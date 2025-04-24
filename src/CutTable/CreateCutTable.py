@@ -137,6 +137,8 @@ cut_table_df = create_cut_table(data_file, mc_files, mc_labels_list, tree, cuts_
 
 if cut_table_df is not None:
     display_df = cut_table_df.copy()
+    cut_names = ["Total Events"] + list(cuts_dict.keys())
+    display_df.insert(0, "Cut", cut_names)
 
     for col in ["Data", "Data(RS67)", "Mixed(RS67)"]:
         if col in display_df.columns:
@@ -152,9 +154,9 @@ if cut_table_df is not None:
     # Apply the formatting row by row
     formatted_data = []
     for index, row in display_df.iterrows():
-        formatted_row = [format_value(value, col) for col, value in row.items()]
+        formatted_row = [row["Cut"]] + [format_value(value, col) for col, value in row.drop("Cut").items()]
         formatted_data.append(formatted_row)
 
-    print(tabulate(formatted_data, headers=display_df.columns, tablefmt="fancy_grid"))
+    print(tabulate(formatted_data, headers=["Cut"] + list(display_df.columns[1:]), tablefmt="fancy_grid"))
     cut_table_df.to_csv("cut_table_with_mixed_and_reweighting.csv")
     print("\n✅ Cut table saved as 'cut_table_with_mixed_and_reweighting.csv'")
