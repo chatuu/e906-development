@@ -1,74 +1,79 @@
 import uproot
 import pandas as pd
 from tabulate import tabulate
+import numpy as np
 
 def create_cut_table(data_file_path, mc_file_paths, mc_labels, tree_name, cuts, variables, mixed_file_path, mixed_tree_name):
     cut_table = pd.DataFrame()
 
-    def apply_cuts(df, cuts):
+    def apply_cuts(df, cuts, use_weights=True):
         cut_results = {}
-        cut_results["Total Events"] = len(df)
+        weight = df['ReWeight'] if use_weights and 'ReWeight' in df.columns else pd.Series(1, index=df.index)
+
+        cut_results["Total Events"] = weight.sum()
+
         for cut_name, cut_string in cuts.items():
             try:
-                cut_mask = df.eval(cut_string)
-                df = df[cut_mask]
-                cut_results[cut_name] = len(df)
+                mask = df.eval(cut_string)
+                cut_results[cut_name] = weight[mask].sum()
+                df = df[mask]
+                weight = weight[mask]
             except Exception as e:
-                print(f"Error applying cut '{cut_name}': {e}")
-                cut_results[cut_name] = None
+                print(f"⚠️ Error applying cut '{cut_name}': {e}")
+                cut_results[cut_name] = 0
+
         return pd.Series(cut_results)
+
+    def read_tree(file_path, tree_name, variables):
+        with uproot.open(file_path) as file:
+            tree = file[tree_name]
+            all_keys = tree.keys()
+            vars_to_read = [var for var in variables if var in all_keys]
+            missing = [var for var in variables if var not in all_keys]
+            if missing:
+                print(f"⚠️ Missing variables in {file_path}: {missing}")
+            df = tree.arrays(vars_to_read, library="pd")
+            return df
 
     # --- Data ---
     try:
-        with uproot.open(data_file_path) as file:
-            tree = file[tree_name]
-            data_vars_to_read = [var for var in variables if var in tree.keys()]
-            data = tree.arrays(data_vars_to_read, library="pd")
-            cut_table["Data"] = apply_cuts(data.copy(), cuts)
+        data = read_tree(data_file_path, tree_name, variables)
+        cut_table["Data"] = apply_cuts(data.copy(), cuts, use_weights=False)
     except Exception as e:
-        print(f"Error reading Data file: {e}")
+        print(f"❌ Error reading Data file: {e}")
         return None
 
-    # --- Data(RS67) from 'result' tree in mixed file ---
+    # --- Data(RS67) ---
     try:
-        with uproot.open(mixed_file_path) as file:
-            tree = file["result"]
-            rs67_vars_to_read = [var for var in variables if var in tree.keys()]
-            rs67_data = tree.arrays(rs67_vars_to_read, library="pd")
-            rs67_series = apply_cuts(rs67_data.copy(), cuts)
-            cut_table.insert(loc=1, column="Data(RS67)", value=rs67_series)
+        rs67_data = read_tree(mixed_file_path, "result", variables)
+        cut_table["Data(RS67)"] = apply_cuts(rs67_data.copy(), cuts, use_weights=False)
     except Exception as e:
-        print(f"Error reading Data(RS67) from 'result' tree: {e}")
-
-    # --- Mixed ---
-    try:
-        with uproot.open(mixed_file_path) as file:
-            tree = file[mixed_tree_name]
-            mixed_vars_to_read = [var for var in variables if var in tree.keys()]
-            mixed_data = tree.arrays(mixed_vars_to_read, library="pd")
-            cut_table["Mixed"] = apply_cuts(mixed_data.copy(), cuts)
-    except Exception as e:
-        print(f"Error reading Mixed file: {e}")
+        print(f"❌ Error reading RS67 data: {e}")
         return None
 
-    # --- MC Files ---
+    # --- Mixed(RS67) ---
+    try:
+        mixed_data = read_tree(mixed_file_path, mixed_tree_name, variables)
+        cut_table["Mixed(RS67)"] = apply_cuts(mixed_data.copy(), cuts, use_weights=False)
+    except Exception as e:
+        print(f"❌ Error reading Mixed file: {e}")
+        return None
+
+    # --- MC files ---
     for i, mc_file_path in enumerate(mc_file_paths):
         label = mc_labels[i]
         try:
-            with uproot.open(mc_file_path) as file:
-                tree = file[tree_name]
-                mc_vars_to_read = [var for var in variables if var in tree.keys()]
-                mc_data = tree.arrays(mc_vars_to_read, library="pd")
-                cut_table[label] = apply_cuts(mc_data.copy(), cuts)
+            mc_data = read_tree(mc_file_path, tree_name, variables + ["ReWeight"])
+            cut_table[label] = apply_cuts(mc_data.copy(), cuts, use_weights=True)
         except Exception as e:
-            print(f"Error reading MC file '{label}': {e}")
+            print(f"❌ Error reading MC file '{label}': {e}")
             cut_table[label] = None
 
     # --- Total MC ---
     try:
         cut_table["Total MC"] = cut_table[mc_labels].sum(axis=1)
     except Exception as e:
-        print(f"Error calculating Total MC: {e}")
+        print(f"⚠️ Error calculating Total MC: {e}")
 
     # --- Purity & Efficiency for DY MC ---
     try:
@@ -77,13 +82,14 @@ def create_cut_table(data_file_path, mc_file_paths, mc_labels, tree_name, cuts, 
         cut_table["Purity (DY MC)"] = (cut_table[dy_col] / cut_table["Total MC"]) * 100
         cut_table["Efficiency (DY MC)"] = (cut_table[dy_col] / total_dy) * 100
     except Exception as e:
-        print(f"Error calculating Purity/Efficiency: {e}")
+        print(f"⚠️ Error calculating Purity/Efficiency: {e}")
 
     cut_table.index.name = "Cut Name"
     return cut_table
 
 
-# --- Example usage ---
+# ------------------- Configuration -------------------
+
 cuts_dict = {
     "nhits1 + nhits2 > 29": "(nHits1 + nHits2) > 29",
     "nhits1st1 + nhits2st1 > 8": "(nHits1St1 + nHits2St1) > 8",
@@ -111,21 +117,44 @@ variables_list = [
     "dx", "dy", "dz", "dpx", "dpy", "dpz", "mass", "D1", "D2", "D3", "xF", "xT", "xB", "costh", "intensityP"
 ]
 
-data_file = "/Users/ckuruppu/Documents/NMSU-Physics/e906-development/ROOTFiles/Hugo/roadset57_70_R008_2111v42_tmp_noPhys.root"
+data_file = "../../ROOTFiles/Hugo/roadset57_70_R008_2111v42_tmp_noPhys.root"
+
 mc_files = [
-    "/Users/ckuruppu/Documents/NMSU-Physics/e906-development/ROOTFiles/Hugo/mc_drellyan_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
-    "/Users/ckuruppu/Documents/NMSU-Physics/e906-development/ROOTFiles/Hugo/mc_jpsi_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
-    "/Users/ckuruppu/Documents/NMSU-Physics/e906-development/ROOTFiles/Hugo/mc_psiprime_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
+    "../../ROOTFiles/Hugo/mc_drellyan_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
+    "../../ROOTFiles/Hugo/mc_jpsi_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
+    "../../ROOTFiles/Hugo/mc_psiprime_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
 ]
+
 mc_labels_list = ["DY MC", "J/Psi MC", "Psi Prime MC"]
+
 tree = "Tree"
-mixed_file = "/Users/ckuruppu/Documents/NMSU-Physics/e906-development/ROOTFiles/MixedEvents/merged_RS67_3089LH2.root"
+mixed_file = "../../ROOTFiles/MixedEvents/merged_RS67_3089LH2.root"
 mixed_tree = "result_mix"
+
+# ------------------- Generate Cut Table -------------------
 
 cut_table_df = create_cut_table(data_file, mc_files, mc_labels_list, tree, cuts_dict, variables_list, mixed_file, mixed_tree)
 
 if cut_table_df is not None:
-    print(cut_table_df)
-    print(tabulate(cut_table_df, headers="keys", tablefmt="fancy_grid"))
-    cut_table_df.to_csv("cut_table_with_mixed.csv")
-    print("\nCut table saved as 'cut_table_with_mixed.csv'")
+    display_df = cut_table_df.copy()
+
+    for col in ["Data", "Data(RS67)", "Mixed(RS67)"]:
+        if col in display_df.columns:
+            display_df[col] = pd.to_numeric(display_df[col], errors="coerce").fillna(0).astype(int)
+
+    # Define a function to format based on the column
+    def format_value(value, col_name):
+        if col_name in ["Data", "Data(RS67)", "Mixed(RS67)"]:
+            return "{:.0f}".format(value)
+        else:
+            return "{:.2f}".format(value)
+
+    # Apply the formatting row by row
+    formatted_data = []
+    for index, row in display_df.iterrows():
+        formatted_row = [format_value(value, col) for col, value in row.items()]
+        formatted_data.append(formatted_row)
+
+    print(tabulate(formatted_data, headers=display_df.columns, tablefmt="fancy_grid"))
+    cut_table_df.to_csv("cut_table_with_mixed_and_reweighting.csv")
+    print("\n✅ Cut table saved as 'cut_table_with_mixed_and_reweighting.csv'")
