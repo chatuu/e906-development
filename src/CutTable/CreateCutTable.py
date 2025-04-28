@@ -242,7 +242,7 @@ def create_cut_table(data_file_path, mc_file_paths, mc_labels, tree_name, cuts, 
             (runids_for_calc >= 12525) & (runids_for_calc <= 15789),
             (runids_for_calc >= 15793) & (runids_for_calc <= 16076)
         ]
-        values = [0.4, 0.4, 1.6, -1.6, -1.6]
+        values = [0.4, 0.4, 1.6, 1.6, 1.6]
 
         # Calculate beamOffset, default to 0.0 if no condition is met (including original NaN runIDs)
         df['beamOffset'] = np.select(conditions, values, default=0.0)
@@ -401,8 +401,9 @@ cuts_dict = {
     "dz within -280 to -5": "dz > -280 and dz < -5",
     # Re-adding the dy - beamOffset cut
     #"dy - beamOffset within -0.22 to 0.22": "(dy - beamOffset) > -0.22 and (dy - beamOffset) < 0.22",
-    #"dy - beamOffset within -0.22 to 0.22": "(abs(dy-1.6) < 0.22 and runID > 11000) or (abs(dy-0.4) < 0.22 and runID < 11000)", # Example alternative
-    #"dx^2 + (dy - beamOffset)^2 < 0.06":"((dx*dx+(dy-1.6)*(dy-1.6)<0.06 and runID > 11000) or (dx*dx+(dy-0.4)*(dy-0.4)<0.06 and runID < 11000))", # Example alternative
+    "dy - beamOffset within -0.22 to 0.22": "((abs(dy-1.6) < 0.22 and runID > 11000) or (abs(dy-0.4) < 0.22 and runID < 11000))", # Example alternative
+    "dx^2 + (dy - beamOffset)^2 < 0.06":"((dx*dx+(dy-1.6)*(dy-1.6)<0.06 and runID > 11000) or (dx*dx+(dy-0.4)*(dy-0.4)<0.06 and runID < 11000))", # Example alternative
+    "abs(x1_st1 + x2_st1) < 42cm": "abs(x1_st1 + x2_st1) < 42",
     "abs(trackSeparation) < 270": "abs(trackSeparation) < 270",
     "abs(dpx) < 1.8": "abs(dpx) < 1.8",
     "abs(dpy) < 2": "abs(dpy) < 2",
@@ -422,7 +423,7 @@ cuts_dict = {
 variables_list = [
     "nHits1", "nHits2", "nHits1St1", "nHits2St1", "chisq_dimuon", "chisq1_target", "chisq2_target",
     "dx", "dy", "dz", "dpx", "dpy", "dpz", "mass", "D1", "D2", "D3", "xF", "xT", "xB", "costh", "intensityP",
-    "runID", "trackSeparation" # <--- Need runID for beamOffset calculation, trackSeparation added from cuts_dict
+    "runID", "trackSeparation", "x1_st1", "x2_st1" # <--- Need runID for beamOffset calculation, trackSeparation added from cuts_dict
     # 'beamOffset' is not in ROOT files, it's calculated, so don't add it here.
     # 'ReWeight' is handled specifically in read_tree
 ]
