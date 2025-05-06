@@ -8,7 +8,7 @@ It applies a series of predefined selection cuts sequentially to filter events.
 
 Key Features:
 - Reads data from ROOT files using the 'uproot' library.
-- Handles multiple datasets (Data, MC types, Mixed Events).
+- Handles multiple datasets (Data, MC types, Mixed Events, Empty Flask).
 - Applies run-independent beam offset corrections (currently fixed).
 - Processes files in parallel using 'concurrent.futures.ProcessPoolExecutor' for speed.
 - Applies sequential event selection cuts defined in a dictionary.
@@ -85,7 +85,7 @@ def read_tree(file_path, tree_name, variables):
                 empty_df = pd.DataFrame()
                 # Include potentially required columns in empty df
                 for var in set(variables + ['runID', 'dy', 'ReWeight']):
-                     empty_df[var] = pd.Series(dtype='float64') # Use float to accommodate NaN
+                        empty_df[var] = pd.Series(dtype='float64') # Use float to accommodate NaN
                 return empty_df
 
 
@@ -105,12 +105,12 @@ def read_tree(file_path, tree_name, variables):
                 # Create a copy to modify for warning message
                 missing_for_warning = list(missing)
                 if 'ReWeight' in missing_for_warning and not is_mc_file:
-                     missing_for_warning.remove('ReWeight')
+                        missing_for_warning.remove('ReWeight')
 
                 # Print warning for missing variables if any remain after filtering ReWeight
                 # (Note: May interleave in parallel execution)
                 if missing_for_warning:
-                    print(f"⚠️ Missing variables in {file_path}: {missing_for_warning}. These will be added as NaN.")
+                    print(f"⚠️ Missing variables in {file_path} ({tree_name}): {missing_for_warning}. These will be added as NaN.")
                     sys.stdout.flush() # Try to flush output buffer
 
 
@@ -118,8 +118,8 @@ def read_tree(file_path, tree_name, variables):
 
             # Add missing columns with NaN values to ensure DataFrame has expected structure
             for var in missing:
-                 if var not in df.columns: # Avoid adding if it somehow got added during read
-                     df[var] = np.nan
+                if var not in df.columns: # Avoid adding if it somehow got added during read
+                    df[var] = np.nan
 
             # Ensure runID, dy, and ReWeight are numeric
             if 'runID' in df.columns:
@@ -131,7 +131,7 @@ def read_tree(file_path, tree_name, variables):
                 df['ReWeight'] = pd.to_numeric(df['ReWeight'], errors='coerce').fillna(1.0)
             else:
                 # If ReWeight wasn't even requested/found, add it with 1.0 for consistency
-                 df['ReWeight'] = 1.0
+                df['ReWeight'] = 1.0
 
 
             return df
@@ -144,7 +144,7 @@ def read_tree(file_path, tree_name, variables):
         empty_df = pd.DataFrame()
         # Keep runID as it might still be used in cuts_dict
         for var in set(variables + ['runID', 'dy', 'ReWeight']):
-             empty_df[var] = pd.Series(dtype='float64')
+            empty_df[var] = pd.Series(dtype='float64')
         return empty_df
 
 
@@ -219,15 +219,15 @@ def apply_cuts(df, cuts, use_weights=True):
     # Ensure beamOffset column exists before cuts that might use it
     # This should be guaranteed by calling add_beam_offset before apply_cuts
     if 'beamOffset' not in df.columns:
-         df['beamOffset'] = 1.6 # Default to 1.6 if somehow missing
+        df['beamOffset'] = 1.6 # Default to 1.6 if somehow missing
 
     # Ensure dy is numeric before cuts that use it
     if 'dy' in df.columns:
-         df['dy'] = pd.to_numeric(df['dy'], errors='coerce').fillna(np.nan)
+        df['dy'] = pd.to_numeric(df['dy'], errors='coerce').fillna(np.nan)
 
     # Ensure runID is numeric before cuts that use it (still needed for some existing cuts)
     if 'runID' in df.columns:
-         df['runID'] = pd.to_numeric(df['runID'], errors='coerce').fillna(-1) # Fill NaN runIDs for safe evaluation
+        df['runID'] = pd.to_numeric(df['runID'], errors='coerce').fillna(-1) # Fill NaN runIDs for safe evaluation
 
     # Keep track of the mask from successful cuts
     cumulative_mask = pd.Series(True, index=df.index)
@@ -240,7 +240,7 @@ def apply_cuts(df, cuts, use_weights=True):
 
     for cut_name, cut_string in cuts.items():
         if cut_name == "Total Events":
-             continue
+            continue
         try:
             # Evaluate the cut string on the *current* filtered DataFrame 'df'
             mask = df.eval(cut_string, engine='python')
@@ -305,18 +305,18 @@ def process_single_file(file_path, tree_name, label, variables, cuts, use_weight
     """
     try:
         # Add process start message here for better tracking in parallel output
-        print(f"Starting processing for {label} from {file_path}...")
+        print(f"Starting processing for {label} from {file_path} (Tree: {tree_name})...")
         sys.stdout.flush()
         # Make sure runID is requested if cuts use it, even if add_beam_offset doesn't
         vars_to_read = list(set(variables + ['runID']))
         df = read_tree(file_path, tree_name, vars_to_read)
 
         if df.empty and not ('runID' in df.columns and 'dy' in df.columns and 'ReWeight' in df.columns):
-             print(f"INFO: read_tree returned empty DataFrame for {label}. Skipping further processing.")
-             sys.stdout.flush()
-             expected_cut_names = ["Total Events"] + list(cuts.keys())
-             # Return structure indicating success but empty data
-             return {'label': label, 'results': pd.Series(0.0, index=expected_cut_names), 'error': False}
+            print(f"INFO: read_tree returned empty DataFrame for {label}. Skipping further processing.")
+            sys.stdout.flush()
+            expected_cut_names = ["Total Events"] + list(cuts.keys())
+            # Return structure indicating success but empty data
+            return {'label': label, 'results': pd.Series(0.0, index=expected_cut_names), 'error': False}
 
 
         df = add_beam_offset(df) # This now sets beamOffset to 1.6
@@ -334,11 +334,11 @@ def process_single_file(file_path, tree_name, label, variables, cuts, use_weight
 
 
         for var in required_for_cuts:
-             if var not in df.columns:
-                  # Print warning if adding missing variable (Note: May interleave in parallel execution)
-                  print(f"⚠️ Adding missing required cut variable '{var}' as NaN to {label} DataFrame.")
-                  sys.stdout.flush()
-                  df[var] = np.nan # Add any missing required variables
+            if var not in df.columns:
+                # Print warning if adding missing variable (Note: May interleave in parallel execution)
+                print(f"⚠️ Adding missing required cut variable '{var}' as NaN to {label} DataFrame.")
+                sys.stdout.flush()
+                df[var] = np.nan # Add any missing required variables
 
 
         cut_series = apply_cuts(df, cuts, use_weights=use_weights)
@@ -348,19 +348,19 @@ def process_single_file(file_path, tree_name, label, variables, cuts, use_weight
 
     except Exception as e:
         # Print error from the overall processing function (Note: May interleave in parallel execution)
-        print(f"❌ Error processing {label} from {file_path}: {e}")
+        print(f"❌ Error processing {label} from {file_path} (Tree: {tree_name}): {e}")
         sys.stdout.flush()
         expected_cut_names = ["Total Events"] + list(cuts.keys())
         # Return structure indicating error
         return {'label': label, 'results': pd.Series(0.0, index=expected_cut_names), 'error': True, 'message': str(e)}
 
 
-def create_cut_table_parallel(data_file_path, mc_file_paths, mc_labels, tree_name, cuts, variables, mixed_file_path, mixed_tree_name):
+def create_cut_table_parallel(data_file_path, mc_file_paths, mc_labels, tree_name, cuts, variables, mixed_file_path, mixed_tree_name, empty_flask_file_path):
     """
     Creates a cut flow table by processing multiple datasets in parallel.
 
-    Orchestrates the parallel processing of data, Monte Carlo (MC), and
-    mixed event samples using `concurrent.futures.ProcessPoolExecutor`.
+    Orchestrates the parallel processing of data, Monte Carlo (MC), 
+    mixed event, and empty flask samples using `concurrent.futures.ProcessPoolExecutor`.
     It submits each dataset to the `process_single_file` function.
     After all tasks complete, it aggregates the results into a single
     pandas DataFrame. Finally, it calculates summary columns like
@@ -374,36 +374,23 @@ def create_cut_table_parallel(data_file_path, mc_file_paths, mc_labels, tree_nam
         List of paths to the MC simulation ROOT files.
     mc_labels : list[str]
         List of labels corresponding to each MC file in `mc_file_paths`.
-        Used for identifying results and as column names.
     tree_name : str
-        Name of the TTree containing event data within the data and MC files.
+        Name of the TTree for event data in data and MC files.
     cuts : dict[str, str]
-        Dictionary defining the cuts to apply (see `apply_cuts`).
+        Dictionary defining the cuts to apply.
     variables : list[str]
-        List of essential variable names to read from the ROOT trees.
+        List of essential variable names to read.
     mixed_file_path : str
-        Path to the ROOT file containing mixed event samples (and potentially
-        a corresponding data sample, e.g., RS67 Data).
+        Path to the ROOT file for "Data(RS67)" and "Mixed(RS67)" samples.
     mixed_tree_name : str
-        Name of the TTree for the mixed event sample within `mixed_file_path`.
-        Assumes the corresponding data sample (if present) is in a tree named "result".
+        Name of the TTree for the "Mixed(RS67)" sample in `mixed_file_path`.
+    empty_flask_file_path : str
+        Path to the ROOT file for "empty flask" samples.
 
     Returns
     -------
     pd.DataFrame or None
         A pandas DataFrame representing the complete cut flow table.
-        Rows correspond to cuts (index="Cut Name"), and columns correspond to
-        the different datasets and calculated values (Data, MCs, Total MC, etc.).
-        Returns None or an empty DataFrame if critical errors prevent table
-        construction (e.g., no tasks complete successfully).
-
-    Notes
-    -----
-    - Assumes the data sample corresponding to the mixed events is in a tree
-      named "result" within the `mixed_file_path` file.
-    - Parallel execution uses a number of worker processes based on available CPU cores.
-    - Handles errors from individual tasks gracefully, printing warnings and
-      filling results with zeros for failed tasks.
     """
     start_time = time.time()
     print("Starting parallel processing...")
@@ -416,11 +403,17 @@ def create_cut_table_parallel(data_file_path, mc_file_paths, mc_labels, tree_nam
         # Submit Data task
         futures.append(executor.submit(process_single_file, data_file_path, tree_name, "Data", variables, cuts, False))
 
-        # Submit Data(RS67) task
+        # Submit Data(RS67) task (from mixed_file_path, tree "result")
         futures.append(executor.submit(process_single_file, mixed_file_path, "result", "Data(RS67)", variables, cuts, False))
 
-        # Submit Mixed(RS67) task
+        # Submit Mixed(RS67) task (from mixed_file_path, tree mixed_tree_name)
         futures.append(executor.submit(process_single_file, mixed_file_path, mixed_tree_name, "Mixed(RS67)", variables, cuts, False))
+
+        # Submit empty flask (RS67) task (from empty_flask_file_path, tree "result")
+        futures.append(executor.submit(process_single_file, empty_flask_file_path, "result", "empty flask (RS67)", variables, cuts, False))
+        
+        # Submit empty flask (RS67) mixed task (from empty_flask_file_path, tree "result_mix")
+        futures.append(executor.submit(process_single_file, empty_flask_file_path, "result_mix", "empty flask (RS67) mixed", variables, cuts, False))
 
         # Submit MC tasks
         for i, mc_file_path in enumerate(mc_file_paths):
@@ -452,16 +445,14 @@ def create_cut_table_parallel(data_file_path, mc_file_paths, mc_labels, tree_nam
                     expected_cut_names = ["Total Events"] + list(cuts.keys())
                     results_dict[label] = pd.Series(0.0, index=expected_cut_names)
                 else:
-                     results_dict[label] = cut_series
-                     print(f"Successfully processed results for '{label}'.")
-                     sys.stdout.flush()
+                    results_dict[label] = cut_series
+                    print(f"Successfully processed results for '{label}'.")
+                    sys.stdout.flush()
 
             except Exception as exc:
                 # Catch exceptions raised *during* future handling/result retrieval
                 print(f'❌ Exception occurred while processing future result (label unknown): {exc}')
                 sys.stdout.flush()
-                # We don't know which label failed here, so we can't easily add a placeholder column.
-                # This indicates a more fundamental problem potentially.
 
 
     # --- Aggregate results into a DataFrame ---
@@ -481,11 +472,11 @@ def create_cut_table_parallel(data_file_path, mc_file_paths, mc_labels, tree_nam
     # Calculate Total MC
     mc_cols = [label for label in mc_labels if label in cut_table.columns]
     if mc_cols:
-         cut_table["Total MC"] = cut_table[mc_cols].sum(axis=1, min_count=1).fillna(0)
+        cut_table["Total MC"] = cut_table[mc_cols].sum(axis=1, min_count=1).fillna(0)
     else:
-         print("⚠️ No MC columns found in results to calculate 'Total MC'. Setting to 0.")
-         sys.stdout.flush()
-         cut_table["Total MC"] = pd.Series(0.0, index=cut_table.index)
+        print("⚠️ No MC columns found in results to calculate 'Total MC'. Setting to 0.")
+        sys.stdout.flush()
+        cut_table["Total MC"] = pd.Series(0.0, index=cut_table.index)
 
 
     # Calculate Purity & Efficiency for DY MC
@@ -493,21 +484,21 @@ def create_cut_table_parallel(data_file_path, mc_file_paths, mc_labels, tree_nam
         dy_col = "DY MC"
         # Check if necessary columns and index exist before calculation
         if dy_col in cut_table.columns and "Total Events" in cut_table.index and "Total MC" in cut_table.columns:
-             total_dy = cut_table.loc["Total Events", dy_col]
+            total_dy = cut_table.loc["Total Events", dy_col]
 
-             # Check if Total DY events is zero
-             if total_dy == 0:
-                 print(f"⚠️ Total Events for '{dy_col}' is zero. Efficiency will be zero.")
-                 sys.stdout.flush()
+            # Check if Total DY events is zero
+            if total_dy == 0:
+                print(f"⚠️ Total Events for '{dy_col}' is zero. Efficiency will be zero.")
+                sys.stdout.flush()
 
-             total_mc_safe = cut_table["Total MC"].replace(0, np.nan) # Avoid division by zero
-             purity = (cut_table[dy_col] / total_mc_safe).replace([np.inf, -np.inf], np.nan).fillna(0).copy()
+            total_mc_safe = cut_table["Total MC"].replace(0, np.nan) # Avoid division by zero
+            purity = (cut_table[dy_col] / total_mc_safe).replace([np.inf, -np.inf], np.nan).fillna(0).copy()
 
-             total_dy_safe = total_dy if total_dy != 0 else np.nan # Avoid division by zero
-             efficiency = (cut_table[dy_col] / total_dy_safe).replace([np.inf, -np.inf], np.nan).fillna(0).copy()
+            total_dy_safe = total_dy if total_dy != 0 else np.nan # Avoid division by zero
+            efficiency = (cut_table[dy_col] / total_dy_safe).replace([np.inf, -np.inf], np.nan).fillna(0).copy()
 
-             cut_table["Purity (DY MC)"] = purity * 100
-             cut_table["Efficiency (DY MC)"] = efficiency * 100
+            cut_table["Purity (DY MC)"] = purity * 100
+            cut_table["Efficiency (DY MC)"] = efficiency * 100
         else:
             # Print warning if calculation cannot be performed
             print(f"⚠️ Cannot calculate Purity/Efficiency: Check if '{dy_col}' column, 'Total Events' index, and 'Total MC' column exist.")
@@ -652,7 +643,9 @@ try:
         base_path_hugo + "mc_psiprime_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
     ]#: List of paths to Monte Carlo simulation files.
 
-    mixed_file = base_path_mixed + "merged_RS67_3089LH2.root" #: Path to the mixed event file.
+    mixed_file = base_path_mixed + "merged_RS67_3089LH2.root" #: Path to the mixed event file (for Data(RS67) and Mixed(RS67)).
+    empty_flask_file = base_path_mixed + "merged_RS67_3089flask.root" #: Path to the empty flask data file.
+
 
 except FileNotFoundError as fnf_error:
     print(f"❌ Configuration Error: File not found at expected path - {fnf_error}")
@@ -664,11 +657,12 @@ except NameError: # Handle if base paths aren't defined
     data_file = "path/to/your/data.root"
     mc_files = ["path/to/drellyan.root", "path/to/jpsi.root", "path/to/psiprime.root"]
     mixed_file = "path/to/mixed.root"
+    empty_flask_file = "path/to/empty_flask.root"
 
 
 mc_labels_list = ["DY MC", "J/Psi MC", "Psi Prime MC"] #: Labels for the MC datasets.
 tree = "Tree" #: Default TTree name for data and MC files.
-mixed_tree = "result_mix" #: TTree name for mixed events in the mixed file.
+mixed_tree = "result_mix" #: TTree name for mixed events in the mixed_file (for "Mixed(RS67)").
 
 # ------------------- Main Execution Logic -------------------
 
@@ -678,11 +672,12 @@ if __name__ == "__main__":
         data_file,
         mc_files,
         mc_labels_list,
-        tree,
+        tree, # TTree name for data_file and mc_files
         cuts_dict,
         variables_list,
-        mixed_file,
-        mixed_tree
+        mixed_file,      # File for "Data(RS67)" and "Mixed(RS67)"
+        mixed_tree,      # TTree name for "Mixed(RS67)" in mixed_file
+        empty_flask_file # File for "empty flask" data
     )
 
     # --- Display and Save ---
@@ -695,6 +690,8 @@ if __name__ == "__main__":
             "Data",
             "Data(RS67)",
             "Mixed(RS67)",
+            "empty flask (RS67)",        # New column
+            "empty flask (RS67) mixed",# New column
             "DY MC",
             "J/Psi MC",
             "Psi Prime MC",
@@ -722,12 +719,16 @@ if __name__ == "__main__":
             display_df.insert(0, "Cut", display_df.index)
 
             # Define columns that should be formatted as integers (event counts)
-            count_cols_base = ["Data", "Data(RS67)", "Mixed(RS67)", "Total MC", "DY MC", "J/Psi MC", "Psi Prime MC"]
+            count_cols_base = [
+                "Data", "Data(RS67)", "Mixed(RS67)",
+                "empty flask (RS67)", "empty flask (RS67) mixed", # New columns
+                "Total MC", "DY MC", "J/Psi MC", "Psi Prime MC"
+            ]
             count_cols = [col for col in count_cols_base if col in display_df.columns]
 
             # Apply integer formatting to count columns
             for col in count_cols:
-                 display_df[col] = pd.to_numeric(display_df[col], errors="coerce").fillna(0).round(0).astype(int)
+                display_df[col] = pd.to_numeric(display_df[col], errors="coerce").fillna(0).round(0).astype(int)
 
             def format_value(value, col_name):
                 """Formats a value for table display based on its column name.
@@ -747,15 +748,15 @@ if __name__ == "__main__":
                 if col_name in count_cols:
                     return "{:.0f}".format(value) # Format as integer
                 elif col_name in ["Purity (DY MC)", "Efficiency (DY MC)"]:
-                     try:
-                         # Format as percentage with 2 decimal places
-                         return "{:.2f}".format(float(value))
-                     except (ValueError, TypeError):
-                          # Fallback if value is not numeric
-                          return str(value)
+                    try:
+                        # Format as percentage with 2 decimal places
+                        return "{:.2f}".format(float(value))
+                    except (ValueError, TypeError):
+                        # Fallback if value is not numeric
+                        return str(value)
                 else:
-                     # Default string conversion for any other columns
-                     return str(value)
+                    # Default string conversion for any other columns
+                    return str(value)
 
             # Prepare data in list-of-lists format for tabulate
             data_to_display = []
@@ -775,7 +776,7 @@ if __name__ == "__main__":
 
             # --- Save Results ---
             try:
-                output_csv_file = "cut_table_with_mixed_and_reweighting_parallel.csv"
+                output_csv_file = "cut_table_with_flask_parallel.csv" # Updated filename
                 # Save the original cut_table_df (column order might not match display)
                 cut_table_df.to_csv(output_csv_file)
                 print(f"\n✅ Cut table saved as '{output_csv_file}'")
