@@ -2,7 +2,7 @@
 """
 Process High Energy Physics data from ROOT files to generate a cut flow table.
 
-This script reads particle physics data (dimuon events) from specified ROOT files,
+This script reads particle physics data (dimuon events) from specified ROOT filabout:blank#blockedes,
 including experimental data, Monte Carlo (MC) simulations, and mixed event samples.
 It applies a series of predefined selection cuts sequentially to filter events.
 
@@ -550,16 +550,10 @@ cuts_dict = {
     "y1_st1 x y1_st3 and y2_st1 x y2_st3 > 0": "(y1_st1 * y1_st3) > 0 and (y2_st1 * y2_st3) > 0",
     "abs(py1_st1) and abs(py2_st1) > 0.02": "abs(py1_st1) > 0.02 and abs(py2_st1) > 0.02",
 
-
     "dz within -280 to -5": "dz > -280 and dz < -5",
     "dx within -0.25 to 0.25": "dx > -0.25 and dx < 0.25",
-
-    # --- Updated Cuts using beamOffset directly ---
-    # Now that add_beam_offset always sets beamOffset = 1.6, these use that value.
     "dy - beamOffset within -0.22 to 0.22": "abs(dy - beamOffset) < 0.22",
     "dx^2 + (dy - beamOffset)^2 < 0.06":"(dx**2 + (dy - beamOffset)**2) < 0.06",
-    # ---
-
     "abs(dpx) < 1.8": "abs(dpx) < 1.8",
     "abs(dpy) < 2": "abs(dpy) < 2",
     "dpz within 38 to 116": "dpz > 38 and dpz < 116",
@@ -575,6 +569,7 @@ cuts_dict = {
     "chisq_dimuon < 18": "chisq_dimuon < 18",
     "abs(x1_st1 + x2_st1) < 42cm": "abs(x1_st1 + x2_st1) < 42",
     "chisq Target within 2": "abs(chisq1_target + chisq2_target - chisq_dimuon) < 2",
+    
     "D1 < 400": "D1 < 400",
     "D2 < 400": "D2 < 400",
     "D3 < 400": "D3 < 400",
