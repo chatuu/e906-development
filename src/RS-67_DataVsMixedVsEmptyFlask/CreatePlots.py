@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Plot mass distribution for specific datasets after a target cut,
-by re-processing ROOT files in parallel.
+Plot mass distribution for specific datasets and their combination
+after a target cut, by re-processing ROOT files in parallel.
 
 This script is designed to:
 1. Load a predefined list of "good spills" from a text file.
@@ -9,7 +9,9 @@ This script is designed to:
 3. Apply a sequence of event selection cuts up to a defined target cut.
 4. Extract the 'mass' variable for events passing these cuts for each dataset.
 5. Perform the data processing for each dataset in parallel to utilize multiple CPU cores.
-6. Generate and save a plot comparing the mass distributions of these datasets.
+6. Generate and save a plot comparing the mass distributions of these datasets,
+   including a calculated "Corrected Data (RS67)" histogram.
+7. The y-axis of the plot is set to a logarithmic scale.
 
 The script includes functions for loading data, applying beam offsets,
 applying selection cuts, and orchestrating the parallel processing and plotting.
@@ -38,6 +40,10 @@ GOOD_SPILLS_FILE_PATH = "../../res/GoodSpills/GoodSpills.txt"
 
 #: The name of the cut in `cuts_dict_full` after which the mass distribution will be plotted.
 TARGET_CUT_NAME = "D1 + D2 + D3 < 1000"
+
+#: Factor used in the calculation of the "Corrected Data (RS67)" histogram.
+#: Formula: Data(RS67) - Mixed(RS67) - FACTOR * (empty flask (RS67) - empty flask (RS67) mixed)
+COMBINED_HIST_FACTOR = 16.1122 / 3.66242
 
 try:
     #: Base path to the directory containing ROOT files for mixed events and empty flask data.
@@ -123,7 +129,7 @@ variables_list = [
     "py1_st1", "py2_st1", "py1_st3", "py2_st3",
     "pz1_st1", "pz2_st1", "pz1_st3", "pz2_st3",
     "px1_st1", "px2_st1", "px1_st3", "px2_st3",
-    # "ReWeight" is intentionally omitted to avoid auto-reading unless explicitly needed by a future MC analysis.
+    # "ReWeight" is intentionally omitted from this list for data processing.
 ]
 
 # --- Helper Functions ---
@@ -179,60 +185,52 @@ def read_tree(file_path, tree_name, variables_to_read):
              DataFrame on critical errors (e.g., file not found, tree not found).
     :rtype: pd.DataFrame
     """
-    # Ensure essential analysis variables are always part of the request list
     local_variables = list(set(variables_to_read + ['mass', 'spillID', 'runID', 'dy']))
     try:
         with uproot.open(file_path) as file:
             if tree_name not in file:
                 print(f"❌ Error: Tree '{tree_name}' not found in '{file_path}'.", file=sys.stderr)
-                return pd.DataFrame()
+                df_empty = pd.DataFrame()
+                for var_name in local_variables: df_empty[var_name] = np.nan # Ensure schema
+                return df_empty
             tree = file[tree_name]
             available_branches = tree.keys()
-            
-            # Determine which of the requested variables are actually available in the TTree
             branches_to_fetch = [var for var in local_variables if var in available_branches]
-            missing_in_tree = [var for var in local_variables if var not in available_branches]
             
+            missing_in_tree = [var for var in local_variables if var not in available_branches]
             if missing_in_tree:
-                # Report only truly missing variables (excluding ReWeight if not explicitly asked for)
                 missing_to_report = [b for b in missing_in_tree if b != 'ReWeight' or 'ReWeight' in variables_to_read]
                 if missing_to_report:
-                     print(f"ℹ️ Note: Branches not found in {file_path} ({tree_name}): {missing_to_report}. Will be added as NaN columns if not already present.", file=sys.stderr)
+                     print(f"ℹ️ Note: Branches not found in {file_path} ({tree_name}): {missing_to_report}. Will be added as NaN.", file=sys.stderr)
 
-            if not branches_to_fetch: # No relevant branches found to read
-                print(f"❌ Error: None of the primary variables to read are available in tree '{tree_name}' of file '{file_path}'.", file=sys.stderr)
-                # Still return a DataFrame with expected columns for consistency downstream, filled with NaN
+            if not branches_to_fetch:
+                print(f"❌ Error: None of the primary variables to read are available in tree '{tree_name}'. Creating empty DF.", file=sys.stderr)
                 df = pd.DataFrame()
-                for var in local_variables: df[var] = np.nan
+                for var_name in local_variables: df[var_name] = np.nan
                 return df
                 
             df = tree.arrays(branches_to_fetch, library="pd")
 
-            # Ensure all initially requested local_variables are columns, even if not in TTree (filled with NaN)
             for var in local_variables:
                 if var not in df.columns:
                     df[var] = np.nan
             
-            # Convert essential and plotting variables to numeric types
             for col in ['runID', 'dy', 'spillID', 'mass']:
                 if col in df.columns:
                     df[col] = pd.to_numeric(df[col], errors='coerce')
             
-            # Handle ReWeight only if it was explicitly in variables_to_read and thus in local_variables
-            if 'ReWeight' in variables_to_read:
+            if 'ReWeight' in variables_to_read: # Only handle ReWeight if explicitly requested
                 if 'ReWeight' in df.columns:
                     df['ReWeight'] = pd.to_numeric(df['ReWeight'], errors='coerce').fillna(1.0)
-                else: # If requested but missing from tree (and thus branches_to_fetch)
-                    df['ReWeight'] = 1.0 # Add as a column of 1.0s
+                else: # If requested but missing from tree
+                    df['ReWeight'] = 1.0 
 
             return df
     except Exception as e:
         print(f"❌ Error reading tree '{tree_name}' from '{file_path}': {e}", file=sys.stderr)
-        # Return an empty DataFrame with expected columns on error for robust downstream handling
-        df = pd.DataFrame()
-        for var in local_variables: df[var] = np.nan # Ensure schema
-        return df
-
+        df_err = pd.DataFrame()
+        for var_name in local_variables: df_err[var_name] = np.nan
+        return df_err
 
 def add_beam_offset(df):
     """Adds a 'beamOffset' column with a fixed value (1.6) to the DataFrame.
@@ -274,83 +272,40 @@ def get_dataframe_after_cuts(df_initial, cuts_to_apply_ordered, good_spills_set_
              Returns an empty DataFrame if the initial DataFrame is empty or all events are cut.
     :rtype: pd.DataFrame
     """
-    if df_initial.empty:
-        return df_initial # Return empty if input is empty
-
-    df = df_initial.copy() # Work on a copy to avoid modifying the original DataFrame passed in
-
-    # Ensure essential columns for cuts are present and correctly typed
-    if 'beamOffset' not in df.columns:
-        # This should ideally be added before this function, but as a fallback:
-        print("Warning: 'beamOffset' column not found in df for get_dataframe_after_cuts. Adding default.", file=sys.stderr)
-        df['beamOffset'] = 1.6
-    
-    if "Good Spills Cut" in cuts_to_apply_ordered:
-        if 'spillID' in df.columns:
-            df['spillID'] = pd.to_numeric(df['spillID'], errors='coerce')
-        else: # Add spillID as NaN if missing and Good Spills Cut is to be applied
-            print("Warning: 'spillID' column missing, adding as NaN for Good Spills Cut.", file=sys.stderr)
-            df['spillID'] = np.nan
+    if df_initial.empty: return df_initial
+    df = df_initial.copy()
+    if 'beamOffset' not in df.columns: df['beamOffset'] = 1.6
+    if 'spillID' in df.columns: df['spillID'] = pd.to_numeric(df['spillID'], errors='coerce')
+    else: 
+        if "Good Spills Cut" in cuts_to_apply_ordered: df['spillID'] = np.nan
 
     cumulative_mask = pd.Series(True, index=df.index)
-
     for cut_name, cut_string in cuts_to_apply_ordered.items():
-        if not cumulative_mask.any():  # Optimization: if no events are left, stop applying cuts
-            # print(f"ℹ️ No events remaining before applying cut '{cut_name}' for {dataset_label_param}. Further cuts skipped.", file=sys.stderr)
-            break
-        
-        # Preserve the mask state before attempting the current cut
-        previous_cumulative_mask_state = cumulative_mask.copy()
-        
+        if not cumulative_mask.any(): break
+        current_df_for_cut = df[cumulative_mask]; previous_cumulative_mask_state = cumulative_mask.copy()
         try:
-            # DataFrame view for the current cut, based on events that passed previous cuts
-            current_df_for_cut = df[previous_cumulative_mask_state] 
-            
-            # By default, assume this cut step passes all events it sees
-            mask_this_step_on_current_df = pd.Series(True, index=current_df_for_cut.index)
-
-            if not current_df_for_cut.empty: # Only evaluate if there's data
+            mask_this_step = pd.Series(True, index=current_df_for_cut.index)
+            if not current_df_for_cut.empty:
                 if cut_name == "Good Spills Cut":
-                    if dataset_label_param in target_labels_good_spills_param: # Check if cut applies to this dataset
+                    if dataset_label_param in target_labels_good_spills_param:
                         if good_spills_set_param is not None and 'spillID' in current_df_for_cut.columns and bool(good_spills_set_param):
                             current_spillID_numeric = pd.to_numeric(current_df_for_cut['spillID'], errors='coerce')
-                            mask_this_step_on_current_df = current_spillID_numeric.isin(good_spills_set_param) & current_spillID_numeric.notna()
-                        else: # Conditions for applying Good Spills Cut not met (e.g., empty spill list)
-                            if not bool(good_spills_set_param): print(f"ℹ️ 'Good Spills Cut' for '{dataset_label_param}' ineffective (spill list empty/not loaded). Passing.", file=sys.stderr)
-                            if 'spillID' not in current_df_for_cut.columns: print(f"⚠️ 'Good Spills Cut' for '{dataset_label_param}' skipped ('spillID' missing). Passing.", file=sys.stderr)
-                    # If not a target dataset, mask_this_step_on_current_df remains True (passes all)
-                else: # Regular cut string evaluation
-                    mask_this_step_on_current_df = current_df_for_cut.eval(cut_string, engine='python')
-            
-            # Align the mask from this step (which is on current_df_for_cut's index) 
-            # back to the original DataFrame's index (df.index) before combining.
-            # Initialize with False on the original index.
-            aligned_mask_for_this_step_on_original_index = pd.Series(False, index=df.index) 
-            if not current_df_for_cut.empty: # Only try to align if there was data to filter
-                aligned_mask_for_this_step_on_original_index.loc[current_df_for_cut.index[mask_this_step_on_current_df]] = True
-            
-            # Update the main cumulative_mask
-            cumulative_mask = previous_cumulative_mask_state & aligned_mask_for_this_step_on_original_index
-
-        except Exception as e:
-            print(f"⚠️ Error applying cut '{cut_name}' for dataset '{dataset_label_param}': {e}. This specific cut will be skipped (no filtering effect for this step).", file=sys.stderr)
-            # Revert cumulative_mask to its state before this failed cut attempt.
-            # This means the failed cut has no filtering effect.
-            cumulative_mask = previous_cumulative_mask_state 
-            
+                            mask_this_step = current_spillID_numeric.isin(good_spills_set_param) & current_spillID_numeric.notna()
+                else: mask_this_step = current_df_for_cut.eval(cut_string, engine='python')
+            aligned_mask_for_this_step = pd.Series(False, index=df.index)
+            if not current_df_for_cut.empty: aligned_mask_for_this_step.loc[current_df_for_cut.index[mask_this_step]] = True
+            cumulative_mask = cumulative_mask & aligned_mask_for_this_step
+        except Exception as e: print(f"⚠️ Error applying cut '{cut_name}' for '{dataset_label_param}': {e}. Skipping cut.", file=sys.stderr); cumulative_mask = previous_cumulative_mask_state
     return df[cumulative_mask]
-
 
 # --- Worker function for parallel processing ---
 def process_single_dataset_for_mass(label, file_path, tree_name, variables_list_arg,
                                     cuts_to_apply_arg, good_spills_arg,
                                     target_labels_good_spills_arg):
-    """Processes a single dataset to extract mass data after applying specified cuts.
+    """Processes a single dataset: reads ROOT file, applies cuts, extracts mass data.
 
     This function is designed to be executed in a separate process by
-    `concurrent.futures.ProcessPoolExecutor`. It reads data from a ROOT file,
-    applies beam offset corrections, filters events based on a series of cuts,
-    and then extracts the 'mass' variable from the surviving events.
+    `concurrent.futures.ProcessPoolExecutor`.
 
     :param label: A string label identifying the dataset (e.g., "Data(RS67)").
     :type label: str
@@ -359,10 +314,8 @@ def process_single_dataset_for_mass(label, file_path, tree_name, variables_list_
     :param tree_name: The name of the TTree within the ROOT file.
     :type tree_name: str
     :param variables_list_arg: A list of variable names to be read from the TTree.
-                               Must include 'mass' and all variables required by the cuts.
     :type variables_list_arg: list[str]
     :param cuts_to_apply_arg: An ordered dictionary of cuts to be applied sequentially.
-                              Keys are cut names, values are pandas query strings.
     :type cuts_to_apply_arg: collections.OrderedDict[str, str]
     :param good_spills_arg: A set of good spill IDs for the "Good Spills Cut".
     :type good_spills_arg: set[int]
@@ -371,23 +324,16 @@ def process_single_dataset_for_mass(label, file_path, tree_name, variables_list_
     :type target_labels_good_spills_arg: set[str]
     :return: A dictionary containing the dataset label, a pandas Series of mass data,
              an error flag (bool), and an error message (str).
-             Example: ``{'label': 'Data(RS67)', 'mass_data': pd.Series([...]), 'error': False, 'message': ''}``
     :rtype: dict
     """
     try:
-        # print(f"--- [Process PID: {os.getpid()}] Starting processing for: {label} ---", flush=True) # Optional debug
-        
         df_initial = read_tree(file_path, tree_name, variables_list_arg)
-        
         if df_initial.empty:
-            # print(f"Info: DataFrame for {label} is empty after reading. No mass data.", file=sys.stderr, flush=True)
             return {'label': label, 'mass_data': pd.Series(dtype='float64'), 'error': False, 'message': 'Initial DataFrame empty'}
             
         df_with_offset = add_beam_offset(df_initial)
         
-        # Ensure all variables needed by cuts are columns in the DataFrame.
-        # This is a safeguard; read_tree should ideally create them as NaN if missing from file.
-        for var in variables_list_arg:
+        for var in variables_list_arg: # Ensure columns exist before applying cuts
             if var not in df_with_offset.columns:
                 df_with_offset[var] = np.nan
         
@@ -396,20 +342,14 @@ def process_single_dataset_for_mass(label, file_path, tree_name, variables_list_
                                                dataset_label_param=label,
                                                target_labels_good_spills_param=target_labels_good_spills_arg)
         
-        mass_series = pd.Series(dtype='float64') # Default to empty series
+        mass_series = pd.Series(dtype='float64')
         if not df_filtered.empty and 'mass' in df_filtered.columns:
             mass_series = df_filtered['mass'].dropna()
-        # elif df_filtered.empty:
-            # print(f"Info: DataFrame for {label} is empty after applying cuts. No mass data.", file=sys.stderr, flush=True)
-        # elif 'mass' not in df_filtered.columns:
-            # print(f"Warning: 'mass' column not found in filtered DataFrame for {label}.", file=sys.stderr, flush=True)
         
-        # print(f"--- [Process PID: {os.getpid()}] Finished processing for: {label}. Found {len(mass_series)} events with mass data.", flush=True)
         return {'label': label, 'mass_data': mass_series, 'error': False, 'message': ''}
 
     except Exception as e:
-        # Capture any unexpected errors during the processing of this dataset
-        print(f"❌ Unhandled Error processing dataset {label} in PID {os.getpid()}: {e}", file=sys.stderr, flush=True)
+        print(f"❌ Error processing dataset {label} in PID {os.getpid()}: {e}", file=sys.stderr, flush=True)
         return {'label': label, 'mass_data': pd.Series(dtype='float64'), 'error': True, 'message': str(e)}
 
 
@@ -420,14 +360,7 @@ def generate_mass_plots_after_cut_parallel(datasets_config, full_cuts_ordered_di
                                            output_filename_base="mass_dist_after_cut_parallel"):
     """Orchestrates parallel processing of datasets and generates mass distribution plots.
 
-    This function performs the following steps:
-    1. Loads the set of good spill IDs.
-    2. Determines the sequence of cuts to apply up to the specified `target_cut_name_local`.
-    3. Submits processing tasks for each dataset to a `ProcessPoolExecutor` for parallel execution.
-       Each task involves reading data, applying cuts, and extracting mass values.
-    4. Collects the mass data from all processed datasets.
-    5. Generates a histogram plot comparing the mass distributions.
-    6. Saves the plot to a PDF file.
+    Includes a combined "Corrected Data (RS67)" histogram. The y-axis is set to a log scale.
 
     :param datasets_config: Dictionary mapping dataset labels to their file path and TTree name.
     :type datasets_config: dict
@@ -447,141 +380,124 @@ def generate_mass_plots_after_cut_parallel(datasets_config, full_cuts_ordered_di
     :rtype: None
     """
     start_time_main = time.time()
-    print("Loading good spills list...")
-    sys.stdout.flush()
+    print("Loading good spills list..."); sys.stdout.flush()
     good_spills = load_good_spills(good_spills_file_path_local)
     
     cuts_to_apply = OrderedDict()
     found_target_cut = False
     for name, condition in full_cuts_ordered_dict.items():
         cuts_to_apply[name] = condition
-        if name == target_cut_name_local:
-            found_target_cut = True
-            break
-    
-    if not found_target_cut:
-        print(f"❌ Error: Target cut '{target_cut_name_local}' not found in the cuts dictionary. Cannot proceed.", file=sys.stderr)
-        return
+        if name == target_cut_name_local: found_target_cut = True; break
+    if not found_target_cut: print(f"❌ Error: Target cut '{target_cut_name_local}' not found.", file=sys.stderr); return
 
-    print(f"\nWill apply cuts up to and including: '{target_cut_name_local}'")
-    sys.stdout.flush()
+    print(f"\nWill apply cuts up to and including: '{target_cut_name_local}'"); sys.stdout.flush()
     
-    mass_data_collections = {}
-    datasets_to_plot_labels = list(datasets_config.keys())
+    mass_data_collections = {}; datasets_to_plot_labels = list(datasets_config.keys()); futures = []
+    num_workers = os.cpu_count(); print(f"Starting parallel processing with up to {num_workers} workers..."); sys.stdout.flush()
     
-    futures = []
-    # Use max_workers=None to use os.cpu_count() worker processes.
-    num_workers = os.cpu_count()
-    print(f"Starting parallel processing with up to {num_workers} workers...")
-    sys.stdout.flush()
-
     with concurrent.futures.ProcessPoolExecutor(max_workers=None) as executor:
         for label in datasets_to_plot_labels:
             config = datasets_config[label]
-            futures.append(executor.submit(process_single_dataset_for_mass,
-                                           label, config["path"], config["tree"],
-                                           variables_list_local, cuts_to_apply, good_spills,
-                                           target_labels_good_spills_local))
-
-        processed_count = 0
-        total_events_plotted = {label: 0 for label in datasets_to_plot_labels}
+            futures.append(executor.submit(process_single_dataset_for_mass, label, config["path"], config["tree"], variables_list_local, cuts_to_apply, good_spills, target_labels_good_spills_local))
+        
+        processed_count = 0; total_events_processed = {label: 0 for label in datasets_to_plot_labels}
         for future in concurrent.futures.as_completed(futures):
             processed_count += 1
             try:
-                result = future.result()
-                current_label = result['label']
+                result = future.result(); current_label = result['label']
                 mass_data_collections[current_label] = result['mass_data']
-                total_events_plotted[current_label] = len(result['mass_data']) # Store count for legend
-                
-                if result['error']:
-                    print(f"Error was reported while processing dataset {current_label}: {result['message']}", file=sys.stderr)
-                
-                print(f"Completed processing for {current_label} ({processed_count}/{len(futures)}). Events for mass plot: {total_events_plotted[current_label]}")
-                sys.stdout.flush()
-
-            except Exception as e:
-                # This catches errors if future.result() itself raises an exception (e.g., worker process died)
-                print(f"❌ Exception occurred while retrieving result for a processed task: {e}", file=sys.stderr)
-                sys.stdout.flush()
-
-    processing_time = time.time() - start_time_main
-    print(f"\nData processing phase finished in {processing_time:.2f} seconds.")
-
+                total_events_processed[current_label] = len(result['mass_data'])
+                if result['error']: print(f"Error reported for {current_label}: {result['message']}", file=sys.stderr)
+                print(f"Processed {current_label} ({processed_count}/{len(futures)}). Events for mass plot: {total_events_processed[current_label]}"); sys.stdout.flush()
+            except Exception as e: print(f"❌ Exception processing future result: {e}", file=sys.stderr); sys.stdout.flush()
+    
+    processing_time = time.time() - start_time_main; print(f"\nData processing finished in {processing_time:.2f} seconds.")
     if not mass_data_collections or all(v is None or v.empty for v in mass_data_collections.values()):
-        print("No mass data collected from any dataset after cuts. Plot will be empty or not generated.", file=sys.stderr)
-        # Optionally, still generate an empty plot for consistency or just return
-        # For now, let it proceed, plt.hist handles empty data by plotting nothing for that dataset.
+        print("No mass data collected. Exiting plot generation.", file=sys.stderr); return
     
-    print("Generating mass distribution plot...")
-    sys.stdout.flush()
-    plt.style.use('seaborn-v0_8-whitegrid') # Using a seaborn style
-    plt.figure(figsize=(12, 7))
+    print("Generating mass distribution plot..."); sys.stdout.flush()
+    plt.style.use('seaborn-v0_8-whitegrid'); plt.figure(figsize=(12, 7))
     
-    mass_range_plot = (4, 10)  # X-axis range: 4 to 10 GeV/c^2
-    bin_width = 0.1            # Bin size: 0.1 GeV/c^2
+    mass_range_plot = (4, 10); bin_width = 0.1
     bins_plot = int(np.ceil((mass_range_plot[1] - mass_range_plot[0]) / bin_width))
-
-    for label, mass_values in mass_data_collections.items():
-        num_entries = total_events_plotted.get(label, 0) # Use count from processing phase
+    
+    hist_counts_collection = {}; bin_edges_common = None
+    datasets_for_combination = ["Data(RS67)", "Mixed(RS67)", "empty flask (RS67)", "empty flask (RS67) mixed"]
+    for label in datasets_for_combination:
+        mass_values = mass_data_collections.get(label)
         if mass_values is not None and not mass_values.empty:
-            plt.hist(mass_values, bins=bins_plot, range=mass_range_plot, 
-                     histtype='step', linewidth=1.5, label=f"{label} (Entries: {num_entries})")
-        else: # Plot empty histogram to keep label in legend if needed
-            plt.hist([], bins=bins_plot, range=mass_range_plot, label=f"{label} (Entries: 0)")
+            counts, edges = np.histogram(mass_values, bins=bins_plot, range=mass_range_plot)
+            hist_counts_collection[label] = counts
+            if bin_edges_common is None: bin_edges_common = edges
+        else:
+            hist_counts_collection[label] = np.zeros(bins_plot)
+            if bin_edges_common is None: _, bin_edges_common = np.histogram([], bins=bins_plot, range=mass_range_plot)
+
+    data_rs67_h = hist_counts_collection.get("Data(RS67)", np.zeros(bins_plot))
+    mixed_rs67_h = hist_counts_collection.get("Mixed(RS67)", np.zeros(bins_plot))
+    ef_rs67_h = hist_counts_collection.get("empty flask (RS67)", np.zeros(bins_plot))
+    ef_mixed_h = hist_counts_collection.get("empty flask (RS67) mixed", np.zeros(bins_plot))
+    
+    combined_counts = data_rs67_h - mixed_rs67_h - COMBINED_HIST_FACTOR * (ef_rs67_h - ef_mixed_h)
+    
+    for label in datasets_to_plot_labels:
+        mass_values = mass_data_collections.get(label)
+        num_entries = total_events_processed.get(label, 0)
+        if mass_values is not None and not mass_values.empty:
+            plt.hist(mass_values, bins=bins_plot, range=mass_range_plot, histtype='step', linewidth=1.5, label=f"{label} (Entries: {num_entries})")
+        else:
+            plt.hist([], bins=bins_plot, range=mass_range_plot, histtype='step', label=f"{label} (Entries: 0)")
+
+    if bin_edges_common is not None:
+        plt.step(bin_edges_common[:-1], combined_counts, where='post', 
+                 label="Corrected Data (RS67)", color='black', linewidth=2.0, linestyle='--') # Changed label
 
     plt.xlabel("Dimuon Mass (GeV/$c^2$)", fontsize=12)
-    plt.ylabel(f"Events / ({bin_width:.1f} GeV/$c^2$)", fontsize=12) # Format bin width in label
+    plt.ylabel(f"Events / ({bin_width:.1f} GeV/$c^2$)", fontsize=12)
     plt.title(f"Dimuon Mass Distribution after cut: '{target_cut_name_local}'", fontsize=14)
-    plt.xlim(mass_range_plot) # Explicitly set x-axis limits
+    plt.xlim(mass_range_plot); plt.xticks(fontsize=10); plt.yticks(fontsize=10)
+    plt.legend(fontsize=9); plt.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.7)
     
-    plt.xticks(fontsize=10)
-    plt.yticks(fontsize=10)
-    plt.legend(fontsize=10)
-    plt.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.7)
+    plt.yscale('log') # Set y-axis to log scale
+    current_ylim = plt.ylim()
+    # Adjust y-limits for log scale, ensuring bottom is positive
+    bottom_limit = 0.1 # Default small positive number for log scale
+    # Find minimum positive count across all histograms for a more dynamic lower limit
+    all_positive_counts_for_ylim = []
+    for label in datasets_to_plot_labels:
+        if hist_counts_collection.get(label) is not None:
+            all_positive_counts_for_ylim.extend(hist_counts_collection.get(label)[hist_counts_collection.get(label) > 0])
+    if combined_counts[combined_counts > 0].size > 0: # Consider positive part of combined for y_lim
+        all_positive_counts_for_ylim.extend(combined_counts[combined_counts > 0])
+
+    if all_positive_counts_for_ylim:
+        min_val = np.min(all_positive_counts_for_ylim)
+        bottom_limit = max(0.05, min_val * 0.5) # Adjust based on data, but not too small
     
-    # Handle y-scale (log or linear)
-    # Only use log scale if there's substantial data to show.
-    if any(n > 0 for n in total_events_plotted.values()):
-        plt.yscale('log')
-        current_ylim = plt.ylim()
-        # Ensure bottom y-limit is reasonable for log scale (e.g., 0.5 or 1 if counts start low)
-        min_val_for_log = 0.5
-        if current_ylim[0] < min_val_for_log :
-            plt.ylim(bottom=min_val_for_log, top=current_ylim[1] * 1.5 if current_ylim[1] > min_val_for_log else 100)
-    else: # No data or all zeros, linear scale might be better or set fixed y-range
-        plt.ylim(bottom=0, top=10) # Default for empty plot
+    plt.ylim(bottom=bottom_limit, top=current_ylim[1] * 1.5 if current_ylim[1] > bottom_limit else bottom_limit * 100)
 
     plt.tight_layout()
-    
     output_filename_pdf = output_filename_base + ".pdf"
     try:
-        plt.savefig(output_filename_pdf, format='pdf', dpi=150) # Save as PDF
+        plt.savefig(output_filename_pdf, format='pdf', dpi=150)
         print(f"Plot successfully saved as '{output_filename_pdf}'")
-    except Exception as e:
-        print(f"Error saving plot: {e}", file=sys.stderr)
-    
-    # plt.show() # Uncomment to display plot interactively after saving
+    except Exception as e: print(f"Error saving plot: {e}", file=sys.stderr)
+    # plt.show()
 
 if __name__ == '__main__':
-    print("Starting parallel mass distribution plotting script...")
-    sys.stdout.flush() # Ensure print statements appear before multiprocessing may fork
-    
+    print("Starting parallel mass distribution plotting script with combined histogram (log scale)...")
+    sys.stdout.flush()
     datasets_to_process_and_plot = {
         "Data(RS67)": FILE_PATHS_CONFIG["Data(RS67)"],
         "Mixed(RS67)": FILE_PATHS_CONFIG["Mixed(RS67)"],
         "empty flask (RS67)": FILE_PATHS_CONFIG["empty flask (RS67)"],
         "empty flask (RS67) mixed": FILE_PATHS_CONFIG["empty flask (RS67) mixed"],
     }
-    
-    output_plot_name_base = "mass_dist_after_Dcut_parallel_4to10GeV_bin01" 
-    
+    output_plot_name_base = "mass_dist_corrected_after_Dcut_4to10GeV_logY" 
     generate_mass_plots_after_cut_parallel(
-        datasets_to_process_and_plot, 
-        cuts_dict_full, 
-        TARGET_CUT_NAME,
-        variables_list, # Pass the module-level list
-        GOOD_SPILLS_FILE_PATH,
-        TARGET_LABELS_FOR_GOOD_SPILLS_CUT_CONFIG, # Pass the module-level config
+        datasets_to_process_and_plot, cuts_dict_full, TARGET_CUT_NAME,
+        variables_list, GOOD_SPILLS_FILE_PATH,
+        TARGET_LABELS_FOR_GOOD_SPILLS_CUT_CONFIG,
         output_filename_base=output_plot_name_base
     )
     print("Script finished.")
