@@ -22,9 +22,8 @@ import matplotlib.pyplot as plt
 # Define target labels for the Good Spills Cut globally for clarity
 TARGET_LABELS_FOR_GOOD_SPILLS_CUT = {"Data", "Data(RS67)", "empty flask (RS67)"}
 
-# Define the constant factor for flask subtraction/scaling
-#FLASK_FACTOR = 4.39933159
-FLASK_FACTOR = 4.94392
+# Define the constant factor for flask subtraction/scaling (No longer used in the new fit model, but kept for now if other parts rely on it)
+# FLASK_FACTOR = 4.39933159
 
 
 def load_good_spills(file_path):
@@ -107,7 +106,7 @@ def apply_cuts(df, cuts, use_weights=True, good_spills_set=None, dataset_label=N
     cut_results = {}
     weight_series = df['ReWeight'] if use_weights and 'ReWeight' in df.columns else pd.Series(1.0, index=df.index)
     weight_series = pd.to_numeric(weight_series, errors='coerce').fillna(1.0)
-    cut_results["Total Events"] = weight_series.sum() 
+    cut_results["Total Events"] = weight_series.sum()
 
     if 'beamOffset' not in df.columns: df['beamOffset'] = 1.6
     if 'dy' in df.columns: df['dy'] = pd.to_numeric(df['dy'], errors='coerce').fillna(np.nan)
@@ -153,12 +152,12 @@ def apply_cuts(df, cuts, use_weights=True, good_spills_set=None, dataset_label=N
             print(f"⚠️ Error applying cut '{cut_name}' for dataset '{dataset_label}': {e}. This cut results in 0 for this step.")
             sys.stdout.flush()
             cut_results[cut_name] = 0.0
-            cumulative_mask = temp_cumulative_mask_before_this_cut 
+            cumulative_mask = temp_cumulative_mask_before_this_cut
     if return_final_state:
         df_passed_all_cuts = original_df_for_cuts[cumulative_mask]
         weights_passed_all_cuts = original_weights_for_cuts[cumulative_mask]
         return pd.Series(cut_results), df_passed_all_cuts, weights_passed_all_cuts
-    else: 
+    else:
         return pd.Series(cut_results)
 
 def process_single_file(file_path, tree_name, label, variables, cuts, use_weights, good_spills_set, is_fit_component=False):
@@ -177,7 +176,6 @@ def process_single_file(file_path, tree_name, label, variables, cuts, use_weight
             cut_series_dummy = pd.Series(0.0, index=expected_cut_names)
             return {'label': label, 'results': cut_series_dummy, 'error': False,
                     'mass_data': np.array([]), 'weights_data': np.array([])}
-
 
         df = add_beam_offset(df)
 
@@ -205,10 +203,9 @@ def process_single_file(file_path, tree_name, label, variables, cuts, use_weight
 
         if 'ReWeight' not in df.columns:
             df['ReWeight'] = 1.0
-        df['ReWeight'] = df['ReWeight'].fillna(1.0) 
+        df['ReWeight'] = df['ReWeight'].fillna(1.0)
 
-
-        mass_data_final, weights_data_final = np.array([]), np.array([]) 
+        mass_data_final, weights_data_final = np.array([]), np.array([])
         cut_series, df_passed_all, weights_series_passed_all = apply_cuts(df, cuts, use_weights=use_weights, good_spills_set=good_spills_set, dataset_label=label, return_final_state=True)
 
         if is_fit_component:
@@ -217,14 +214,11 @@ def process_single_file(file_path, tree_name, label, variables, cuts, use_weight
                 valid_mass_mask = mass_values_passed.notna()
                 mass_data_final = mass_values_passed[valid_mass_mask].to_numpy()
 
-                if label in ["DY MC", "J/Psi MC", "Psi Prime MC"]: 
-                    if weights_series_passed_all is not None:
-                        weights_data_final = weights_series_passed_all[valid_mass_mask].to_numpy()
-                    else: 
-                        weights_data_final = np.ones_like(mass_data_final)
-                else: 
+                if weights_series_passed_all is not None:
+                    weights_data_final = weights_series_passed_all[valid_mass_mask].to_numpy()
+                else:
                     weights_data_final = np.ones_like(mass_data_final)
-        
+
         print(f"Finished processing {label}.")
         sys.stdout.flush()
         return {'label': label, 'results': cut_series, 'error': False, 'mass_data': mass_data_final, 'weights_data': weights_data_final}
@@ -236,19 +230,21 @@ def process_single_file(file_path, tree_name, label, variables, cuts, use_weight
         return {'label': label, 'results': pd.Series(0.0, index=expected_cut_names), 'error': True, 'message': str(e), 'mass_data': None, 'weights_data': None}
 
 def prepare_fit_data_parallel(data_file_path, mc_file_paths, mc_labels, tree_name, current_cuts_dict, variables_param,
-                                mixed_file_path, mixed_tree_name, empty_flask_file_path, good_spills_file_path):
+                              mixed_file_path, mixed_tree_name, empty_flask_file_path, good_spills_file_path):
     start_time = time.time()
-    print("Starting parallel processing for FIT DATA...") 
+    print("Starting parallel processing for FIT DATA...")
     sys.stdout.flush()
     good_spills_set = load_good_spills(good_spills_file_path)
-    fit_data_arrays, futures = {}, [] 
+    fit_data_arrays, futures = {}, []
 
-    all_datasets_for_fit_construction = {"Data(RS67)", "Mixed(RS67)",
-                                         "empty flask (RS67)", "empty flask (RS67) mixed",
-                                         "DY MC", "J/Psi MC", "Psi Prime MC"}
+    all_datasets_for_fit_construction = {
+        "Data(RS67)", "Mixed(RS67)", "empty flask (RS67)",
+        "empty flask (RS67) mixed",
+        "DY MC", "J/Psi MC", "Psi Prime MC"
+    }
     tasks = [
         (data_file_path, tree_name, "Data", variables_param, current_cuts_dict, False, good_spills_set, False),
-        (mixed_file_path, "result", "Data(RS67)", variables_param, current_cuts_dict, False, good_spills_set, True), 
+        (mixed_file_path, "result", "Data(RS67)", variables_param, current_cuts_dict, False, good_spills_set, True),
         (mixed_file_path, mixed_tree_name, "Mixed(RS67)", variables_param, current_cuts_dict, False, good_spills_set, True),
         (empty_flask_file_path, "result", "empty flask (RS67)", variables_param, current_cuts_dict, False, good_spills_set, True),
         (empty_flask_file_path, "result_mix", "empty flask (RS67) mixed", variables_param, current_cuts_dict, False, good_spills_set, True)
@@ -278,13 +274,12 @@ def prepare_fit_data_parallel(data_file_path, mc_file_paths, mc_labels, tree_nam
                     if label in all_datasets_for_fit_construction:
                         fit_data_arrays[label] = {'mass': np.array([]), 'weights': np.array([])}
                 else:
-                    if label in all_datasets_for_fit_construction:
-                        mass_data = result['mass_data']
-                        weights_data = result['weights_data']
-                        fit_data_arrays[label] = {
-                            'mass': mass_data if mass_data is not None else np.array([]),
-                            'weights': weights_data if weights_data is not None else np.array([])
-                        }
+                    mass_data = result['mass_data']
+                    weights_data = result['weights_data']
+                    fit_data_arrays[label] = {
+                        'mass': mass_data if mass_data is not None else np.array([]),
+                        'weights': weights_data if weights_data is not None else np.array([])
+                    }
             except Exception as exc:
                 print(f'❌ Exception occurred while retrieving future result: {exc}. Affected task details might be lost.')
                 sys.stdout.flush()
@@ -298,306 +293,321 @@ def perform_scipy_fit(fit_data_arrays, mass_min=3.0, mass_max=7.0, n_bins=100,
                       parameter_constraints=None, use_logy_plot=False,
                       initial_param_guesses=None):
     """
-    Performs a binned template fit for MC components to a background-subtracted data histogram using SciPy.
-    Target: Corrected_Data = Data(RS67) - Mixed(RS67) - FLASK_FACTOR * (EF(RS67) - EF_mixed(RS67))
-    Model: Total_MC = c_dy*DY_MC + c_jpsi*JPsi_MC + c_psip*PsiP_MC
+    Performs a binned template fit to Data(RS67) histogram using SciPy.
+    Target: Data(RS67)
+    Model: Total = c_mixed*Mixed(RS67) + c_empty*EF(RS67)
+                 + c_dy*DY_MC + c_jpsi*JPsi_MC + c_psip*PsiP_MC
     Attempts to numerically calculate Hessian for error estimation.
     """
-    print("\n--- Starting SciPy Template Fit (Background Subtracted Model) ---")
+    print("\n--- Starting SciPy Template Fit (Direct Data Model Modified) ---")
     print(f"Histograms: {n_bins} bins from {mass_min:.2f} to {mass_max:.2f} GeV.")
 
-    bin_edges = np.linspace(mass_min, mass_max, n_bins + 1)
-    bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+    bin_edges = np.linspace(mass_min, mass_max, n_bins + 1) # Full range bin edges
+    bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2     # Full range bin centers
 
-    components_for_corrected_data_labels = ["Data(RS67)", "Mixed(RS67)", "empty flask (RS67)", "empty flask (RS67) mixed"]
-    component_contents = {}
-    component_original_counts_for_error = {} 
+    all_component_labels_needed = ["Data(RS67)", "Mixed(RS67)", "empty flask (RS67)",
+                                   "empty flask (RS67) mixed",
+                                   "DY MC", "J/Psi MC", "Psi Prime MC"]
 
-    for label in components_for_corrected_data_labels:
+    component_contents = {} # To store full-range histograms
+    component_raw_counts_for_error_calc = {} # Full-range raw counts for target
+
+    template_definitions_ordered_new_model = [
+        ("Mixed(RS67)", "c_mixed"),
+        ("empty flask (RS67)", "c_empty"),
+        ("DY MC", "c_dy"),
+        ("J/Psi MC", "c_jpsi"),
+        ("Psi Prime MC", "c_psip")
+    ]
+
+    for label in all_component_labels_needed:
         if label not in fit_data_arrays or fit_data_arrays[label]['mass'] is None:
-            print(f"⚠️ Missing mass data for component '{label}' needed for Corrected Data. Cannot perform fit.")
-            return None
+            print(f"⚠️ Missing mass data for component '{label}'.")
+            is_essential_for_this_fit = label == "Data(RS67)" or label in [tpl[0] for tpl in template_definitions_ordered_new_model]
+            if is_essential_for_this_fit:
+                print(f"❌ Component '{label}' is essential for the current fit and missing. Cannot perform fit.")
+                return None
+            component_contents[label] = np.zeros(n_bins, dtype=float)
+            if label == "Data(RS67)": component_raw_counts_for_error_calc[label] = np.zeros(n_bins, dtype=float)
+            continue
+
         mass_data = fit_data_arrays[label]['mass']
-        
-        current_contents = np.zeros(n_bins, dtype=float)
+        weights_data = fit_data_arrays[label]['weights']
+        current_hist_contents = np.zeros(n_bins, dtype=float)
         if isinstance(mass_data, np.ndarray) and mass_data.size > 0:
-            current_contents, _ = np.histogram(mass_data, bins=bin_edges) 
+            current_hist_contents, _ = np.histogram(mass_data, bins=bin_edges, weights=weights_data) # Histogram over full range
+            if label == "Data(RS67)":
+                raw_counts_target, _ = np.histogram(mass_data, bins=bin_edges) # Raw counts over full range
+                component_raw_counts_for_error_calc[label] = raw_counts_target.astype(float)
         elif isinstance(mass_data, np.ndarray) and mass_data.size == 0:
             print(f"ℹ️ No mass data entries for component '{label}'. Assuming zero content.")
         else:
             print(f"ℹ️ Mass data for '{label}' is not a numpy array or None. Assuming zero content.")
+        component_contents[label] = current_hist_contents.astype(float) # Store full-range histogram
+        if label == "Data(RS67)" and label not in component_raw_counts_for_error_calc:
+             component_raw_counts_for_error_calc[label] = np.zeros(n_bins, dtype=float)
+        print(f"Prepared component '{label}': {np.sum(current_hist_contents):.2f} effective entries (sum of weights/counts).")
 
-        component_contents[label] = current_contents.astype(float)
-        component_original_counts_for_error[label] = current_contents.astype(float) 
-        print(f"Prepared component '{label}' for Corrected Data: {np.sum(current_contents):.0f} entries.")
-
-    corrected_data_contents = (component_contents["Data(RS67)"] -
-                               component_contents["Mixed(RS67)"] -
-                               FLASK_FACTOR * (component_contents["empty flask (RS67)"] -
-                                               component_contents["empty flask (RS67) mixed"]))
-
-    corrected_data_errors_sq = (component_original_counts_for_error["Data(RS67)"] + 
-                                component_original_counts_for_error["Mixed(RS67)"] +
-                                (FLASK_FACTOR**2) * component_original_counts_for_error["empty flask (RS67)"] +
-                                (FLASK_FACTOR**2) * component_original_counts_for_error["empty flask (RS67) mixed"])
-
-    corrected_data_errors = np.sqrt(np.maximum(0, corrected_data_errors_sq)) 
-
-    negative_bins_mask = corrected_data_contents < 0
-    num_neg_bins_target = np.sum(negative_bins_mask)
-    if num_neg_bins_target > 0:
-        print(f"ℹ️ Corrected Data: Found {num_neg_bins_target} negative bins. Setting them to 0.")
-        corrected_data_contents[negative_bins_mask] = 0.0
-        
-    corrected_data_errors[corrected_data_errors < 1e-9] = 1.0 
-    mask_zeroed_content = (corrected_data_contents == 0) & (corrected_data_errors < 1.0) 
-    corrected_data_errors[mask_zeroed_content] = 1.0
-
-    print(f"Constructed Corrected Data histogram with integral: {np.sum(corrected_data_contents):.2f}")
-    if np.sum(corrected_data_contents) <= 1e-9 and np.all(corrected_data_contents <=1e-9): 
-        print("❌ Corrected Data histogram has zero or negligible integral. Aborting fit.")
+    target_data_label = "Data(RS67)"
+    if target_data_label not in component_contents or target_data_label not in component_raw_counts_for_error_calc:
+        print(f"❌ Target data '{target_data_label}' not prepared correctly. Aborting fit.")
         return None
 
-    mc_template_definitions_ordered = [
-        ("DY MC", True), ("J/Psi MC", True), ("Psi Prime MC", True)
-    ]
-    mc_template_hist_contents = {} # These will store histograms over the FULL range (mass_min to mass_max)
-    active_mc_template_labels = []
-    min_sum_weights_for_mc_template = 1.0 
+    target_data_contents = component_contents[target_data_label] # Full-range target data
+    target_data_errors = np.sqrt(np.maximum(1.0, component_raw_counts_for_error_calc[target_data_label])) # Full-range errors
+    target_data_errors[target_data_errors < 1e-9] = 1.0
+    mask_zeroed_content_and_small_error = (target_data_contents == 0) & (target_data_errors < 1.0)
+    target_data_errors[mask_zeroed_content_and_small_error] = 1.0
 
-    for fit_label, is_weighted_mc in mc_template_definitions_ordered:
-        source_label = fit_label 
-        if source_label not in fit_data_arrays or fit_data_arrays[source_label]['mass'] is None:
-            print(f"⚠️ Missing data for MC template '{source_label}'. Excluding from fit.")
-            mc_template_hist_contents[fit_label] = np.zeros(n_bins, dtype=float)
+    print(f"Constructed Target Data ('{target_data_label}') histogram with integral: {np.sum(target_data_contents):.2f}")
+    if np.sum(target_data_contents) <= 1e-9 and np.all(target_data_contents <=1e-9):
+        print("❌ Target Data histogram has zero or negligible integral. Aborting fit.")
+        return None
+
+    templates_hist_content = {} # To store full-range template histograms selected for the fit model
+    active_templates_info = []
+    min_sum_weights_for_template = 1.0
+
+    for source_label, param_name_for_fit in template_definitions_ordered_new_model:
+        if source_label not in component_contents:
+            print(f"⚠️ Missing data for template component '{source_label}'. Excluding from fit.")
+            # templates_hist_content[source_label] = np.zeros(n_bins, dtype=float) # Not strictly needed if excluded
             continue
-        mass_values, weights_values = fit_data_arrays[source_label]['mass'], fit_data_arrays[source_label]['weights']
-        if not isinstance(mass_values, np.ndarray) or mass_values.size == 0:
-            print(f"ℹ️ No valid mass data for MC template '{source_label}'. Excluding from fit.")
-            mc_template_hist_contents[fit_label] = np.zeros(n_bins, dtype=float)
-            continue
-
-        current_weights = weights_values.astype(float) if weights_values is not None and weights_values.size == mass_values.size else np.ones_like(mass_values, dtype=float)
-        if weights_values is None or weights_values.size != mass_values.size :
-            print(f"⚠️ Weights issue for MC template '{source_label}'. Using unit weights for shape contribution if weights missing/mismatched (this might be incorrect if MC should be weighted).")
-
-        # mc_template_hist_contents stores the full range histogram
-        contents_full, _ = np.histogram(mass_values, bins=bin_edges, weights=current_weights)
-        contents_full[contents_full < 0] = 0.0 
-        sum_of_weights = np.sum(contents_full)
-        raw_entries_unweighted = np.histogram(mass_values, bins=bin_edges)[0].sum() 
-        print(f"Prepared MC TEMPLATE '{fit_label}': {raw_entries_unweighted:.0f} raw entries, SumW={sum_of_weights:.2f}.")
-
-        if sum_of_weights >= min_sum_weights_for_mc_template:
-            mc_template_hist_contents[fit_label] = contents_full.astype(float)
-            active_mc_template_labels.append(fit_label)
+        current_template_hist = component_contents[source_label] # This is the full-range histogram
+        current_template_hist[current_template_hist < 0] = 0.0
+        sum_of_hist_content = np.sum(current_template_hist)
+        is_mc_component = "MC" in source_label
+        print_label_type = "MC TEMPLATE" if is_mc_component else "BACKGROUND TEMPLATE"
+        print(f"Prepared {print_label_type} '{source_label}': Sum of (weighted) entries = {sum_of_hist_content:.2f}.")
+        if sum_of_hist_content >= min_sum_weights_for_template:
+            templates_hist_content[source_label] = current_template_hist # Store the full-range histogram
+            active_templates_info.append((source_label, param_name_for_fit))
         else:
-            mc_template_hist_contents[fit_label] = np.zeros(n_bins, dtype=float) 
-            print(f"⚠️ EXCLUDING MC template '{fit_label}' (SumW {sum_of_weights:.2f} < {min_sum_weights_for_mc_template}).")
+            # templates_hist_content[source_label] = np.zeros(n_bins, dtype=float) # Not strictly needed if excluded
+            print(f"⚠️ EXCLUDING template '{source_label}' (Sum {sum_of_hist_content:.2f} < {min_sum_weights_for_template}).")
 
-    if not active_mc_template_labels:
-        print("❌ No active MC templates with sufficient statistics. Cannot perform SciPy fit.")
+    if not active_templates_info:
+        print("❌ No active templates with sufficient statistics. Cannot perform SciPy fit.")
         return None
-    print(f"ℹ️ Active MC templates for SciPy fit: {active_mc_template_labels}")
 
-    fit_idx_start, fit_idx_end = 0, n_bins 
+    active_param_names_ordered = [info[1] for info in active_templates_info]
+    print(f"ℹ️ Active parameters for SciPy fit: {active_param_names_ordered}")
+
+    fit_idx_start, fit_idx_end = 0, n_bins
     if fit_range_gev_min is not None and fit_range_gev_max is not None and fit_range_gev_max > fit_range_gev_min:
         actual_bin_idx_start = np.searchsorted(bin_edges, fit_range_gev_min, side='left')
-        actual_bin_idx_end = np.searchsorted(bin_edges, fit_range_gev_max, side='right') 
+        actual_bin_idx_end = np.searchsorted(bin_edges, fit_range_gev_max, side='right')
         if actual_bin_idx_start < actual_bin_idx_end and actual_bin_idx_start < n_bins and actual_bin_idx_end > 0 :
             fit_idx_start = actual_bin_idx_start
-            fit_idx_end = min(actual_bin_idx_end, n_bins) 
+            fit_idx_end = min(actual_bin_idx_end, n_bins)
             print(f"ℹ️ SciPy fit range: bins from index {fit_idx_start} to {fit_idx_end-1} "
                   f"(approx {bin_edges[fit_idx_start]:.2f} - {bin_edges[fit_idx_end]:.2f} GeV).")
         else:
-            print(f"⚠️ Invalid SciPy fit range calculation. Using full range. Start_idx:{actual_bin_idx_start}, End_idx:{actual_bin_idx_end}")
+            print(f"⚠️ Invalid SciPy fit range definition. Using full histogram range for fit.")
             fit_idx_start, fit_idx_end = 0, n_bins
     else:
-        print("ℹ️ SciPy fit using full histogram range.")
+        print("ℹ️ SciPy fit using full histogram range (no specific sub-range defined).")
 
-    target_data_fit = corrected_data_contents[fit_idx_start:fit_idx_end]
-    target_errors_fit = corrected_data_errors[fit_idx_start:fit_idx_end]
-    # mc_templates_fit are sliced to the fit range for the chi2 calculation
-    mc_templates_fit = {label: hist[fit_idx_start:fit_idx_end] for label, hist in mc_template_hist_contents.items() if label in active_mc_template_labels}
-    # bin_centers_fit = bin_centers[fit_idx_start:fit_idx_end] # Not strictly needed if plotting full range data
-    target_errors_fit[target_errors_fit <= 1e-9] = 1.0 
+    # Data for the FIT (sliced to fit region)
+    target_data_fit = target_data_contents[fit_idx_start:fit_idx_end]
+    target_errors_fit = target_data_errors[fit_idx_start:fit_idx_end]
+    # Templates for the FIT (sliced to fit region)
+    templates_fit = {label_key: templates_hist_content[label_key][fit_idx_start:fit_idx_end]
+                     for label_key, _ in active_templates_info}
+    target_errors_fit[target_errors_fit <= 1e-9] = 1.0
 
-    param_names_active_ordered = [label for label in [tpl[0] for tpl in mc_template_definitions_ordered] if label in active_mc_template_labels]
-
-    def model_total_mc_func_fit_range(params_array): 
+    # Model function for the FIT (operates on fit-region data)
+    def model_total_func_fit_region(params_array):
         prediction = np.zeros_like(target_data_fit, dtype=float)
-        for i, active_label in enumerate(param_names_active_ordered):
-            prediction += params_array[i] * mc_templates_fit[active_label] # Uses fit-range templates
+        for i, (active_label, _) in enumerate(active_templates_info):
+            prediction += params_array[i] * templates_fit[active_label] # Uses sliced templates_fit
         return prediction
 
-    def chi_squared_total_mc_func(params_array):
-        model = model_total_mc_func_fit_range(params_array)
+    def chi_squared_total_func(params_array):
+        model = model_total_func_fit_region(params_array) # Uses fit-region model
         residuals = target_data_fit - model
-        chi2_terms = (residuals**2) / (target_errors_fit**2) 
+        chi2_terms = (residuals**2) / (target_errors_fit**2)
         return np.sum(chi2_terms)
 
     initial_params_list = []
     bounds_list = []
     default_guess = 0.1
-    default_bounds = (0.0, None) 
+    default_bounds = (0.0, None)
 
-    for p_name in param_names_active_ordered:
-        guess = (initial_param_guesses.get(p_name, default_guess) if initial_param_guesses else default_guess)
-        low_b, high_b = (parameter_constraints.get(p_name, default_bounds) if parameter_constraints else default_bounds)
+    for p_name_key in active_param_names_ordered:
+        guess = (initial_param_guesses.get(p_name_key, default_guess) if initial_param_guesses else default_guess)
+        low_b, high_b = (parameter_constraints.get(p_name_key, default_bounds) if parameter_constraints else default_bounds)
         initial_params_list.append(guess)
         bounds_list.append((low_b, high_b))
 
-    print(f"ℹ️ SciPy active MC parameters for fit: {param_names_active_ordered}")
-    print(f"ℹ️ SciPy initial MC parameter values: {initial_params_list}")
-    print(f"ℹ️ SciPy MC parameter bounds: {bounds_list}")
+    print(f"ℹ️ SciPy initial parameter values: {initial_params_list}")
+    print(f"ℹ️ SciPy parameter bounds: {bounds_list}")
 
-    if not initial_params_list: 
-        print("❌ No active MC parameters to fit. Aborting SciPy fit.")
+    if not initial_params_list:
+        print("❌ No active parameters to fit. Aborting SciPy fit.")
         return None
 
-    print("Performing SciPy minimization for Total MC fit...")
-    minimizer_options = {'maxiter': 20000, 'ftol': 1e-9, 'disp': False} 
-    result = minimize(chi_squared_total_mc_func, initial_params_list, method='L-BFGS-B', bounds=bounds_list, options=minimizer_options)
+    print("Performing SciPy minimization for Total Model fit...")
+    minimizer_options = {'maxiter': 20000, 'ftol': 1e-9, 'disp': False}
+    result = minimize(chi_squared_total_func, initial_params_list, method='L-BFGS-B', bounds=bounds_list, options=minimizer_options)
 
     fit_params = result.x
     fit_success = result.success
     chi2_val = result.fun
     num_bins_in_fit = len(target_data_fit)
-    ndf_reduction = len(fit_params) 
+    ndf_reduction = len(fit_params)
     ndf = num_bins_in_fit - ndf_reduction if num_bins_in_fit > ndf_reduction else 0
-    param_errors = np.full_like(fit_params, np.nan) 
+    param_errors = np.full_like(fit_params, np.nan)
     err_chi2_ndf = np.nan
 
     params_at_bounds_info = []
-    for i, p_name in enumerate(param_names_active_ordered):
+    for i, (_, p_name_key) in enumerate(active_templates_info):
         val = fit_params[i]
         low_b, high_b = bounds_list[i]
-        if low_b is not None and np.isclose(val, low_b, rtol=1e-5, atol=1e-8): 
-            params_at_bounds_info.append(f"{p_name} at lower bound ({low_b})")
-        if high_b is not None and np.isclose(val, high_b, rtol=1e-5, atol=1e-8): 
-            params_at_bounds_info.append(f"{p_name} at upper bound ({high_b})")
+        if low_b is not None and np.isclose(val, low_b, rtol=1e-5, atol=1e-8):
+            params_at_bounds_info.append(f"{p_name_key} at lower bound ({low_b})")
+        if high_b is not None and np.isclose(val, high_b, rtol=1e-5, atol=1e-8):
+            params_at_bounds_info.append(f"{p_name_key} at upper bound ({high_b})")
     if params_at_bounds_info:
         print("⚠️ WARNING: Some fit parameters are at their bounds, error estimation might be unreliable:")
         for info in params_at_bounds_info: print(f"   - {info}")
 
     if fit_success:
-        print("✅ SciPy Fit (Total MC): Minimization successful.")
+        print("✅ SciPy Fit (Total Model): Minimization successful.")
+        # Gradient/Hessian checks remain for the fit-region chi2 function
+        current_gradient_at_solution = approx_fprime(fit_params, chi_squared_total_func, np.sqrt(np.finfo(float).eps) * np.maximum(1.0, np.abs(fit_params)))
+        print(f"ℹ️ Gradient at solution (approx): {current_gradient_at_solution}")
+        print(f"ℹ️ Fit parameters at solution: {fit_params}")
         print("Attempting numerical calculation of Hessian for error estimation...")
-        epsilon_for_grad = np.sqrt(np.finfo(float).eps) * np.maximum(1.0, np.abs(fit_params))
-        def grad_chi2_at_minimum(p_array_for_grad): 
-            return approx_fprime(p_array_for_grad, chi_squared_total_mc_func, epsilon_for_grad)
-
+        epsilon_for_grad_func = np.sqrt(np.finfo(float).eps) * np.maximum(1.0, np.abs(fit_params))
+        def grad_chi2_at_minimum(p_array_for_grad): # This is for the fit-region chi2
+            return approx_fprime(p_array_for_grad, chi_squared_total_func, epsilon_for_grad_func)
+        default_epsilon_for_hess_step = np.sqrt(np.finfo(float).eps)
         numerical_hessian = np.zeros((len(fit_params), len(fit_params)))
-        default_epsilon_for_hess = np.sqrt(np.finfo(float).eps) 
-
         try:
             for i in range(len(fit_params)):
                 def single_grad_component_func(p_array_for_hess_row, component_idx_i):
                     grad_vector = grad_chi2_at_minimum(p_array_for_hess_row)
                     return grad_vector[component_idx_i]
-                hessian_row_i = approx_fprime(fit_params, single_grad_component_func, default_epsilon_for_hess, i) 
+                hessian_row_i = approx_fprime(fit_params, single_grad_component_func,
+                                              default_epsilon_for_hess_step * np.maximum(1.0, np.abs(fit_params[i])), i)
                 numerical_hessian[i, :] = hessian_row_i
-
-            numerical_hessian = (numerical_hessian + numerical_hessian.T) / 2.0 
-
-            eigenvalues = np.linalg.eigvalsh(numerical_hessian) 
-            if np.all(eigenvalues > 1e-8): 
-                covariance_matrix = np.linalg.inv(numerical_hessian) 
-                param_errors = np.sqrt(np.diag(covariance_matrix)) 
-                print(f"ℹ️ SciPy parameter errors estimated from numerical Hessian: {param_errors}")
+            numerical_hessian = (numerical_hessian + numerical_hessian.T) / 2.0
+            eigenvalues, eigenvectors = np.linalg.eigh(numerical_hessian)
+            print(f"ℹ️ Original eigenvalues of numerical Hessian: {eigenvalues}")
+            min_eigenvalue_allowed = 1e-6
+            if np.any(eigenvalues <= min_eigenvalue_allowed / 10):
+                print(f"⚠️ Numerical Hessian is not robustly positive definite. Original eigenvalues: {eigenvalues}")
+                print(f"   Attempting to correct Hessian by flooring eigenvalues to >= {min_eigenvalue_allowed}.")
+                corrected_eigenvalues = np.maximum(eigenvalues, min_eigenvalue_allowed)
+                if not np.array_equal(eigenvalues, corrected_eigenvalues): print(f"   Corrected eigenvalues: {corrected_eigenvalues}")
+                numerical_hessian_corrected = eigenvectors @ np.diag(corrected_eigenvalues) @ eigenvectors.T
+                try:
+                    covariance_matrix = np.linalg.inv(numerical_hessian_corrected)
+                    diag_cov = np.diag(covariance_matrix)
+                    param_errors = np.sqrt(np.abs(diag_cov))
+                    if np.any(diag_cov < 0): print("⚠️ Warning: Some diagonal elements of the 'corrected' covariance matrix were negative. abs() taken for sqrt.")
+                    print(f"ℹ️ SciPy parameter errors estimated from 'corrected' numerical Hessian: {param_errors}")
+                except np.linalg.LinAlgError as lae_corr:
+                    print(f"⚠️ Linear algebra error during 'corrected' Hessian inversion: {lae_corr}. Errors remain NaN.")
+                    param_errors = np.full_like(fit_params, np.nan)
             else:
-                print(f"⚠️ Numerical Hessian is not positive definite (eigenvalues: {eigenvalues}). Cannot compute errors reliably. Errors set to NaN.")
-                if params_at_bounds_info: print("   This often happens if parameters are at their bounds or highly correlated.")
-        except np.linalg.LinAlgError as lae: print(f"⚠️ Linear algebra error during Hessian inversion: {lae}. Errors set to NaN.")
-        except Exception as e: print(f"⚠️ Error during numerical Hessian calculation: {e}. Errors set to NaN.")
+                covariance_matrix = np.linalg.inv(numerical_hessian)
+                param_errors = np.sqrt(np.diag(covariance_matrix))
+                print(f"ℹ️ SciPy parameter errors estimated from numerical Hessian: {param_errors}")
+        except np.linalg.LinAlgError as lae:
+            print(f"⚠️ Linear algebra error during Hessian processing: {lae}. Errors set to NaN.")
+            param_errors = np.full_like(fit_params, np.nan)
+        except Exception as e:
+            print(f"⚠️ Error during numerical Hessian calculation: {e}. Errors set to NaN.")
+            param_errors = np.full_like(fit_params, np.nan)
     else:
-        print(f"❌ SciPy Fit (Total MC) failed. Status: {result.status}, Message: {result.message}")
+        print(f"❌ SciPy Fit (Total Model) failed. Status: {result.status}, Message: {result.message}")
 
-    if ndf > 0:
-        err_chi2_ndf = np.sqrt(2.0 / ndf)
+    if ndf > 0: err_chi2_ndf = np.sqrt(2.0 / ndf)
 
     fit_results_output = {"chi2": chi2_val, "ndf": ndf, "status": result.status,
-                          "message": result.message, "success": fit_success,
-                          "err_chi2_ndf": err_chi2_ndf}
-    for i, label in enumerate(param_names_active_ordered): 
-        clean_label_c = f"c_{label.replace(' ', '_').replace('/', '_').replace('(', '').replace(')', '')}"
-        clean_label_err_c = f"err_{clean_label_c}"
-        fit_results_output[clean_label_c] = fit_params[i]
-        fit_results_output[clean_label_err_c] = param_errors[i] 
+                          "message": result.message, "success": fit_success, "err_chi2_ndf": err_chi2_ndf}
+    for i, (_, param_name_key) in enumerate(active_templates_info):
+        fit_results_output[param_name_key] = fit_params[i]
+        fit_results_output[f"err_{param_name_key}"] = param_errors[i]
 
-    # Plotting
+    # --- Plotting ---
     plt.figure(figsize=(12, 8))
-    
-    # Plot Corrected Data (Target) over the full histogram range
-    plt.errorbar(bin_centers, corrected_data_contents, yerr=corrected_data_errors, fmt='o', label='Corrected Data (Target)', color='black', capsize=3, elinewidth=1, markeredgewidth=1, ms=5, zorder=5)
+    # Plot target data points over the FULL histogram range
+    plt.errorbar(bin_centers, target_data_contents, yerr=target_data_errors, fmt='o', label=f'Target: {target_data_label}', color='black', capsize=3, elinewidth=1, markeredgewidth=1, ms=5, zorder=5)
 
-    if fit_success: 
-        # Calculate total model over the FULL histogram range for plotting
-        model_total_mc_full_range_plot = np.zeros_like(bin_centers, dtype=float) # n_bins long
-        for i, active_label in enumerate(param_names_active_ordered):
-            # Use the full template mc_template_hist_contents[active_label]
-            model_total_mc_full_range_plot += fit_params[i] * mc_template_hist_contents[active_label]
-       
-        # Plot this full range model. bin_edges is already the full range.
-        try: 
-            plt.stairs(model_total_mc_full_range_plot, bin_edges, label='Total MC Fit', color='red', linewidth=2, zorder=4, baseline=None)
-        except AttributeError: 
-            plt.step(bin_edges[:-1], model_total_mc_full_range_plot, where='post', label='Total MC Fit', color='red', linewidth=2, zorder=4)
+    if fit_success:
+        # Construct Total Model for PLOTTING using FULL-RANGE templates and fitted parameters
+        total_model_plot_full_range = np.zeros_like(bin_centers, dtype=float) # bin_centers is full range
+        for i, (active_label_for_param, _) in enumerate(active_templates_info):
+            if active_label_for_param in templates_hist_content:
+                full_range_template = templates_hist_content[active_label_for_param]
+                total_model_plot_full_range += fit_params[i] * full_range_template
+            else:
+                print(f"⚠️ Plotting Warning: Active template '{active_label_for_param}' not found in templates_hist_content.")
 
-        colors = ['green', 'blue', 'purple'] 
-        for i, label in enumerate(param_names_active_ordered):
-            # Calculate scaled component over the FULL histogram range for plotting
-            scaled_component_full_plot = fit_params[i] * mc_template_hist_contents[label] # Use full-range template
-            if np.sum(np.abs(scaled_component_full_plot)) > 1e-6: 
-                try:
-                    # Plot using full range bin_edges
-                    plt.stairs(scaled_component_full_plot, bin_edges, label=f"{label} (c={fit_params[i]:.2e})",
-                               linestyle='-', color=colors[i % len(colors)], linewidth=1.5, baseline=None, zorder=3)
-                except AttributeError:
-                    plt.step(bin_edges[:-1], scaled_component_full_plot, where='post', label=f"{label} (c={fit_params[i]:.2e})",
-                               linestyle='-', color=colors[i % len(colors)], linewidth=1.5, zorder=3)
+        # Plot the full-range total model line
+        try:
+            plt.stairs(total_model_plot_full_range, bin_edges, label='Total Fit Model', color='red', linewidth=2, zorder=4, baseline=None)
+        except AttributeError:
+            plt.step(bin_edges[:-1], total_model_plot_full_range, where='post', label='Total Fit Model', color='red', linewidth=2, zorder=4)
+
+        # Plot Individual Scaled Components for PLOTTING using FULL-RANGE templates
+        component_colors = ['green', 'blue', 'purple', 'orange', 'cyan', 'magenta', 'brown', 'pink']
+        for i, (label, param_name_key) in enumerate(active_templates_info):
+            if label in templates_hist_content and i < len(fit_params):
+                full_range_template_component = templates_hist_content[label] # Use full-range template
+                scaled_component_plot_full_range = fit_params[i] * full_range_template_component
+
+                if np.sum(np.abs(scaled_component_plot_full_range)) > 1e-6:
+                    try:
+                        plt.stairs(scaled_component_plot_full_range, bin_edges, label=f"{label} ({param_name_key}={fit_params[i]:.2e})",
+                                   linestyle='-', color=component_colors[i % len(component_colors)], linewidth=1.5, baseline=None, zorder=3)
+                    except AttributeError:
+                        plt.step(bin_edges[:-1], scaled_component_plot_full_range, where='post', label=f"{label} ({param_name_key}={fit_params[i]:.2e})",
+                                   linestyle='-', color=component_colors[i % len(component_colors)], linewidth=1.5, zorder=3)
+            else:
+                 print(f"⚠️ Plotting Warning: Template '{label}' for param '{param_name_key}' not found or param index issue.")
+
 
     plt.xlabel("Mass (GeV)", fontsize=12)
-    plt.ylabel(f"Events / ({ (mass_max - mass_min) / n_bins :.3f} GeV)", fontsize=12) 
+    bin_width_gev = (mass_max - mass_min) / n_bins # Uses full range mass_min, mass_max
+    plt.ylabel(f"Events / ({bin_width_gev:.3f} GeV)", fontsize=12)
 
     ndf_val = fit_results_output['ndf']
     chi2_val_title = fit_results_output['chi2']
     chi2_ndf_val_str = f"{chi2_val_title/ndf_val:.2f}" if ndf_val > 0 else "N/A"
-    err_chi2_ndf_val = fit_results_output.get('err_chi2_ndf', np.nan) 
+    err_chi2_ndf_val = fit_results_output.get('err_chi2_ndf', np.nan)
     chi2_ndf_err_str = f"{err_chi2_ndf_val:.2f}" if ndf_val > 0 and not np.isnan(err_chi2_ndf_val) else "N/A"
 
     if ndf_val > 0 and chi2_ndf_val_str != "N/A" and chi2_ndf_err_str != "N/A":
         title_chi2_part = rf"$\chi^2$/NDF = {chi2_val_title:.2f}/{ndf_val} = {chi2_ndf_val_str} $\pm$ {chi2_ndf_err_str}"
-    else: 
+    else:
         title_chi2_part = rf"$\chi^2$/NDF = {chi2_val_title:.2f}/{ndf_val} = {chi2_ndf_val_str}"
 
-    plt.title(f"SciPy MC Fit to Corrected Data (Status: {result.status})\n{title_chi2_part}", fontsize=14)
-
+    plt.title(f"SciPy Fit to {target_data_label} (Status: {'Success' if fit_success else 'Failed'})\n{title_chi2_part}", fontsize=14)
 
     if use_logy_plot:
-        plt.yscale('log'); plt.ylim(bottom=max(0.1, plt.ylim()[0] if plt.ylim()[0] > 0 else 0.1 )) 
-    else: 
+        plt.yscale('log'); plt.ylim(bottom=max(0.1, plt.ylim()[0] if plt.ylim()[0] > 0 else 0.1 ))
+    else:
         current_ylim_min = plt.ylim()[0]
-        # Check target_data_fit for the heuristic as it's the primary data for y-axis scale before this plot.
-        # Or, more robustly, check corrected_data_contents if it's expected to be mostly positive.
-        # Using corrected_data_contents as it's now the main plotted data.
-        positive_data_mean = np.mean(corrected_data_contents[corrected_data_contents > 0]) if np.any(corrected_data_contents > 0) else 0
-        if current_ylim_min < 0 and positive_data_mean > -2 * current_ylim_min : 
-            plt.ylim(bottom=0)
+        if current_ylim_min < 0 and np.any(target_data_contents >= 0):
+            positive_data = target_data_contents[target_data_contents > 0]
+            if len(positive_data) > 0 and np.mean(positive_data) > -2*current_ylim_min:
+                 plt.ylim(bottom=0)
 
-
-    plt.legend(loc='upper right', fontsize='medium'); plt.grid(True, linestyle=':', alpha=0.6); plt.tight_layout()
-    plot_filename_base = "scipy_fit_corrected_data"
+    plt.legend(loc='upper right', fontsize='small'); plt.grid(True, linestyle=':', alpha=0.6); plt.tight_layout()
+    plot_filename_base = "scipy_fit_direct_data_model_modified"
     try:
         plt.savefig(plot_filename_base + ".png"); plt.savefig(plot_filename_base + ".pdf")
         print(f"ℹ️ SciPy fit plot saved as {plot_filename_base}.png/pdf")
     except Exception as e: print(f"⚠️ Error saving SciPy fit plot: {e}")
-    plt.close() 
+    plt.close()
     return fit_results_output
 
-
 # ------------------- Configuration -------------------
-GOOD_SPILLS_FILE_PATH = "../../res/GoodSpills/GoodSpills.txt" 
+GOOD_SPILLS_FILE_PATH = "../../res/GoodSpills/GoodSpills.txt"
 full_cuts_dict = {
     "Good Spills Cut": "spillID # Custom handled by apply_cuts",
     "z1_v and z2_v within -320cm to -5cm": "z1_v > -320 and z1_v < -5 and z2_v > -320 and z2_v < -5",
@@ -644,24 +654,23 @@ variables_list = ["mass", "spillID", "matrix1", "nHits1", "nHits2", "nHits1St1",
                   "px1_st1", "px2_st1", "px1_st3", "px2_st3",
                   "ReWeight", "beamOffset"
                  ]
-variables_list = list(set(variables_list)) 
+variables_list = list(set(variables_list))
 
 try:
-    base_path_hugo = "../../res/ROOTFiles/Hugo/" 
-    base_path_mixed = "../../res/ROOTFiles/MixedEvents/" 
+    base_path_hugo = "../../res/ROOTFiles/Hugo/"
+    base_path_mixed = "../../res/ROOTFiles/MixedEvents/"
     data_file = base_path_hugo + "roadset57_70_R008_2111v42_tmp_noPhys.root"
     mc_files = [ base_path_hugo + "mc_drellyan_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
                  base_path_hugo + "mc_jpsi_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
                  base_path_hugo + "mc_psiprime_LH2_M027_S001_messy_occ_pTxFweight_v2.root" ]
     mixed_file = base_path_mixed + "merged_RS67_3089LH2.root"
     empty_flask_file = base_path_mixed + "merged_RS67_3089flask.root"
-except NameError: 
+except NameError:
     print("⚠️ Warning: Using placeholder file paths due to undefined base paths. Ensure paths are correct.")
     sys.stdout.flush()
     data_file, mc_files, mixed_file, empty_flask_file = "data.root", ["drellyan.root", "jpsi.root", "psiprime.root"], "mixed.root", "empty_flask.root"
 
 mc_labels_list, tree, mixed_tree = ["DY MC", "J/Psi MC", "Psi Prime MC"], "Tree", "result_mix"
-
 
 def format_param_err_str(value, error, val_fmt=".4e", err_fmt=".2e"):
     if error is None or np.isnan(error) or not np.isfinite(error):
@@ -683,30 +692,26 @@ if __name__ == "__main__":
         data_file, mc_files, mc_labels_list, tree, active_cuts_dict, variables_list,
         mixed_file, mixed_tree, empty_flask_file, GOOD_SPILLS_FILE_PATH
     )
-    
-    print("ℹ️ Cut table generation and display has been removed for speedup.")
 
+    print("ℹ️ Cut table generation and display has been removed for speedup.")
 
     if collected_fit_data and isinstance(collected_fit_data, dict) and len(collected_fit_data) > 0:
         scipy_param_bounds_dict = {
-            "DY MC": (0.0, 2.0),
-            "J/Psi MC": (0.0, 2.0),
-            "Psi Prime MC": (0.0, 2.0)
+            "c_mixed": (0.0, 10.0), "c_empty": (0.0, 10.0),
+            "c_dy": (0.0, 2.0), "c_jpsi": (0.0, 2.0), "c_psip": (0.0, 2.0)
         }
         scipy_initial_guesses_dict = {
-            "DY MC": 1.0e-1,
-            "J/Psi MC": 1.0e-1,
-            "Psi Prime MC": 1.0e-1
+            "c_mixed": 1.0, "c_empty": 1.0, "c_dy": 0.1, "c_jpsi": 0.1, "c_psip": 0.1
         }
-        print(f"ℹ️ SciPy FIT (Corrected Data): Using parameter bounds: {scipy_param_bounds_dict}")
-        print(f"ℹ️ SciPy FIT (Corrected Data): Using initial guesses: {scipy_initial_guesses_dict}")
+        print(f"ℹ️ SciPy FIT (Direct Data Model Modified): Using parameter bounds: {scipy_param_bounds_dict}")
+        print(f"ℹ️ SciPy FIT (Direct Data Model Modified): Using initial guesses: {scipy_initial_guesses_dict}")
 
         n_bins_for_fit = 140
         print(f"ℹ️ SciPy FIT: Using n_bins = {n_bins_for_fit} for fit histograms.")
-        hist_mass_min_GeV = 2.0
-        hist_mass_max_GeV = 9.0
-        fit_sub_range_min_GeV = 3.0 
-        fit_sub_range_max_GeV = 9.0 
+        hist_mass_min_GeV = 2.0 # Plotting range min
+        hist_mass_max_GeV = 9.0 # Plotting range max
+        fit_sub_range_min_GeV = 3.0 # Fit sub-range min
+        fit_sub_range_max_GeV = 9.0 # Fit sub-range max
         print(f"ℹ️ Histogram mass range: {hist_mass_min_GeV:.2f}-{hist_mass_max_GeV:.2f} GeV. Fit sub-range: {fit_sub_range_min_GeV:.2f}-{fit_sub_range_max_GeV:.2f} GeV.")
         use_log_y_on_plot = True
 
@@ -720,7 +725,7 @@ if __name__ == "__main__":
         )
 
         if fit_results:
-            print("\n--- SciPy Fit Results (Corrected Data Model) ---")
+            print("\n--- SciPy Fit Results (Direct Data Model Modified) ---")
             fit_success = fit_results.get('success', False)
             fit_status = fit_results.get('status', -999)
             fit_message = fit_results.get('message', "N/A")
@@ -728,17 +733,14 @@ if __name__ == "__main__":
             print(f"   Fit Status Code (SciPy): {fit_status}")
             print(f"   Fit Message (SciPy): {fit_message}")
 
-            print("\n   --- Fitted MC Scaling Factors (c_values) ---")
-            c_dy_val = fit_results.get('c_DY_MC', np.nan)
-            err_c_dy_val = fit_results.get('err_c_DY_MC', np.nan)
-            c_jpsi_val = fit_results.get('c_J_Psi_MC', np.nan)
-            err_c_jpsi_val = fit_results.get('err_c_J_Psi_MC', np.nan)
-            c_psip_val = fit_results.get('c_Psi_Prime_MC', np.nan)
-            err_c_psip_val = fit_results.get('err_c_Psi_Prime_MC', np.nan)
-
-            print(f"   c_DY MC         : {format_param_err_str(c_dy_val, err_c_dy_val)}")
-            print(f"   c_J/Psi MC      : {format_param_err_str(c_jpsi_val, err_c_jpsi_val)}")
-            print(f"   c_Psi Prime MC  : {format_param_err_str(c_psip_val, err_c_psip_val)}")
+            print("\n   --- Fitted Scaling Factors (c_values) ---")
+            param_names_to_report = ["c_mixed", "c_empty", "c_dy", "c_jpsi", "c_psip"]
+            fitted_params_values = {}
+            for p_name in param_names_to_report:
+                val = fit_results.get(p_name, np.nan)
+                err_val = fit_results.get(f"err_{p_name}", np.nan)
+                fitted_params_values[p_name] = (val, err_val)
+                if not np.isnan(val): print(f"   {p_name:<15} : {format_param_err_str(val, err_val)}")
 
             chi2 = fit_results.get('chi2', np.nan)
             ndf = fit_results.get('ndf', -1)
@@ -747,71 +749,35 @@ if __name__ == "__main__":
 
             if ndf > 0:
                 chi2_ndf_val = chi2 / ndf
-                if not np.isnan(err_chi2_ndf):
-                    print(f"   Chi2/NDF: {chi2_ndf_val:.2f} +/- {err_chi2_ndf:.2f} ({chi2:.2f} / {ndf})")
-                else:
-                    print(f"   Chi2/NDF: {chi2_ndf_val:.2f} ({chi2:.2f} / {ndf}) (error N/A)")
-            else:
-                print(f"   Chi2: {chi2:.2f} (NDF: {ndf}, Chi2/NDF not meaningful)")
+                if not np.isnan(err_chi2_ndf): print(f"   Chi2/NDF: {chi2_ndf_val:.2f} +/- {err_chi2_ndf:.2f} ({chi2:.2f} / {ndf})")
+                else: print(f"   Chi2/NDF: {chi2_ndf_val:.2f} ({chi2:.2f} / {ndf}) (error N/A)")
+            else: print(f"   Chi2: {chi2:.2f} (NDF: {ndf}, Chi2/NDF not meaningful)")
 
-            print("\nℹ️ To view plots, check 'scipy_fit_corrected_data.png/pdf'.")
-
-            csv_file_name = "fit_results_output.csv"
+            print(f"\nℹ️ To view plots, check 'scipy_fit_direct_data_model_modified.png/pdf'.")
+            csv_file_name = "fit_results_direct_model_modified_output.csv"
             csv_data = []
+            for p_name_key in param_names_to_report:
+                if p_name_key in fit_results:
+                    val, err_val = fitted_params_values.get(p_name_key, (np.nan, np.nan))
+                    csv_data.append({
+                        'Component': p_name_key, 'ScalingFactor': val, 'ErrorScalingFactor': err_val,
+                        'Chisq_NDF': chi2_ndf_val if ndf > 0 else 'N/A',
+                        'Error_Chisq_NDF': err_chi2_ndf if ndf > 0 and not np.isnan(err_chi2_ndf) else 'N/A',
+                        'MinMassFit': fit_sub_range_min_GeV, 'MaxMassFit': fit_sub_range_max_GeV
+                    })
+            if csv_data:
+                df_results = pd.DataFrame(csv_data)
+                column_order = ['Component', 'ScalingFactor', 'ErrorScalingFactor', 'Chisq_NDF', 'Error_Chisq_NDF', 'MinMassFit', 'MaxMassFit']
+                df_results = df_results[column_order]
+                try:
+                    df_results.to_csv(csv_file_name, index=False, float_format='%.6e')
+                    print(f"\n✅ Fit results successfully saved to: {csv_file_name}")
+                except Exception as e: print(f"\n❌ Error saving fit results to CSV: {e}")
+            else: print("\nℹ️ No active parameters were fitted (or values were NaN), CSV file not generated.")
 
-            csv_data.append({
-                'Component': 'c_dy',
-                'ScalingFactor': c_dy_val,
-                'ErrorScalingFactor': err_c_dy_val,
-                'Chisq_NDF': chi2_ndf_val if ndf > 0 else 'N/A',
-                'Error_Chisq_NDF': err_chi2_ndf if ndf > 0 else 'N/A',
-                'MinMassFit': fit_sub_range_min_GeV,
-                'MaxMassFit': fit_sub_range_max_GeV
-            })
-            csv_data.append({
-                'Component': 'c_jpsi',
-                'ScalingFactor': c_jpsi_val,
-                'ErrorScalingFactor': err_c_jpsi_val,
-                'Chisq_NDF': chi2_ndf_val if ndf > 0 else 'N/A',
-                'Error_Chisq_NDF': err_chi2_ndf if ndf > 0 else 'N/A',
-                'MinMassFit': fit_sub_range_min_GeV,
-                'MaxMassFit': fit_sub_range_max_GeV
-            })
-            csv_data.append({
-                'Component': 'c_psip',
-                'ScalingFactor': c_psip_val,
-                'ErrorScalingFactor': err_c_psip_val,
-                'Chisq_NDF': chi2_ndf_val if ndf > 0 else 'N/A',
-                'Error_Chisq_NDF': err_chi2_ndf if ndf > 0 else 'N/A',
-                'MinMassFit': fit_sub_range_min_GeV,
-                'MaxMassFit': fit_sub_range_max_GeV
-            })
-
-            df_results = pd.DataFrame(csv_data)
-            column_order = [
-                'Component', 
-                'ScalingFactor', 
-                'ErrorScalingFactor', 
-                'Chisq_NDF', 
-                'Error_Chisq_NDF', 
-                'MinMassFit', 
-                'MaxMassFit'  
-            ]
-            df_results = df_results[column_order]
-            
-            try:
-                df_results.to_csv(csv_file_name, index=False, float_format='%.6e')
-                print(f"\n✅ Fit results successfully saved to: {csv_file_name}")
-            except Exception as e:
-                print(f"\n❌ Error saving fit results to CSV: {e}")
-
-            if not fit_success :
-                print("\n⚠️ WARNING: SciPy fit FAILED (check status and message).")
-            elif ndf > 0 and (chi2 / ndf > 10.0) : 
-                print(f"\n⚠️ WARNING: SciPy fit converged, but Chi2/NDF ({chi2/ndf:.2f}) is very high.")
-            elif ndf <= 0 and fit_success:
-                print(f"\n⚠️ WARNING: SciPy fit converged, but NDF ({ndf}) is not positive.")
-        else:
-            print("❌ SciPy fit analysis did not return a results dictionary.")
+            if not fit_success : print("\n⚠️ WARNING: SciPy fit FAILED (check status and message).")
+            elif ndf > 0 and (chi2 / ndf > 10.0) : print(f"\n⚠️ WARNING: SciPy fit converged, but Chi2/NDF ({chi2/ndf:.2f}) is very high.")
+            elif ndf <= 0 and fit_success: print(f"\n⚠️ WARNING: SciPy fit converged, but NDF ({ndf}) is not positive (Chi2/NDF not meaningful).")
+        else: print("❌ SciPy fit analysis did not return a results dictionary.")
     else: print("⚠️ No data collected for SciPy fit analysis, or data was empty/invalid.")
     print("\nScript finished.")
