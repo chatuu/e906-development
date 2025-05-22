@@ -126,8 +126,8 @@ def create_dy_plot(yield_info):
     canvas.Update()
     
     # You might want to save the canvas to a file
-    canvas.SaveAs("dy_yields_plot.root")
-    canvas.SaveAs("dy_yields_plot.pdf")
+    canvas.SaveAs("dy_yields_plot_no_emptyflask_mixed.root")
+    canvas.SaveAs("dy_yields_plot_no_emptyflask_mixed.pdf")
     print("Plot saved as dy_yields_plot.root and dy_yields_plot.pdf")
 
     # To keep the canvas open if running interactively, you might need:
@@ -138,10 +138,10 @@ def create_dy_plot(yield_info):
 if __name__ == '__main__':
     # Provided yield information
     yield_info = {
-        "data_yield": 16140,
-        "data_error": 220,
-        "mc_yield": 15618.5,
-        "mc_error": 185.8, # Corrected key
+        "data_yield": 14356.2807,
+        "data_error": 247.64788,
+        "mc_yield": 14071.5,
+        "mc_error": 182.8, # Corrected key
     }
 
     # Generate the plot
