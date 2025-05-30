@@ -31,10 +31,10 @@ SECTIONS = [
     {
         "title": "Analysis Steps",
         "bullets": [
-            "Data selection and quality checks.",
-            "Background subtraction techniques.",
+            "Background Subtraction from Data by using MC templates.",
+            "Applying acceptance and kTracker efficiency corrections to Data."
             "Acceptance and efficiency corrections.",
-            "Systematic uncertainty estimation."
+            "Scale for live POT and hodo efficiencies."
         ]
     },
     # New section for the PDF plots
