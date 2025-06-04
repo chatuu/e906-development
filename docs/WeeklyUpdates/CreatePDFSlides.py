@@ -18,10 +18,10 @@ SECTIONS = [
             {"raw_latex_block": r"""% Note: This block is intended to be a sub-list or detailed text for "Files Used:"
                 \begin{itemize}
                     \itemsep0.25em % Optional: add some space between sub-items
-                    \item Data:\\ \texttt{roadset57\_70\_R008\_2111v42\_tmp\_noPhys.root}
+                    \item Data and Mixed Events:\\ \texttt{merged\_RS67\_3089LH2.root}
+                    \item Empty Flask and Mixed Events:\\ \texttt{merged\_RS67\_3089LH2.root}
                     \item $J/\psi$ MC Events:\\ \texttt{mc\_jpsi\_LH2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
                     \item $\psi'$ MC Events: \texttt{mc\_psiprime\_LH2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
-                    \item Mixed Events:\\ \texttt{mixFPGA4\_67\_R008\_preBin2.root}
                     \item NNPDF4 File:\\ \texttt{NNPDF40\_xFnew\_p.root}
                     \item CT18 File:\\ \texttt{CT18\_xFnew\_p.root}
                 \end{itemize}"""
@@ -31,10 +31,68 @@ SECTIONS = [
     {
         "title": "Analysis Steps",
         "bullets": [
-            "Background Subtraction from Data by using MC templates.",
-            "Applying acceptance and kTracker efficiency corrections to Data."
-            "Acceptance and efficiency corrections.",
-            "Scale for live POT and hodo efficiencies."
+            "Background Subtraction from Data by using MC templates:",
+            {"raw_latex_block": r"""% Note: This block is intended to be a sub-list or detailed text for "Files Used:"
+                \begin{itemize}
+                    \item Data and Mixed Events:\\ \texttt{$Y_{DY} = Y_{Data} - Y_{Mixed} - \alpha_{Flask}(Y_{empty flask} - Y_{Mixed}) - \alpha_{J/\psi}Y_{J/\psi} -\alpha_{\psi'}Y_{\psi'}$}
+                    \item $\alpha_{Flask}$:\\ \texttt{4.94392}
+                    \item $\alpha_{J/\psi}$:\\ \texttt{2.1878e-03}
+                    \item $\alpha_{\psi'}$:\\ \texttt{3.4826e-03}
+                \end{itemize}"""
+            },
+            "Applying acceptance corrections:",
+            {"raw_latex_block": r"""% Note: This block is intended to be a sub-list or detailed text for "Files Used:"
+                \begin{itemize}
+                    \item Recorded in:\\ \texttt{acceptance\_h.root}
+                \end{itemize}"""
+            },
+            "kTracker efficiency corrections:",
+            {"raw_latex_block": r"""% Note: This block is intended to be a sub-list or detailed text for "Files Used:"
+                \begin{multicols}{2}
+                \begin{itemize}
+                    \item \texttt{1.77909}
+                    \item \texttt{1.74145}
+                    \item \texttt{1.62481}
+                    \item \texttt{1.63713}
+                    \item \texttt{1.57874}
+                    \item \texttt{1.58371}                    
+                    \item \texttt{1.47446}
+                    \item \texttt{1.4607}
+                    \item \texttt{1.42335} 
+                    \item \texttt{1.43693}
+                    \item \texttt{1.36176} 
+                    \item \texttt{1.35986}
+                    \item \texttt{1.37244}
+                    \item \texttt{1.34141}
+                    \item \texttt{1.33321}
+                    \item \texttt{1.30802}
+                \end{itemize}
+                \end{multicols}"""
+            },
+           
+        ]
+    },
+    {
+        "title": "Analysis Steps (Continued)",
+        "bullets": [ 
+            "Scale for 1/live POT:",
+            {"raw_latex_block": r"""% Note: This block is intended to be a sub-list or detailed text for "Files Used:"
+                \begin{itemize}
+                    \item \texttt{3.48489e-8} 
+                \end{itemize}"""
+            },  
+            "Scale for hodo efficiencies:",
+            {"raw_latex_block": r"""% Note: This block is intended to be a sub-list or detailed text for "Files Used:"
+                \begin{itemize}
+                    \item \texttt{1.102} 
+                \end{itemize}"""
+            },
+            "Cross-section definition:",
+            {"raw_latex_block": r"""% Note: This block is intended to be a sub-list or detailed text for "Files Used:"
+                \begin{itemize}
+                    \item \texttt{$$M^3\frac{d\sigma^2}{dMdx_{F}}=M^3\frac{N_{events}}{\Delta M \delta x_{F}\mathcal{L}}$$} 
+                \end{itemize}"""
+            },
         ]
     },
     # New section for the PDF plots
@@ -45,7 +103,8 @@ SECTIONS = [
 ]
 
 LOGO_FILENAME = "NMSU_logo.png" # Place this in the same directory as the script
-PDF_PLOT_DIR = "../../src/Archived/DiffCross/plots/"
+#PDF_PLOT_DIR = "../../src/Archived/DiffCross/plots/"
+PDF_PLOT_DIR = "../../src/DiffCross/plots/"
 
 # xF Bin Definitions
 XF_BINS = [
