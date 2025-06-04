@@ -426,9 +426,9 @@ def create_cut_table_parallel(data_file_path, mc_file_paths, mc_labels, tree_nam
 
     # --- Apply Normalization to specified MC columns ---
     norm_factors = {
-        "DY MC":      {"value": 2.872e-3, "error": 0.041e-3},
-        "J/Psi MC":   {"value": 2.454e-3, "error": 0.021e-3},
-        "Psi Prime MC": {"value": 3.494e-3, "error": 0.085e-3}
+        "DY MC":      {"value": 2.8502e-03, "error": 2.66e-05},
+        "J/Psi MC":   {"value": 2.1878e-03, "error": 1.71e-05},
+        "Psi Prime MC": {"value": 3.4826e-03, "error": 6.75e-05}
     }
     mc_cols_to_normalize = list(norm_factors.keys())
 

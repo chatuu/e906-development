@@ -94,8 +94,8 @@ def create_dy_plot(yield_info):
     hist_axis.SetMaximum(max_y + padding)
 
     # Set X-axis bin labels for categorical data
-    hist_axis.GetXaxis().SetBinLabel(1, "Corrected Data") # Bin 1 (center x=1)
-    hist_axis.GetXaxis().SetBinLabel(2, "DY MC")   # Bin 2 (center x=2)
+    hist_axis.GetXaxis().SetBinLabel(1, "DY (Data-Based)") # Bin 1 (center x=1)
+    hist_axis.GetXaxis().SetBinLabel(2, "DY (MC-Based)")   # Bin 2 (center x=2)
     hist_axis.GetXaxis().SetLabelSize(0.05)
     hist_axis.GetXaxis().SetTitleSize(0.05)
     hist_axis.GetXaxis().CenterTitle(True)
@@ -114,9 +114,9 @@ def create_dy_plot(yield_info):
     # --- 7. Create TLegend ---
     # Adjusted coordinates for a slightly larger legend box & increased text size
     # Shifted legend left to ensure text fits within the plot region
-    legend = ROOT.TLegend(0.32, 0.70, 0.75, 0.88) # x1, y1, x2, y2 (NDC coordinates)
-    legend.AddEntry(gr_data, "Corrected Data (DY Candidates)", "pe") # "pe" for marker with error bar
-    legend.AddEntry(gr_mc, "DY MC Prediction", "pe")
+    legend = ROOT.TLegend(0.55, 0.70, 0.75, 0.88) # x1, y1, x2, y2 (NDC coordinates)
+    legend.AddEntry(gr_data, "DY (Data-Based)", "pe") # "pe" for marker with error bar
+    legend.AddEntry(gr_mc, "DY (MC-Based)", "pe")
     legend.SetBorderSize(0) # Remove the border
     legend.SetTextSize(0.04) # Increase text size (adjust as needed)
     legend.SetFillStyle(0) # Transparent background
@@ -140,8 +140,8 @@ if __name__ == '__main__':
     yield_info = {
         "data_yield": 16140,
         "data_error": 220,
-        "mc_yield": 16054,
-        "mc_error": 182.8, # Corrected key
+        "mc_yield": 15618.5,
+        "mc_error": 185.8, # Corrected key
     }
 
     # Generate the plot
