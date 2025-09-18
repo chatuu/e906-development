@@ -1,7 +1,7 @@
 /**
  * @file run_all_plots.C
- * @brief A ROOT macro to compare particle acceptance from different data sources.
- * @author Gemini
+ * @brief A ROOT macro to compare particle acceptance from the latest results to Shivangi's results.
+ * @author Chatura Kuruppu
  * @version 1.7
  * @date 2025-09-17
  *
