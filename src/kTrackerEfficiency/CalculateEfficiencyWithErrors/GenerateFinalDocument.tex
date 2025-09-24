@@ -1,0 +1,341 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+
+% --- PACKAGES ---
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{subcaption} % For arranging plots with sub-captions
+\usepackage{braket}
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{authblk}
+\usepackage{xcolor} % For code listing colors
+
+% --- HYPERREF (LOAD TOWARDS THE END) ---
+% This ensures it can correctly handle links for elements from other packages.
+\usepackage{hyperref} 
+
+
+% --- DOCUMENT SETUP ---
+\geometry{a4paper, margin=1in}
+
+% Setup for hyperlinks: urlcolor is for external links, linkcolor for internal (ToC, refs)
+\hypersetup{colorlinks=true, urlcolor=blue, linkcolor=black}
+
+% Setup for code listings
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+
+% --- DOCUMENT START ---
+\begin{document}
+\title{Determination of reconstruction efficiency}
+\author[1]{Chatura Kuruppu}
+\affil[1]{New Mexico State University, Las Cruces, NM 88003}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+\noindent This document outlines the methodology for determining the dimuon reconstruction efficiency required for the Drell-Yan double-differential cross-section measurement. Efficiency correction factors are derived using Monte Carlo simulations and applied to experimental data. The efficiency $\epsilon$ is parameterized as a function of the kinematic variables, Feynman-x ($x_F$) and dimuon invariant mass ($m$). We detail the procedure for calculating the average efficiency $\langle\epsilon\rangle$ for each kinematic bin by applying a linear interpolation method to data events. The propagation of statistical uncertainties is rigorously derived, and the final correction factors, $1/\langle\epsilon\rangle$, are presented for different datasets and target configurations.
+\end{abstract}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\listoffigures
+\clearpage
+
+\listoftables
+\clearpage
+
+
+% --- METHODOLOGY PART 1 ---
+\section{Introduction}
+We report DY absolute double differntial cross-section for different Mass and $x_{F}$ bins. It is necessary to correct the reconstruction efficiency for different $x_{F}$ and Mass bins using Monte-Carlo events. In this study we first generate efficiency curves for different Mass and $x_{F}$ bins and then calculate average efficiency $<\epsilon>$ using the methodology developped by Harsha and iterating through data (RS67, RS57-70) for each 2-dimensional bin range. Then the correction factor: $1/<\epsilon>$ will be applied when calculating cross-section.
+
+\subsection{Dimuon Events Used}
+Following files were used to calculate kTracker efficiency for different Mass and $x_{F}$ bins:
+\begin{itemize}
+ \item Following Monte-Carlo files were used to generate efficiency curves for different Mass and $x_{F}$ bins:
+ \begin{itemize}
+  \item mc\_drellyan\_LH2\_M027\_S002\_messy\_occ\_pTxFweight\_v2.root
+  \item mc\_drellyan\_LH2\_M027\_S002\_clean\_occ\_pTxFweight\_v2.root
+ \end{itemize}
+ \item Following data files were used to calculate average efficiency for different Mass and $x_{F}$ bins:
+ \begin{itemize}
+	 \item R008\_roadset67\_0\_2111v42\_tmp\_noPhys\_noOcc.parquet
+  \item roadset57\_70\_R008\_2111v42\_tmp\_noPhys.parquet
+ \end{itemize}
+\end{itemize}
+
+
+The reconstruction efficiency curves were generated for different Mass and $x_{F}$ bins by taking the ratio: 
+$$Efficiency\ (\epsilon) = \frac{Number\ of\ messy\ dimuon\ events}{Number\ of\ clean\ dimuon\ events}$$ 
+that passes all event selection cuts. This is calculated as a function of the D2 variable, binned in Feynman-x ($x_F$) and dimuon mass ($m$).
+
+\subsection{Bin ranges}
+This efficiency study is conducted by using the same bin ranges defined in Shivangi's cross-section script.
+Following bins widths are defined to calculate efficiency corrections.
+\begin{itemize}
+ \item $x_{F}$ bins: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85]
+ \item Mass bins: [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.7]
+
+\end{itemize}
+
+\subsection{Event Selection}
+Following event selection criteria applied to Monte-Carlo events mentioned in section. I am using the same event selection criteria defined by Hugo's analysis.
+\begin{itemize}
+ \item Event selection applied to messy events:
+  \begin{itemize}
+   \item Base cuts: chuckCutsPositive\_2111v42\_tmp \&\& chuckCutsNegative\_2111v42\_tmp \&\& chuckCutsDimuon\_2111v42 \&\& physicsCuts\_noMassCut\_2111v42\_tmp \&\& occCuts\_2111v42 \&\& DYCut\_MC
+   \item xF cut
+   \item mass cut
+  \end{itemize}
+ \item Event selection applied to clean events:
+  \begin{itemize}
+   \item Base cuts: chuckCutsPositive\_2111v42\_tmp \&\& chuckCutsNegative\_2111v42\_tmp \&\& chuckCutsDimuon\_2111v42 \&\& physicsCuts\_noMassCut\_2111v42\_tmp \&\& DYCut\_MC
+   \item xF cut
+   \item mass cut
+  \end{itemize}
+
+\end{itemize}
+
+\subsection{Determination of Efficiency for a Dimuon Event}
+In order to determine efficiency for each dimuon event in data, I use the same methodology developped by Harsha.
+
+\begin{figure}[h!]
+    \centering
+    % Image generation prompt: A conceptual diagram illustrating the propagation of error.
+    % It should show a function (e.g., a curve) with input variables having small uncertainties (represented as error bars or shaded regions),
+    % and the output variable showing a larger, propagated uncertainty.
+    % Use abstract, scientific visualization style with clear labels for inputs (epsilon_+, epsilon_-) and output (epsilon).
+    % The background should be clean and white, with the diagram elements in blue, green, and red to differentiate.
+    % Include axes representing a multi-dimensional space.
+    \includegraphics[width=0.8\textwidth]{error.png} % This will be replaced by the generated image
+    \caption{Determination of Efficiency and it's uncertainty}
+    \label{fig:error_propagation_concept}
+\end{figure}
+
+
+The given formula for the efficiency, denoted by $\epsilon_{t,d_{2}}$, is a function of $\epsilon_{t,d_{+}}$, $\epsilon_{t,d_{-}}$, $d_+$, $d_-$, and $d_2$:
+$$
+\epsilon_{t,d_{2}} = \epsilon_{t,d_{-}} - \frac{\epsilon_{t,d_{+}} - \epsilon_{t,d_{-}}}{d_+ - d_-} (d_2 - d_-)
+$$
+Our goal is to find the uncertainty of $\epsilon_{t,d_{2}}$, denoted as $\delta\epsilon_{t,d_{2}}$, assuming we know the uncertainties $\delta\epsilon_{t,d_{+}}$ and $\delta\epsilon_{t,d_{-}}$. The terms $d_2$, $d_+$, and $d_-$ are treated as constants with no associated uncertainty.
+
+%\hrulefill
+% --- Section 2: Error Propagation Method ---
+\subsubsection{Error Propagation Method}
+
+For a function of multiple variables, such as $\epsilon_{t,d_{2}}(\epsilon_{t,d_{+}}, \epsilon_{t,d_{-}})$, the general formula to propagate uncertainty (assuming the variables are uncorrelated) is:
+$$
+(\delta\epsilon_{t,d_{2}})^2 = \left(\frac{\partial \epsilon_{t,d_{2}}}{\partial \epsilon_{t,d_{+}}}\right)^2 (\delta\epsilon_{t,d_{+}})^2 + \left(\frac{\partial \epsilon_{t,d_{2}}}{\partial \epsilon_{t,d_{-}}}\right)^2 (\delta\epsilon_{t,d_{-}})^2
+$$
+
+%\hrulefill
+\clearpage
+% --- Section 3: Step-by-Step Derivation ---
+
+\subsubsection{Step-by-Step Derivation}
+
+To find the final uncertainty, we follow three main steps.
+
+\subsubsection{Simplify the Expression for $\epsilon_{t,d_{2}}$}
+
+To make the calculation of derivatives more straightforward, we first rearrange the formula for $\epsilon_{t,d_{2}}$:
+$$
+\epsilon_{t,d_{2}} = \epsilon_{t,d_{-}} - \left(\frac{d_2 - d_-}{d_+ - d_-}\right)\epsilon_{t,d_{+}} + \left(\frac{d_2 - d_-}{d_+ - d_-}\right)\epsilon_{t,d_{-}}
+$$
+Combining the terms that contain $\epsilon_{t,d_{-}}$, we get:
+$$
+\epsilon_{t,d_{2}} = \left(1 + \frac{d_2 - d_-}{d_+ - d_-}\right)\epsilon_{t,d_{-}} - \left(\frac{d_2 - d_-}{d_+ - d_-}\right)\epsilon_{t,d_{+}}
+$$
+We can find a common denominator for the term multiplying $\epsilon_{t,d_{-}}$:
+$$
+\epsilon_{t,d_{2}} = \left(\frac{d_+ - d_- + d_2 - d_-}{d_+ - d_-}\right)\epsilon_{t,d_{-}} - \left(\frac{d_2 - d_-}{d_+ - d_-}\right)\epsilon_{t,d_{+}}
+$$
+This simplifies to:
+$$
+\epsilon_{t,d_{2}} = \left(\frac{d_+ + d_2 - 2d_-}{d_+ - d_-}\right)\epsilon_{t,d_{-}} - \left(\frac{d_2 - d_-}{d_+ - d_-}\right)\epsilon_{t,d_{+}}
+$$
+
+\subsubsection{Calculate the Partial Derivatives}
+
+With the simplified expression, we can now find the partial derivatives of $\epsilon_{t,d_{2}}$ with respect to $\epsilon_{t,d_{+}}$ and $\epsilon_{t,d_{-}}$.
+
+\paragraph{Derivative with respect to $\epsilon_{t,d_{+}}$:}
+$$
+\frac{\partial \epsilon_{t,d_{2}}}{\partial \epsilon_{t,d_{+}}} = -\frac{d_2 - d_-}{d_+ - d_-} = \frac{d_- - d_2}{d_+ - d_-}
+$$
+
+\paragraph{Derivative with respect to $\epsilon_{t,d_{-}}$:}
+$$
+\frac{\partial \epsilon_{t,d_{2}}}{\partial \epsilon_{t,d_{-}}} = \frac{d_+ + d_2 - 2d_-}{d_+ - d_-}
+$$
+
+\subsubsection{Uncertainty Formula for one di-muon event}
+
+Finally, we substitute these partial derivatives back into the error propagation formula:
+$$
+(\delta\epsilon_{t,d_{2}})^2 = \left(\frac{d_- - d_2}{d_+ - d_-}\right)^2 (\delta\epsilon_{t,d_{+}})^2 + \left(\frac{d_+ + d_2 - 2d_-}{d_+ - d_-}\right)^2 (\delta\epsilon_{t,d_{-}})^2
+$$
+Taking the square root of both sides gives the final expression for the uncertainty, $\delta\epsilon_{t,d_{2}}$:
+$$
+\delta\epsilon_{t,d_{2}} = \sqrt{\left(\frac{d_- - d_2}{d_+ - d_-}\right)^2 (\delta\epsilon_{t,d_{+}})^2 + \left(\frac{d_+ + d_2 - 2d_-}{d_+ - d_-}\right)^2 (\delta\epsilon_{t,d_{-}})^2}
+$$
+This can also be written in a more compact form by factoring out the denominator:
+$$
+\delta\epsilon_{t,d_{2}} = \frac{1}{|d_+ - d_-|} \sqrt{(d_- - d_2)^2 (\delta\epsilon_{t,d_{+}})^2 + (d_+ + d_2 - 2d_-)^2 (\delta\epsilon_{t,d_{-}})^2}
+$$
+\clearpage
+
+\subsection{Average efficiency and final uncertainty}
+We determine average efficiency by iterating through all the di-muon events. The final efficiency $\bar{\epsilon}$
+If you have N dimuon events, each with a calculated efficiency ($\epsilon_1, \epsilon_2, \dots, \epsilon_N$) and a corresponding error ($\delta\epsilon_1, \delta\epsilon_2, \dots, \delta\epsilon_N$), you first calculate the \textbf{average efficiency}, $\bar{\epsilon}$:
+$$
+\bar{\epsilon} = \frac{1}{N} \sum_{i=1}^{N} \epsilon_i
+$$
+The \textbf{error on this average efficiency}, which we'll call $\delta\bar{\epsilon}$, is then given by the standard formula for propagation of error for a sum:
+$$
+\delta\bar{\epsilon} = \frac{1}{N} \sqrt{\sum_{i=1}^{N} (\delta\epsilon_i)^2}
+$$
+This is equivalent to writing the sum of squares explicitly:
+$$
+\delta\bar{\epsilon} = \sqrt{\frac{(\delta\epsilon_1)^2 + (\delta\epsilon_2)^2 + \dots + (\delta\epsilon_N)^2}{N^2}}
+$$
+
+\section{Results}
+Here, we report efficiency corrections under 2 scenerios.
+
+\begin{itemize}
+	\item Efficiency calculation only by using $x_{F}$ bins (1-D Study)
+	\item Efficiency calculation only by using both $x_{F}$ and Mass bins (2-D Study)
+\end{itemize}
+
+
+
+%\subsection{Generating Efficiency Curves (PDF Plots)}
+%The efficiency curves are generated using a ROOT C++ script, `Efficiency\_single\_bin.C', which is executed in parallel for each of the 187 kinematic bins ($17 \times x_F$, $11 \times m$).
+%
+%The C++ script performs the core task of calculating the efficiency for one specific bin. A Bash script, `run\_parallel.sh`, manages the parallel execution of this C++ script, significantly speeding up the process. The Bash script, shown in Listing~\ref{lst:bash_script}, contains a simple loop.
+%
+%\begin{lstlisting}[language=Bash, caption={Excerpt from `run\_parallel.sh` showing the parallel execution loop.}, label={lst:bash_script}]
+%#!/bin/bash
+%MAX_JOBS=$(nproc)
+%XF_BINS=17
+%MASS_BINS=11
+%
+%for ixf in $(seq 0 $(($XF_BINS - 1))); do
+%    for imass in $(seq 0 $(($MASS_BINS - 1))); do
+%        # Run the ROOT macro in the background for one bin
+%        root -l -b -q "Efficiency_single_bin.C($ixf, $imass)" &
+%
+%        # Pause if the maximum number of jobs is reached
+%        if [[ $(jobs -r -p | wc -l) -ge $MAX_JOBS ]]; then
+%            wait -n
+%        fi
+%    done
+%done
+%wait # Wait for all remaining jobs to finish
+%\end{lstlisting}
+%
+%The output of this process is a collection of PDF files, each showing the efficiency curve for a single bin, as displayed in Section~\ref{sec:plots}.
+%
+%\subsection{Generating Raw Data Files (.npz)}
+%For the subsequent analysis step, the raw data points from the efficiency curves are required. A modified version of the C++ script, `Efficiency\_single\_bin\_npz.C`, is used. This script performs the same efficiency calculation but, instead of creating a plot, it saves the data arrays (D2 values, efficiency values, and asymmetric errors) into a compressed NumPy (`.npz`) file for each bin. This provides a machine-readable format for the Python-based analysis.
+%
+% --- PLOTS SECTION ---
+\section{Efficiency Curves by Kinematic Bin}
+\label{sec:plots}
+The following pages display the D2 efficiency curves for all 187 kinematic bins. Each page corresponds to a single bin in $x_F$, with the 11 mass bins for that $x_F$ range arranged as sub-plots.
+
+% This command will input the generated all_plots.tex file
+% REMINDER: You must add \caption{} and \label{} to each figure inside this file.
+\input{all_plots.tex}
+
+% --- METHODOLOGY PART 2 ---
+\section{Methodology: Calculating Average Efficiencies}
+With the efficiency data saved in `.npz` files, a Python script is used to calculate the average efficiency for a separate dataset of dimuon events. For each event in the dataset, its corresponding efficiency is found by linearly interpolating the efficiency curve from the appropriate $(x_F, m)$ bin. The average efficiency for each bin is then calculated along with its associated errors.
+
+The key quantities are defined as follows:
+\begin{itemize}
+    \item \textbf{Average Efficiency ($<\epsilon>$):} The simple arithmetic mean of the interpolated efficiency values, $\epsilon_i$, for all $N$ events in a bin, as shown in Equation~\ref{eq:avg_eff}.
+    \begin{equation} \label{eq:avg_eff}
+        \langle\epsilon\rangle = \frac{1}{N} \sum_{i=1}^{N} \epsilon_i
+    \end{equation}
+
+    \item \textbf{Statistical Error ($\delta_{\text{stat}} <\epsilon>$):} The standard error on the mean of the efficiency distribution within the bin, which quantifies the statistical uncertainty.
+    \begin{equation} \label{eq:stat_err}
+        \delta_{\text{stat}} \langle\epsilon\rangle = \sqrt{\frac{\langle\epsilon^2\rangle - \langle\epsilon\rangle^2}{N}}
+    \end{equation}
+
+    \item \textbf{Propagated Error ($\delta_{\text{prop}} <\epsilon>$):} The error on the average efficiency found by propagating the uncertainties from the original efficiency curve points, $\delta\epsilon_i$.
+    \begin{equation} \label{eq:prop_err}
+        \delta_{\text{prop}} \langle\epsilon\rangle = \frac{\sqrt{\sum_{i=1}^{N} (\delta\epsilon_i)^2}}{N}
+    \end{equation}
+
+    \item \textbf{Inverse Average Efficiency ($1/<\epsilon>$):} The reciprocal of the average efficiency, often used in cross-section calculations.
+
+    \item \textbf{Propagated Error of the Inverse ($\delta(1/<\epsilon>)$):} The uncertainty on the inverse efficiency, found using standard error propagation.
+    \begin{equation} \label{eq:inv_err}
+        \delta(1/\langle\epsilon\rangle) = \frac{\delta_{\text{prop}}\langle\epsilon\rangle}{\langle\epsilon\rangle^2}
+    \end{equation}
+\end{itemize}
+
+% --- RESULTS TABLE SECTION ---
+\section{Results: Average Efficiency Tables}
+The final results of the analysis are summarized in the following tables. 
+\begin{itemize}
+ \item Efficiency Table made by using RS-67 LH2 only target \ref{tab:RS67LH2Efficiency}
+ \item Efficiency Table made by using RS-67 all targets \ref{tab:RS67AllEfficiency}
+ \item Efficiency Table made by using RS-57-70 LH2 only target \ref{tab:RS57-70LH2Efficiency}
+ \item Efficiency Table made by using RS-57-70 all targets \ref{tab:RS57-70AllEfficiency}
+\end{itemize}
+%For example, Table~\ref{tab:rs67_lh2} shows results for specific targe
+
+% REMINDER: You must add \caption{} and a unique \label{} to each table inside these files.
+% Example for the first file: \caption{My Table Title}\label{tab:rs67_lh2} \\
+\clearpage
+\subsection{Average Efficiency Calculations using RS67 LH2 target only}
+\input{efficiency_table_RS67_LH2_only_targets.tex}
+\clearpage
+\subsection{Average Efficiency Calculations using RS67 all targets only}
+\input{efficiency_table_RS67_all_targets.tex}
+\clearpage
+\subsection{Average Efficiency Calculations using RS57-70 LH2 target only}
+\input{efficiency_table_RS57-70_LH2_only_targets.tex}
+\clearpage
+\subsection{Average Efficiency Calculations using RS57-70 all targets only}
+\input{efficiency_table_RS57-70_all_targets.tex}
+
+\end{document}
