@@ -1,0 +1,45 @@
+{
+//========= Macro generated from object: Graph/D2 Efficiency 0.00 #leq xF < 0.05 and 4.8 #leq mass < 5.1 GeV/c^{2}
+//========= by ROOT version6.32.12
+   
+   Double_t Graph_fx3001[16] = { 12.5, 37.5, 62.5, 87.5, 112.5, 137.5, 162.5, 187.5, 212.5, 237.5, 262.5, 287.5, 312.5, 337.5, 362.5, 387.5 };
+   Double_t Graph_fy3001[16] = { 1, 1.07574, 0.875223, 0.98665, 1, 0, 0.395742, 2.00372, 0, 0, 0, 0, 0, 0, 0, 0 };
+   Double_t Graph_felx3001[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+   Double_t Graph_fely3001[16] = { 0.26205, -nan, 0.178396, 0.133174, 0.5, 0, 0.264718, -nan, 0, 0, 0, 0, 0, 0, 0, 0 };
+   Double_t Graph_fehx3001[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+   Double_t Graph_fehy3001[16] = { 0, -nan, 0.0801461, 0.0122844, 0, 0.306409, 0.344159, -nan, 0.360055, 0, 0, 0, 0, 0, 0, 0 };
+   TGraphAsymmErrors *grae = new TGraphAsymmErrors(16,Graph_fx3001,Graph_fy3001,Graph_felx3001,Graph_fehx3001,Graph_fely3001,Graph_fehy3001);
+   grae->SetName("Graph");
+   grae->SetTitle("D2 Efficiency 0.00 #leq xF < 0.05 and 4.8 #leq mass < 5.1 GeV/c^{2}");
+   grae->SetFillStyle(1000);
+
+   Int_t ci;      // for color index setting
+   TColor *color; // for color definition with alpha
+   ci = TColor::GetColor("#0000ff");
+   grae->SetMarkerColor(ci);
+   grae->SetMarkerStyle(21);
+   
+   TH1F *Graph_Graph3001 = new TH1F("Graph_Graph3001","D2 Efficiency 0.00 #leq xF < 0.05 and 4.8 #leq mass < 5.1 GeV/c^{2}",100,0,425);
+   Graph_Graph3001->SetMinimum(0);
+   Graph_Graph3001->SetMaximum(1.2);
+   Graph_Graph3001->SetDirectory(nullptr);
+   Graph_Graph3001->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   Graph_Graph3001->SetLineColor(ci);
+   Graph_Graph3001->GetXaxis()->SetTitle("D2");
+   Graph_Graph3001->GetXaxis()->CenterTitle(true);
+   Graph_Graph3001->GetXaxis()->SetLabelFont(42);
+   Graph_Graph3001->GetXaxis()->SetTitleOffset(1);
+   Graph_Graph3001->GetXaxis()->SetTitleFont(42);
+   Graph_Graph3001->GetYaxis()->SetTitle("Efficiency");
+   Graph_Graph3001->GetYaxis()->CenterTitle(true);
+   Graph_Graph3001->GetYaxis()->SetLabelFont(42);
+   Graph_Graph3001->GetYaxis()->SetTitleFont(42);
+   Graph_Graph3001->GetZaxis()->SetLabelFont(42);
+   Graph_Graph3001->GetZaxis()->SetTitleOffset(1);
+   Graph_Graph3001->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graph_Graph3001);
+   
+   grae->Draw("");
+}
