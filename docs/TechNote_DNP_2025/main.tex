@@ -47,17 +47,18 @@
 % DOCUMENT START
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
+\linenumbers
 % --- Title Block ---
-\title{\textbf{Measurement of the Drell-Yan Absolute Cross-Section in p+p and p+d Collisions with a \SI{120}{\giga\electronvolt} Proton Beam at Fermilab}}
+\title{\textbf{Measurement of the Drell-Yan Absolute Cross-Section in $pp$ Collisions with a 120 GeV Proton Beam at Fermilab}}
 \author[1]{Chatura Kuruppu}
+\author[1]{Stephen Pate-Morales}
 \affil[1]{New Mexico State University, Las Cruces, NM 88003, USA}
 \date{October 2, 2025}
 \maketitle
 
 % --- Abstract ---
 \begin{abstract}
-The proton-induced Drell-Yan process is a powerful experimental tool for probing the antiquark distributions within nucleons. While existing data have extensively covered the region of small parton momentum fraction ($x$), the SeaQuest experiment at Fermilab extends the kinematic reach to larger $x$ values by utilizing a \SI{120}{\giga\electronvolt} proton beam. In this work, we report the measurement of the double-differential Drell-Yan cross-sections, $\diffd^{2}\sigma/\diffd x_{F}\diffd M$, from collisions of protons with both liquid deuterium (p+d) and liquid hydrogen (p+p) targets. These measurements provide direct sensitivity to the $\bar{u}(x) + \bar{d}(x)$ and $\bar{u}(x)$ antiquark distributions of the proton, respectively. The results are compared with theoretical predictions from Quantum Chromodynamics (QCD) using several current parameterizations of the proton's parton distribution functions. Additionally, these new data are compared with previous measurements to examine the scaling behavior of the Drell-Yan cross-section across a broad range of the kinematic variable $\sqrt{\tau}$.
+The proton-induced Drell-Yan process is a powerful experimental tool for probing the antiquark distributions within nucleons. While existing data have extensively covered the region of small parton momentum fraction ($x$), the SeaQuest experiment at Fermilab extends the kinematic reach to larger $x$ values by utilizing a 120 GeV proton beam. In this work, we report the measurement of the double-differential Drell-Yan cross-sections, $\diffd^{2}\sigma/\diffd x_{F}\diffd M$, from collisions of protons with both liquid deuterium (p+d) and liquid hydrogen (p+p) targets. These measurements provide direct sensitivity to the $\bar{u}(x) + \bar{d}(x)$ and $\bar{u}(x)$ antiquark distributions of the proton, respectively. The results are compared with theoretical predictions from Quantum Chromodynamics (QCD) using several current parameterizations of the proton's parton distribution functions. Additionally, these new data are compared with previous measurements to examine the scaling behavior of the Drell-Yan cross-section across a broad range of the kinematic variable $\sqrt{\tau}$.
 \vspace{1em}
 \hrule
 \vspace{1em}
@@ -80,7 +81,7 @@ The proton-induced Drell-Yan process is a powerful experimental tool for probing
 \label{sec:introduction}
 The Drell-Yan process, where a quark from one hadron annihilates with an antiquark from another to produce a lepton-antilepton pair ($q\bar{q} \rightarrow \ell^+\ell^-$), provides a clean and direct probe of the antiquark structure of nucleons. Over the past several decades, Drell-Yan experiments have been instrumental in mapping the parton distribution functions (PDFs) of the proton and other hadrons. However, most existing data are concentrated at small to moderate values of the parton momentum fraction, $x < 0.3$. The region of large $x$ ($x>0.3$) remains relatively unexplored, yet it is crucial for understanding phenomena such as the flavor asymmetry of the proton's light antiquark sea ($\bar{d}(x)/\bar{u}(x)$) and the fundamental mechanisms of non-perturbative QCD that govern hadron structure.
 
-The SeaQuest experiment (E906) at Fermilab was designed specifically to explore this high-$x$ frontier. By impinging a high-intensity \SI{120}{\giga\electronvolt} proton beam from the Main Injector onto various fixed targets, including liquid hydrogen (LH$_2$) and liquid deuterium (LD$_2$), SeaQuest measures dimuon production in a kinematic region sensitive to antiquarks carrying a large fraction of the nucleon's momentum.
+The SeaQuest experiment (E906) at Fermilab was designed specifically to explore this high-$x$ frontier. By impinging a high-intensity 120 GeV proton beam from the Main Injector onto various fixed targets, including liquid hydrogen (LH$_2$) and liquid deuterium (LD$_2$), SeaQuest measures dimuon production in a kinematic region sensitive to antiquarks carrying a large fraction of the nucleon's momentum.
 
 This analysis presents a measurement of the absolute double-differential Drell-Yan cross-section, binned in the dimuon invariant mass ($M$) and Feynman-$x$ ($x_F$), using data collected with the LH$_2$ and LD$_2$ targets. The p+p collisions are primarily sensitive to the $\bar{u}$ distribution in the proton, while the p+d collisions provide information on the sum of $\bar{u}$ and $\bar{d}$. These results provide stringent new constraints on modern PDF parameterizations in the valence-dominated region.
 
@@ -104,8 +105,20 @@ The empty flask data are crucial for subtracting contributions from beam interac
 
 To correct for detector acceptance and reconstruction efficiencies, extensive Monte Carlo (MC) simulations were employed. The simulations model the Drell-Yan process and propagate the resulting muons through a Geant4-based model of the SeaQuest spectrometer. The primary MC files used are:
 \begin{itemize}
-    \item \textbf{Acceptance Study:} Drell-Yan events were generated over a $4\pi$ solid angle ("thrown") and also processed through the full detector simulation and reconstruction chain ("accepted"). This study uses the \texttt{*\_M027\_S001\_*} series of files.
-    \item \textbf{Efficiency Study:} To model the effect of high detector occupancy on track reconstruction, simulated events were processed with ("messy") and without ("clean") the overlay of random background hits from experimental data. This study uses the \texttt{*\_M027\_S002\_*} series of files.
+    \item \textbf{Acceptance Study:} Drell-Yan events were generated over a $4\pi$ solid angle ("thrown") and also processed through the full detector simulation and reconstruction chain ("accepted"). This study uses the \texttt{*\_M027\_S001\_*} series of files:
+    \begin{itemize}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+	    \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+	    \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
+    \end{itemize}
+    \item \textbf{Efficiency Study:} To model the effect of high detector occupancy on track reconstruction, simulated events were processed with ("messy") and without ("clean") the overlay of random background hits from experimental data. This study uses the \texttt{*\_M027\_S002\_*} series of files:
+    \begin{itemize}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S002\_clean\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S002\_messy\_occ\_pTxFweight\_v2.root}    
+    \end{itemize}
 \end{itemize}
 All MC samples are weighted on an event-by-event basis to match the transverse momentum ($p_T$) distribution observed in the data.
 
@@ -115,7 +128,7 @@ A multi-tiered set of selection criteria is applied to isolate high-quality Drel
 \begin{itemize}
     \item \textbf{Data Quality:} Only data from "good spills," as identified by standard run quality monitoring, are included in the analysis. A physics trigger condition (\texttt{MATRIX1 == 1}) is required, selecting events consistent with the passage of two muons through the spectrometer.
     \item \textbf{Track and Dimuon Quality:} A set of stringent cuts, developed by the collaboration and referred to as "Chuck cuts," are applied to ensure well-reconstructed positive and negative muon tracks that form a high-quality common vertex. These cuts impose requirements on track $\chi^2$, momentum, number of hits, and fiducial volume. The full details of these cuts are provided in Appendix \ref{app:event_selection}.
-    \item \textbf{Kinematic Selection:} The analysis focuses on the high-mass continuum, away from the charmonium resonances ($J/\psi, \psi'$). A cut of $M_{\mu\mu} > \SI{4.2}{\giga\electronvolt\per c\squared}$ is applied. The analysis is restricted to the kinematic range $0 < x_F < 0.8$.
+    \item \textbf{Kinematic Selection:} The analysis focuses on the high-mass continuum, away from the charmonium resonances ($J/\psi, \psi'$). A cut of $M_{\mu\mu} > 4.2$ GeV is applied. The analysis is restricted to the kinematic range $0 < x_F < 0.8$.
 \end{itemize}
 
 \subsection{Cross-Section Formalism}
@@ -126,22 +139,23 @@ The double-differential cross-section in a given kinematic bin ($\Delta M, \Delt
 \end{equation}
 where:
 \begin{itemize}
-    \item $N_{DY}$ is the number of Drell-Yan events in the bin after background subtraction.
+    \item $N_{DY}$ is the number of Drell-Yan events in the bin after subtraction of the combinatoric and empty flask backgrounds (see \cite{alternativeDY} DocDB 11322).
+    $$N_{DY} = N_{\rm LH2}-N_{\rm LH2,~mixed} - \frac{I_{\rm LH2}}{I_{\rm flask}}\left( N_{\rm flask}-N_{\rm flask,~mixed}\right)$$
     \item $\mathcal{L}$ is the integrated luminosity for the dataset.
-    \item $\epsilon_{\text{total}}$ is the total correction factor, accounting for all inefficiencies.
+    \item $\epsilon_{\text{total}}$ is the total correction factor, accounting for acceptance and inefficiencies.
 \end{itemize}
 The integrated luminosity, $\mathcal{L}$, is given by the product of the total number of protons incident on the target and the number of target nuclei per unit area:
 \begin{equation}
 \mathcal{L} = N_{\text{incident}} \cdot \frac{N_{A} \rho L}{A} \cdot f_{\text{atten}}
 \label{eq:luminosity}
 \end{equation}
-Here, $N_{\text{incident}}$ is the number of protons on target, $N_A$ is Avogadro's number, $\rho$ is the target density, $L$ is the target length, $A$ is the molar mass, and $f_{\text{atten}}$ is a correction factor for beam attenuation within the thick target. For the \SI{50.8}{cm} LH$_2$ target, with a density of $\rho_H = \SI{0.0708}{g/cm^3}$, the target thickness is $3.5966\ g/cm^{2}$ with a beam attenuation factor of 0.966.
+Here, $N_{\text{incident}}$ is the number of protons on target, $N_A$ is Avogadro's number, $\rho$ is the target density, $L$ is the target length, $A$ is the molar mass, and $f_{\text{atten}}$ is a correction factor for beam attenuation within the thick target. For the $L=50.8$ cm long LH$_2$ target, with a density of $\rho_H=0.0708$~g/cm$^3$, the target thickness is 3.5966 g/cm$^2$ with a beam attenuation factor of 0.966.
 
-The total correction factor, $\epsilon_{\text{total}}$, is the product of several terms determined from MC simulations:
+The total correction factor, $\epsilon_{\text{total}}$, is the product of three terms determined from MC simulations:
 \begin{equation}
 \epsilon_{\text{total}} = \epsilon_{\text{acc}}(M,x_{F}) \cdot \epsilon_{\text{recon}}(M,x_{F}) \cdot \epsilon_{\text{trigger}}
 \end{equation}
-where $\epsilon_{\text{acc}}$ is the geometric and kinematic acceptance of the spectrometer, $\epsilon_{\text{recon}}$ is the track reconstruction efficiency (often called "kTracker efficiency"), and $\epsilon_{\text{trigger}}$ is the trigger efficiency. The calculation of the first two terms is detailed in the following sections.
+where $\epsilon_{\text{acc}}$ is the geometric and kinematic acceptance of the spectrometer, $\epsilon_{\text{recon}}$ is the track reconstruction efficiency (often called "kTracker efficiency"), and $\epsilon_{\text{trigger}}$ is the trigger efficiency. The calculation of these three terms is detailed in the following sections.
 
 \section{Acceptance and Efficiency Corrections}
 \label{sec:corrections}
@@ -160,7 +174,10 @@ This calculation is performed in bins of $M$ and $x_F$. The kinematic binning us
     \item \textbf{Mass Edges (GeV/$c^2$)}: $\{4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.5, 8.7\}$ (11 bins)
 \end{itemize}
 
-The following pages show the calculated acceptance as a function of mass for each of the 16 $x_F$ bins. The plots show the acceptance for the LH$_2$ and LD$_2$ targets, their combined average, and their ratio. The ratio is close to unity across the kinematic range, indicating that target-dependent effects on the acceptance are small.
+The following pages show the calculated acceptance as a function of mass for each of the 16 $x_F$ bins. The plots show the acceptance for the LH$_2$ and LD$_2$ targets, their combined average, and their ratio. The ratio is close to unity across the kinematic range, indicating that target-dependent effects on the acceptance are small. In this case, we compare newly calculated acceptance corrections to the existing acceptance calculations saved in Shivangi's file:
+\begin{verbatim}
+./shivangi/work/analysis/R008/diffCross/v42/5770/looseCut/final/acceptance_h.root
+\end{verbatim}
 
 %--- All Acceptance plots ---
 \begin{figure}[p]
@@ -503,7 +520,7 @@ The following pages show the calculated acceptance as a function of mass for eac
 
 \subsection{Reconstruction Efficiency Correction}
 \label{sec:ktracker_eff}
-The track-finding algorithm ("kTracker") has an efficiency that depends on the detector occupancy---the number of hits from unrelated particles in the detector during an event. This efficiency is studied using "clean" MC simulations (signal only) and "messy" MC simulations (signal with background hits overlaid). The reconstruction efficiency, $\epsilon_{\text{recon}}$, is defined as the ratio of events found in the messy sample to those in the clean sample, as a function of an occupancy-related variable (e.g., D2, the number of hits in Drift Chamber Station 2).
+The track-finding algorithm ("kTracker") has an efficiency that depends on the detector occupancy; the number of hits from unrelated particles in the detector during an event. This efficiency is studied using "clean" MC simulations (signal only) and "messy" MC simulations (signal with background hits overlaid). The reconstruction efficiency, $\epsilon_{\text{recon}}$, is defined as the ratio of events found in the messy sample to those in the clean sample, as a function of an occupancy-related variable (e.g., D2, the number of hits in Drift Chamber Station 2).
 
 \begin{equation}
     \epsilon_{\text{recon}}(\text{D2}, M, x_F) = \frac{N_{\text{reco}}^{\text{messy}}(\text{D2}, M, x_F)}{N_{\text{reco}}^{\text{clean}}(M, x_F)}
@@ -529,7 +546,7 @@ The final correction applied to the data is $1/\langle\epsilon\rangle$, and its 
 \end{equation}
 
 \subsubsection{Efficiency Results}
-The efficiency curves as a function of D2 were generated for all kinematic bins. The following pages display these curves, with each page corresponding to a single bin in $x_F$, showing the results for all 11 mass bins.
+The efficiency curves as a function of D2 were generated for all kinematic bins. The following pages display these curves, with each page corresponding to a single bin in $x_F$, showing the results for all 11 mass bins.  {\bf It is clear that some bins have insufficient statistics, and we should perform additional MC simulation in the near future to remedy this.}
 
 %--- All Efficiency plots ---
 \begin{figure}[p]
@@ -1554,21 +1571,23 @@ The efficiency curves as a function of D2 were generated for all kinematic bins.
 
 \clearpage
 \FloatBarrier
+Several bins exhibit unphysical average efficiencies, with some values equal to zero and others exceeding 100\%. Therefore, only the bins with valid, non-zero kTracker efficiencies are included in the final cross-section calculation.
+\\
 
-Table \ref{tab:efficiency_lh2} summarizes the calculated average efficiencies and their uncertainties for each kinematic bin using the RS-67 LH$_2$ dataset.
+Table \ref{tab:efficiency_lh2} summary of the calculated average efficiencies and their uncertainties for each kinematic bin using the RS-67 LH$_2$ dataset.
 
 %--- The longtable for efficiency results ---
 \begin{longtable}{| l | l | r | r | r | r | r | r |}
 \caption{Average Efficiency and Errors for Bins in $x_F$ and Mass}
-\label{tab:efficiency}
+\label{tab:efficiency_lh2}
 \hline
-        $x_F$ Bin & Mass Bin (GeV/$c^2$) & $N_{\text{events}}$ & $<\epsilon>$ & $\delta_{\text{stat}} <\epsilon>$ & $\delta_{\text{prop}} <\epsilon>$ & $1/<\epsilon>$ & $\delta(1/<\epsilon>)$ \\
+        $x_F$ Bin & Mass Bin (GeV) & $N_{\text{events}}$ & $<\epsilon>$ & $\delta_{\text{stat}} <\epsilon>$ & $\delta_{\text{prop}} <\epsilon>$ & $1/<\epsilon>$ & $\delta(1/<\epsilon>)$ \\
 \hline
 \endfirsthead
 
 \caption[]{{(Continued)}}
 \hline
-        $x_F$ Bin & Mass Bin (GeV/$c^2$) & $N_{\text{events}}$ & $<\epsilon>$ & $\delta_{\text{stat}} <\epsilon>$ & $\delta_{\text{prop}} <\epsilon>$ & $1/<\epsilon>$ & $\delta(1/<\epsilon>)$ \\
+        $x_F$ Bin & Mass Bin (GeV) & $N_{\text{events}}$ & $<\epsilon>$ & $\delta_{\text{stat}} <\epsilon>$ & $\delta_{\text{prop}} <\epsilon>$ & $1/<\epsilon>$ & $\delta(1/<\epsilon>)$ \\
 \hline
 \endhead
 
@@ -1742,6 +1761,10 @@ Table \ref{tab:efficiency_lh2} summarizes the calculated average efficiencies an
         $[$0.75, 0.8$)$ & $[$4.8, 5.1$)$ & 34 & 0.0947 & 0.0366 & 0.0160 & 10.559 & 1.783 \\
 \end{longtable}
 
+\subsection{Trigger Efficiency}
+
+In DocDB 10795 Kenichi performed a trigger efficiency study in support of Hugo's charmonium analysis.  This study showed an efficiency of $0.87 \pm 0.10$ independent of kinematic bin.  This study will need to be redone for the DY region $4.2<M<8.0$.  For this purposes of this release, however, we have slightly enlarged the range of the error to include the possibility of a lower efficiency.  We have adopted the value $\epsilon_{\text{trigger}} = 0.845 \pm 0.125$ temporarily.  We note that this will be the largest contributor to the systematic error described in the next section.
+
 \FloatBarrier
 
 \section{Systematic Uncertainties}
@@ -1754,13 +1777,17 @@ A comprehensive evaluation of systematic uncertainties is essential for a precis
     \item \textbf{Background Subtraction:} Uncertainty in the normalization of the empty flask and combinatorial backgrounds.
     \item \textbf{Event Selection:} Variation of the analysis cuts to test the stability of the final result.
 \end{itemize}
-A detailed quantification of these uncertainties is underway and will be presented in a future version of this note.
+A study of the systematic effect of the combinatoric background subtraction is underway (see DocDB 11307), but this is expected to be purely statistical and not systematic.  
+
+In this report we have computed a systematic uncertainty from three sources: the reconstruction efficiency, the acceptance, and the trigger efficiency.  Those corrections are described in detail in the previous section.  In each case we computed the fractional error in the correction and applied that fraction to the corrected yield in Equation~\ref{eq:modified_cross_section} to obtain the absolute systematic error.  The three systematic errors were added in quadrature.  This total systematic error is displayed as an error band in the plots in the next section.
 
 \section{Results: Double-Differential Cross-Section}
 \label{sec:results}
-Following the application of all corrections and background subtraction procedures, the Drell-Yan double-differential cross-section, $M^3 \diffd^2\sigma / (\diffd M \diffd x_F)$, was extracted for the p+p collisions at $\sqrt{s} = \SI{15.01}{\giga\electronvolt}$. The results are presented in the following figures for all bins of $x_F$.
+Following the application of all corrections and background subtraction procedures, the Drell-Yan double-differential cross-section, $M^3 \diffd^2\sigma / (\diffd M \diffd x_F)$, was extracted for the $pp$ collisions at $\sqrt{s} = 15$ GeV. The results are presented in the following figures for all bins of $x_F$.
 
-Each figure displays the measured cross-section as a function of the dimuon invariant mass, $M$. The inner error bars on the data points represent the statistical uncertainty, while the outer error bars show the statistical and systematic uncertainties added in quadrature. The data are compared with theoretical predictions based on Next-to-Leading Order (NLO) QCD calculations, using various modern PDF sets.
+Each figure displays the measured cross-section as a function of the dimuon invariant mass, $M$. The error bars on the data points represent the statistical uncertainty, while the error bands show the systematic uncertainties. The data are compared with theoretical predictions based on Next-to-Leading Order (NLO) QCD calculations, using various modern PDF sets.
+
+Data points do not appear if the efficiency and/or acceptance for that bin was computed to be zero.
 
 %--- All Cross Section plots ---
 \begin{figure}[p]
@@ -1862,7 +1889,7 @@ Each figure displays the measured cross-section as a function of the dimuon inva
 
 \section{Discussion and Conclusion}
 \label{sec:conclusion}
-This analysis presents the first measurement of the absolute Drell-Yan cross-section from the Fermilab SeaQuest experiment for p+p and p+d collisions at \SI{120}{\giga\electronvolt}. The preliminary results show reasonable agreement with theoretical predictions from NLO QCD using modern PDF sets, although some tension may be apparent in certain kinematic regions. These data, particularly at high $x_F$, provide valuable new constraints for global PDF fits.
+This analysis presents the first measurement of the absolute Drell-Yan cross-section from the Fermilab SeaQuest experiment for $pp$ collisions at 120 GeV. The preliminary results show reasonable agreement with theoretical predictions from NLO QCD using modern PDF sets, although some tension may be apparent in certain kinematic regions. These data, particularly at high $x_F$, provide valuable new constraints for global PDF fits.
 
 The calculation of the reconstruction efficiency correction (Section \ref{sec:ktracker_eff}) highlights a key challenge of the analysis. In kinematic bins with low statistics, both in the data and the MC samples, the determination of the efficiency can be unreliable. In some cases, statistical fluctuations lead to calculated efficiencies greater than one or zero, and these bins must be excluded from the final result. Future analyses will benefit from MC samples with higher statistics to mitigate this issue.
 
@@ -1928,12 +1955,20 @@ mass > 4.2 && xF > 0 && xF < 0.8 && pt < 5 && pt > 0.1
 // occCuts_2111v42
 D1 < 150 && D2 < 150 && D3 < 150 && D4 < 150
 \end{verbatim}}
+\clearpage
+\section*{Acknowledgements}
+The authors wish to express their gratitude to \textbf{Kenichi Nakano (University of Virginia)} and \textbf{Ching Him Leung (Jefferson Laboratory)} for insightful discussions and valuable feedback. We also thank \textbf{Shivangi Prasad (University of Illinois Urbana-Champaign)} and \textbf{Harsha Kaluarachchi (New Mexico State University)} for their helpful conversations and support throughout this work.
 
+\clearpage
 \begin{thebibliography}{99}
     \bibitem{Drell1970}
     S. D. Drell and T.-M. Yan,
     \textit{Massive Lepton-Pair Production in Hadron-Hadron Collisions at High Energies},
     Phys. Rev. Lett. \textbf{25}, 316 (1970).
+    
+    \bibitem{alternativeDY}
+    An alternative proposal for determining DY yields. DocDB 11322-v1
+    
 \end{thebibliography}
 
 \end{document}
