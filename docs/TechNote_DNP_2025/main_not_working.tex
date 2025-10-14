@@ -1,0 +1,301 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+
+% --- Packages for Page Layout and Encoding ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper, margin=1in]{geometry}
+
+% --- Packages for Graphics and Color ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{subcaption} % For subfigures
+\usepackage{placeins}   % Provides \FloatBarrier
+
+% --- Packages for Tables ---
+\usepackage{longtable}
+\usepackage{booktabs} % For professional-looking tables (\toprule, \midrule, \bottomrule)
+\usepackage{tabularx}
+\usepackage{ltablex} % Fixes interaction between longtable and tabularx
+\usepackage{multirow} % <<< NEW: Required for the systematics table
+\usepackage{pdflscape} % <<< NEW: For displaying the wide table in landscape
+
+% --- Packages for Mathematics and Physics ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{braket}
+%\usepackage{siunitx} % For typesetting units and numbers, e.g., \SI{120}{\giga\electronvolt}
+
+% --- Packages for Document Structure and References ---
+\usepackage[hidelinks]{hyperref} % For clickable links
+\usepackage{authblk}           % For author affiliations
+\usepackage{lineno}            % For line numbers
+\usepackage{appendix} % <<< NEW: To handle appendices properly
+%\linenumbers
+
+% --- Custom Commands and Settings ---
+\newcommand{\dyprocess}{\text{p+p} \rightarrow \mu^+\mu^-X}
+\newcommand{\diffd}{\mathrm{d}}
+\renewcommand{\Authand}{, } % Adjusts authblk separator
+%\sisetup{per-mode=symbol} % Uses '/' for units like GeV/c^2
+
+% Fix for "Counter too large" error with many subfigures
+\usepackage{chngcntr}
+\counterwithout{figure}{section}
+\counterwithout{table}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT START
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\linenumbers
+% --- Title Block ---
+\title{\textbf{Measurement of the Drell-Yan Absolute Cross-Section in $pp$ Collisions with a 120 GeV Proton Beam at Fermilab}}
+\author[1]{Chatura Kuruppu}
+\author[1]{Stephen Pate}
+\affil[1]{New Mexico State University, Las Cruces, NM 88003, USA}
+\date{October 6, 2025} % <<< UPDATED: To current date
+\maketitle
+
+% --- Abstract ---
+\begin{abstract}
+The proton-induced Drell-Yan process is a powerful experimental tool for probing the antiquark distributions within nucleons. While existing data have extensively covered the region of small parton momentum fraction ($x$), the SeaQuest experiment at Fermilab extends the kinematic reach to larger $x$ values by utilizing a 120 GeV proton beam. In this work, we report the measurement of the double-differential Drell-Yan cross-sections, $\diffd^{2}\sigma/\diffd x_{F}\diffd M$, from collisions of protons with both liquid deuterium (p+d) and liquid hydrogen (p+p) targets. These measurements provide direct sensitivity to the $\bar{u}(x) + \bar{d}(x)$ and $\bar{u}(x)$ antiquark distributions of the proton, respectively. The results are compared with theoretical predictions from Quantum Chromodynamics (QCD) using several current parameterizations of the proton's parton distribution functions. Additionally, these new data are compared with previous measurements to examine the scaling behavior of the Drell-Yan cross-section across a broad range of the kinematic variable $\sqrt{\tau}$.
+\vspace{1em}
+\hrule
+\vspace{1em}
+\footnotesize{This work was supported in part by US DOE grant DE-FG02-94ER40847.}
+\end{abstract}
+
+\clearpage
+
+% --- Table of Contents, List of Figures, List of Tables ---
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+% --- Main Body of the Document (Sections remain unchanged) ---
+
+\section{Introduction}
+\label{sec:introduction}
+The Drell-Yan process, where a quark from one hadron annihilates with an antiquark from another to produce a lepton-antilepton pair ($q\bar{q} \rightarrow \ell^+\ell^-$), provides a clean and direct probe of the antiquark structure of nucleons. Over the past several decades, Drell-Yan experiments have been instrumental in mapping the parton distribution functions (PDFs) of the proton and other hadrons. However, most existing data are concentrated at small to moderate values of the parton momentum fraction, $x < 0.3$. The region of large $x$ ($x>0.3$) remains relatively unexplored, yet it is crucial for understanding phenomena such as the flavor asymmetry of the proton's light antiquark sea ($\bar{d}(x)/\bar{u}(x)$) and the fundamental mechanisms of non-perturbative QCD that govern hadron structure.
+
+The SeaQuest experiment (E906) at Fermilab was designed specifically to explore this high-$x$ frontier. By impinging a high-intensity 120 GeV proton beam from the Main Injector onto various fixed targets, including liquid hydrogen (LH$_2$) and liquid deuterium (LD$_2$), SeaQuest measures dimuon production in a kinematic region sensitive to antiquarks carrying a large fraction of the nucleon's momentum.
+
+This analysis presents a measurement of the absolute double-differential Drell-Yan cross-section, binned in the dimuon invariant mass ($M$) and Feynman-$x$ ($x_F$), using data collected with the LH$_2$ and LD$_2$ targets. The p+p collisions are primarily sensitive to the $\bar{u}$ distribution in the proton, while the p+d collisions provide information on the sum of $\bar{u}$ and $\bar{d}$. These results provide stringent new constraints on modern PDF parameterizations in the valence-dominated region.
+
+The cross-section is presented in its scaling form, which, in the leading-order Drell-Yan model, is independent of the center-of-mass energy, $\sqrt{s}$:
+\begin{equation}
+    M^{3}\frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} = f(\tau)
+\end{equation}
+where $\tau = M^2/s$. The experimental determination of this quantity requires a precise understanding of the integrated luminosity, detector acceptance, and reconstruction efficiencies, which are detailed in the subsequent sections of this document.
+
+\section{Analysis Methodology}
+\label{sec:methodology}
+The extraction of the Drell-Yan cross-section from the raw data involves several distinct steps: selecting candidate dimuon events, subtracting backgrounds, calculating the integrated luminosity, and correcting for detector- and reconstruction-related inefficiencies.
+
+\subsection{Data and Monte Carlo Samples}
+This analysis utilizes the ``Roadset 67'' dataset collected by the SeaQuest experiment. The primary data files for the liquid hydrogen (LH$_2$) target and the corresponding empty "flask" target runs are saved in:
+\begin{verbatim}
+    /seaquest/users/apun/e906_projects/rs67_merged_files/
+\end{verbatim}
+\begin{itemize}
+    \item \textbf{Data (LH$_2$ Target):} \texttt{merged\_RS67\_3089LH2.root}
+    \item \textbf{Background (Empty Flask):} \texttt{merged\_RS67\_3089Flask.root}
+\end{itemize}
+The empty flask data are crucial for subtracting contributions from beam interactions with the target vessel walls and other upstream material.
+
+To correct for detector acceptance and reconstruction efficiencies, extensive Monte Carlo (MC) simulations were employed. The simulations model the Drell-Yan process and propagate the resulting muons through a Geant4-based model of the SeaQuest spectrometer. The primary MC files used are:
+\begin{itemize}
+    \item \textbf{Acceptance Study:} Drell-Yan events were generated over a $4\pi$ solid angle ("thrown") and also processed through the full detector simulation and reconstruction chain ("accepted"). This study uses the \texttt{*\_M027\_S001\_*} series of files saved in: \begin{verbatim}
+        /seaquest/users/chleung/pT_ReWeight/
+    \end{verbatim}
+    \begin{itemize}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+	    \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+	    \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
+    \end{itemize}
+    \item \textbf{Efficiency Study:} To model the effect of high detector occupancy on track reconstruction, simulated events were processed with ("messy") and without ("clean") the overlay of random background hits from experimental data. This study uses the \texttt{*\_M027\_S002\_*} series of files also saved in the same location:
+    \begin{itemize}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S002\_clean\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S002\_messy\_occ\_pTxFweight\_v2.root}    
+    \end{itemize}
+\end{itemize}
+All MC samples are weighted on an event-by-event basis to match the transverse momentum ($p_T$) distribution observed in the data.
+
+\subsection{Event Selection}
+\label{sec:event_selection}
+A multi-tiered set of selection criteria is applied to isolate high-quality Drell-Yan dimuon events from the large background of other processes.
+\begin{itemize}
+    \item \textbf{Data Quality:} Only data from "good spills," as identified by standard run quality monitoring, are included in the analysis. A physics trigger condition (\texttt{MATRIX1 == 1}) is required, selecting events consistent with the passage of two muons through the spectrometer.
+    \item \textbf{Track and Dimuon Quality:} A set of stringent cuts, developed by the collaboration and referred to as "Chuck cuts," are applied to ensure well-reconstructed positive and negative muon tracks that form a high-quality common vertex. These cuts impose requirements on track $\chi^2$, momentum, number of hits, and fiducial volume. The full details of these cuts are provided in Appendix \ref{app:event_selection}.
+    \item \textbf{Kinematic Selection:} The analysis focuses on the high-mass continuum, away from the charmonium resonances ($J/\psi, \psi'$). A cut of $M_{\mu\mu} > 4.2$ GeV is applied. The analysis is restricted to the kinematic range $0 < x_F < 0.8$.
+\end{itemize}
+
+\subsection{Cross-Section Formalism}
+The double-differential cross-section in a given kinematic bin ($\Delta M, \Delta x_F$) is calculated as:
+\begin{equation}
+\frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} = \frac{N_{DY}}{\Delta M \Delta x_{F} \cdot \mathcal{L} \cdot \epsilon_{\text{total}}}
+\label{eq:modified_cross_section}
+\end{equation}
+where:
+\begin{itemize}
+    \item $N_{DY}$ is the number of Drell-Yan events in the bin after subtraction of the combinatoric and empty flask backgrounds (see \cite{alternativeDY} DocDB 11322).
+    $$N_{DY} = N_{\rm LH2}-N_{\rm LH2,~mixed} - \frac{I_{\rm LH2}}{I_{\rm flask}}\left( N_{\rm flask}-N_{\rm flask,~mixed}\right)$$
+    \item $\mathcal{L}$ is the integrated luminosity for the dataset.
+    \item $\epsilon_{\text{total}}$ is the total correction factor, accounting for acceptance and inefficiencies.
+\end{itemize}
+The integrated luminosity, $\mathcal{L}$, is given by the product of the total number of protons incident on the target and the number of target nuclei per unit area:
+\begin{equation}
+\mathcal{L} = N_{\text{incident}} \cdot \frac{N_{A} \rho L}{A} \cdot f_{\text{atten}}
+\label{eq:luminosity}
+\end{equation}
+Here, $N_{\text{incident}}$ is the number of protons on target, $N_A$ is Avogadro's number, $\rho$ is the target density, $L$ is the target length, $A$ is the molar mass, and $f_{\text{atten}}$ is a correction factor for beam attenuation within the thick target. For the $L=50.8$ cm long LH$_2$ target, with a density of $\rho_H=0.0708$~g/cm$^3$, the target thickness is 3.5966 g/cm$^2$ with a beam attenuation factor of 0.966.
+
+The total correction factor, $\epsilon_{\text{total}}$, is the product of three terms determined from MC simulations:
+\begin{equation}
+\epsilon_{\text{total}} = \epsilon_{\text{acc}}(M,x_{F}) \cdot \epsilon_{\text{recon}}(M,x_{F}) \cdot \epsilon_{\text{trigger}}
+\end{equation}
+where $\epsilon_{\text{acc}}$ is the geometric and kinematic acceptance of the spectrometer, $\epsilon_{\text{recon}}$ is the track reconstruction efficiency (often called "kTracker efficiency"), and $\epsilon_{\text{trigger}}$ is the trigger efficiency. The calculation of these three terms is detailed in the following sections.
+
+% --- The rest of the document sections (3, 4, 5, etc.) would go here ---
+% --- The content is omitted for brevity but is identical to your original file ---
+% --- ... ---
+% --- ... ---
+
+\section{Acceptance and Efficiency Corrections}
+\label{sec:corrections}
+
+% ... (Content of Section 3 is unchanged) ...
+\FloatBarrier
+
+\section{Systematic Uncertainties}
+\label{sec:systematics}
+
+% ... (Content of Section 4 is unchanged) ...
+\FloatBarrier
+
+\section{Results: Double-Differential Cross-Section}
+\label{sec:results}
+
+% ... (Content of Section 5 is unchanged) ...
+\clearpage
+
+\section{Discussion and Conclusion}
+\label{sec:conclusion}
+
+% ... (Content of Section 6 is unchanged) ...
+
+\section{Acknowledgements}
+
+% ... (Content of Section 7 is unchanged) ...
+
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDICES START HERE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{appendices}
+
+\section{Event Selection Criteria}
+\label{app:event_selection}
+
+The analysis relies on a standard set of selection criteria ("cuts") to identify high-quality dimuon events. These are defined for the positive track ($\mu^+$), negative track ($\mu^-$), and the combined dimuon vertex. The cuts are implemented as \texttt{TCut} objects in the ROOT analysis framework. The parameter \texttt{beamOffset} accounts for run-dependent shifts in the beam position.
+
+\subsection{Positive Track Cuts (\texttt{chuckCutsPositive\_2111v42})}
+\label{cut:chuck_positive}
+{\small\begin{verbatim}
+chisq1_target < 15 && pz1_st1 > 9 && pz1_st1 < 75 && nHits1 > 13
+&& x1_t*x1_t + (y1_t-beamOffset)*(y1_t-beamOffset) < 320
+&& x1_d*x1_d + (y1_d-beamOffset)*(y1_d-beamOffset) < 1100
+&& x1_d*x1_d + (y1_d-beamOffset)*(y1_d-beamOffset) > 16
+&& chisq1_target < 1.5*chisq1_upstream && chisq1_target < 1.5*chisq1_dump
+&& z1_v < -5 && z1_v > -320 && chisq1/(nHits1-5) < 12
+&& y1_st1/y1_st3 < 1 && abs(abs(px1_st1-px1_st3)-0.416) < 0.008
+&& abs(py1_st1-py1_st3) < 0.008 && abs(pz1_st1-pz1_st3) < 0.08
+&& y1_st1*y1_st3 > 0 && abs(py1_st1)>0.02
+\end{verbatim}}
+
+\subsection{Negative Track Cuts (\texttt{chuckCutsNegative\_2111v42})}
+\label{cut:chuck_negative}
+{\small\begin{verbatim}
+chisq2_target < 15 && pz2_st1 > 9 && pz2_st1 < 75 && nHits2 > 13
+&& x2_t*x2_t + (y2_t-beamOffset)*(y2_t-beamOffset) < 320
+&& x2_d*x2_d + (y2_d-beamOffset)*(y2_d-beamOffset) < 1100
+&& x2_d*x2_d + (y2_d-beamOffset)*(y2_d-beamOffset) > 16
+&& chisq2_target < 1.5*chisq2_upstream && chisq2_target < 1.5*chisq2_dump
+&& z2_v < -5 && z2_v > -320 && chisq2/(nHits2-5) < 12
+&& y2_st1/y2_st3 < 1 && abs(abs(px2_st1-px2_st3)-0.416) < 0.008
+&& abs(py2_st1-py2_st3) < 0.008 && abs(pz2_st1-pz2_st3) < 0.08
+&& y2_st1*y2_st3 > 0 && abs(py2_st1)>0.02
+\end{verbatim}}
+
+\subsection{Dimuon Cuts (\texttt{chuckCutsDimuon\_2111v42})}
+\label{cut:chuck_dimuon}
+{\small\begin{verbatim}
+abs(dx) < 0.25 && abs(dy-beamOffset) < 0.22 && dz > -280 && dz < -5
+&& abs(dpx) < 1.8 && abs(dpy) < 2 && dpx*dpx + dpy*dpy < 5 && dpz > 38
+&& dpz < 116 && dx*dx + (dy-beamOffset)*(dy-beamOffset) < 0.06
+&& abs(trackSeparation) < 270 && chisq_dimuon < 18
+&& abs(chisq1_target + chisq2_target - chisq_dimuon) < 2
+&& y1_st3*y2_st3 < 0 && nHits1 + nHits2 > 29 && nHits1St1 + nHits2St1 > 8
+&& abs(x1_st1+x2_st1) < 42
+\end{verbatim}}
+
+\subsection{Physics and Occupancy Cuts}
+\label{cut:physics_occ}
+{\small\begin{verbatim}
+// physicsCuts_2111v42
+mass > 4.2 && xF > 0 && xF < 0.8 && pt < 5 && pt > 0.1
+&& abs(pz1_st1-pz2_st1) < 50 && abs(px1_st1-px2_st1) < 3.5
+&& abs(py1_st1-py2_st1) < 3.5 && pz1_st1 > 15 && pz2_st1 > 15
+&& pz1_st1 < 75 && pz2_st1 < 75
+
+// occCuts_2111v42
+D1 < 150 && D2 < 150 && D3 < 150 && D4 < 150
+\end{verbatim}}
+
+\clearpage
+
+% <<< NEW APPENDIX SECTION FOR THE SYSTEMATICS TABLE >>>
+\section{Systematic Uncertainty Table}
+\label{app:systematics_table}
+
+This section contains the summary of systematic and statistical uncertainties for each kinematic bin of Feynman-$x$ ($x_F$) and invariant mass. The values are given in percent (\%).
+
+% --- Using landscape mode for better readability of the wide table ---
+\begin{landscape}
+    \centering
+    \captionof{table}{Summary of uncertainties for each kinematic bin.}
+    \label{tab:systematics_summary}
+    \vspace{1em} % Add a little space before the table
+    \tiny % Use a smaller font size for the large table
+    %\input{final_systematics_table.tex}
+\end{landscape}
+
+\end{appendices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END OF DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+\begin{thebibliography}{99}
+    \bibitem{Drell1970}
+    S. D. Drell and T.-M. Yan,
+    \textit{Massive Lepton-Pair Production in Hadron-Hadron Collisions at High Energies},
+    Phys. Rev. Lett. \textbf{25}, 316 (1970).
+    
+    \bibitem{alternativeDY}
+    An alternative proposal for determining DY yields. DocDB 11322-v1
+    
+\end{thebibliography}
+
+\end{document}

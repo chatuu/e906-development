@@ -51,14 +51,16 @@
 % --- Title Block ---
 \title{\textbf{Measurement of the Drell-Yan Absolute Cross-Section in $pp$ Collisions with a 120 GeV Proton Beam at Fermilab}}
 \author[1]{Chatura Kuruppu}
-\author[1]{Stephen Pate-Morales}
+\author[1]{Stephen Pate}
 \affil[1]{New Mexico State University, Las Cruces, NM 88003, USA}
 \date{October 2, 2025}
 \maketitle
 
 % --- Abstract ---
 \begin{abstract}
-The proton-induced Drell-Yan process is a powerful experimental tool for probing the antiquark distributions within nucleons. While existing data have extensively covered the region of small parton momentum fraction ($x$), the SeaQuest experiment at Fermilab extends the kinematic reach to larger $x$ values by utilizing a 120 GeV proton beam. In this work, we report the measurement of the double-differential Drell-Yan cross-sections, $\diffd^{2}\sigma/\diffd x_{F}\diffd M$, from collisions of protons with both liquid deuterium (p+d) and liquid hydrogen (p+p) targets. These measurements provide direct sensitivity to the $\bar{u}(x) + \bar{d}(x)$ and $\bar{u}(x)$ antiquark distributions of the proton, respectively. The results are compared with theoretical predictions from Quantum Chromodynamics (QCD) using several current parameterizations of the proton's parton distribution functions. Additionally, these new data are compared with previous measurements to examine the scaling behavior of the Drell-Yan cross-section across a broad range of the kinematic variable $\sqrt{\tau}$.
+This analysis note reports on the determination of $pp$ Drell-Yan absolute cross sections from data collected using the Roadset 67 trigger.
+We seek preliminary approval of these results, for presentation in upcoming conferences.  Similar techniques will be used to determine the $pd$ DY cross section, and then we will move on to include data from the other run 2-3 and 5-6 roadsets.
+%The proton-induced Drell-Yan process is a powerful experimental tool for probing the antiquark distributions within nucleons. While existing data have extensively covered the region of small parton momentum fraction ($x$), the SeaQuest experiment at Fermilab extends the kinematic reach to larger $x$ values by utilizing a 120 GeV proton beam. In this work, we report the measurement of the double-differential Drell-Yan cross-sections, $\diffd^{2}\sigma/\diffd x_{F}\diffd M$, from collisions of protons with both liquid deuterium (p+d) and liquid hydrogen (p+p) targets. These measurements provide direct sensitivity to the $\bar{u}(x) + \bar{d}(x)$ and $\bar{u}(x)$ antiquark distributions of the proton, respectively. The results are compared with theoretical predictions from Quantum Chromodynamics (QCD) using several current parameterizations of the proton's parton distribution functions. Additionally, these new data are compared with previous measurements to examine the scaling behavior of the Drell-Yan cross-section across a broad range of the kinematic variable $\sqrt{\tau}$.
 \vspace{1em}
 \hrule
 \vspace{1em}
@@ -96,7 +98,10 @@ where $\tau = M^2/s$. The experimental determination of this quantity requires a
 The extraction of the Drell-Yan cross-section from the raw data involves several distinct steps: selecting candidate dimuon events, subtracting backgrounds, calculating the integrated luminosity, and correcting for detector- and reconstruction-related inefficiencies.
 
 \subsection{Data and Monte Carlo Samples}
-This analysis utilizes the "Roadset 67" dataset collected by the SeaQuest experiment. The primary data files for the liquid hydrogen (LH$_2$) target and the corresponding empty "flask" target runs are:
+This analysis utilizes the ``Roadset 67'' dataset collected by the SeaQuest experiment. The primary data files for the liquid hydrogen (LH$_2$) target and the corresponding empty "flask" target runs are saved in:
+\begin{verbatim}
+    /seaquest/users/apun/e906_projects/rs67_merged_files/
+\end{verbatim}
 \begin{itemize}
     \item \textbf{Data (LH$_2$ Target):} \texttt{merged\_RS67\_3089LH2.root}
     \item \textbf{Background (Empty Flask):} \texttt{merged\_RS67\_3089Flask.root}
@@ -105,7 +110,9 @@ The empty flask data are crucial for subtracting contributions from beam interac
 
 To correct for detector acceptance and reconstruction efficiencies, extensive Monte Carlo (MC) simulations were employed. The simulations model the Drell-Yan process and propagate the resulting muons through a Geant4-based model of the SeaQuest spectrometer. The primary MC files used are:
 \begin{itemize}
-    \item \textbf{Acceptance Study:} Drell-Yan events were generated over a $4\pi$ solid angle ("thrown") and also processed through the full detector simulation and reconstruction chain ("accepted"). This study uses the \texttt{*\_M027\_S001\_*} series of files:
+    \item \textbf{Acceptance Study:} Drell-Yan events were generated over a $4\pi$ solid angle ("thrown") and also processed through the full detector simulation and reconstruction chain ("accepted"). This study uses the \texttt{*\_M027\_S001\_*} series of files saved in: \begin{verbatim}
+        /seaquest/users/chleung/pT_ReWeight/
+    \end{verbatim}
     \begin{itemize}
         \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
 	    \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
@@ -114,7 +121,7 @@ To correct for detector acceptance and reconstruction efficiencies, extensive Mo
         \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
         \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
     \end{itemize}
-    \item \textbf{Efficiency Study:} To model the effect of high detector occupancy on track reconstruction, simulated events were processed with ("messy") and without ("clean") the overlay of random background hits from experimental data. This study uses the \texttt{*\_M027\_S002\_*} series of files:
+    \item \textbf{Efficiency Study:} To model the effect of high detector occupancy on track reconstruction, simulated events were processed with ("messy") and without ("clean") the overlay of random background hits from experimental data. This study uses the \texttt{*\_M027\_S002\_*} series of files also saved in the same location:
     \begin{itemize}
         \item \textbf{mc\_drellyan\_LH2\_M027\_S002\_clean\_occ\_pTxFweight\_v2.root}
         \item \textbf{mc\_drellyan\_LH2\_M027\_S002\_messy\_occ\_pTxFweight\_v2.root}    
@@ -529,14 +536,17 @@ The track-finding algorithm ("kTracker") has an efficiency that depends on the d
 For each kinematic bin of ($M, x_F$), an efficiency curve as a function of D2 is generated from the MC. To obtain a single correction factor for each bin, an average efficiency, $\langle \epsilon \rangle$, is calculated by weighting this efficiency curve by the D2 distribution of the experimental data in that same bin.
 
 \subsubsection{Uncertainty Propagation}
-An important aspect of this procedure is the correct propagation of uncertainties. For each event in the data with a measured D2 value, an efficiency $\epsilon_{i}$ and its uncertainty $\delta\epsilon_{i}$ are determined by linear interpolation between points on the MC-derived efficiency curve.
+An important aspect of this procedure is the correct propagation of uncertainties. For each event in the data with a measured D2 value, an efficiency $\epsilon_{i}$ and its uncertainty $\delta\epsilon_{i}$ are determined by linear interpolation between points on the MC-derived efficiency curve.  For a given event $i$ the efficiency will be interpolated:
+$$\epsilon_i = \epsilon(D2^-)+\left(\frac{\epsilon(D2^+)-\epsilon(D2^-)}{D2^+-D2^-} \right)\left(D2^+-D2_i\right) $$
+$$\delta\epsilon_i = \frac{1}{D2^+-D2^-}\sqrt{\left(D2^+-D2_i\right)^2\delta\epsilon(D2^+)^2+\left(D2^--D2_i\right)^2\delta\epsilon(D2^-)^2}$$
+where $D2_i$ is the value of D2 for the event $i$, $D2^+$ is the nearest D2 value greater than $D2_i$, $D2^-$ is the nearest D2 value less than $D2_i$, $\epsilon(D2^\pm)$ is the value of the efficiency at $D2^\pm$, and $\delta\epsilon(D2^\pm)$ is the uncertainty in $\epsilon(D2^\pm)$
 
 The average efficiency $\langle\epsilon\rangle$ for a bin containing $N$ data events is the mean of the individual efficiencies:
 \begin{equation} \label{eq:avg_eff_2}
     \langle\epsilon\rangle = \frac{1}{N} \sum_{i=1}^{N} \epsilon_i
 \end{equation}
 
-The uncertainty on this average, $\delta\langle\epsilon\rangle$, has two components: a statistical error from the spread of efficiencies within the data distribution, and a propagated error from the uncertainty on the MC-derived efficiency curve itself. The latter is the dominant systematic uncertainty for this correction and is calculated as:
+The uncertainty on this average, $\delta\langle\epsilon\rangle$, is based on the propagated error from the uncertainty on the MC-derived efficiency curve itself. 
 \begin{equation} \label{eq:prop_err_2}
     \delta_{\text{prop}} \langle\epsilon\rangle = \frac{1}{N} \sqrt{\sum_{i=1}^{N} (\delta\epsilon_i)^2}
 \end{equation}
@@ -546,7 +556,7 @@ The final correction applied to the data is $1/\langle\epsilon\rangle$, and its 
 \end{equation}
 
 \subsubsection{Efficiency Results}
-The efficiency curves as a function of D2 were generated for all kinematic bins. The following pages display these curves, with each page corresponding to a single bin in $x_F$, showing the results for all 11 mass bins.  {\bf It is clear that some bins have insufficient statistics, and we should perform additional MC simulation in the near future to remedy this.}
+The efficiency curves as a function of D2 were generated for all kinematic bins. The following pages display these curves, with each page corresponding to a single bin in $x_F$, showing the results for all 11 mass bins.  {\bf It is clear that some bins have insufficient statistics, and we should perform additional MC simulation in the near future to remedy this.} The efficiency sometimes exceeds 1.0 due to mistakenly reconstructing dimuon events due to ``messy pick-up events'' for some D2 bins.
 
 %--- All Efficiency plots ---
 \begin{figure}[p]
@@ -1509,257 +1519,101 @@ The efficiency curves as a function of D2 were generated for all kinematic bins.
     \caption{Efficiency plots for the $x_F$ bin $0.75 \leq x_F < 0.80$.}
 \end{figure}
 
-\begin{figure}[p]
-    \centering
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass0.pdf}
-        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
-    \end{subfigure}\hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass1.pdf}
-        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
-    \end{subfigure}\hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass2.pdf}
-        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
-    \end{subfigure}\vspace{0.5cm}
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass3.pdf}
-        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
-    \end{subfigure}\hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass4.pdf}
-        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
-    \end{subfigure}\hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass5.pdf}
-        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
-    \end{subfigure}\vspace{0.5cm}
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass6.pdf}
-        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
-    \end{subfigure}\hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass7.pdf}
-        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
-    \end{subfigure}\hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass8.pdf}
-        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
-    \end{subfigure}\vspace{0.5cm}
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass9.pdf}
-        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
-    \end{subfigure}\hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass10.pdf}
-        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
-    \end{subfigure}
-    \caption{Efficiency plots for the $x_F$ bin $0.80 \leq x_F < 0.85$.}
-\end{figure}
+% \begin{figure}[p]
+%     \centering
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass0.pdf}
+%         \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+%         \label{fig:xF16_mass0}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass1.pdf}
+%         \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+%         \label{fig:xF16_mass1}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass2.pdf}
+%         \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+%         \label{fig:xF16_mass2}
+%     \end{subfigure}
+%     \vspace{0.5cm}
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass3.pdf}
+%         \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+%         \label{fig:xF16_mass3}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass4.pdf}
+%         \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+%         \label{fig:xF16_mass4}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass5.pdf}
+%         \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+%         \label{fig:xF16_mass5}
+%     \end{subfigure}
+%     \vspace{0.5cm}
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass6.pdf}
+%         \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+%         \label{fig:xF16_mass6}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass7.pdf}
+%         \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+%         \label{fig:xF16_mass7}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass8.pdf}
+%         \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+%         \label{fig:xF16_mass8}
+%     \end{subfigure}
+%     \vspace{0.5cm}
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass9.pdf}
+%         \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+%         \label{fig:xF16_mass9}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass10.pdf}
+%         \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+%         \label{fig:xF16_mass10}
+%     \end{subfigure}
+%     \hfill
+%     \caption{Efficiency plots for the $x_F$ bin $0.80 \leq x_F < 0.85$.}
+%     \label{fig:xF16}
+% \end{figure}
+
+% \clearpage
+
 
 \clearpage
 \FloatBarrier
-Several bins exhibit unphysical average efficiencies, with some values equal to zero and others exceeding 100\%. Therefore, only the bins with valid, non-zero kTracker efficiencies are included in the final cross-section calculation.
+Several bins exhibit unphysical average efficiencies, with some values equal to zero and others exceeding 100\%. Therefore, only the bins with valid (0, 100], kTracker efficiencies are included in the final cross section calculation.
 \\
 
-Table \ref{tab:efficiency_lh2} summary of the calculated average efficiencies and their uncertainties for each kinematic bin using the RS-67 LH$_2$ dataset.
+Table \ref{tab:efficiency_lh2} lists the calculated average efficiencies and their uncertainties for each kinematic bin using the RS-67 LH$_2$ dataset.
 
 %--- The longtable for efficiency results ---
-\begin{longtable}{| l | l | r | r | r | r | r | r |}
-\caption{Average Efficiency and Errors for Bins in $x_F$ and Mass}
-\label{tab:efficiency_lh2}
-\hline
-        $x_F$ Bin & Mass Bin (GeV) & $N_{\text{events}}$ & $<\epsilon>$ & $\delta_{\text{stat}} <\epsilon>$ & $\delta_{\text{prop}} <\epsilon>$ & $1/<\epsilon>$ & $\delta(1/<\epsilon>)$ \\
-\hline
-\endfirsthead
-
-\caption[]{{(Continued)}}
-\hline
-        $x_F$ Bin & Mass Bin (GeV) & $N_{\text{events}}$ & $<\epsilon>$ & $\delta_{\text{stat}} <\epsilon>$ & $\delta_{\text{prop}} <\epsilon>$ & $1/<\epsilon>$ & $\delta(1/<\epsilon>)$ \\
-\hline
-\endhead
-
-\hline
-\multicolumn{8}{r}{{Continued on next page}} \\
-\endfoot
-
-\hline
-\endlastfoot
-
-        $[$0.0, 0.05$)$ & $[$4.5, 4.8$)$ & 9 & 0.1378 & 0.0878 & 0.0248 & 7.258 & 1.305 \\
-        $[$0.0, 0.05$)$ & $[$4.8, 5.1$)$ & 40 & 0.8807 & 0.0827 & 0.0209 & 1.135 & 0.027 \\
-        $[$0.0, 0.05$)$ & $[$5.1, 5.4$)$ & 72 & 0.6521 & 0.0167 & 0.0216 & 1.534 & 0.051 \\
-        $[$0.0, 0.05$)$ & $[$5.4, 5.7$)$ & 66 & 0.6728 & 0.0262 & 0.0119 & 1.486 & 0.026 \\
-        $[$0.0, 0.05$)$ & $[$5.7, 6.0$)$ & 37 & 0.5828 & 0.0505 & 0.0174 & 1.716 & 0.051 \\
-        $[$0.0, 0.05$)$ & $[$6.0, 6.3$)$ & 26 & 0.6369 & 0.0445 & 0.0190 & 1.570 & 0.047 \\
-        $[$0.0, 0.05$)$ & $[$6.3, 6.6$)$ & 15 & 0.5970 & 0.0532 & 0.0313 & 1.675 & 0.088 \\
-        $[$0.0, 0.05$)$ & $[$6.6, 6.9$)$ & 12 & 0.7055 & 0.0394 & 0.0250 & 1.417 & 0.050 \\
-        $[$0.0, 0.05$)$ & $[$6.9, 7.5$)$ & 9 & 0.6253 & 0.0865 & 0.0272 & 1.599 & 0.070 \\
-        $[$0.0, 0.05$)$ & $[$7.5, 8.7$)$ & 1 & 0.6066 & 0.0000 & 0.0595 & 1.649 & 0.162 \\
-        $[$0.05, 0.1$)$ & $[$4.5, 4.8$)$ & 39 & 0.2746 & 0.0516 & 0.0222 & 3.642 & 0.294 \\
-        $[$0.05, 0.1$)$ & $[$4.8, 5.1$)$ & 81 & 0.5004 & 0.0360 & 0.0185 & 1.999 & 0.074 \\
-        $[$0.05, 0.1$)$ & $[$5.1, 5.4$)$ & 95 & 0.7206 & 0.0381 & 0.0099 & 1.388 & 0.019 \\
-        $[$0.05, 0.1$)$ & $[$5.4, 5.7$)$ & 77 & 0.6718 & 0.0192 & 0.0122 & 1.488 & 0.027 \\
-        $[$0.05, 0.1$)$ & $[$5.7, 6.0$)$ & 53 & 0.7379 & 0.0231 & 0.0122 & 1.355 & 0.022 \\
-        $[$0.05, 0.1$)$ & $[$6.0, 6.3$)$ & 39 & 0.7318 & 0.0325 & 0.0117 & 1.367 & 0.022 \\
-        $[$0.05, 0.1$)$ & $[$6.3, 6.6$)$ & 25 & 0.5964 & 0.0379 & 0.0204 & 1.677 & 0.057 \\
-        $[$0.05, 0.1$)$ & $[$6.6, 6.9$)$ & 5 & 0.5670 & 0.1215 & 0.0382 & 1.764 & 0.119 \\
-        $[$0.05, 0.1$)$ & $[$6.9, 7.5$)$ & 7 & 0.6487 & 0.0764 & 0.0268 & 1.541 & 0.064 \\
-        $[$0.05, 0.1$)$ & $[$7.5, 8.7$)$ & 6 & 0.5979 & 0.1095 & 0.0270 & 1.672 & 0.075 \\
-        $[$0.1, 0.15$)$ & $[$4.5, 4.8$)$ & 96 & 0.5701 & 0.0284 & 0.0173 & 1.754 & 0.053 \\
-        $[$0.1, 0.15$)$ & $[$4.8, 5.1$)$ & 137 & 0.6224 & 0.0151 & 0.0144 & 1.607 & 0.037 \\
-        $[$0.1, 0.15$)$ & $[$5.1, 5.4$)$ & 132 & 0.5965 & 0.0152 & 0.0114 & 1.676 & 0.032 \\
-        $[$0.1, 0.15$)$ & $[$5.4, 5.7$)$ & 87 & 0.6659 & 0.0247 & 0.0091 & 1.502 & 0.021 \\
-        $[$0.1, 0.15$)$ & $[$5.7, 6.0$)$ & 76 & 0.6958 & 0.0183 & 0.0088 & 1.437 & 0.018 \\
-        $[$0.1, 0.15$)$ & $[$6.0, 6.3$)$ & 52 & 0.7145 & 0.0263 & 0.0102 & 1.400 & 0.020 \\
-        $[$0.1, 0.15$)$ & $[$6.3, 6.6$)$ & 28 & 0.7879 & 0.0218 & 0.0113 & 1.269 & 0.018 \\
-        $[$0.1, 0.15$)$ & $[$6.6, 6.9$)$ & 10 & 0.7518 & 0.0446 & 0.0193 & 1.330 & 0.034 \\
-        $[$0.1, 0.15$)$ & $[$6.9, 7.5$)$ & 11 & 0.6798 & 0.0405 & 0.0167 & 1.471 & 0.036 \\
-        $[$0.1, 0.15$)$ & $[$7.5, 8.7$)$ & 7 & 0.7011 & 0.0352 & 0.0140 & 1.426 & 0.029 \\
-        $[$0.15, 0.2$)$ & $[$4.5, 4.8$)$ & 167 & 0.6997 & 0.0217 & 0.0132 & 1.429 & 0.027 \\
-        $[$0.15, 0.2$)$ & $[$4.8, 5.1$)$ & 231 & 0.5373 & 0.0098 & 0.0088 & 1.861 & 0.030 \\
-        $[$0.15, 0.2$)$ & $[$5.1, 5.4$)$ & 201 & 0.6974 & 0.0126 & 0.0070 & 1.434 & 0.014 \\
-        $[$0.15, 0.2$)$ & $[$5.4, 5.7$)$ & 113 & 0.6925 & 0.0214 & 0.0087 & 1.444 & 0.018 \\
-        $[$0.15, 0.2$)$ & $[$5.7, 6.0$)$ & 94 & 0.7358 & 0.0197 & 0.0088 & 1.359 & 0.016 \\
-        $[$0.15, 0.2$)$ & $[$6.0, 6.3$)$ & 67 & 0.7156 & 0.0175 & 0.0089 & 1.397 & 0.017 \\
-        $[$0.15, 0.2$)$ & $[$6.3, 6.6$)$ & 35 & 0.7728 & 0.0346 & 0.0100 & 1.294 & 0.017 \\
-        $[$0.15, 0.2$)$ & $[$6.6, 6.9$)$ & 16 & 0.6784 & 0.0492 & 0.0176 & 1.474 & 0.038 \\
-        $[$0.15, 0.2$)$ & $[$6.9, 7.5$)$ & 12 & 0.6677 & 0.0281 & 0.0149 & 1.498 & 0.033 \\
-        $[$0.15, 0.2$)$ & $[$7.5, 8.7$)$ & 3 & 0.6570 & 0.1554 & 0.0400 & 1.522 & 0.093 \\
-        $[$0.2, 0.25$)$ & $[$4.2, 4.5$)$ & 181 & 0.5438 & 0.0217 & 0.0128 & 1.839 & 0.043 \\
-        $[$0.2, 0.25$)$ & $[$4.5, 4.8$)$ & 281 & 0.6018 & 0.0152 & 0.0074 & 1.662 & 0.021 \\
-        $[$0.2, 0.25$)$ & $[$4.8, 5.1$)$ & 269 & 0.7047 & 0.0114 & 0.0057 & 1.419 & 0.012 \\
-        $[$0.2, 0.25$)$ & $[$5.1, 5.4$)$ & 206 & 0.6898 & 0.0124 & 0.0057 & 1.450 & 0.012 \\
-        $[$0.2, 0.25$)$ & $[$5.4, 5.7$)$ & 143 & 0.6979 & 0.0163 & 0.0067 & 1.433 & 0.014 \\
-        $[$0.2, 0.25$)$ & $[$5.7, 6.0$)$ & 106 & 0.7908 & 0.0127 & 0.0062 & 1.265 & 0.010 \\
-        $[$0.2, 0.25$)$ & $[$6.0, 6.3$)$ & 54 & 0.7371 & 0.0250 & 0.0086 & 1.357 & 0.016 \\
-        $[$0.2, 0.25$)$ & $[$6.3, 6.6$)$ & 46 & 0.7367 & 0.0252 & 0.0097 & 1.357 & 0.018 \\
-        $[$0.2, 0.25$)$ & $[$6.6, 6.9$)$ & 21 & 0.7909 & 0.0341 & 0.0111 & 1.264 & 0.018 \\
-        $[$0.2, 0.25$)$ & $[$6.9, 7.5$)$ & 10 & 0.6953 & 0.0456 & 0.0153 & 1.438 & 0.032 \\
-        $[$0.2, 0.25$)$ & $[$7.5, 8.7$)$ & 6 & 0.7790 & 0.0427 & 0.0117 & 1.284 & 0.019 \\
-        $[$0.25, 0.3$)$ & $[$4.2, 4.5$)$ & 363 & 0.7031 & 0.0120 & 0.0075 & 1.422 & 0.015 \\
-        $[$0.25, 0.3$)$ & $[$4.5, 4.8$)$ & 402 & 0.7172 & 0.0073 & 0.0053 & 1.394 & 0.010 \\
-        $[$0.25, 0.3$)$ & $[$4.8, 5.1$)$ & 316 & 0.7115 & 0.0135 & 0.0046 & 1.406 & 0.009 \\
-        $[$0.25, 0.3$)$ & $[$5.1, 5.4$)$ & 243 & 0.7125 & 0.0110 & 0.0052 & 1.404 & 0.010 \\
-        $[$0.25, 0.3$)$ & $[$5.4, 5.7$)$ & 179 & 0.7724 & 0.0123 & 0.0055 & 1.295 & 0.009 \\
-        $[$0.25, 0.3$)$ & $[$5.7, 6.0$)$ & 89 & 0.7356 & 0.0196 & 0.0074 & 1.359 & 0.014 \\
-        $[$0.25, 0.3$)$ & $[$6.0, 6.3$)$ & 60 & 0.7620 & 0.0156 & 0.0078 & 1.312 & 0.013 \\
-        $[$0.25, 0.3$)$ & $[$6.3, 6.6$)$ & 38 & 0.7720 & 0.0232 & 0.0083 & 1.295 & 0.014 \\
-        $[$0.25, 0.3$)$ & $[$6.6, 6.9$)$ & 26 & 0.6924 & 0.0382 & 0.0134 & 1.444 & 0.028 \\
-        $[$0.25, 0.3$)$ & $[$6.9, 7.5$)$ & 24 & 0.7399 & 0.0379 & 0.0104 & 1.352 & 0.019 \\
-        $[$0.25, 0.3$)$ & $[$7.5, 8.7$)$ & 2 & 0.5631 & 0.0363 & 0.0336 & 1.776 & 0.106 \\
-        $[$0.3, 0.35$)$ & $[$4.2, 4.5$)$ & 542 & 0.7566 & 0.0065 & 0.0051 & 1.322 & 0.009 \\
-        $[$0.3, 0.35$)$ & $[$4.5, 4.8$)$ & 488 & 0.7802 & 0.0082 & 0.0037 & 1.282 & 0.006 \\
-        $[$0.3, 0.35$)$ & $[$4.8, 5.1$)$ & 381 & 0.7314 & 0.0087 & 0.0039 & 1.367 & 0.007 \\
-        $[$0.3, 0.35$)$ & $[$5.1, 5.4$)$ & 271 & 0.7999 & 0.0086 & 0.0038 & 1.250 & 0.006 \\
-        $[$0.3, 0.35$)$ & $[$5.4, 5.7$)$ & 185 & 0.7186 & 0.0118 & 0.0047 & 1.392 & 0.009 \\
-        $[$0.3, 0.35$)$ & $[$5.7, 6.0$)$ & 93 & 0.7165 & 0.0225 & 0.0063 & 1.396 & 0.012 \\
-        $[$0.3, 0.35$)$ & $[$6.0, 6.3$)$ & 60 & 0.7233 & 0.0225 & 0.0083 & 1.383 & 0.016 \\
-        $[$0.3, 0.35$)$ & $[$6.3, 6.6$)$ & 45 & 0.7940 & 0.0231 & 0.0074 & 1.259 & 0.012 \\
-        $[$0.3, 0.35$)$ & $[$6.6, 6.9$)$ & 25 & 0.7720 & 0.0154 & 0.0113 & 1.295 & 0.019 \\
-        $[$0.3, 0.35$)$ & $[$6.9, 7.5$)$ & 19 & 0.7341 & 0.0488 & 0.0124 & 1.362 & 0.023 \\
-        $[$0.3, 0.35$)$ & $[$7.5, 8.7$)$ & 9 & 0.7511 & 0.0670 & 0.0119 & 1.331 & 0.021 \\
-        $[$0.35, 0.4$)$ & $[$4.2, 4.5$)$ & 625 & 0.8121 & 0.0077 & 0.0034 & 1.231 & 0.005 \\
-        $[$0.35, 0.4$)$ & $[$4.5, 4.8$)$ & 543 & 0.7329 & 0.0080 & 0.0034 & 1.364 & 0.006 \\
-        $[$0.35, 0.4$)$ & $[$4.8, 5.1$)$ & 402 & 0.7561 & 0.0070 & 0.0036 & 1.323 & 0.006 \\
-        $[$0.35, 0.4$)$ & $[$5.1, 5.4$)$ & 281 & 0.7953 & 0.0085 & 0.0038 & 1.257 & 0.006 \\
-        $[$0.35, 0.4$)$ & $[$5.4, 5.7$)$ & 147 & 0.7652 & 0.0140 & 0.0046 & 1.307 & 0.008 \\
-        $[$0.35, 0.4$)$ & $[$5.7, 6.0$)$ & 110 & 0.7670 & 0.0171 & 0.0054 & 1.304 & 0.009 \\
-        $[$0.35, 0.4$)$ & $[$6.0, 6.3$)$ & 68 & 0.8024 & 0.0186 & 0.0064 & 1.246 & 0.010 \\
-        $[$0.35, 0.4$)$ & $[$6.3, 6.6$)$ & 43 & 0.7917 & 0.0221 & 0.0077 & 1.263 & 0.012 \\
-        $[$0.35, 0.4$)$ & $[$6.6, 6.9$)$ & 20 & 0.7471 & 0.0310 & 0.0124 & 1.339 & 0.022 \\
-        $[$0.35, 0.4$)$ & $[$6.9, 7.5$)$ & 19 & 0.7659 & 0.0476 & 0.0091 & 1.306 & 0.016 \\
-        $[$0.35, 0.4$)$ & $[$7.5, 8.7$)$ & 8 & 0.6464 & 0.0596 & 0.0164 & 1.547 & 0.039 \\
-        $[$0.4, 0.45$)$ & $[$4.2, 4.5$)$ & 652 & 0.7735 & 0.0068 & 0.0034 & 1.293 & 0.006 \\
-        $[$0.4, 0.45$)$ & $[$4.5, 4.8$)$ & 497 & 0.7426 & 0.0113 & 0.0031 & 1.347 & 0.006 \\
-        $[$0.4, 0.45$)$ & $[$4.8, 5.1$)$ & 400 & 0.7471 & 0.0075 & 0.0032 & 1.339 & 0.006 \\
-        $[$0.4, 0.45$)$ & $[$5.1, 5.4$)$ & 244 & 0.7470 & 0.0091 & 0.0041 & 1.339 & 0.007 \\
-        $[$0.4, 0.45$)$ & $[$5.4, 5.7$)$ & 178 & 0.7796 & 0.0111 & 0.0040 & 1.283 & 0.007 \\
-        $[$0.4, 0.45$)$ & $[$5.7, 6.0$)$ & 94 & 0.7949 & 0.0181 & 0.0054 & 1.258 & 0.008 \\
-        $[$0.4, 0.45$)$ & $[$6.0, 6.3$)$ & 82 & 0.8039 & 0.0141 & 0.0058 & 1.244 & 0.009 \\
-        $[$0.4, 0.45$)$ & $[$6.3, 6.6$)$ & 47 & 0.7396 & 0.0240 & 0.0085 & 1.352 & 0.016 \\
-        $[$0.4, 0.45$)$ & $[$6.6, 6.9$)$ & 24 & 0.8323 & 0.0225 & 0.0085 & 1.202 & 0.012 \\
-        $[$0.4, 0.45$)$ & $[$6.9, 7.5$)$ & 20 & 0.7353 & 0.0435 & 0.0102 & 1.360 & 0.019 \\
-        $[$0.4, 0.45$)$ & $[$7.5, 8.7$)$ & 8 & 0.8233 & 0.0525 & 0.0100 & 1.215 & 0.015 \\
-        $[$0.45, 0.5$)$ & $[$4.2, 4.5$)$ & 671 & 0.7745 & 0.0068 & 0.0030 & 1.291 & 0.005 \\
-        $[$0.45, 0.5$)$ & $[$4.5, 4.8$)$ & 512 & 0.7618 & 0.0060 & 0.0028 & 1.313 & 0.005 \\
-        $[$0.45, 0.5$)$ & $[$4.8, 5.1$)$ & 352 & 0.7306 & 0.0078 & 0.0034 & 1.369 & 0.006 \\
-        $[$0.45, 0.5$)$ & $[$5.1, 5.4$)$ & 219 & 0.7627 & 0.0126 & 0.0043 & 1.311 & 0.007 \\
-        $[$0.45, 0.5$)$ & $[$5.4, 5.7$)$ & 143 & 0.8074 & 0.0098 & 0.0047 & 1.239 & 0.007 \\
-        $[$0.45, 0.5$)$ & $[$5.7, 6.0$)$ & 96 & 0.7845 & 0.0163 & 0.0055 & 1.275 & 0.009 \\
-        $[$0.45, 0.5$)$ & $[$6.0, 6.3$)$ & 58 & 0.7846 & 0.0272 & 0.0073 & 1.275 & 0.012 \\
-        $[$0.45, 0.5$)$ & $[$6.3, 6.6$)$ & 49 & 0.7242 & 0.0193 & 0.0081 & 1.381 & 0.016 \\
-        $[$0.45, 0.5$)$ & $[$6.6, 6.9$)$ & 17 & 0.7580 & 0.0364 & 0.0148 & 1.319 & 0.026 \\
-        $[$0.45, 0.5$)$ & $[$6.9, 7.5$)$ & 27 & 0.7951 & 0.0238 & 0.0064 & 1.258 & 0.010 \\
-        $[$0.45, 0.5$)$ & $[$7.5, 8.7$)$ & 7 & 0.8274 & 0.0525 & 0.0121 & 1.209 & 0.018 \\
-        $[$0.5, 0.55$)$ & $[$4.2, 4.5$)$ & 616 & 0.6899 & 0.0076 & 0.0035 & 1.449 & 0.007 \\
-        $[$0.5, 0.55$)$ & $[$4.5, 4.8$)$ & 395 & 0.7404 & 0.0071 & 0.0034 & 1.351 & 0.006 \\
-        $[$0.5, 0.55$)$ & $[$4.8, 5.1$)$ & 285 & 0.7299 & 0.0106 & 0.0037 & 1.370 & 0.007 \\
-        $[$0.5, 0.55$)$ & $[$5.1, 5.4$)$ & 207 & 0.7855 & 0.0108 & 0.0038 & 1.273 & 0.006 \\
-        $[$0.5, 0.55$)$ & $[$5.4, 5.7$)$ & 152 & 0.7783 & 0.0082 & 0.0042 & 1.285 & 0.007 \\
-        $[$0.5, 0.55$)$ & $[$5.7, 6.0$)$ & 78 & 0.7854 & 0.0165 & 0.0062 & 1.273 & 0.010 \\
-        $[$0.5, 0.55$)$ & $[$6.0, 6.3$)$ & 42 & 0.7132 & 0.0300 & 0.0093 & 1.402 & 0.018 \\
-        $[$0.5, 0.55$)$ & $[$6.3, 6.6$)$ & 38 & 0.8216 & 0.0208 & 0.0073 & 1.217 & 0.011 \\
-        $[$0.5, 0.55$)$ & $[$6.6, 6.9$)$ & 16 & 0.7818 & 0.0286 & 0.0137 & 1.279 & 0.022 \\
-        $[$0.5, 0.55$)$ & $[$6.9, 7.5$)$ & 14 & 0.8153 & 0.0477 & 0.0107 & 1.227 & 0.016 \\
-        $[$0.5, 0.55$)$ & $[$7.5, 8.7$)$ & 10 & 0.7404 & 0.0443 & 0.0111 & 1.351 & 0.020 \\
-        $[$0.55, 0.6$)$ & $[$4.2, 4.5$)$ & 486 & 0.7795 & 0.0079 & 0.0032 & 1.283 & 0.005 \\
-        $[$0.55, 0.6$)$ & $[$4.5, 4.8$)$ & 385 & 0.7572 & 0.0073 & 0.0033 & 1.321 & 0.006 \\
-        $[$0.55, 0.6$)$ & $[$4.8, 5.1$)$ & 245 & 0.7574 & 0.0105 & 0.0041 & 1.320 & 0.007 \\
-        $[$0.55, 0.6$)$ & $[$5.1, 5.4$)$ & 153 & 0.7870 & 0.0131 & 0.0045 & 1.271 & 0.007 \\
-        $[$0.55, 0.6$)$ & $[$5.4, 5.7$)$ & 90 & 0.8021 & 0.0166 & 0.0058 & 1.247 & 0.009 \\
-        $[$0.55, 0.6$)$ & $[$5.7, 6.0$)$ & 59 & 0.7335 & 0.0184 & 0.0064 & 1.363 & 0.012 \\
-        $[$0.55, 0.6$)$ & $[$6.0, 6.3$)$ & 42 & 0.8234 & 0.0219 & 0.0070 & 1.214 & 0.010 \\
-        $[$0.55, 0.6$)$ & $[$6.3, 6.6$)$ & 22 & 0.7949 & 0.0223 & 0.0096 & 1.258 & 0.015 \\
-        $[$0.55, 0.6$)$ & $[$6.6, 6.9$)$ & 16 & 0.8082 & 0.0364 & 0.0122 & 1.237 & 0.019 \\
-        $[$0.55, 0.6$)$ & $[$6.9, 7.5$)$ & 14 & 0.7432 & 0.0579 & 0.0109 & 1.346 & 0.020 \\
-        $[$0.55, 0.6$)$ & $[$7.5, 8.7$)$ & 5 & 0.7910 & 0.0674 & 0.0155 & 1.264 & 0.025 \\
-        $[$0.6, 0.65$)$ & $[$4.2, 4.5$)$ & 380 & 0.7973 & 0.0086 & 0.0034 & 1.254 & 0.005 \\
-        $[$0.6, 0.65$)$ & $[$4.5, 4.8$)$ & 251 & 0.7772 & 0.0104 & 0.0042 & 1.287 & 0.007 \\
-        $[$0.6, 0.65$)$ & $[$4.8, 5.1$)$ & 164 & 0.7728 & 0.0112 & 0.0046 & 1.294 & 0.008 \\
-        $[$0.6, 0.65$)$ & $[$5.1, 5.4$)$ & 108 & 0.8356 & 0.0156 & 0.0044 & 1.197 & 0.006 \\
-        $[$0.6, 0.65$)$ & $[$5.4, 5.7$)$ & 66 & 0.8310 & 0.0158 & 0.0060 & 1.203 & 0.009 \\
-        $[$0.6, 0.65$)$ & $[$5.7, 6.0$)$ & 51 & 0.7211 & 0.0237 & 0.0078 & 1.387 & 0.015 \\
-        $[$0.6, 0.65$)$ & $[$6.0, 6.3$)$ & 38 & 0.8297 & 0.0284 & 0.0081 & 1.205 & 0.012 \\
-        $[$0.6, 0.65$)$ & $[$6.3, 6.6$)$ & 19 & 0.7875 & 0.0322 & 0.0096 & 1.270 & 0.015 \\
-        $[$0.6, 0.65$)$ & $[$6.6, 6.9$)$ & 12 & 0.9017 & 0.0334 & 0.0086 & 1.109 & 0.011 \\
-        $[$0.6, 0.65$)$ & $[$6.9, 7.5$)$ & 10 & 0.8154 & 0.0785 & 0.0137 & 1.226 & 0.021 \\
-        $[$0.6, 0.65$)$ & $[$7.5, 8.7$)$ & 3 & 0.8549 & 0.1118 & 0.0236 & 1.170 & 0.032 \\
-        $[$0.65, 0.7$)$ & $[$4.2, 4.5$)$ & 248 & 0.7996 & 0.0124 & 0.0041 & 1.251 & 0.006 \\
-        $[$0.65, 0.7$)$ & $[$4.5, 4.8$)$ & 181 & 0.7809 & 0.0098 & 0.0046 & 1.281 & 0.008 \\
-        $[$0.65, 0.7$)$ & $[$4.8, 5.1$)$ & 111 & 0.8258 & 0.0126 & 0.0049 & 1.211 & 0.007 \\
-        $[$0.65, 0.7$)$ & $[$5.1, 5.4$)$ & 91 & 0.8077 & 0.0142 & 0.0053 & 1.238 & 0.008 \\
-        $[$0.65, 0.7$)$ & $[$5.4, 5.7$)$ & 55 & 0.7491 & 0.0220 & 0.0068 & 1.335 & 0.012 \\
-        $[$0.65, 0.7$)$ & $[$5.7, 6.0$)$ & 31 & 0.8202 & 0.0300 & 0.0094 & 1.219 & 0.014 \\
-        $[$0.65, 0.7$)$ & $[$6.0, 6.3$)$ & 23 & 0.7967 & 0.0288 & 0.0103 & 1.255 & 0.016 \\
-        $[$0.65, 0.7$)$ & $[$6.3, 6.6$)$ & 9 & 0.7798 & 0.0436 & 0.0173 & 1.282 & 0.028 \\
-        $[$0.65, 0.7$)$ & $[$6.6, 6.9$)$ & 9 & 0.8424 & 0.0382 & 0.0151 & 1.187 & 0.021 \\
-        $[$0.65, 0.7$)$ & $[$6.9, 7.5$)$ & 15 & 0.7883 & 0.0219 & 0.0162 & 1.269 & 0.026 \\
-        $[$0.65, 0.7$)$ & $[$7.5, 8.7$)$ & 5 & 0.0786 & 0.0548 & 0.0410 & 12.717 & 6.635 \\
-        $[$0.7, 0.75$)$ & $[$4.2, 4.5$)$ & 167 & 0.7450 & 0.0129 & 0.0057 & 1.342 & 0.010 \\
-        $[$0.7, 0.75$)$ & $[$4.5, 4.8$)$ & 136 & 0.7774 & 0.0134 & 0.0055 & 1.286 & 0.009 \\
-        $[$0.7, 0.75$)$ & $[$4.8, 5.1$)$ & 86 & 0.7999 & 0.0178 & 0.0068 & 1.250 & 0.011 \\
-        $[$0.7, 0.75$)$ & $[$5.1, 5.4$)$ & 44 & 0.7882 & 0.0227 & 0.0106 & 1.269 & 0.017 \\
-        $[$0.7, 0.75$)$ & $[$5.4, 5.7$)$ & 25 & 0.7779 & 0.0380 & 0.0115 & 1.286 & 0.019 \\
-        $[$0.7, 0.75$)$ & $[$5.7, 6.0$)$ & 17 & 0.8597 & 0.0364 & 0.0185 & 1.163 & 0.025 \\
-        $[$0.7, 0.75$)$ & $[$6.0, 6.3$)$ & 15 & 0.7732 & 0.0519 & 0.0268 & 1.293 & 0.045 \\
-        $[$0.7, 0.75$)$ & $[$6.3, 6.6$)$ & 11 & 0.8705 & 0.1232 & 0.0475 & 1.149 & 0.063 \\
-        $[$0.75, 0.8$)$ & $[$4.2, 4.5$)$ & 114 & 0.7278 & 0.0267 & 0.0099 & 1.374 & 0.019 \\
-        $[$0.75, 0.8$)$ & $[$4.5, 4.8$)$ & 51 & 0.9280 & 0.0492 & 0.0090 & 1.078 & 0.010 \\
-        $[$0.75, 0.8$)$ & $[$4.8, 5.1$)$ & 34 & 0.0947 & 0.0366 & 0.0160 & 10.559 & 1.783 \\
-\end{longtable}
+\input{kTrackerTable}
 
 \subsection{Trigger Efficiency}
 
@@ -1779,15 +1633,25 @@ A comprehensive evaluation of systematic uncertainties is essential for a precis
 \end{itemize}
 A study of the systematic effect of the combinatoric background subtraction is underway (see DocDB 11307), but this is expected to be purely statistical and not systematic.  
 
-In this report we have computed a systematic uncertainty from three sources: the reconstruction efficiency, the acceptance, and the trigger efficiency.  Those corrections are described in detail in the previous section.  In each case we computed the fractional error in the correction and applied that fraction to the corrected yield in Equation~\ref{eq:modified_cross_section} to obtain the absolute systematic error.  The three systematic errors were added in quadrature.  This total systematic error is displayed as an error band in the plots in the next section.
+In this report we have computed a systematic uncertainty from three sources: the reconstruction efficiency, the acceptance, and the trigger efficiency.  Those corrections are described in detail in the previous section.  In each case we computed the fractional error in the correction and applied that fraction to the corrected yield in Equation~\ref{eq:modified_cross_section} to obtain the absolute systematic error.  The three systematic errors were added in quadrature.  To summarize:
+$${\rm Let~}C(M,x_F) = \frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} (M,x_F).$$
+$${\rm Then~}\sigma_C^{\rm sys,acc}(M,x_F)=\frac{\delta\epsilon_{\rm acc}(M,x_F)}{\epsilon_{\rm acc}(M,x_F)}C(M,x_F),$$
+$$\sigma_C^{\rm sys,recon}(M,x_F)=\frac{\delta\epsilon_{\rm recon}(M,x_F)}{\epsilon_{\rm recon}(M,x_F)}C(M,x_F),$$
+$$\sigma_C^{\rm sys,trigger}(M,x_F)=\frac{\delta\epsilon_{\rm trigger}}{\epsilon_{\rm trigger}}C(M,x_F),{\rm~and}$$
+$$\sigma_C^{\rm sys,total}(M,x_F)=\sqrt{[\sigma_C^{\rm sys,acc}(M,x_F)]^2+[\sigma_C^{\rm sys,recon}(M,x_F)]^2+[\sigma_C^{\rm sys,trigger}(M,x_F)]^2}.$$
+This total systematic error is displayed as an error band in the plots in the next section.  Table~\ref{tab:acceptance_lh2}, in the Appendix, lists the systematic uncertainties for each bin.
+
+The charmonium paper~\cite{charmonium} uses a 10\% systematic error associated with the integrated luminosity; we adopt the same value. We have not included this in the plots because it is uniform for every point.
 
 \section{Results: Double-Differential Cross-Section}
 \label{sec:results}
-Following the application of all corrections and background subtraction procedures, the Drell-Yan double-differential cross-section, $M^3 \diffd^2\sigma / (\diffd M \diffd x_F)$, was extracted for the $pp$ collisions at $\sqrt{s} = 15$ GeV. The results are presented in the following figures for all bins of $x_F$.
+Following the application of all corrections and background subtraction procedures, the Drell-Yan double-differential cross-section, $M^3 \diffd^2\sigma / (\diffd M \diffd x_F)$, was extracted for the $pp$ collisions at $\sqrt{s} = 15$ GeV. The results are presented in the following figures for all bins of $x_F$. Table~\ref{tab:xsec_lh2}, in the Appendix, lists these results.
 
-Each figure displays the measured cross-section as a function of the dimuon invariant mass, $M$. The error bars on the data points represent the statistical uncertainty, while the error bands show the systematic uncertainties. The data are compared with theoretical predictions based on Next-to-Leading Order (NLO) QCD calculations, using various modern PDF sets.
+Each figure displays the measured cross-section as a function of the dimuon invariant mass, $M$. The error bars on the data points represent the statistical uncertainty, while the error bands show the systematic uncertainties. Please note that the 10\% global uncertainty due to the integrated luminosity is not included in the error bands.
 
-Data points do not appear if the efficiency and/or acceptance for that bin was computed to be zero.
+The data are compared with theoretical predictions based on Next-to-Leading Order (NLO) QCD calculations, using the NNPDF4.0 and CT18 NLO PDFs obtained from LHAPDF.  These calculations were performed by Hugo and are mentioned in DocDB 10167. 
+
+Data points do not appear if the efficiency and/or acceptance for that bin was computed to be zero.  
 
 %--- All Cross Section plots ---
 \begin{figure}[p]
@@ -1886,6 +1750,12 @@ Data points do not appear if the efficiency and/or acceptance for that bin was c
 \caption{Differential cross-section for $x_F$ bin $0.75 \leq x_F < 0.80$.}
 \end{figure}
 \clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/AllXsectionsOnSameCanvas.pdf}
+\caption{Summary of double differential cross-section measurements}
+\end{figure}
+\clearpage
 
 \section{Discussion and Conclusion}
 \label{sec:conclusion}
@@ -1894,6 +1764,9 @@ This analysis presents the first measurement of the absolute Drell-Yan cross-sec
 The calculation of the reconstruction efficiency correction (Section \ref{sec:ktracker_eff}) highlights a key challenge of the analysis. In kinematic bins with low statistics, both in the data and the MC samples, the determination of the efficiency can be unreliable. In some cases, statistical fluctuations lead to calculated efficiencies greater than one or zero, and these bins must be excluded from the final result. Future analyses will benefit from MC samples with higher statistics to mitigate this issue.
 
 In conclusion, we have developed a comprehensive framework for the measurement of the absolute Drell-Yan cross-section. The results presented here demonstrate the capability of the SeaQuest experiment to probe the antiquark structure of the nucleon in the large-$x$ domain. The final results from this analysis will provide crucial input for resolving long-standing questions about the non-perturbative structure of the proton.
+
+\section{Acknowledgements}
+The authors wish to express their gratitude to \textbf{Kenichi Nakano (University of Virginia)} and \textbf{Ching Him Leung (Jefferson Laboratory)} for insightful discussions and valuable feedback. We also thank \textbf{Shivangi Prasad (University of Illinois Urbana-Champaign)} and \textbf{Harsha Kaluarachchi (New Mexico State University)} for their helpful conversations and support throughout this work.
 
 \clearpage
 
@@ -1955,20 +1828,35 @@ mass > 4.2 && xF > 0 && xF < 0.8 && pt < 5 && pt > 0.1
 // occCuts_2111v42
 D1 < 150 && D2 < 150 && D3 < 150 && D4 < 150
 \end{verbatim}}
-\clearpage
-\section*{Acknowledgements}
-The authors wish to express their gratitude to \textbf{Kenichi Nakano (University of Virginia)} and \textbf{Ching Him Leung (Jefferson Laboratory)} for insightful discussions and valuable feedback. We also thank \textbf{Shivangi Prasad (University of Illinois Urbana-Champaign)} and \textbf{Harsha Kaluarachchi (New Mexico State University)} for their helpful conversations and support throughout this work.
 
+\clearpage
+\section{Appendix: Table of Systematic Errors}
+\label{app:systematics_table}
+
+%--- The longtable for efficiency results ---
+\input{SystematicsTable}
+\clearpage
+
+
+\section{Appendix: Table of $M^{3}\frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}}$ Cross-Section Values}
+\label{app:xsec_table}
+
+%--- The longtable for efficiency results ---
+\input{XSecTable}
 \clearpage
 \begin{thebibliography}{99}
     \bibitem{Drell1970}
     S. D. Drell and T.-M. Yan,
     \textit{Massive Lepton-Pair Production in Hadron-Hadron Collisions at High Energies},
     Phys. Rev. Lett. \textbf{25}, 316 (1970).
-    
-    \bibitem{alternativeDY}
-    An alternative proposal for determining DY yields. DocDB 11322-v1
-    
+
+    \bibitem{alternativeDY} S. Pate and C. Kuruppu, 
+    \textit{An alternative proposal for determining DY yields}, DocDB 11322
+
+    \bibitem{charmonium}
+    C.H. Leung et al., \textit{Measurement of $J/\psi$ and $\psi$(2S) production in $p + p$ and $p + d$ interactions at 120 GeV},
+    Physics Letters B \textbf{858}, 139032 (2024).
+ 
 \end{thebibliography}
 
 \end{document}
