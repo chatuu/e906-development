@@ -9,6 +9,14 @@ num_xF_bins = 16
 # Output file name for the plot
 output_filename = "cross_section_comparison.pdf"
 output_filename1 = "cross_section_comparison.root"
+# Define the xF bin ranges to be displayed as labels
+# You can adjust these values to match your specific analysis bins
+xF_bin_ranges = [
+    (0.10, 0.15), (0.15, 0.20), (0.20, 0.25), (0.25, 0.30),
+    (0.30, 0.35), (0.35, 0.40), (0.40, 0.45), (0.45, 0.50),
+    (0.50, 0.55), (0.55, 0.60), (0.60, 0.65), (0.65, 0.70),
+    (0.70, 0.75), (0.75, 0.80), (0.80, 0.85), (0.85, 0.90)
+]
 
 def plot_cross_sections():
     """
@@ -41,8 +49,9 @@ def plot_cross_sections():
     legend.SetFillStyle(0)
     legend.SetTextSize(0.025) # Adjust text size for readability
 
-    # List to store processed histogram information
+    # Lists to store objects to prevent them from being garbage collected
     processed_hists = []
+    latex_labels = []
 
     # Define a list of colors to use for different bins
     colors = [
@@ -81,19 +90,32 @@ def plot_cross_sections():
         hData.Scale(scale_factor)
         hDataOverlay.Scale(scale_factor)
         
-        # Store processed histograms and their original index
-        processed_hists.append({'data': hData, 'sys': hDataOverlay, 'index': i})
+        # Store processed histograms, their original index, and the scale factor
+        processed_hists.append({'data': hData, 'sys': hDataOverlay, 'index': i, 'scale': scale_factor})
 
-    # --- Second pass: Drawing logic, after processing all files ---
+    # --- Drawing logic ---
     if not processed_hists:
         print("Error: No histograms were loaded. Cannot create plot.")
         return
 
-    is_first_draw = True
+    # Create a frame histogram to define the axes and their ranges
+    h_frame = canvas.DrawFrame(2.8, 1e-3, 9.0, 1e35)
+
+    # Set titles and labels on the frame
+    h_frame.SetTitle("DY Absolute Cross-Section Vs Mass for x_{F} bins")
+    h_frame.GetXaxis().SetTitle("Invariant Mass (GeV)")
+    h_frame.GetXaxis().CenterTitle()
+    h_frame.GetXaxis().SetTitleOffset(1.2)
+    h_frame.GetYaxis().SetTitle("M^{3} #frac{d^{2}#sigma}{dMdx_{F}} (nb GeV^{2}) #times 5 #times 10^{x_{F} bin index}")
+    h_frame.GetYaxis().CenterTitle()
+    h_frame.GetYaxis().SetTitleOffset(1.4)
+    
+    # Loop through and draw all processed histograms
     for hist_info in processed_hists:
         hData = hist_info['data']
         hDataOverlay = hist_info['sys']
         bin_index = hist_info['index']
+        scale_factor = hist_info['scale']
         color = colors[bin_index % len(colors)]
 
         # --- Set visual styles ---
@@ -107,31 +129,23 @@ def plot_cross_sections():
         hData.SetMarkerStyle(ROOT.kFullCircle)
         hData.SetMarkerSize(1.0)
 
-        if is_first_draw:
-            # Set titles, labels, and range on the first histogram
-            hDataOverlay.SetTitle("DY Absolute Cross-Section Vs Mass for x_{F} bins")
-            
-            hDataOverlay.GetXaxis().SetTitle("Invariant Mass (GeV)")
-            hDataOverlay.GetXaxis().CenterTitle()
-            hDataOverlay.GetXaxis().SetTitleOffset(1.2)
-            
-            hDataOverlay.GetYaxis().SetTitle("M^{3} #frac{d^{2}#sigma}{dMdx_{F}} (nb GeV^{2}) #times 5 #times 10^{x_{F} bin index}")
-            hDataOverlay.GetYaxis().CenterTitle()
-            hDataOverlay.GetYaxis().SetTitleOffset(1.4)
+        # Draw on top of the frame using the "SAME" option
+        hDataOverlay.Draw("E2 SAME")
+        hData.Draw("E1 P SAME")
 
-            # Set the y-axis range to fixed values
-            hDataOverlay.GetYaxis().SetRangeUser(1e-3, 1e53)
-            
-            hDataOverlay.Draw("E2")
-            hData.Draw("E1 P SAME")
-            is_first_draw = False
-        else:
-            hDataOverlay.Draw("E2 SAME")
-            hData.Draw("E1 P SAME")
+        # Add TLatex label for the xF bin range
+        if bin_index < len(xF_bin_ranges):
+            low_edge, high_edge = xF_bin_ranges[bin_index]
+            y_pos = 1.0 * scale_factor
+            latex = ROOT.TLatex(3.1, y_pos, f"{low_edge:.2f} #leq x_{{F}} < {high_edge:.2f}")
+            latex.SetTextSize(0.025)
+            latex.SetTextColor(color)
+            latex.Draw()
+            latex_labels.append(latex) # Store to prevent garbage collection
 
         legend.AddEntry(hData, f"x_{{F}} bin {bin_index}", "pl")
 
-    legend.Draw()
+    #legend.Draw()
     canvas.Update()
     canvas.SaveAs(output_filename)
     canvas.SaveAs(output_filename1)
@@ -141,3 +155,4 @@ def plot_cross_sections():
 
 if __name__ == "__main__":
     plot_cross_sections()
+
