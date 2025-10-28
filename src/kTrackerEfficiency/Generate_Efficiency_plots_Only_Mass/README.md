@@ -1,4 +1,4 @@
-# Mass-Binned D2 Efficiency Calculator
+# Mass-Binned D2 Efficiency Curves
 
 This project provides a set of scripts to calculate D2 efficiency (from "messy" and "clean" Monte Carlo files) binned by dimuon mass. The calculation is parallelized by mass bin to significantly speed up processing, and a final script merges all results into a single, convenient ROOT file.
 
