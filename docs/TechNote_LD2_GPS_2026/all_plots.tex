@@ -1,0 +1,93 @@
+% This file contains the updated efficiency plots as per the new methodology.
+% It includes the global reconstruction efficiency curve vs D1 occupancy,
+% and the 2-D efficiency maps for Target and Mixed events.
+% All per-bin xF efficiency plots have been removed.
+
+% --- Global Reconstruction Efficiency Curve ---
+\begin{figure}[h!]
+    \centering
+    % REPLACE WITH YOUR ACTUAL GLOBAL EFFICIENCY CURVE FILENAME
+    % Plot should have Efficiency on Y-axis and D1 Occupancy on X-axis
+    \includegraphics[width=0.8\textwidth]{./kTrackerEfficiencyPlots/Global_Reco_Efficiency_vs_D1.pdf}
+    \caption{Global Reconstruction Efficiency curve as a function of the $D1$ occupancy variable, integrated over all kinematic bins.}
+    \label{fig:global_reco_eff}
+\end{figure}
+
+\clearpage
+
+% --- 2-D Average Reconstruction Efficiency Plots ---
+\begin{figure}[h!]
+    \centering
+    % 1a. LH2 target dimuon events (Reconstruction Efficiency)
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        % REPLACE WITH YOUR ACTUAL FILENAME
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/Reco_Eff_LH2_Target_2D.pdf} 
+        \caption{Reconstruction Efficiency (LH2 Target Dimuons)}
+        \label{fig:reco_eff_lh2_target}
+    \end{subfigure}
+    \hfill
+    % 1b. LH2 mixed events (Reconstruction Efficiency)
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        % REPLACE WITH YOUR ACTUAL FILENAME
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/Reco_Eff_LH2_Mixed_2D.pdf}
+        \caption{Reconstruction Efficiency (LH2 Mixed Events)}
+        \label{fig:reco_eff_lh2_mixed}
+    \end{subfigure}
+    
+    \caption{2-D Average Reconstruction Efficiency plots ($D1$-based) for LH2 Target and Mixed events.}
+    \label{fig:reco_eff_2d}
+\end{figure}
+
+% --- 2-D Average Hodoscope Efficiency Plots ---
+\begin{figure}[h!]
+    \centering
+    % 2a. LH2 target dimuon events (Hodoscope Efficiency)
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        % REPLACE WITH YOUR ACTUAL FILENAME
+        \includegraphics[width=\textwidth]{./EfficiencyPlots/Hodo_Eff_LH2_Target_2D.pdf}
+        \caption{Hodoscope Efficiency (LH2 Target Dimuons)}
+        \label{fig:hodo_eff_lh2_target}
+    \end{subfigure}
+    \hfill
+    % 2b. LH2 mixed events (Hodoscope Efficiency)
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        % REPLACE WITH YOUR ACTUAL FILENAME
+        \includegraphics[width=\textwidth]{./EfficiencyPlots/Hodo_Eff_LH2_Mixed_2D.pdf}
+        \caption{Hodoscope Efficiency (LH2 Mixed Events)}
+        \label{fig:hodo_eff_lh2_mixed}
+    \end{subfigure}
+    
+    \caption{2-D Average Hodoscope Efficiency plots for LH2 Target and Mixed events.}
+    \label{fig:hodo_eff_2d}
+\end{figure}
+
+\clearpage
+
+% --- 2-D Total Efficiency Product Plots ---
+\begin{figure}[h!]
+    \centering
+    % 3a. LH2 target dimuon events (Efficiency Product)
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        % REPLACE WITH YOUR ACTUAL FILENAME
+        \includegraphics[width=\textwidth]{./EfficiencyPlots/Total_Eff_LH2_Target_2D.pdf}
+        \caption{Total Efficiency Product (LH2 Target Dimuons)}
+        \label{fig:total_eff_lh2_target}
+    \end{subfigure}
+    \hfill
+    % 3b. LH2 mixed events (Efficiency Product)
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        % REPLACE WITH YOUR ACTUAL FILENAME
+        \includegraphics[width=\textwidth]{./EfficiencyPlots/Total_Eff_LH2_Mixed_2D.pdf}
+        \caption{Total Efficiency Product (LH2 Mixed Events)}
+        \label{fig:total_eff_lh2_mixed}
+    \end{subfigure}
+    
+    \caption{2-D Combined Efficiency Product ($\epsilon_{hodo} \times \epsilon_{recon}$) plots for LH2 Target and Mixed events.}
+    \label{fig:total_eff_2d}
+\end{figure}

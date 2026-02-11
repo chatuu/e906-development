@@ -1,0 +1,1189 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+
+% --- Packages for Page Layout and Encoding ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper, margin=1in]{geometry}
+
+% --- Packages for Graphics and Color ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{subcaption} % For subfigures
+\usepackage{placeins}   % Provides \FloatBarrier to control image placement
+
+% --- Packages for Tables ---
+\usepackage{longtable}
+\usepackage{booktabs} % For professional-looking tables (\toprule, \midrule, \bottomrule)
+\usepackage{tabularx}
+\usepackage{ltablex} % Fixes interaction between longtable and tabularx
+
+% --- Packages for Mathematics and Physics ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{braket}
+
+% --- Packages for Document Structure and References ---
+\usepackage[hidelinks]{hyperref} % For clickable links
+\usepackage{authblk}           % For author affiliations
+\usepackage{lineno}            % For line numbers
+\usepackage{url}
+
+% --- Custom Commands and Settings ---
+\newcommand{\dyprocess}{\text{p+p} \rightarrow \mu^+\mu^-X}
+\newcommand{\diffd}{\mathrm{d}}
+\renewcommand{\Authand}{, } % Adjusts authblk separator
+
+% Fix for "Counter too large" error with many subfigures
+\usepackage{chngcntr}
+\counterwithout{figure}{section}
+\counterwithout{table}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT START
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\linenumbers
+
+% --- Title Block ---
+\title{\textbf{Measurement of the Drell-Yan Absolute Cross-Section in $pp$ and $pd$ Collisions with a 120 GeV Proton Beam at Fermilab}}
+\author[1]{Chatura Kuruppu}
+\author[1]{Stephen Pate}
+\affil[1]{New Mexico State University, Las Cruces, NM 88003, USA}
+\date{\today}
+\maketitle
+
+% --- Abstract ---
+\begin{abstract}
+This analysis note reports on the determination of $pp$ and $pd$ Drell-Yan absolute cross sections from data collected using the Roadset 67 trigger.
+We seek preliminary approval of these results for presentation in upcoming conferences.
+This work extends previous analyses by incorporating both Liquid Hydrogen (LH$_2$) and Liquid Deuterium (LD$_2$) target data.
+Furthermore, significant updates to the efficiency corrections have been implemented. The reconstruction efficiency is now calculated using a global curve based on the $D1$ occupancy variable, integrated over all kinematic bins, as demonstrated in DocDB 11427. 
+Additionally, the hodoscope efficiency correction has been upgraded from a constant factor to a dimuon-level calculation using RoadIDs and paddle-specific efficiencies (DocDB 11467).
+In this work, we report the measurement of the double-differential Drell-Yan cross-sections, $\diffd^{2}\sigma/\diffd x_{F}\diffd M$, and compare the results with theoretical predictions from Quantum Chromodynamics (QCD).
+
+\vspace{1em}
+\hrule
+\vspace{1em}
+\footnotesize{This work was supported in part by US DOE grant DE-FG02-94ER40847.}
+\end{abstract}
+
+\clearpage
+
+% --- Table of Contents, List of Figures, List of Tables ---
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+% --- Sections ---
+
+\section{Introduction}
+\label{sec:introduction}
+The Drell-Yan process, where a quark from one hadron annihilates with an antiquark from another to produce a lepton-antilepton pair ($q\bar{q} \rightarrow \ell^+\ell^-$), provides a clean and direct probe of the antiquark structure of nucleons. Over the past several decades, Drell-Yan experiments have been instrumental in mapping the parton distribution functions (PDFs) of the proton and other hadrons. However, most existing data are concentrated at small to moderate values of the parton momentum fraction, $x < 0.3$. The region of large $x$ ($x>0.3$) remains relatively unexplored, yet it is crucial for understanding phenomena such as the flavor asymmetry of the proton's light antiquark sea ($\bar{d}(x)/\bar{u}(x)$) and the fundamental mechanisms of non-perturbative QCD that govern hadron structure.
+
+The SeaQuest experiment (E906) at Fermilab was designed specifically to explore this high-$x$ frontier. By impinging a high-intensity 120 GeV proton beam from the Main Injector onto various fixed targets, including liquid hydrogen (LH$_2$) and liquid deuterium (LD$_2$), SeaQuest measures dimuon production in a kinematic region sensitive to antiquarks carrying a large fraction of the nucleon's momentum.
+
+This analysis presents a measurement of the absolute double-differential Drell-Yan cross-section, binned in the dimuon invariant mass ($M$) and Feynman-$x$ ($x_F$), using data collected with the LH$_2$ and LD$_2$ targets. The p+p collisions are primarily sensitive to the $\bar{u}$ distribution in the proton, while the p+d collisions provide information on the sum of $\bar{u}$ and $\bar{d}$. These results provide stringent new constraints on modern PDF parameterizations in the valence-dominated region.
+
+The cross-section is presented in its scaling form, which, in the leading-order Drell-Yan model, is independent of the center-of-mass energy, $\sqrt{s}$:
+\begin{equation}
+    M^{3}\frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} = f(\tau)
+\end{equation}
+where $\tau = M^2/s$. The experimental determination of this quantity requires a precise understanding of the integrated luminosity, detector acceptance, and reconstruction efficiencies, which are detailed in the subsequent sections of this document.
+
+\section{Analysis Methodology}
+\label{sec:methodology}
+The extraction of the Drell-Yan cross-section from the raw data involves several distinct steps: selecting candidate dimuon events, subtracting backgrounds, calculating the integrated luminosity, and correcting for detector- and reconstruction-related inefficiencies.
+
+\subsection{Data and Monte Carlo Samples}
+This analysis utilizes the ``Roadset 67'' dataset collected by the SeaQuest experiment. The primary data files for the liquid hydrogen (LH$_2$) target and the corresponding empty ``flask'' target runs are saved in:
+\begin{verbatim}
+    /seaquest/users/apun/e906_projects/rs67_merged_files/
+\end{verbatim}
+\begin{itemize}
+    \item \textbf{Data (LH$_2$ Target):} \texttt{merged\_RS67\_3089LH2.root}
+    \item \textbf{Data (LD$_2$ Target):} \texttt{merged\_RS67\_3089LD2.root}
+    \item \textbf{Background (Empty Flask):} \texttt{merged\_RS67\_3089Flask.root}
+\end{itemize}
+
+To properly correct for detector performance, we calculate the hodoscope and reconstruction efficiency corrections at the dimuon level. The above ROOT files were modified by adding the following variables to each event:
+\begin{itemize}
+    \item \texttt{recoeff}: reconstruction efficiency correction
+    \item \texttt{recoeff\_error}: propagated uncertainty of the reconstruction efficiency correction
+    \item \texttt{hodoeff}: hodoscope efficiency correction
+    \item \texttt{hodoeff\_error}: propagated uncertainty of the hodoscope efficiency correction
+\end{itemize}
+
+The updated datasets containing these variables are saved in the following locations:
+\begin{itemize}
+    \item \texttt{/seaquest/users/ckuruppu/rootfiles/rs67/merged\_RS67\_3089\_LH2\_recoeff\_hodoeff.root}
+    \item \texttt{/seaquest/users/ckuruppu/rootfiles/rs67/merged\_RS67\_3089\_LD2\_recoeff\_hodoeff.root}
+    \item \texttt{/seaquest/users/ckuruppu/rootfiles/rs67/merged\_RS67\_3089\_Flask\_recoeff\_hodoeff.root}
+\end{itemize}
+
+The empty flask data are crucial for subtracting contributions from beam interactions with the target vessel walls and other upstream material.
+
+To correct for detector acceptance and reconstruction efficiencies, extensive Monte Carlo (MC) simulations were employed. The simulations model the Drell-Yan process and propagate the resulting muons through a Geant4-based model of the SeaQuest spectrometer. The primary MC files used are:
+\begin{itemize}
+    \item \textbf{Acceptance Study:} Drell-Yan events were generated over a $4\pi$ solid angle (``thrown'') and also processed through the full detector simulation and reconstruction chain (``accepted''). This study uses the \texttt{*\_M027\_S001\_*} series of files saved in: \begin{verbatim}
+        /seaquest/users/chleung/pT_ReWeight/
+    \end{verbatim}
+    \begin{itemize}
+        \item \texttt{mc\_drellyan\_LH2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+        \item \texttt{mc\_drellyan\_LH2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+        \item \texttt{mc\_drellyan\_LH2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
+        \item \texttt{mc\_drellyan\_LD2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+        \item \texttt{mc\_drellyan\_LD2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+        \item \texttt{mc\_drellyan\_LD2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
+    \end{itemize}
+    \item \textbf{Efficiency Study:} To model the effect of high detector occupancy on track reconstruction, simulated events were processed with (``messy'') and without (``clean'') the overlay of random background hits from experimental data. This study uses the \texttt{*\_M027\_S001\_*} series of files also saved in the same location.
+\end{itemize}
+All MC samples are weighted on an event-by-event basis to match the transverse momentum ($p_T$) distribution observed in the data.
+
+\subsection{Event Selection}
+\label{sec:event_selection}
+A multi-tiered set of selection criteria is applied to isolate high-quality Drell-Yan dimuon events from the large background of other processes.
+\begin{itemize}
+    \item \textbf{Data Quality:} Only data from ``good spills,'' as identified by standard run quality monitoring, are included in the analysis. A physics trigger condition (\texttt{MATRIX1 == 1}) is required, selecting events consistent with the passage of two muons through the spectrometer.
+    \item \textbf{Track and Dimuon Quality:} A set of stringent cuts, developed by the collaboration and referred to as ``Chuck cuts,'' are applied to ensure well-reconstructed positive and negative muon tracks that form a high-quality common vertex. These cuts impose requirements on track $\chi^2$, momentum, number of hits, and fiducial volume. The full details of these cuts are provided in Appendix \ref{app:event_selection}.
+    \item \textbf{Kinematic Selection:} The analysis focuses on the high-mass continuum, away from the charmonium resonances ($J/\psi, \psi'$). A cut of $M_{\mu\mu} > 4.2$ GeV is applied. The analysis is restricted to the kinematic range $0 < x_F < 0.8$.
+\end{itemize}
+
+After applying the event selection criteria mentioned in the Appendix, the total and mix yields for the LH$_2$, LD$_2$, and Empty Flask targets in each kinematic bin are extracted. The distributions are shown in Figure \ref{fig:yield_distributions}.
+
+\begin{figure}[h!]
+    \centering
+    % Row 1: LH2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/YieldDists/Y_total_LH2.pdf}
+        \caption{LH2 total dimuon yield}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/YieldDists/Y_mix_LH2.pdf}
+        \caption{LH2 mix dimuon yield}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 2: LD2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/YieldDists/Y_total_LD2.pdf}
+        \caption{Total LD2 dimuon yield}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/YieldDists/Y_mix_LD2.pdf}
+        \caption{LD2 mix dimuon yield}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 3: Flask
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/YieldDists/Y_total_Flask.pdf}
+        \caption{Total Flask dimuon yield}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/YieldDists/Y_mix_Flask.pdf}
+        \caption{Flask mix dimuon yield}
+    \end{subfigure}
+    
+    \caption{Dimuon distributions after applying event selection criteria.}
+    \label{fig:yield_distributions}
+\end{figure}
+
+\subsection{Cross-Section Formalism}
+The double-differential cross-section in a given kinematic bin ($\Delta M, \Delta x_F$) is calculated as (refer DocDB 11445-V3):
+\begin{equation}
+    \frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} = \frac{1}{\epsilon_{\text{acc}} \Delta M \Delta x_{F}} 
+    \left[ 
+        \frac{Y^{\text{LH2}}_{\text{total}} - Y^{\text{LH2}}_{\text{mixed}}}{\epsilon^{\text{LH2}}_{\text{signal}}} 
+        - \frac{I_{\text{LH2}}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\epsilon^{\text{flask}}_{\text{signal}}} \right) 
+    \right]
+    \label{eq:modified_cross_section}
+\end{equation}
+where:
+\begin{itemize}
+    \item $Y^{\text{LH2}}_{\text{total}}$ is the total LH2 target dimuon yield after the event selection criteria.
+    \item $Y^{\text{LH2}}_{\text{mixed}}$ is the estimated mixed background yield from mixed events for the LH2 target.
+    \item $Y^{\text{flask}}_{\text{total}}$ is the total flask target dimuon yield after the event selection criteria.
+    \item $Y^{\text{flask}}_{\text{mixed}}$ is the estimated mixed background yield from mixed events for the flask target.
+    \item $\epsilon^{\text{LH2}}_{\text{signal}}$ is the average signal efficiency correction for the LH2 target dimuons.
+    \item $\epsilon^{\text{flask}}_{\text{signal}}$ is the average signal efficiency correction for the flask target dimuons.
+    \item $\mathcal{L}$ is the integrated luminosity for the dataset.
+\end{itemize}
+The average signal efficiency correction can be calculated as:
+\begin{equation}
+    \epsilon_{\text{signal}} = \frac{1}{Y_{\text{total}} - Y_{\text{mixed}}}\left[\epsilon_{\text{total}}Y_{\text{total}} - \epsilon_{\text{mixed}}Y_{\text{mixed}}\right]
+\end{equation}
+where:
+\begin{itemize}
+    \item $\epsilon_{\text{total}}$ is the average total efficiency correction for the total yield.
+    \item $\epsilon_{\text{mixed}}$ is the average mixed efficiency correction for the mixed background yield.
+\end{itemize}
+as explained in DocDB 11448-V2.
+
+In each case, efficiency correction of the $i^{th}$ dimuon is defined as:
+\begin{equation}
+    \epsilon^{i} = \epsilon^{i}_{\text{recon}} \cdot \epsilon^{i}_{\text{hodo}}
+\end{equation}
+where $\epsilon^{i}_{\text{recon}}$ is the reconstruction efficiency for the $i^{th}$ dimuon and $\epsilon^{i}_{\text{hodo}}$ is the hodoscope efficiency for the $i^{th}$ dimuon.
+
+The integrated luminosity, $\mathcal{L}$, is given by the product of the total number of protons incident on the target and the number of target nuclei per unit area:
+\begin{equation}
+\mathcal{L} = N_{\text{incident}} \cdot \frac{N_{A} \rho L}{A} \cdot f_{\text{atten}}
+\label{eq:luminosity}
+\end{equation}
+Here, $N_{\text{incident}}$ is the number of protons on target, $N_A$ is Avogadro's number, $\rho$ is the target density, $L$ is the target length, $A$ is the molar mass, and $f_{\text{atten}}$ is a correction factor for beam attenuation within the thick target. For the $L=50.8$ cm long LH$_2$ target, with a density of $\rho_H=0.0708$~g/cm$^3$, the target thickness is 3.5966 g/cm$^2$ with a beam attenuation factor of 0.966.
+
+The total correction factor, $\epsilon_{\text{total}}$, is the product of three terms determined from MC simulations:
+\begin{equation}
+\epsilon_{\text{total}} = \epsilon_{\text{acc}}(M,x_{F}) \cdot \epsilon_{\text{recon}}(M,x_{F}) \cdot \epsilon_{\text{trigger}}
+\end{equation}
+where $\epsilon_{\text{acc}}$ is the geometric and kinematic acceptance of the spectrometer, $\epsilon_{\text{recon}}$ is the track reconstruction efficiency (often called ``kTracker efficiency''), and $\epsilon_{\text{trigger}}$ is the trigger efficiency. The calculation of these three terms is detailed in the following sections.
+
+\FloatBarrier
+\section{Acceptance and Efficiency Corrections}
+\label{sec:corrections}
+
+\subsection{Detector Acceptance Correction}
+The SeaQuest spectrometer has a finite geometric acceptance, which limits the fraction of produced dimuon events that can be detected. This acceptance depends strongly on the event kinematics, primarily the dimuon invariant mass ($M$) and Feynman-$x$ ($x_F$). The acceptance correction factor is determined using MC simulations.
+
+The acceptance, $A(M, x_F)$, is defined as the ratio of the number of simulated events that are successfully reconstructed and pass all analysis cuts ($N_{\text{reco}}$) to the total number of events generated in a given kinematic bin ($N_{\text{gen}}$):
+\begin{equation}
+\text{Acceptance (A)} = \frac{N_{\text{reco}}}{N_{\text{gen}}}
+\label{eq:acceptance}
+\end{equation}
+This calculation is performed in bins of $M$ and $x_F$. The kinematic binning used for this study is defined by the following edges:
+\begin{itemize}
+    \item \textbf{$x_F$ Edges}: $\{0, 0.05, 0.1, \dots, 0.8\}$ (16 bins)
+    \item \textbf{Mass Edges (GeV/$c^2$)}: $\{4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.5, 8.7\}$ (11 bins)
+\end{itemize}
+
+The following pages show the calculated acceptance as a function of mass for each of the 16 $x_F$ bins. The plots show the acceptance for the LH$_2$ and LD$_2$ targets, their combined average, and their ratio. The ratio is close to unity across the kinematic range, indicating that target-dependent effects on the acceptance are small. In this case, we compare newly calculated acceptance corrections to the existing acceptance calculations saved in Shivangi's file:
+\begin{verbatim}
+./shivangi/work/analysis/R008/diffCross/v42/5770/looseCut/final/acceptance_h.root
+\end{verbatim}
+
+%--- All Acceptance plots ---
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_0.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_0.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_0.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_0.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.00 \le x_F < 0.05$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_1.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_1.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_1.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_1.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.05 \le x_F < 0.10$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_2.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_2.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_2.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_2.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.10 \le x_F < 0.15$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_3.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_3.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_3.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_3.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.15 \le x_F < 0.20$.}
+\end{figure}
+
+\clearpage % Force page break to process floats
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_4.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_4.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_4.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_4.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.20 \le x_F < 0.25$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_5.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_5.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_5.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_5.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.25 \le x_F < 0.30$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_6.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_6.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_6.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_6.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.30 \le x_F < 0.35$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_7.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_7.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_7.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_7.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.35 \le x_F < 0.40$.}
+\end{figure}
+
+\clearpage % Force page break to process floats
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_8.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_8.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_8.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_8.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.40 \le x_F < 0.45$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_9.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_9.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_9.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_9.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.45 \le x_F < 0.50$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_10.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_10.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_10.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_10.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.50 \le x_F < 0.55$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_11.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_11.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_11.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_11.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.55 \le x_F < 0.60$.}
+\end{figure}
+
+\clearpage % Force page break to process floats
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_12.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_12.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_12.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_12.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.60 \le x_F < 0.65$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_13.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_13.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_13.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_13.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.65 \le x_F < 0.70$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_14.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_14.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_14.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_14.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.70 \le x_F < 0.75$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_15.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_15.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_15.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_15.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.75 \le x_F < 0.80$.}
+\end{figure}
+
+\FloatBarrier
+\clearpage
+
+\section{Reconstruction Efficiency Correction}
+\label{sec:ktracker_eff}
+The track-finding algorithm (``kTracker'') has an efficiency that depends on the detector occupancy; the number of hits in the detector during an event. This efficiency is studied using ``clean'' MC simulations (signal only) and ``messy'' MC simulations (signal with background hits overlaid). The reconstruction efficiency, $\epsilon_{\text{recon}}$, is defined as the ratio of events found in the messy sample to those in the clean sample, as a function of an occupancy-related variable (e.g., D2, the number of hits in Drift Chamber Station 2).
+
+\begin{equation}
+    \epsilon_{\text{recon}}(\text{D1}) = \frac{N_{\text{reco}}^{\text{messy}}(\text{D1})}{N_{\text{reco}}^{\text{clean}}(\text{D1})}
+\end{equation}
+
+We have updated the reconstruction efficiency calculation compared to previous reconstruction efficiency calculation.
+Previously, reconstruction efficiency was calculated by creating curves in each kinematic bin using the $D2$ occupancy variable. 
+However, it has been demonstrated that there is little correlation between reconstruction efficiency and different kinematic bins (DocDB 11427).
+Therefore, we utilize a \textbf{global reconstruction efficiency curve}, defined with efficiency on the y-axis and the \textbf{$D1$ occupancy variable} on the x-axis, integrated over all kinematic bins. 
+
+\begin{figure}[h!]
+    \centering
+    % REPLACE WITH YOUR ACTUAL GLOBAL EFFICIENCY CURVE FILENAME
+    % Plot should have Efficiency on Y-axis and D1 Occupancy on X-axis
+    \includegraphics[width=0.8\textwidth]{./kTrackerEfficiencyPlots/GlobalEfficiencyCurve.pdf}
+    \caption{Global Reconstruction Efficiency curve as a function of the $D1$ occupancy variable, integrated over all kinematic bins.}
+    \label{fig:global_reco_eff}
+\end{figure}
+
+For each dimuon passing event selection, the reconstruction efficiency is calculated based on its $D1$ occupancy using following equation:
+\begin{equation}
+    \epsilon_i = \epsilon(D1^-) + \left(\frac{\epsilon(D1^+) - \epsilon(D1^-)}{D1^+ - D1^-} \right)\left(D1^+ - D1_i\right)
+\end{equation}
+where $D1_i$ is the $D1$ occupancy for the dimuon event, and $D1^-$ and $D1^+$ are the nearest lower and upper bin edges on the global reconstruction efficiency curve.
+For \textbf{mixed events}, the reconstruction efficiency is calculated using an average $D1$ occupancy:
+\begin{equation}
+    D1_{\text{mixed}} = \frac{D1_{\text{pos}} + D1_{\text{neg}}}{2}
+\end{equation}
+An average reconstruction efficiency, $\langle \epsilon_{\text{recon}} \rangle$, with correctly propagated uncertainty, is then calculated for each kinematic bin.
+The Global Reconstruction Efficiency curve and the 2-D plots of the average efficiency for LH2 target dimuons and LH2 mixed events are presented below.
+
+\subsection{Uncertainty Propagation}
+An important aspect of this procedure is the correct propagation of uncertainties. For each event in the data with a measured D1 value, an efficiency $\epsilon_{i}$ and its uncertainty $\delta\epsilon_{i}$ are determined by linear interpolation between points on the MC-derived efficiency curve.  For a given event $i$ the efficiency will be interpolated:
+\begin{equation}
+\delta\epsilon_i = \frac{1}{D1^+-D1^-}\sqrt{\left(D1^+-D1_i\right)^2\delta\epsilon(D1^+)^2+\left(D1^--D1_i\right)^2\delta\epsilon(D1^-)^2}
+\end{equation}
+where $D1_i$ is the value of D1 for the event $i$, $D1^+$ is the nearest D1 value greater than $D1_i$, $D1^-$ is the nearest D1 value less than $D1_i$, $\epsilon(D1^\pm)$ is the value of the efficiency at $D1^\pm$, and $\delta\epsilon(D1^\pm)$ is the uncertainty in $\epsilon(D1^\pm)$.
+
+The average efficiency $\langle\epsilon\rangle$ for a bin containing $N$ data events is the mean of the individual efficiencies:
+\begin{equation} \label{eq:avg_eff_2}
+    \langle\epsilon\rangle = \frac{1}{N} \sum_{i=1}^{N} \epsilon_i
+\end{equation}
+
+The uncertainty on this average, $\delta\langle\epsilon\rangle$, is based on the propagated error from the uncertainty on the MC-derived efficiency curve itself. 
+\begin{equation} \label{eq:prop_err_2}
+    \delta_{\text{prop}} \langle\epsilon\rangle = \frac{1}{N} \sqrt{\sum_{i=1}^{N} (\delta\epsilon_i)^2}
+\end{equation}
+
+We calculate the average reconstruction efficiency and its propagated uncertainty for both target dimuons and mixed dimuons in each kinematic bin.
+The average reconstruction efficiency correction calculated for each kinematic bin with the propagated uncertainty for target dimuons and mixed events are shown in 2-D plots below in Figure \ref{fig:reco_eff_2d}.
+
+\begin{figure}[h!]
+    \centering
+    % Row 1: LH2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/RecoEffDists/E_total_reco_LH2.pdf} 
+        \caption{LH2 average reconstruction efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/RecoEffDists/E_mix_reco_LH2.pdf}
+        \caption{LH2 average reconstruction efficiency for mix}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 2: LD2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/RecoEffDists/E_total_reco_LD2.pdf} 
+        \caption{LD2 average reconstruction efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/RecoEffDists/E_mix_reco_LD2.pdf}
+        \caption{LD2 average reconstruction efficiency for mix}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 3: Flask
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/RecoEffDists/E_total_reco_Flask.pdf} 
+        \caption{Flask average reconstruction efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/RecoEffDists/E_mix_reco_Flask.pdf}
+        \caption{Flask average reconstruction efficiency for mix}
+    \end{subfigure}
+
+    \caption{Average Reconstruction Efficiencies calculated each kinematic bin with the propagated uncertainties.}
+    \label{fig:reco_eff_2d}
+\end{figure}
+
+% Then we calcualted average reconstruction efficiency correction for signal candidates using: with the correct propagated uncertainties.
+% \begin{figure}[h!]
+%     \centering
+%     % REPLACE WITH YOUR ACTUAL GLOBAL EFFICIENCY CURVE FILENAME
+%     % Plot should have Efficiency on Y-axis and D1 Occupancy on X-axis
+%     \includegraphics[width=0.8\textwidth]{./kTrackerEfficiencyPlots/Signal_Reco_Corrections.pdf}
+%     \caption{Reconstruction efficiency corrections for DY signal candidates.}
+%     \label{fig:global_reco_eff2}
+% \end{figure}
+
+
+% \FloatBarrier
+\section{Hodoscope Efficiency Correction}
+\label{sec:hodo_eff}
+Previously, a constant hodoscope efficiency correction of $0.845 \pm 0.125$ was used (DocDB 11383-v4).
+In this analysis, we calculate the hodoscope efficiency for both target dimuons and mixed dimuons on an event-by-event basis.
+This is done by determining the roadID for the positive track (`posRoad') and the negative track (`negRoad') and utilizing the hodoscope paddle efficiency table created by Harsha (DocDB 11467-v4).
+
+\begin{figure}[h!]
+    \centering
+    % --- FIRST ROW: Top Hodoscopes (4 across) ---
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/H1T_efficiency.pdf} 
+        \caption{H1T}
+        \label{fig:h1t_eff}
+    \end{subfigure}
+    \hfill % Adds horizontal stretching space
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/H2T_efficiency.pdf}
+        \caption{H2T}
+        \label{fig:h2t_eff}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/H3T_efficiency.pdf} 
+        \caption{H3T}
+        \label{fig:h3t_eff}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/H4T_efficiency.pdf}
+        \caption{H4T}
+        \label{fig:h4t_eff}
+    \end{subfigure}
+
+    \vspace{0.5cm} % Vertical gap between the two rows
+
+    % --- SECOND ROW: Bottom Hodoscopes (4 across) ---
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/H1B_efficiency.pdf} 
+        \caption{H1B}
+        \label{fig:h1b_eff}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/H2B_efficiency.pdf}
+        \caption{H2B}
+        \label{fig:h2b_eff}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/H3B_efficiency.pdf} 
+        \caption{H3B}
+        \label{fig:h3b_eff}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/H4B_efficiency.pdf}
+        \caption{H4B}
+        \label{fig:h4b_eff}
+    \end{subfigure}
+    
+    \caption{Hodoscope Paddle Efficiencies calculated in each plane.}
+    \label{fig:hodo_grid_eff}
+\end{figure}
+
+We also calculated hit distributions for each hodoscope paddle and shown below in Figure \ref{fig:hodo_hit_dist}.
+
+\begin{figure}[p] % 'p' allows it to take up a full page if needed
+    \centering
+    
+    % --- ROW 1: Plane 1 ---
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/h_sum_H1T.pdf} 
+        \caption{H1T Plane}
+        \label{fig:h1t_dist}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/h_sum_H1B.pdf}
+        \caption{H1B Plane}
+        \label{fig:h1b_dist}
+    \end{subfigure}
+
+    \vspace{0.2cm} % Vertical gap between rows
+
+    % --- ROW 2: Plane 2 ---
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/h_sum_H2T.pdf} 
+        \caption{H2T Plane}
+        \label{fig:h2t_dist}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/h_sum_H2B.pdf}
+        \caption{H2B Plane}
+        \label{fig:h2b_dist}
+    \end{subfigure}
+
+    \vspace{0.2cm}
+
+    % --- ROW 3: Plane 3 ---
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/h_sum_H3T.pdf} 
+        \caption{H3T Plane}
+        \label{fig:h3t_dist}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/h_sum_H3B.pdf}
+        \caption{H3B Plane}
+        \label{fig:h3b_dist}
+    \end{subfigure}
+
+    \vspace{0.2cm}
+
+    % --- ROW 4: Plane 4 ---
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/h_sum_H4T.pdf} 
+        \caption{H4T Plane}
+        \label{fig:h4t_dist}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./HodoEffPlots/h_sum_H4B.pdf}
+        \caption{H4B Plane}
+        \label{fig:h4b_dist}
+    \end{subfigure}
+    
+    \caption{Hodoscope Paddle hit distributions arranged by Plane (Rows 1-4), Top vs Bottom.}
+    \label{fig:hodo_hit_dist}
+\end{figure}
+
+\clearpage
+The average hodoscope efficiency, $\langle \epsilon_{\text{hodo}} \rangle$, along with propagated uncertainty, is calculated for each kinematic bin.
+2-D plots are shown below in Figure \ref{fig:hodo_eff_2d}.
+
+\begin{figure}[h!]
+    \centering
+    % Row 1: LH2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/HodoEffDists/E_total_hodo_LH2.pdf} 
+        \caption{LH2 average hodoscope efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/HodoEffDists/E_mix_hodo_LH2.pdf}
+        \caption{LH2 average hodoscope efficiency for mix}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 2: LD2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/HodoEffDists/E_total_hodo_LD2.pdf} 
+        \caption{LD2 average hodoscope efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/HodoDists/E_mix_hodo_LD2.pdf}
+        \caption{LD2 average hodoscope efficiency for mix}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 3: Flask
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/HodoEffDists/E_total_hodo_Flask.pdf} 
+        \caption{Flask average hodoscope efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/HodoEffDists/E_mix_hodo_Flask.pdf}
+        \caption{Flask average hodoscope efficiency for mix}
+    \end{subfigure}
+
+    \caption{Average Hodoscope Efficiencies calculated each kinematic bin with the propagated uncertainties.}
+    \label{fig:hodo_eff_2d}
+\end{figure}
+
+\FloatBarrier
+\section{Total Efficiency Correction}
+\label{sec:total_eff}
+
+The total efficiency correction $\epsilon_{\text{total}}$ is calculated on an event-by-event basis as the product of the reconstruction and hodoscope efficiencies:
+\begin{equation}
+    \epsilon_{\text{total}} = \epsilon_{\text{reco}} \times \epsilon_{\text{hodo}}
+\end{equation}
+The average total efficiencies for the total and mixed event yields, along with their propagated uncertainties, are calculated for each kinematic bin and are shown below in Figure \ref{fig:total_eff_2d}.
+
+\begin{figure}[h!]
+    \centering
+    % Row 1: LH2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/FinalEffDists/E_total_final_LH2.pdf} 
+        \caption{LH2 average total efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/FinalEffDists/E_mix_final_LH2.pdf}
+        \caption{LH2 average total efficiency for mix}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 2: LD2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/FinalEffDists/E_total_final_LD2.pdf} 
+        \caption{LD2 average total efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/FinalDists/E_mix_final_LD2.pdf}
+        \caption{LD2 average total efficiency for mix}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 3: Flask
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/FinalEffDists/E_total_final_Flask.pdf} 
+        \caption{Flask average total efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/FinalEffDists/E_mix_final_Flask.pdf}
+        \caption{Flask average total efficiency for mix}
+    \end{subfigure}
+
+    \caption{Average total Efficiencies calculated each kinematic bin with the propagated uncertainties.}
+    \label{fig:total_eff_2d}
+\end{figure}
+
+\FloatBarrier
+\section{Determination of Corrected Yields}
+\label{sec:corrected_yields}
+
+With the average total efficiencies determined, we extract the corrected yields by calculating the average signal efficiency correction using the following equation:
+\begin{equation}
+    \langle\epsilon_{\text{sig}}\rangle = \frac{1}{Y_{\text{total}}-Y_{\text{mix}}}\left[\epsilon_{\text{total}}Y_{\text{total}} - \epsilon_{\text{mix}}Y_{\text{mix}}\right]
+\end{equation}
+We then apply this correction factor to determine the final background-subtracted yield for the signal:
+\begin{equation}
+    Y_{\text{corrected}} = \frac{Y_{\text{total}}-Y_{\text{mix}}}{\langle\epsilon_{\text{sig}}\rangle}
+\end{equation}
+The resulting average signal efficiency corrections and the corrected signal yields for each target configuration are presented in Figure \ref{fig:corrected_yields}.
+
+\begin{figure}[h!]
+    \centering
+    % Row 1: LH2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/SigEffDists/E_final_signal_LH2.pdf} 
+        \caption{LH2 average efficiency correction for signal}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/CorrectedYieldsDists/Y_corrected_LH2.pdf}
+        \caption{Corrected yield for LH2}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 2: LD2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/SigEffDists/E_final_signal_LD2.pdf} 
+        \caption{LD2 average efficiency correction for signal}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/CorrectedYieldsDists/Y_corrected_LD2.pdf}
+        \caption{Corrected yield for LD2}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 3: Flask
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/SigEffDists/E_final_signal_Flask.pdf} 
+        \caption{Flask average efficiency correction for signal}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/CorrectedYieldsDists/Y_corrected_Flask.pdf}
+        \caption{Corrected yield for Flask}
+    \end{subfigure}
+
+    \caption{Average efficiency correction for signal and final corrected yields.}
+    \label{fig:corrected_yields}
+\end{figure}
+
+\clearpage
+\section{Appendix: Event Selection Criteria (Chuck Cuts)}
+\label{app:event_selection}
+
+The event selection criteria, commonly referred to as ``Chuck Cuts,'' are designed to select high-quality dimuon events originating from the target while rejecting backgrounds from the beam dump, upstream interactions, and cosmic rays. The cuts are applied at three levels: single track quality, dimuon vertex/kinematics, and detector occupancy.
+
+In the following tables, the beam vertical offset is denoted as $y_{\text{beam}} = 1.6$ cm.
+
+\subsection{Single Track Cuts}
+These cuts are applied individually to both the positive and negative muon tracks to ensure they are well-reconstructed and pass through the spectrometer magnet apertures correctly.
+
+\begin{table}[h!]
+    \centering
+    \caption{Single track selection criteria.}
+    \label{tab:single_track_cuts}
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        \textbf{Variable} & \textbf{Condition} \\ 
+        \midrule
+        \textbf{Track Fit Quality} & \\
+        Target $\chi^2$ & $\chi^2_{\text{target}} < 15$ \\
+        Reduced $\chi^2$ & $\chi^2 / (N_{\text{hits}} - 5) < 12$ \\
+        Vertex Assumption & $\chi^2_{\text{target}} < 1.5 \times \chi^2_{\text{dump}}$ AND $\chi^2_{\text{target}} < 1.5 \times \chi^2_{\text{upstream}}$ \\
+        \midrule
+        \textbf{Hits \& Geometry} & \\
+        Number of Hits & $N_{\text{hits}} > 13$ \\
+        Station 1 Z-Momentum & $9 < p_{z, \text{st1}} < 75$ GeV/$c$ \\
+        Single Track Vertex $z$ & $-320 < z_{v} < -5$ cm \\
+        \midrule
+        \textbf{Aperture \& Trajectory} & \\
+        Radial pos. at target ($z \approx -130$ cm) & $x^2 + (y-y_{\text{beam}})^2 < 320$ cm$^2$ \\
+        Radial pos. at dump ($z \approx 50$ cm) & $16 < x^2 + (y-y_{\text{beam}})^2 < 1100$ cm$^2$ \\
+        Vertical Focusing & $y_{\text{st1}} / y_{\text{st3}} < 1$ \\
+        Vertical Projection & $y_{\text{st1}} \cdot y_{\text{st3}} > 0$ \\
+        Min Vertical Momentum & $|p_{y, \text{st1}}| > 0.02$ GeV/$c$ \\
+        \midrule
+        \textbf{Momentum Conservation} & \\
+        KMag Momentum Kick & $||p_{x, \text{st1}} - p_{x, \text{st3}}| - 0.416| < 0.008$ GeV/$c$ \\
+        Vertical Bend (Null) & $|p_{y, \text{st1}} - p_{y, \text{st3}}| < 0.008$ GeV/$c$ \\
+        Longitudinal (Null) & $|p_{z, \text{st1}} - p_{z, \text{st3}}| < 0.08$ GeV/$c$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Dimuon Cuts}
+After forming a dimuon pair, the following cuts ensure the vertex is valid and the kinematics fall within the trustworthy region of the spectrometer acceptance.
+
+\begin{table}[h!]
+    \centering
+    \caption{Dimuon kinematic and vertex selection criteria.}
+    \label{tab:dimuon_cuts}
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        \textbf{Variable} & \textbf{Condition} \\ 
+        \midrule
+        \textbf{Vertex Position} & \\
+        Transverse Offset ($x$) & $|dx| < 0.25$ cm \\
+        Vertical Offset ($y$) & $|dy - y_{\text{beam}}| < 0.22$ cm \\
+        Radial Vertex & $dx^2 + (dy - y_{\text{beam}})^2 < 0.06$ cm$^2$ \\
+        Longitudinal Vertex ($z$) & $-280 < dz < -5$ cm \\
+        Vertex Fit Quality & $\chi^2_{\text{dimuon}} < 18$ \\
+        Vertex Consistency & $|\chi^2_{\text{trk1}} + \chi^2_{\text{trk2}} - \chi^2_{\text{dimuon}}| < 2$ \\
+        \midrule
+        \textbf{Kinematics} & \\
+        Invariant Mass & $4.2 < M_{\mu\mu} < 8.8$ GeV/$c^2$ \\
+        Feynman-$x$ & $-0.1 < x_F < 0.95$ \\
+        Transverse Scaling $x_T$ & $0.05 < x_T \le 0.58$ \\
+        Costh (Collins-Soper) & $|\cos \theta| < 0.5$ \\
+        Longitudinal Momentum & $38 < p_z < 116$ GeV/$c$ \\
+        Transverse Momentum limits & $|dp_x| < 1.8$ GeV/$c$, $|dp_y| < 2.0$ GeV/$c$ \\
+        Total $p_T$ & $dp_x^2 + dp_y^2 < 5.0$ (GeV/$c$)$^2$ \\
+        Track Separation & $\text{sep} < 270$ cm \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Occupancy and Topology Cuts}
+These cuts remove events with high detector activity (which complicates reconstruction) and ensure the two muons pass through opposite sides of the spectrometer (the standard ``top/bottom'' trigger topology).
+
+\begin{table}[h!]
+    \centering
+    \caption{Occupancy and topological cuts.}
+    \label{tab:occupancy_cuts}
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        \textbf{Variable} & \textbf{Condition} \\ 
+        \midrule
+        \textbf{Chamber Occupancy} & \\
+        Drift Chamber 1 Hits & $D1 < 400$ \\
+        Drift Chamber 2 Hits & $D2 < 400$ \\
+        Drift Chamber 3 Hits & $D3 < 400$ \\
+        Total Chamber Hits & $D1 + D2 + D3 < 1000$ \\
+        \midrule
+        \textbf{Topology} & \\
+        Opposite Quadrants & $y_{\text{st3}}^{\text{trk1}} \cdot y_{\text{st3}}^{\text{trk2}} < 0$ \\
+        Total Hits on Tracks & $N_{\text{hits}}^{\text{trk1}} + N_{\text{hits}}^{\text{trk2}} > 29$ \\
+        Station 1 Hits Sum & $N_{\text{hits, st1}}^{\text{trk1}} + N_{\text{hits, st1}}^{\text{trk2}} > 8$ \\
+        Station 1 X-Sum & $|x_{\text{st1}}^{\text{trk1}} + x_{\text{st1}}^{\text{trk2}}| < 42$ cm \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\clearpage
+\section{Appendix: Efficiency Plots}
+\label{app:eff_plots}
+This appendix contains the efficiency studies used in this analysis. 
+Figures \ref{fig:reco_eff_2d}, \ref{fig:hodo_eff_2d}, and \ref{fig:hodo_hit_dist} show the relevant efficiency and distribution maps.
+
+%\input{all_plots}
+
+\clearpage
+\section{Appendix: Table of Systematic Errors}
+\label{app:systematics_table}
+\input{SystematicsTable}
+
+\clearpage
+\section{Appendix: Table of Cross-Section Values}
+\label{app:xsec_table}
+\input{XSecTable}
+
+\clearpage
+\section{Appendix: Transverse Momentum Distributions}
+\label{app:pT_plots}
+%\input{pt_plots}
+
+\clearpage
+\begin{thebibliography}{99}
+    \bibitem{Drell1970} S. D. Drell and T. M. Yan, Phys. Rev. Lett. 25, 316 (1970).
+    \bibitem{eff_mix_corr} DocDB 11448-v2, \url{https://seaquest-docdb.fnal.gov/cgi-bin/sso/RetrieveFile?docid=11448&filename=eff_mix_corr.pdf&version=2}
+    \bibitem{reco_eff} DocDB 11427, \url{https://seaquest-docdb.fnal.gov/cgi-bin/sso/RetrieveFile?docid=11427&filename=reco_eff_kinematics.pdf&version=1}
+    \bibitem{hodo_eff} DocDB 11467-v4, \url{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11467}
+    \bibitem{alternativeDY} DocDB 11322.
+\end{thebibliography}
+
+\end{document}

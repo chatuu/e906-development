@@ -1,0 +1,2072 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+
+% --- Packages for Page Layout and Encoding ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper, margin=1in]{geometry}
+
+% --- Packages for Graphics and Color ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{subcaption} % For subfigures
+\usepackage{placeins}   % Provides \FloatBarrier
+
+\usepackage{pdflscape}
+
+% --- Packages for Tables ---
+\usepackage{longtable}
+\usepackage{booktabs} % For professional-looking tables (\toprule, \midrule, \bottomrule)
+\usepackage{tabularx}
+\usepackage{ltablex} % Fixes interaction between longtable and tabularx
+
+% --- Packages for Mathematics and Physics ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{braket}
+%\usepackage{siunitx} % For typesetting units and numbers, e.g., \SI{120}{\giga\electronvolt}
+
+% --- Packages for Document Structure and References ---
+\usepackage[hidelinks]{hyperref} % For clickable links
+\usepackage{authblk}           % For author affiliations
+\usepackage{lineno}            % For line numbers
+%\linenumbers
+
+% --- Custom Commands and Settings ---
+\newcommand{\dyprocess}{\text{p+p} \rightarrow \mu^+\mu^-X}
+\newcommand{\diffd}{\mathrm{d}}
+\renewcommand{\Authand}{, } % Adjusts authblk separator
+%\sisetup{per-mode=symbol} % Uses '/' for units like GeV/c^2
+
+% Fix for "Counter too large" error with many subfigures
+\usepackage{chngcntr}
+\counterwithout{figure}{section}
+\counterwithout{table}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT START
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\linenumbers
+% --- Title Block ---
+\title{\textbf{Measurement of the Drell-Yan Absolute Cross-Section in $pp$ and $pd$ Collisions with a 120 GeV Proton Beam at Fermilab}}
+\author[1]{Chatura Kuruppu}
+\author[1]{Stephen Pate}
+\affil[1]{New Mexico State University, Las Cruces, NM 88003, USA}
+\date{October 2, 2025}
+\maketitle
+
+% --- Abstract ---
+\begin{abstract}
+This analysis note reports on the determination of $pp$ Drell-Yan absolute cross sections from data collected using the Roadset 67 trigger.
+We seek preliminary approval of these results, for presentation in upcoming conferences.  Similar techniques will be used to determine the $pd$ DY cross section, and then we will move on to include data from the other run 2-3 and 5-6 roadsets.
+%The proton-induced Drell-Yan process is a powerful experimental tool for probing the antiquark distributions within nucleons. While existing data have extensively covered the region of small parton momentum fraction ($x$), the SeaQuest experiment at Fermilab extends the kinematic reach to larger $x$ values by utilizing a 120 GeV proton beam. In this work, we report the measurement of the double-differential Drell-Yan cross-sections, $\diffd^{2}\sigma/\diffd x_{F}\diffd M$, from collisions of protons with both liquid deuterium (p+d) and liquid hydrogen (p+p) targets. These measurements provide direct sensitivity to the $\bar{u}(x) + \bar{d}(x)$ and $\bar{u}(x)$ antiquark distributions of the proton, respectively. The results are compared with theoretical predictions from Quantum Chromodynamics (QCD) using several current parameterizations of the proton's parton distribution functions. Additionally, these new data are compared with previous measurements to examine the scaling behavior of the Drell-Yan cross-section across a broad range of the kinematic variable $\sqrt{\tau}$.
+\vspace{1em}
+\hrule
+\vspace{1em}
+\footnotesize{This work was supported in part by US DOE grant DE-FG02-94ER40847.}
+\end{abstract}
+
+\clearpage
+
+% --- Table of Contents, List of Figures, List of Tables ---
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+% --- Sections (Content remains the same, only structural fixes applied) ---
+
+\section{Introduction}
+\label{sec:introduction}
+The Drell-Yan process, where a quark from one hadron annihilates with an antiquark from another to produce a lepton-antilepton pair ($q\bar{q} \rightarrow \ell^+\ell^-$), provides a clean and direct probe of the antiquark structure of nucleons. Over the past several decades, Drell-Yan experiments have been instrumental in mapping the parton distribution functions (PDFs) of the proton and other hadrons. However, most existing data are concentrated at small to moderate values of the parton momentum fraction, $x < 0.3$. The region of large $x$ ($x>0.3$) remains relatively unexplored, yet it is crucial for understanding phenomena such as the flavor asymmetry of the proton's light antiquark sea ($\bar{d}(x)/\bar{u}(x)$) and the fundamental mechanisms of non-perturbative QCD that govern hadron structure.
+
+The SeaQuest experiment (E906) at Fermilab was designed specifically to explore this high-$x$ frontier. By impinging a high-intensity 120 GeV proton beam from the Main Injector onto various fixed targets, including liquid hydrogen (LH$_2$) and liquid deuterium (LD$_2$), SeaQuest measures dimuon production in a kinematic region sensitive to antiquarks carrying a large fraction of the nucleon's momentum.
+
+This analysis presents a measurement of the absolute double-differential Drell-Yan cross-section, binned in the dimuon invariant mass ($M$) and Feynman-$x$ ($x_F$), using data collected with the LH$_2$ and LD$_2$ targets. The p+p collisions are primarily sensitive to the $\bar{u}$ distribution in the proton, while the p+d collisions provide information on the sum of $\bar{u}$ and $\bar{d}$. These results provide stringent new constraints on modern PDF parameterizations in the valence-dominated region.
+
+The cross-section is presented in its scaling form, which, in the leading-order Drell-Yan model, is independent of the center-of-mass energy, $\sqrt{s}$:
+\begin{equation}
+    M^{3}\frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} = f(\tau)
+\end{equation}
+where $\tau = M^2/s$. The experimental determination of this quantity requires a precise understanding of the integrated luminosity, detector acceptance, and reconstruction efficiencies, which are detailed in the subsequent sections of this document.
+
+\section{Analysis Methodology}
+\label{sec:methodology}
+The extraction of the Drell-Yan cross-section from the raw data involves several distinct steps: selecting candidate dimuon events, subtracting backgrounds, calculating the integrated luminosity, and correcting for detector- and reconstruction-related inefficiencies.
+
+\subsection{Data and Monte Carlo Samples}
+This analysis utilizes the ``Roadset 67'' dataset collected by the SeaQuest experiment. The primary data files for the liquid hydrogen (LH$_2$) target and the corresponding empty "flask" target runs are saved in:
+\begin{verbatim}
+    /seaquest/users/apun/e906_projects/rs67_merged_files/
+\end{verbatim}
+\begin{itemize}
+    \item \textbf{Data (LH$_2$ Target):} \texttt{merged\_RS67\_3089LH2.root}
+    \item \textbf{Background (Empty Flask):} \texttt{merged\_RS67\_3089Flask.root}
+\end{itemize}
+The empty flask data are crucial for subtracting contributions from beam interactions with the target vessel walls and other upstream material.
+
+To correct for detector acceptance and reconstruction efficiencies, extensive Monte Carlo (MC) simulations were employed. The simulations model the Drell-Yan process and propagate the resulting muons through a Geant4-based model of the SeaQuest spectrometer. The primary MC files used are:
+\begin{itemize}
+    \item \textbf{Acceptance Study:} Drell-Yan events were generated over a $4\pi$ solid angle ("thrown") and also processed through the full detector simulation and reconstruction chain ("accepted"). This study uses the \texttt{*\_M027\_S001\_*} series of files saved in: \begin{verbatim}
+        /seaquest/users/chleung/pT_ReWeight/
+    \end{verbatim}
+    \begin{itemize}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+	    \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+	    \item \textbf{mc\_drellyan\_LH2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LD2\_M027\_S001\_messy\_occ\_pTxFweight\_v2.root}
+    \end{itemize}
+    \item \textbf{Efficiency Study:} To model the effect of high detector occupancy on track reconstruction, simulated events were processed with ("messy") and without ("clean") the overlay of random background hits from experimental data. This study uses the \texttt{*\_M027\_S002\_*} series of files also saved in the same location:
+    \begin{itemize}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S002\_clean\_occ\_pTxFweight\_v2.root}
+        \item \textbf{mc\_drellyan\_LH2\_M027\_S002\_messy\_occ\_pTxFweight\_v2.root}    
+    \end{itemize}
+\end{itemize}
+All MC samples are weighted on an event-by-event basis to match the transverse momentum ($p_T$) distribution observed in the data.
+
+\subsection{Event Selection}
+\label{sec:event_selection}
+A multi-tiered set of selection criteria is applied to isolate high-quality Drell-Yan dimuon events from the large background of other processes.
+\begin{itemize}
+    \item \textbf{Data Quality:} Only data from "good spills," as identified by standard run quality monitoring, are included in the analysis. A physics trigger condition (\texttt{MATRIX1 == 1}) is required, selecting events consistent with the passage of two muons through the spectrometer.
+    \item \textbf{Track and Dimuon Quality:} A set of stringent cuts, developed by the collaboration and referred to as "Chuck cuts," are applied to ensure well-reconstructed positive and negative muon tracks that form a high-quality common vertex. These cuts impose requirements on track $\chi^2$, momentum, number of hits, and fiducial volume. The full details of these cuts are provided in Appendix \ref{app:event_selection}.
+    \item \textbf{Kinematic Selection:} The analysis focuses on the high-mass continuum, away from the charmonium resonances ($J/\psi, \psi'$). A cut of $M_{\mu\mu} > 4.2$ GeV is applied. The analysis is restricted to the kinematic range $0 < x_F < 0.8$.
+\end{itemize}
+
+\subsection{Cross-Section Formalism}
+The double-differential cross-section in a given kinematic bin ($\Delta M, \Delta x_F$) is calculated as:
+\begin{equation}
+\frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} = \frac{N_{DY}}{\Delta M \Delta x_{F} \cdot \mathcal{L} \cdot \epsilon_{\text{total}}}
+\label{eq:modified_cross_section}
+\end{equation}
+where:
+\begin{itemize}
+    \item $N_{DY}$ is the number of Drell-Yan events in the bin after subtraction of the combinatoric and empty flask backgrounds (see \cite{alternativeDY} DocDB 11322).
+    $$N_{DY} = N_{\rm LH2}-N_{\rm LH2,~mixed} - \frac{I_{\rm LH2}}{I_{\rm flask}}\left( N_{\rm flask}-N_{\rm flask,~mixed}\right)$$
+    \item $\mathcal{L}$ is the integrated luminosity for the dataset.
+    \item $\epsilon_{\text{total}}$ is the total correction factor, accounting for acceptance and inefficiencies.
+\end{itemize}
+The integrated luminosity, $\mathcal{L}$, is given by the product of the total number of protons incident on the target and the number of target nuclei per unit area:
+\begin{equation}
+\mathcal{L} = N_{\text{incident}} \cdot \frac{N_{A} \rho L}{A} \cdot f_{\text{atten}}
+\label{eq:luminosity}
+\end{equation}
+Here, $N_{\text{incident}}$ is the number of protons on target, $N_A$ is Avogadro's number, $\rho$ is the target density, $L$ is the target length, $A$ is the molar mass, and $f_{\text{atten}}$ is a correction factor for beam attenuation within the thick target. For the $L=50.8$ cm long LH$_2$ target, with a density of $\rho_H=0.0708$~g/cm$^3$, the target thickness is 3.5966 g/cm$^2$ with a beam attenuation factor of 0.966.
+
+The total correction factor, $\epsilon_{\text{total}}$, is the product of three terms determined from MC simulations:
+\begin{equation}
+\epsilon_{\text{total}} = \epsilon_{\text{acc}}(M,x_{F}) \cdot \epsilon_{\text{recon}}(M,x_{F}) \cdot \epsilon_{\text{trigger}}
+\end{equation}
+where $\epsilon_{\text{acc}}$ is the geometric and kinematic acceptance of the spectrometer, $\epsilon_{\text{recon}}$ is the track reconstruction efficiency (often called "kTracker efficiency"), and $\epsilon_{\text{trigger}}$ is the trigger efficiency. The calculation of these three terms is detailed in the following sections.
+
+\section{Acceptance and Efficiency Corrections}
+\label{sec:corrections}
+
+\subsection{Detector Acceptance Correction}
+The SeaQuest spectrometer has a finite geometric acceptance, which limits the fraction of produced dimuon events that can be detected. This acceptance depends strongly on the event kinematics, primarily the dimuon invariant mass ($M$) and Feynman-$x$ ($x_F$). The acceptance correction factor is determined using MC simulations.
+
+The acceptance, $A(M, x_F)$, is defined as the ratio of the number of simulated events that are successfully reconstructed and pass all analysis cuts ($N_{\text{reco}}$) to the total number of events generated in a given kinematic bin ($N_{\text{gen}}$):
+\begin{equation}
+\text{Acceptance (A)} = \frac{N_{\text{reco}}}{N_{\text{gen}}}
+\label{eq:acceptance}
+\end{equation}
+This calculation is performed in bins of $M$ and $x_F$. The kinematic binning used for this study is defined by the following edges:
+\begin{itemize}
+    \item \textbf{$x_F$ Edges}: $\{0, 0.05, 0.1, \dots, 0.8\}$ (16 bins)
+    \item \textbf{Mass Edges (GeV/$c^2$)}: $\{4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.5, 8.7\}$ (11 bins)
+\end{itemize}
+
+The following pages show the calculated acceptance as a function of mass for each of the 16 $x_F$ bins. The plots show the acceptance for the LH$_2$ and LD$_2$ targets, their combined average, and their ratio. The ratio is close to unity across the kinematic range, indicating that target-dependent effects on the acceptance are small. In this case, we compare newly calculated acceptance corrections to the existing acceptance calculations saved in Shivangi's file:
+\begin{verbatim}
+./shivangi/work/analysis/R008/diffCross/v42/5770/looseCut/final/acceptance_h.root
+\end{verbatim}
+
+%--- All Acceptance plots ---
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_0.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_0.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_0.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_0.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.00 \le x_F < 0.05$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_1.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_1.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_1.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_1.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.05 \le x_F < 0.10$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_2.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_2.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_2.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_2.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.10 \le x_F < 0.15$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_3.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_3.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_3.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_3.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.15 \le x_F < 0.20$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_4.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_4.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_4.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_4.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.20 \le x_F < 0.25$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_5.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_5.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_5.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_5.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.25 \le x_F < 0.30$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_6.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_6.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_6.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_6.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.30 \le x_F < 0.35$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_7.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_7.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_7.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_7.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.35 \le x_F < 0.40$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_8.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_8.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_8.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_8.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.40 \le x_F < 0.45$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_9.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_9.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_9.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_9.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.45 \le x_F < 0.50$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_10.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_10.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_10.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_10.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.50 \le x_F < 0.55$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_11.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_11.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_11.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_11.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.55 \le x_F < 0.60$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_12.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_12.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_12.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_12.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.60 \le x_F < 0.65$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_13.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_13.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_13.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_13.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.65 \le x_F < 0.70$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_14.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_14.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_14.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_14.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.70 \le x_F < 0.75$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LH2_acceptance_xF_bin_15.pdf}
+       \caption{Acceptance for LH2}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/LD2_acceptance_xF_bin_15.pdf}
+       \caption{Acceptance for LD2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Combined_acceptance_xF_bin_15.pdf}
+       \caption{Combined Acceptance}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+       \includegraphics[width=\linewidth]{./acceptancePlots/Acceptance_ratio_xF_bin_15.pdf}
+       \caption{Acceptance Ratio (LH2/LD2)}
+    \end{subfigure}
+    \caption{Acceptance plots for $0.75 \le x_F < 0.80$.}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{Reconstruction Efficiency Correction}
+\label{sec:ktracker_eff}
+The track-finding algorithm ("kTracker") has an efficiency that depends on the detector occupancy; the number of hits from unrelated particles in the detector during an event. This efficiency is studied using "clean" MC simulations (signal only) and "messy" MC simulations (signal with background hits overlaid). The reconstruction efficiency, $\epsilon_{\text{recon}}$, is defined as the ratio of events found in the messy sample to those in the clean sample, as a function of an occupancy-related variable (e.g., D2, the number of hits in Drift Chamber Station 2).
+
+\begin{equation}
+    \epsilon_{\text{recon}}(\text{D2}, M, x_F) = \frac{N_{\text{reco}}^{\text{messy}}(\text{D2}, M, x_F)}{N_{\text{reco}}^{\text{clean}}(M, x_F)}
+\end{equation}
+
+For each kinematic bin of ($M, x_F$), an efficiency curve as a function of D2 is generated from the MC. To obtain a single correction factor for each bin, an average efficiency, $\langle \epsilon \rangle$, is calculated by weighting this efficiency curve by the D2 distribution of the experimental data in that same bin.
+
+\subsubsection{Uncertainty Propagation}
+An important aspect of this procedure is the correct propagation of uncertainties. For each event in the data with a measured D2 value, an efficiency $\epsilon_{i}$ and its uncertainty $\delta\epsilon_{i}$ are determined by linear interpolation between points on the MC-derived efficiency curve.  For a given event $i$ the efficiency will be interpolated:
+$$\epsilon_i = \epsilon(D2^-)+\left(\frac{\epsilon(D2^+)-\epsilon(D2^-)}{D2^+-D2^-} \right)\left(D2^+-D2_i\right) $$
+$$\delta\epsilon_i = \frac{1}{D2^+-D2^-}\sqrt{\left(D2^+-D2_i\right)^2\delta\epsilon(D2^+)^2+\left(D2^--D2_i\right)^2\delta\epsilon(D2^-)^2}$$
+where $D2_i$ is the value of D2 for the event $i$, $D2^+$ is the nearest D2 value greater than $D2_i$, $D2^-$ is the nearest D2 value less than $D2_i$, $\epsilon(D2^\pm)$ is the value of the efficiency at $D2^\pm$, and $\delta\epsilon(D2^\pm)$ is the uncertainty in $\epsilon(D2^\pm)$
+
+The average efficiency $\langle\epsilon\rangle$ for a bin containing $N$ data events is the mean of the individual efficiencies:
+\begin{equation} \label{eq:avg_eff_2}
+    \langle\epsilon\rangle = \frac{1}{N} \sum_{i=1}^{N} \epsilon_i
+\end{equation}
+
+The uncertainty on this average, $\delta\langle\epsilon\rangle$, is based on the propagated error from the uncertainty on the MC-derived efficiency curve itself. 
+\begin{equation} \label{eq:prop_err_2}
+    \delta_{\text{prop}} \langle\epsilon\rangle = \frac{1}{N} \sqrt{\sum_{i=1}^{N} (\delta\epsilon_i)^2}
+\end{equation}
+The final correction applied to the data is $1/\langle\epsilon\rangle$, and its propagated error is given by:
+\begin{equation} \label{eq:inv_err_2}
+    \delta(1/\langle\epsilon\rangle) = \frac{\delta_{\text{prop}}\langle\epsilon\rangle}{\langle\epsilon\rangle^2}
+\end{equation}
+
+\subsubsection{Efficiency Results}
+Reconstruction efficiency is calculated by using ``D1'' occupancy variable with the global efficiency curve created by integrating over all the kinematic bins.
+We subtract combinatoric background yield $(Y_{\text{mix})$ from total yield $(Y_{\text{total}})$ to get the signal yield $(Y_{\text{signal}})$ in each kinematic bin. The D1 distribution for the signal is created by subtracting the D1 distribution of the mixed events from that of the total events in each kinematic bin. Therefore, the average efficiency correction is given by:
+\begin{equation}
+    <\epsilon_{signal}>=\frac{1/(Y_{total}-Y_{mix})}(<\epsilon_{total}>Y_{total}-<\epsilon_{mix}>Y_{mix})
+\end{equation}
+
+%--- All Efficiency plots ---
+
+\begin{figure}[ht]{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/SignalEfficiencies_Reco.pdf}
+    \caption{$<\epsilon_{signal}>$ calculated in each kinematic bin}
+\end{figure}\hfill
+
+\clearpage
+
+\begin{landscape}
+\begin{footnotesize}
+\begin{longtable}{|c|c|c|c|c|c|c|}
+\caption{Calculated Average Signal Efficiency and Yields per Bin} \label{tab:signal_eff} \\
+\hline
+Mass Range [GeV] & $x_F$ Range & $Y_{total} \pm \delta Y_{total}$ & $Y_{mix} \pm \delta Y_{mix}$ & $\langle\epsilon_{total}\rangle \pm \delta \langle\epsilon_{total}\rangle$ & $\langle\epsilon_{mix}\rangle \pm \delta \langle\epsilon_{mix}\rangle$ & $\langle\epsilon_{signal}\rangle \pm \delta \langle\epsilon_{signal}\rangle$ \\
+\hline
+\endfirsthead
+\multicolumn{7}{c}{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline
+Mass Range [GeV] & $x_F$ Range & $Y_{total} \pm \delta Y$ & $Y_{mix} \pm \delta Y$ & $\langle\epsilon_{total}\rangle$ & $\langle\epsilon_{mix}\rangle$ & $\langle\epsilon_{signal}\rangle$ \\
+\hline
+\endhead
+\hline \multicolumn{7}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+\hline
+\endlastfoot
+[4.20, 4.50) & [0.05, 0.10) & 2 $\pm$ 1.4 & 1 $\pm$ 1.0 & 0.8234 $\pm$ 0.0843 & 0.5347 $\pm$ 0.4068 & \textbf{1.1121} $\pm$ 0.8331 \\
+\hline
+[4.20, 4.50) & [0.10, 0.15) & 32 $\pm$ 5.7 & 9 $\pm$ 3.0 & 0.6456 $\pm$ 0.0529 & 0.5912 $\pm$ 0.1019 & \textbf{0.6669} $\pm$ 0.0845 \\
+\hline
+[4.20, 4.50) & [0.15, 0.20) & 84 $\pm$ 9.2 & 27 $\pm$ 5.2 & 0.6738 $\pm$ 0.0285 & 0.6279 $\pm$ 0.0627 & \textbf{0.6955} $\pm$ 0.0520 \\
+\hline
+[4.20, 4.50) & [0.20, 0.25) & 184 $\pm$ 13.6 & 48 $\pm$ 6.9 & 0.6649 $\pm$ 0.0217 & 0.5973 $\pm$ 0.0472 & \textbf{0.6887} $\pm$ 0.0342 \\
+\hline
+[4.20, 4.50) & [0.25, 0.30) & 363 $\pm$ 19.1 & 58 $\pm$ 7.6 & 0.6697 $\pm$ 0.0142 & 0.6308 $\pm$ 0.0430 & \textbf{0.6771} $\pm$ 0.0188 \\
+\hline
+[4.20, 4.50) & [0.30, 0.35) & 540 $\pm$ 23.2 & 81 $\pm$ 9.0 & 0.6768 $\pm$ 0.0121 & 0.6377 $\pm$ 0.0347 & \textbf{0.6837} $\pm$ 0.0155 \\
+\hline
+[4.20, 4.50) & [0.35, 0.40) & 624 $\pm$ 25.0 & 83 $\pm$ 9.1 & 0.6852 $\pm$ 0.0108 & 0.6233 $\pm$ 0.0337 & \textbf{0.6947} $\pm$ 0.0136 \\
+\hline
+[4.20, 4.50) & [0.40, 0.45) & 653 $\pm$ 25.6 & 76 $\pm$ 8.7 & 0.6857 $\pm$ 0.0102 & 0.6499 $\pm$ 0.0347 & \textbf{0.6904} $\pm$ 0.0124 \\
+\hline
+[4.20, 4.50) & [0.45, 0.50) & 665 $\pm$ 25.8 & 64 $\pm$ 8.0 & 0.6965 $\pm$ 0.0093 & 0.6538 $\pm$ 0.0379 & \textbf{0.7011} $\pm$ 0.0111 \\
+\hline
+[4.20, 4.50) & [0.50, 0.55) & 609 $\pm$ 24.7 & 40 $\pm$ 6.3 & 0.6805 $\pm$ 0.0108 & 0.6476 $\pm$ 0.0497 & \textbf{0.6828} $\pm$ 0.0121 \\
+\hline
+[4.20, 4.50) & [0.55, 0.60) & 477 $\pm$ 21.8 & 42 $\pm$ 6.5 & 0.6855 $\pm$ 0.0121 & 0.6441 $\pm$ 0.0464 & \textbf{0.6895} $\pm$ 0.0140 \\
+\hline
+[4.20, 4.50) & [0.60, 0.65) & 370 $\pm$ 19.2 & 34 $\pm$ 5.8 & 0.6961 $\pm$ 0.0135 & 0.6650 $\pm$ 0.0455 & \textbf{0.6992} $\pm$ 0.0156 \\
+\hline
+[4.20, 4.50) & [0.65, 0.70) & 229 $\pm$ 15.1 & 26 $\pm$ 5.1 & 0.6812 $\pm$ 0.0169 & 0.6356 $\pm$ 0.0560 & \textbf{0.6871} $\pm$ 0.0205 \\
+\hline
+[4.20, 4.50) & [0.70, 0.75) & 159 $\pm$ 12.6 & 15 $\pm$ 3.9 & 0.6816 $\pm$ 0.0207 & 0.6805 $\pm$ 0.0624 & \textbf{0.6818} $\pm$ 0.0238 \\
+\hline
+[4.20, 4.50) & [0.75, 0.80) & 100 $\pm$ 10.0 & 9 $\pm$ 3.0 & 0.6737 $\pm$ 0.0259 & 0.5691 $\pm$ 0.1249 & \textbf{0.6841} $\pm$ 0.0312 \\
+\hline
+[4.20, 4.50) & [0.80, 0.85) & 44 $\pm$ 6.6 & 4 $\pm$ 2.0 & 0.7049 $\pm$ 0.0393 & 0.7062 $\pm$ 0.1166 & \textbf{0.7047} $\pm$ 0.0448 \\
+\hline
+[4.50, 4.80) & [0.00, 0.05) & 9 $\pm$ 3.0 & 1 $\pm$ 1.0 & 0.7230 $\pm$ 0.0530 & 0.6692 $\pm$ 0.1795 & \textbf{0.7297} $\pm$ 0.0642 \\
+\hline
+[4.50, 4.80) & [0.05, 0.10) & 39 $\pm$ 6.2 & 5 $\pm$ 2.2 & 0.6434 $\pm$ 0.0449 & 0.5434 $\pm$ 0.2327 & \textbf{0.6581} $\pm$ 0.0624 \\
+\hline
+[4.50, 4.80) & [0.10, 0.15) & 99 $\pm$ 9.9 & 16 $\pm$ 4.0 & 0.6646 $\pm$ 0.0275 & 0.5521 $\pm$ 0.1062 & \textbf{0.6862} $\pm$ 0.0393 \\
+\hline
+[4.50, 4.80) & [0.15, 0.20) & 167 $\pm$ 12.9 & 34 $\pm$ 5.8 & 0.6592 $\pm$ 0.0226 & 0.5878 $\pm$ 0.0651 & \textbf{0.6775} $\pm$ 0.0332 \\
+\hline
+[4.50, 4.80) & [0.20, 0.25) & 284 $\pm$ 16.9 & 44 $\pm$ 6.6 & 0.6669 $\pm$ 0.0169 & 0.6242 $\pm$ 0.0447 & \textbf{0.6747} $\pm$ 0.0217 \\
+\hline
+[4.50, 4.80) & [0.25, 0.30) & 402 $\pm$ 20.0 & 64 $\pm$ 8.0 & 0.6751 $\pm$ 0.0138 & 0.6252 $\pm$ 0.0391 & \textbf{0.6845} $\pm$ 0.0180 \\
+\hline
+[4.50, 4.80) & [0.30, 0.35) & 487 $\pm$ 22.1 & 62 $\pm$ 7.9 & 0.6841 $\pm$ 0.0124 & 0.6300 $\pm$ 0.0399 & \textbf{0.6920} $\pm$ 0.0154 \\
+\hline
+[4.50, 4.80) & [0.35, 0.40) & 542 $\pm$ 23.3 & 44 $\pm$ 6.6 & 0.6780 $\pm$ 0.0119 & 0.6059 $\pm$ 0.0490 & \textbf{0.6843} $\pm$ 0.0137 \\
+\hline
+[4.50, 4.80) & [0.40, 0.45) & 494 $\pm$ 22.2 & 37 $\pm$ 6.1 & 0.6921 $\pm$ 0.0113 & 0.6135 $\pm$ 0.0553 & \textbf{0.6984} $\pm$ 0.0130 \\
+\hline
+[4.50, 4.80) & [0.45, 0.50) & 507 $\pm$ 22.5 & 32 $\pm$ 5.7 & 0.6894 $\pm$ 0.0118 & 0.6364 $\pm$ 0.0564 & \textbf{0.6929} $\pm$ 0.0132 \\
+\hline
+[4.50, 4.80) & [0.50, 0.55) & 386 $\pm$ 19.6 & 25 $\pm$ 5.0 & 0.6935 $\pm$ 0.0129 & 0.6632 $\pm$ 0.0500 & \textbf{0.6956} $\pm$ 0.0142 \\
+\hline
+[4.50, 4.80) & [0.55, 0.60) & 379 $\pm$ 19.5 & 14 $\pm$ 3.7 & 0.6991 $\pm$ 0.0125 & 0.6912 $\pm$ 0.0732 & \textbf{0.6994} $\pm$ 0.0133 \\
+\hline
+[4.50, 4.80) & [0.60, 0.65) & 243 $\pm$ 15.6 & 12 $\pm$ 3.5 & 0.6862 $\pm$ 0.0171 & 0.6745 $\pm$ 0.0739 & \textbf{0.6868} $\pm$ 0.0184 \\
+\hline
+[4.50, 4.80) & [0.65, 0.70) & 178 $\pm$ 13.3 & 9 $\pm$ 3.0 & 0.7152 $\pm$ 0.0171 & 0.5731 $\pm$ 0.1052 & \textbf{0.7227} $\pm$ 0.0191 \\
+\hline
+[4.50, 4.80) & [0.70, 0.75) & 130 $\pm$ 11.4 & 5 $\pm$ 2.2 & 0.6794 $\pm$ 0.0242 & 0.6492 $\pm$ 0.1518 & \textbf{0.6806} $\pm$ 0.0258 \\
+\hline
+[4.50, 4.80) & [0.75, 0.80) & 48 $\pm$ 6.9 & 7 $\pm$ 2.6 & 0.7049 $\pm$ 0.0308 & 0.7400 $\pm$ 0.0645 & \textbf{0.6989} $\pm$ 0.0378 \\
+\hline
+[4.50, 4.80) & [0.80, 0.85) & 27 $\pm$ 5.2 & 2 $\pm$ 1.4 & 0.6420 $\pm$ 0.0638 & 0.6321 $\pm$ 0.1174 & \textbf{0.6428} $\pm$ 0.0695 \\
+\hline
+[4.80, 5.10) & [0.00, 0.05) & 41 $\pm$ 6.4 & 9 $\pm$ 3.0 & 0.6787 $\pm$ 0.0407 & 0.4666 $\pm$ 0.1397 & \textbf{0.7383} $\pm$ 0.0711 \\
+\hline
+[4.80, 5.10) & [0.05, 0.10) & 83 $\pm$ 9.1 & 21 $\pm$ 4.6 & 0.6405 $\pm$ 0.0339 & 0.5332 $\pm$ 0.0949 & \textbf{0.6768} $\pm$ 0.0569 \\
+\hline
+[4.80, 5.10) & [0.10, 0.15) & 138 $\pm$ 11.7 & 33 $\pm$ 5.7 & 0.6651 $\pm$ 0.0232 & 0.5774 $\pm$ 0.0645 & \textbf{0.6927} $\pm$ 0.0372 \\
+\hline
+[4.80, 5.10) & [0.15, 0.20) & 232 $\pm$ 15.2 & 41 $\pm$ 6.4 & 0.6574 $\pm$ 0.0194 & 0.5632 $\pm$ 0.0560 & \textbf{0.6777} $\pm$ 0.0268 \\
+\hline
+[4.80, 5.10) & [0.20, 0.25) & 273 $\pm$ 16.5 & 39 $\pm$ 6.2 & 0.6816 $\pm$ 0.0159 & 0.5905 $\pm$ 0.0520 & \textbf{0.6968} $\pm$ 0.0207 \\
+\hline
+[4.80, 5.10) & [0.25, 0.30) & 315 $\pm$ 17.7 & 27 $\pm$ 5.2 & 0.6793 $\pm$ 0.0152 & 0.6028 $\pm$ 0.0677 & \textbf{0.6864} $\pm$ 0.0178 \\
+\hline
+[4.80, 5.10) & [0.30, 0.35) & 384 $\pm$ 19.6 & 26 $\pm$ 5.1 & 0.6824 $\pm$ 0.0136 & 0.5634 $\pm$ 0.0756 & \textbf{0.6910} $\pm$ 0.0157 \\
+\hline
+[4.80, 5.10) & [0.35, 0.40) & 400 $\pm$ 20.0 & 24 $\pm$ 4.9 & 0.6948 $\pm$ 0.0126 & 0.6311 $\pm$ 0.0591 & \textbf{0.6988} $\pm$ 0.0139 \\
+\hline
+[4.80, 5.10) & [0.40, 0.45) & 400 $\pm$ 20.0 & 19 $\pm$ 4.4 & 0.6974 $\pm$ 0.0127 & 0.6596 $\pm$ 0.0676 & \textbf{0.6993} $\pm$ 0.0137 \\
+\hline
+[4.80, 5.10) & [0.45, 0.50) & 351 $\pm$ 18.7 & 10 $\pm$ 3.2 & 0.6984 $\pm$ 0.0135 & 0.7439 $\pm$ 0.0597 & \textbf{0.6970} $\pm$ 0.0140 \\
+\hline
+[4.80, 5.10) & [0.50, 0.55) & 282 $\pm$ 16.8 & 12 $\pm$ 3.5 & 0.6879 $\pm$ 0.0156 & 0.6499 $\pm$ 0.0822 & \textbf{0.6896} $\pm$ 0.0168 \\
+\hline
+[4.80, 5.10) & [0.55, 0.60) & 241 $\pm$ 15.5 & 7 $\pm$ 2.6 & 0.7002 $\pm$ 0.0168 & 0.7727 $\pm$ 0.0599 & \textbf{0.6981} $\pm$ 0.0174 \\
+\hline
+[4.80, 5.10) & [0.60, 0.65) & 163 $\pm$ 12.8 & 9 $\pm$ 3.0 & 0.6966 $\pm$ 0.0190 & 0.5883 $\pm$ 0.1004 & \textbf{0.7030} $\pm$ 0.0211 \\
+\hline
+[4.80, 5.10) & [0.65, 0.70) & 110 $\pm$ 10.5 & 3 $\pm$ 1.7 & 0.7120 $\pm$ 0.0210 & 0.7010 $\pm$ 0.1301 & \textbf{0.7124} $\pm$ 0.0219 \\
+\hline
+[4.80, 5.10) & [0.70, 0.75) & 84 $\pm$ 9.2 & 1 $\pm$ 1.0 & 0.6972 $\pm$ 0.0234 & 0.8153 $\pm$ 0.1044 & \textbf{0.6958} $\pm$ 0.0237 \\
+\hline
+[4.80, 5.10) & [0.75, 0.80) & 34 $\pm$ 5.8 & 1 $\pm$ 1.0 & 0.6750 $\pm$ 0.0460 & 0.6482 $\pm$ 0.1956 & \textbf{0.6758} $\pm$ 0.0477 \\
+\hline
+[4.80, 5.10) & [0.80, 0.85) & 19 $\pm$ 4.4 & 1 $\pm$ 1.0 & 0.6869 $\pm$ 0.0639 & 0.6579 $\pm$ 0.1882 & \textbf{0.6885} $\pm$ 0.0683 \\
+\hline
+[5.10, 5.40) & [0.00, 0.05) & 72 $\pm$ 8.5 & 7 $\pm$ 2.6 & 0.6415 $\pm$ 0.0364 & 0.5639 $\pm$ 0.1408 & \textbf{0.6499} $\pm$ 0.0433 \\
+\hline
+[5.10, 5.40) & [0.05, 0.10) & 97 $\pm$ 9.8 & 17 $\pm$ 4.1 & 0.6792 $\pm$ 0.0284 & 0.5914 $\pm$ 0.0777 & \textbf{0.6979} $\pm$ 0.0387 \\
+\hline
+[5.10, 5.40) & [0.10, 0.15) & 136 $\pm$ 11.7 & 13 $\pm$ 3.6 & 0.6479 $\pm$ 0.0268 & 0.5013 $\pm$ 0.1128 & \textbf{0.6633} $\pm$ 0.0323 \\
+\hline
+[5.10, 5.40) & [0.15, 0.20) & 205 $\pm$ 14.3 & 21 $\pm$ 4.6 & 0.6649 $\pm$ 0.0194 & 0.5661 $\pm$ 0.0958 & \textbf{0.6761} $\pm$ 0.0244 \\
+\hline
+[5.10, 5.40) & [0.20, 0.25) & 208 $\pm$ 14.4 & 21 $\pm$ 4.6 & 0.6710 $\pm$ 0.0196 & 0.6011 $\pm$ 0.0769 & \textbf{0.6789} $\pm$ 0.0235 \\
+\hline
+[5.10, 5.40) & [0.25, 0.30) & 243 $\pm$ 15.6 & 28 $\pm$ 5.3 & 0.6796 $\pm$ 0.0177 & 0.6100 $\pm$ 0.0594 & \textbf{0.6886} $\pm$ 0.0215 \\
+\hline
+[5.10, 5.40) & [0.30, 0.35) & 273 $\pm$ 16.5 & 11 $\pm$ 3.3 & 0.6833 $\pm$ 0.0153 & 0.5801 $\pm$ 0.1114 & \textbf{0.6876} $\pm$ 0.0167 \\
+\hline
+[5.10, 5.40) & [0.35, 0.40) & 283 $\pm$ 16.8 & 11 $\pm$ 3.3 & 0.7018 $\pm$ 0.0151 & 0.6132 $\pm$ 0.1006 & \textbf{0.7054} $\pm$ 0.0163 \\
+\hline
+[5.10, 5.40) & [0.40, 0.45) & 244 $\pm$ 15.6 & 6 $\pm$ 2.4 & 0.6973 $\pm$ 0.0159 & 0.5489 $\pm$ 0.1749 & \textbf{0.7011} $\pm$ 0.0169 \\
+\hline
+[5.10, 5.40) & [0.45, 0.50) & 219 $\pm$ 14.8 & 7 $\pm$ 2.6 & 0.6877 $\pm$ 0.0169 & 0.7222 $\pm$ 0.0829 & \textbf{0.6866} $\pm$ 0.0177 \\
+\hline
+[5.10, 5.40) & [0.50, 0.55) & 208 $\pm$ 14.4 & 9 $\pm$ 3.0 & 0.6888 $\pm$ 0.0178 & 0.5843 $\pm$ 0.1216 & \textbf{0.6935} $\pm$ 0.0195 \\
+\hline
+[5.10, 5.40) & [0.55, 0.60) & 153 $\pm$ 12.4 & 4 $\pm$ 2.0 & 0.7157 $\pm$ 0.0192 & 0.7541 $\pm$ 0.1094 & \textbf{0.7147} $\pm$ 0.0199 \\
+\hline
+[5.10, 5.40) & [0.60, 0.65) & 107 $\pm$ 10.3 & 3 $\pm$ 1.7 & 0.7090 $\pm$ 0.0218 & 0.6749 $\pm$ 0.1206 & \textbf{0.7100} $\pm$ 0.0227 \\
+\hline
+[5.10, 5.40) & [0.65, 0.70) & 91 $\pm$ 9.5 & 2 $\pm$ 1.4 & 0.7097 $\pm$ 0.0234 & 0.7220 $\pm$ 0.1117 & \textbf{0.7094} $\pm$ 0.0241 \\
+\hline
+[5.10, 5.40) & [0.70, 0.75) & 43 $\pm$ 6.6 & 2 $\pm$ 1.4 & 0.6906 $\pm$ 0.0415 & 0.5547 $\pm$ 0.3343 & \textbf{0.6973} $\pm$ 0.0467 \\
+\hline
+[5.10, 5.40) & [0.80, 0.85) & 12 $\pm$ 3.5 & 1 $\pm$ 1.0 & 0.6825 $\pm$ 0.0678 & 0.4180 $\pm$ 0.6791 & \textbf{0.7065} $\pm$ 0.1001 \\
+\hline
+[5.40, 5.70) & [0.00, 0.05) & 66 $\pm$ 8.1 & 8 $\pm$ 2.8 & 0.6597 $\pm$ 0.0341 & 0.5338 $\pm$ 0.1493 & \textbf{0.6770} $\pm$ 0.0446 \\
+\hline
+[5.40, 5.70) & [0.05, 0.10) & 78 $\pm$ 8.8 & 17 $\pm$ 4.1 & 0.6906 $\pm$ 0.0304 & 0.5680 $\pm$ 0.0799 & \textbf{0.7248} $\pm$ 0.0463 \\
+\hline
+[5.40, 5.70) & [0.10, 0.15) & 87 $\pm$ 9.3 & 8 $\pm$ 2.8 & 0.6891 $\pm$ 0.0281 & 0.4970 $\pm$ 0.1653 & \textbf{0.7085} $\pm$ 0.0360 \\
+\hline
+[5.40, 5.70) & [0.15, 0.20) & 113 $\pm$ 10.6 & 6 $\pm$ 2.4 & 0.6579 $\pm$ 0.0252 & 0.6657 $\pm$ 0.1095 & \textbf{0.6574} $\pm$ 0.0273 \\
+\hline
+[5.40, 5.70) & [0.20, 0.25) & 144 $\pm$ 12.0 & 11 $\pm$ 3.3 & 0.6738 $\pm$ 0.0239 & 0.5169 $\pm$ 0.1303 & \textbf{0.6868} $\pm$ 0.0283 \\
+\hline
+[5.40, 5.70) & [0.25, 0.30) & 180 $\pm$ 13.4 & 11 $\pm$ 3.3 & 0.6694 $\pm$ 0.0200 & 0.6228 $\pm$ 0.0848 & \textbf{0.6724} $\pm$ 0.0220 \\
+\hline
+[5.40, 5.70) & [0.30, 0.35) & 188 $\pm$ 13.7 & 7 $\pm$ 2.6 & 0.6901 $\pm$ 0.0182 & 0.5531 $\pm$ 0.1323 & \textbf{0.6954} $\pm$ 0.0197 \\
+\hline
+[5.40, 5.70) & [0.35, 0.40) & 147 $\pm$ 12.1 & 3 $\pm$ 1.7 & 0.7087 $\pm$ 0.0206 & 0.7199 $\pm$ 0.1280 & \textbf{0.7085} $\pm$ 0.0212 \\
+\hline
+[5.40, 5.70) & [0.40, 0.45) & 180 $\pm$ 13.4 & 4 $\pm$ 2.0 & 0.6945 $\pm$ 0.0189 & 0.6697 $\pm$ 0.1406 & \textbf{0.6950} $\pm$ 0.0196 \\
+\hline
+[5.40, 5.70) & [0.45, 0.50) & 144 $\pm$ 12.0 & 3 $\pm$ 1.7 & 0.6781 $\pm$ 0.0238 & 0.8353 $\pm$ 0.0566 & \textbf{0.6748} $\pm$ 0.0244 \\
+\hline
+[5.40, 5.70) & [0.50, 0.55) & 152 $\pm$ 12.3 & 2 $\pm$ 1.4 & 0.6988 $\pm$ 0.0200 & 0.3792 $\pm$ 0.3023 & \textbf{0.7030} $\pm$ 0.0209 \\
+\hline
+[5.40, 5.70) & [0.55, 0.60) & 90 $\pm$ 9.5 & 3 $\pm$ 1.7 & 0.6816 $\pm$ 0.0286 & 0.4533 $\pm$ 0.2536 & \textbf{0.6894} $\pm$ 0.0312 \\
+\hline
+[5.40, 5.70) & [0.60, 0.65) & 66 $\pm$ 8.1 & 2 $\pm$ 1.4 & 0.7182 $\pm$ 0.0282 & 0.6055 $\pm$ 0.2082 & \textbf{0.7217} $\pm$ 0.0299 \\
+\hline
+[5.40, 5.70) & [0.65, 0.70) & 55 $\pm$ 7.4 & 1 $\pm$ 1.0 & 0.7031 $\pm$ 0.0315 & 0.6546 $\pm$ 0.1907 & \textbf{0.7040} $\pm$ 0.0323 \\
+\hline
+[5.70, 6.00) & [0.00, 0.05) & 37 $\pm$ 6.1 & 1 $\pm$ 1.0 & 0.6857 $\pm$ 0.0413 & 0.6385 $\pm$ 0.2031 & \textbf{0.6870} $\pm$ 0.0429 \\
+\hline
+[5.70, 6.00) & [0.05, 0.10) & 54 $\pm$ 7.3 & 4 $\pm$ 2.0 & 0.7092 $\pm$ 0.0341 & 0.6457 $\pm$ 0.0887 & \textbf{0.7142} $\pm$ 0.0376 \\
+\hline
+[5.70, 6.00) & [0.10, 0.15) & 78 $\pm$ 8.8 & 6 $\pm$ 2.4 & 0.6916 $\pm$ 0.0299 & 0.5394 $\pm$ 0.1337 & \textbf{0.7043} $\pm$ 0.0347 \\
+\hline
+[5.70, 6.00) & [0.15, 0.20) & 94 $\pm$ 9.7 & 2 $\pm$ 1.4 & 0.6717 $\pm$ 0.0292 & 0.5687 $\pm$ 0.3550 & \textbf{0.6740} $\pm$ 0.0308 \\
+\hline
+[5.70, 6.00) & [0.20, 0.25) & 106 $\pm$ 10.3 & 7 $\pm$ 2.6 & 0.6905 $\pm$ 0.0245 & 0.5103 $\pm$ 0.1566 & \textbf{0.7033} $\pm$ 0.0290 \\
+\hline
+[5.70, 6.00) & [0.25, 0.30) & 89 $\pm$ 9.4 & 8 $\pm$ 2.8 & 0.6960 $\pm$ 0.0272 & 0.5887 $\pm$ 0.1142 & \textbf{0.7067} $\pm$ 0.0322 \\
+\hline
+[5.70, 6.00) & [0.30, 0.35) & 93 $\pm$ 9.6 & 4 $\pm$ 2.0 & 0.6721 $\pm$ 0.0282 & 0.6077 $\pm$ 0.1602 & \textbf{0.6750} $\pm$ 0.0303 \\
+\hline
+[5.70, 6.00) & [0.35, 0.40) & 110 $\pm$ 10.5 & 2 $\pm$ 1.4 & 0.6972 $\pm$ 0.0228 & 0.6420 $\pm$ 0.1875 & \textbf{0.6983} $\pm$ 0.0235 \\
+\hline
+[5.70, 6.00) & [0.40, 0.45) & 94 $\pm$ 9.7 & 2 $\pm$ 1.4 & 0.6924 $\pm$ 0.0280 & 0.5145 $\pm$ 0.2749 & \textbf{0.6962} $\pm$ 0.0294 \\
+\hline
+[5.70, 6.00) & [0.45, 0.50) & 96 $\pm$ 9.8 & 1 $\pm$ 1.0 & 0.7049 $\pm$ 0.0258 & 0.7423 $\pm$ 0.1417 & \textbf{0.7045} $\pm$ 0.0262 \\
+\hline
+[5.70, 6.00) & [0.50, 0.55) & 78 $\pm$ 8.8 & 1 $\pm$ 1.0 & 0.6989 $\pm$ 0.0287 & 0.6498 $\pm$ 0.1944 & \textbf{0.6996} $\pm$ 0.0292 \\
+\hline
+[5.70, 6.00) & [0.65, 0.70) & 31 $\pm$ 5.6 & 1 $\pm$ 1.0 & 0.6911 $\pm$ 0.0536 & 0.5086 $\pm$ 0.3568 & \textbf{0.6972} $\pm$ 0.0570 \\
+\hline
+[5.70, 6.00) & [0.80, 0.85) & 8 $\pm$ 2.8 & 3 $\pm$ 1.7 & 0.7327 $\pm$ 0.0682 & 0.5872 $\pm$ 0.2516 & \textbf{0.8200} $\pm$ 0.2089 \\
+\hline
+[6.00, 6.30) & [0.00, 0.05) & 27 $\pm$ 5.2 & 1 $\pm$ 1.0 & 0.6565 $\pm$ 0.0550 & 0.4036 $\pm$ 0.6923 & \textbf{0.6662} $\pm$ 0.0639 \\
+\hline
+[6.00, 6.30) & [0.05, 0.10) & 39 $\pm$ 6.2 & 2 $\pm$ 1.4 & 0.7107 $\pm$ 0.0377 & 0.5157 $\pm$ 0.1466 & \textbf{0.7212} $\pm$ 0.0413 \\
+\hline
+[6.00, 6.30) & [0.10, 0.15) & 52 $\pm$ 7.2 & 4 $\pm$ 2.0 & 0.6547 $\pm$ 0.0413 & 0.5829 $\pm$ 0.1944 & \textbf{0.6606} $\pm$ 0.0477 \\
+\hline
+[6.00, 6.30) & [0.15, 0.20) & 67 $\pm$ 8.2 & 1 $\pm$ 1.0 & 0.6758 $\pm$ 0.0326 & 0.6434 $\pm$ 0.1994 & \textbf{0.6763} $\pm$ 0.0332 \\
+\hline
+[6.00, 6.30) & [0.20, 0.25) & 56 $\pm$ 7.5 & 1 $\pm$ 1.0 & 0.7115 $\pm$ 0.0321 & 0.6103 $\pm$ 0.3229 & \textbf{0.7133} $\pm$ 0.0332 \\
+\hline
+[6.00, 6.30) & [0.30, 0.35) & 60 $\pm$ 7.7 & 2 $\pm$ 1.4 & 0.6927 $\pm$ 0.0336 & 0.5387 $\pm$ 0.1519 & \textbf{0.6981} $\pm$ 0.0354 \\
+\hline
+[6.00, 6.30) & [0.40, 0.45) & 82 $\pm$ 9.1 & 1 $\pm$ 1.0 & 0.7163 $\pm$ 0.0244 & 0.6268 $\pm$ 0.3100 & \textbf{0.7174} $\pm$ 0.0251 \\
+\hline
+[6.00, 6.30) & [0.45, 0.50) & 58 $\pm$ 7.6 & 1 $\pm$ 1.0 & 0.7086 $\pm$ 0.0296 & 0.6834 $\pm$ 0.2185 & \textbf{0.7090} $\pm$ 0.0303 \\
+\hline
+[6.00, 6.30) & [0.50, 0.55) & 42 $\pm$ 6.5 & 1 $\pm$ 1.0 & 0.6666 $\pm$ 0.0411 & 0.6032 $\pm$ 0.3285 & \textbf{0.6681} $\pm$ 0.0428 \\
+\hline
+[6.00, 6.30) & [0.60, 0.65) & 38 $\pm$ 6.2 & 1 $\pm$ 1.0 & 0.7230 $\pm$ 0.0355 & 0.6530 $\pm$ 0.1919 & \textbf{0.7249} $\pm$ 0.0369 \\
+\hline
+[6.00, 6.30) & [0.65, 0.70) & 23 $\pm$ 4.8 & 1 $\pm$ 1.0 & 0.6989 $\pm$ 0.0517 & 0.7839 $\pm$ 0.1250 & \textbf{0.6950} $\pm$ 0.0545 \\
+\hline
+[6.30, 6.60) & [0.20, 0.25) & 46 $\pm$ 6.8 & 1 $\pm$ 1.0 & 0.7040 $\pm$ 0.0380 & 0.5512 $\pm$ 0.3930 & \textbf{0.7074} $\pm$ 0.0400 \\
+\hline
+[6.30, 6.60) & [0.25, 0.30) & 38 $\pm$ 6.2 & 3 $\pm$ 1.7 & 0.7072 $\pm$ 0.0368 & 0.4565 $\pm$ 0.3718 & \textbf{0.7287} $\pm$ 0.0530 \\
+\hline
+[6.30, 6.60) & [0.35, 0.40) & 43 $\pm$ 6.6 & 1 $\pm$ 1.0 & 0.7270 $\pm$ 0.0328 & 0.3558 $\pm$ 0.5787 & \textbf{0.7358} $\pm$ 0.0374 \\
+\hline
+[6.60, 6.90) & [0.05, 0.10) & 5 $\pm$ 2.2 & 2 $\pm$ 1.4 & 0.5855 $\pm$ 0.1911 & 0.7076 $\pm$ 0.2021 & \textbf{0.5042} $\pm$ 0.3640 \\
+\hline
+[6.60, 6.90) & [0.20, 0.25) & 21 $\pm$ 4.6 & 1 $\pm$ 1.0 & 0.7366 $\pm$ 0.0414 & 0.7270 $\pm$ 0.1882 & \textbf{0.7371} $\pm$ 0.0445 \\
+\hline
+[6.60, 6.90) & [0.25, 0.30) & 26 $\pm$ 5.1 & 1 $\pm$ 1.0 & 0.7000 $\pm$ 0.0425 & 0.6546 $\pm$ 0.1907 & \textbf{0.7019} $\pm$ 0.0449 \\
+\hline
+[6.60, 6.90) & [0.45, 0.50) & 17 $\pm$ 4.1 & 1 $\pm$ 1.0 & 0.6819 $\pm$ 0.0674 & 0.4832 $\pm$ 0.3796 & \textbf{0.6943} $\pm$ 0.0766 \\
+\hline
+[6.90, 7.50) & [0.10, 0.15) & 11 $\pm$ 3.3 & 1 $\pm$ 1.0 & 0.6639 $\pm$ 0.0923 & 0.4382 $\pm$ 0.6606 & \textbf{0.6864} $\pm$ 0.1239 \\
+\hline
+[6.90, 7.50) & [0.20, 0.25) & 10 $\pm$ 3.2 & 1 $\pm$ 1.0 & 0.6691 $\pm$ 0.0766 & 0.5104 $\pm$ 0.3551 & \textbf{0.6867} $\pm$ 0.0961 \\
+\hline
+[6.90, 7.50) & [0.25, 0.30) & 24 $\pm$ 4.9 & 1 $\pm$ 1.0 & 0.6948 $\pm$ 0.0607 & 0.3895 $\pm$ 0.2171 & \textbf{0.7080} $\pm$ 0.0656 \\
+\hline
+[6.90, 7.50) & [0.40, 0.45) & 20 $\pm$ 4.5 & 1 $\pm$ 1.0 & 0.6673 $\pm$ 0.0636 & 0.6563 $\pm$ 0.1894 & \textbf{0.6679} $\pm$ 0.0677 \\
+\hline
+[6.90, 7.50) & [0.60, 0.65) & 10 $\pm$ 3.2 & 1 $\pm$ 1.0 & 0.6863 $\pm$ 0.0949 & 0.5370 $\pm$ 0.4048 & \textbf{0.7029} $\pm$ 0.1163 \\
+\hline
+\end{longtable}
+\end{footnotesize}
+\end{landscape}
+\clearpage
+
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass1.png}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass4.png}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF1_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.05 \leq x_F < 0.10$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass2.png}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass4.pdf}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass6.png}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF2_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.10 \leq x_F < 0.15$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass3.png}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass4.png}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass7.png}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass8.png}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF3_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.15 \leq x_F < 0.20$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass4.png}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass6.png}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass9.png}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF4_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.20 \leq x_F < 0.25$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass0.png}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass4.png}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass5.png}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass7.png}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF5_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.25 \leq x_F < 0.30$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass3.png}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass4.png}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass6.png}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF6_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.30 \leq x_F < 0.35$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass2.png}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass4.png}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass8.png}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF7_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.35 \leq x_F < 0.40$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass1.png}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass2.png}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass3.png}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass4.pdf}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass8.png}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF8_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.40 \leq x_F < 0.45$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass0.png}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass1.png}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass4.pdf}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass5.png}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass8.png}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF9_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.45 \leq x_F < 0.50$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass2.png}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass4.pdf}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass5.png}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass9.png}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF10_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.50 \leq x_F < 0.55$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass2.png}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass4.pdf}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass6.png}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF11_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.55 \leq x_F < 0.60$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass1.png}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass3.png}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass4.pdf}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass7.png}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass9.png}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF12_mass10.png}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.60 \leq x_F < 0.65$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass0.pdf}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass4.png}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass5.png}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass6.png}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass8.png}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF13_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.65 \leq x_F < 0.70$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass0.png}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass3.png}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass4.pdf}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass5.png}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass6.png}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF14_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.70 \leq x_F < 0.75$.}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass0.png}
+        \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass1.pdf}
+        \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass2.pdf}
+        \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass3.pdf}
+        \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass4.pdf}
+        \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass5.pdf}
+        \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass6.pdf}
+        \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass7.pdf}
+        \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass8.pdf}
+        \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+    \end{subfigure}\vspace{0.5cm}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass9.pdf}
+        \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF15_mass10.pdf}
+        \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+    \end{subfigure}
+    \caption{Efficiency plots for the $x_F$ bin $0.75 \leq x_F < 0.80$.}
+\end{figure}
+
+% \begin{figure}[p]
+%     \centering
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass0.pdf}
+%         \caption{$4.2 \leq m < 4.5$ GeV/$c^2$}
+%         \label{fig:xF16_mass0}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass1.pdf}
+%         \caption{$4.5 \leq m < 4.8$ GeV/$c^2$}
+%         \label{fig:xF16_mass1}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass2.pdf}
+%         \caption{$4.8 \leq m < 5.1$ GeV/$c^2$}
+%         \label{fig:xF16_mass2}
+%     \end{subfigure}
+%     \vspace{0.5cm}
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass3.pdf}
+%         \caption{$5.1 \leq m < 5.4$ GeV/$c^2$}
+%         \label{fig:xF16_mass3}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass4.pdf}
+%         \caption{$5.4 \leq m < 5.7$ GeV/$c^2$}
+%         \label{fig:xF16_mass4}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass5.pdf}
+%         \caption{$5.7 \leq m < 6.0$ GeV/$c^2$}
+%         \label{fig:xF16_mass5}
+%     \end{subfigure}
+%     \vspace{0.5cm}
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass6.pdf}
+%         \caption{$6.0 \leq m < 6.3$ GeV/$c^2$}
+%         \label{fig:xF16_mass6}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass7.pdf}
+%         \caption{$6.3 \leq m < 6.6$ GeV/$c^2$}
+%         \label{fig:xF16_mass7}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass8.pdf}
+%         \caption{$6.6 \leq m < 6.9$ GeV/$c^2$}
+%         \label{fig:xF16_mass8}
+%     \end{subfigure}
+%     \vspace{0.5cm}
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass9.pdf}
+%         \caption{$6.9 \leq m < 7.5$ GeV/$c^2$}
+%         \label{fig:xF16_mass9}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./kTrackerEfficiencyPlots/D2_Efficiency_xF16_mass10.pdf}
+%         \caption{$7.5 \leq m < 8.7$ GeV/$c^2$}
+%         \label{fig:xF16_mass10}
+%     \end{subfigure}
+%     \hfill
+%     \caption{Efficiency plots for the $x_F$ bin $0.80 \leq x_F < 0.85$.}
+%     \label{fig:xF16}
+% \end{figure}
+
+% \clearpage
+
+
+\clearpage
+\FloatBarrier
+Several bins exhibit unphysical average efficiencies, with some values equal to zero and others exceeding 100\%. Therefore, only the bins with valid (0, 100], kTracker efficiencies are included in the final cross section calculation.
+\\
+
+Table \ref{tab:efficiency_lh2} lists the calculated average efficiencies and their uncertainties for each kinematic bin using the RS-67 LH$_2$ dataset.
+
+%--- The longtable for efficiency results ---
+\input{kTrackerTable}
+
+\subsection{Trigger Efficiency}
+
+In DocDB 10795 Kenichi performed a trigger efficiency study in support of Hugo's charmonium analysis.  This study showed an efficiency of $0.87 \pm 0.10$ independent of kinematic bin.  This study will need to be redone for the DY region $4.2<M<8.0$.  For this purposes of this release, however, we have slightly enlarged the range of the error to include the possibility of a lower efficiency.  We have adopted the value $\epsilon_{\text{trigger}} = 0.845 \pm 0.125$ temporarily.  We note that this will be the largest contributor to the systematic error described in the next section.
+
+\FloatBarrier
+
+\section{Systematic Uncertainties}
+\label{sec:systematics}
+A comprehensive evaluation of systematic uncertainties is essential for a precision cross-section measurement. The main sources of systematic uncertainty in this analysis include:
+\begin{itemize}
+    \item \textbf{Luminosity Determination:} Uncertainty in the incident proton flux, target density, and length.
+    \item \textbf{Acceptance Correction:} Uncertainty stemming from the MC statistics and the physics model used to generate the Drell-Yan events (e.g., the input PDFs).
+    \item \textbf{Reconstruction Efficiency:} Uncertainty from the statistics of the clean and messy MC samples, and the method used to average over the data's occupancy distribution.
+    \item \textbf{Background Subtraction:} Uncertainty in the normalization of the empty flask and combinatorial backgrounds.
+    \item \textbf{Event Selection:} Variation of the analysis cuts to test the stability of the final result.
+\end{itemize}
+A study of the systematic effect of the combinatoric background subtraction is underway (see DocDB 11307), but this is expected to be purely statistical and not systematic.  
+
+In this report we have computed a systematic uncertainty from three sources: the reconstruction efficiency, the acceptance, and the trigger efficiency.  Those corrections are described in detail in the previous section.  In each case we computed the fractional error in the correction and applied that fraction to the corrected yield in Equation~\ref{eq:modified_cross_section} to obtain the absolute systematic error.  The three systematic errors were added in quadrature.  To summarize:
+$${\rm Let~}C(M,x_F) = \frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} (M,x_F).$$
+$${\rm Then~}\sigma_C^{\rm sys,acc}(M,x_F)=\frac{\delta\epsilon_{\rm acc}(M,x_F)}{\epsilon_{\rm acc}(M,x_F)}C(M,x_F),$$
+$$\sigma_C^{\rm sys,recon}(M,x_F)=\frac{\delta\epsilon_{\rm recon}(M,x_F)}{\epsilon_{\rm recon}(M,x_F)}C(M,x_F),$$
+$$\sigma_C^{\rm sys,trigger}(M,x_F)=\frac{\delta\epsilon_{\rm trigger}}{\epsilon_{\rm trigger}}C(M,x_F),{\rm~and}$$
+$$\sigma_C^{\rm sys,total}(M,x_F)=\sqrt{[\sigma_C^{\rm sys,acc}(M,x_F)]^2+[\sigma_C^{\rm sys,recon}(M,x_F)]^2+[\sigma_C^{\rm sys,trigger}(M,x_F)]^2}.$$
+This total systematic error is displayed as an error band in the plots in the next section.  Table~\ref{tab:acceptance_lh2}, in the Appendix, lists the systematic uncertainties for each bin.
+
+The charmonium paper~\cite{charmonium} uses a 10\% systematic error associated with the integrated luminosity; we adopt the same value. We have not included this in the plots because it is uniform for every point.
+
+\section{Results: Double-Differential Cross-Section}
+\label{sec:results}
+Following the application of all corrections and background subtraction procedures, the Drell-Yan double-differential cross-section, $M^3 \diffd^2\sigma / (\diffd M \diffd x_F)$, was extracted for the $pp$ collisions at $\sqrt{s} = 15$ GeV. The results are presented in the following figures for all bins of $x_F$. Table~\ref{tab:xsec_lh2}, in the Appendix, lists these results.
+
+Each figure displays the measured cross-section as a function of the dimuon invariant mass, $M$. The error bars on the data points represent the statistical uncertainty, while the error bands show the systematic uncertainties. Please note that the 10\% global uncertainty due to the integrated luminosity is not included in the error bands.
+
+The data are compared with theoretical predictions based on Next-to-Leading Order (NLO) QCD calculations, using the NNPDF4.0 and CT18 NLO PDFs obtained from LHAPDF.  These calculations were performed by Hugo and are mentioned in DocDB 10167. 
+
+Data points do not appear if the efficiency and/or acceptance for that bin was computed to be zero.  
+
+%--- All Cross Section plots ---
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_0_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.00 \leq x_F < 0.05$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_1_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.05 \leq x_F < 0.10$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_2_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.10 \leq x_F < 0.15$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_3_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.15 \leq x_F < 0.20$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_4_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.20 \leq x_F < 0.25$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_5_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.25 \leq x_F < 0.30$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_6_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.30 \leq x_F < 0.35$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_7_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.35 \leq x_F < 0.40$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_8_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.40 \leq x_F < 0.45$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_9_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.45 \leq x_F < 0.50$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_10_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.50 \leq x_F < 0.55$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_11_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.55 \leq x_F < 0.60$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_12_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.60 \leq x_F < 0.65$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_13_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.65 \leq x_F < 0.70$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_14_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.70 \leq x_F < 0.75$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/LH2_15_roofit.pdf}
+\caption{Differential cross-section for $x_F$ bin $0.75 \leq x_F < 0.80$.}
+\end{figure}
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\textwidth]{./XSecPlots/AllXsectionsOnSameCanvas.pdf}
+\caption{Summary of double differential cross-section measurements}
+\end{figure}
+\clearpage
+
+\section{Discussion and Conclusion}
+\label{sec:conclusion}
+This analysis presents the first measurement of the absolute Drell-Yan cross-section from the Fermilab SeaQuest experiment for $pp$ collisions at 120 GeV. The preliminary results show reasonable agreement with theoretical predictions from NLO QCD using modern PDF sets, although some tension may be apparent in certain kinematic regions. These data, particularly at high $x_F$, provide valuable new constraints for global PDF fits.
+
+The calculation of the reconstruction efficiency correction (Section \ref{sec:ktracker_eff}) highlights a key challenge of the analysis. In kinematic bins with low statistics, both in the data and the MC samples, the determination of the efficiency can be unreliable. In some cases, statistical fluctuations lead to calculated efficiencies greater than one or zero, and these bins must be excluded from the final result. Future analyses will benefit from MC samples with higher statistics to mitigate this issue.
+
+In conclusion, we have developed a comprehensive framework for the measurement of the absolute Drell-Yan cross-section. The results presented here demonstrate the capability of the SeaQuest experiment to probe the antiquark structure of the nucleon in the large-$x$ domain. The final results from this analysis will provide crucial input for resolving long-standing questions about the non-perturbative structure of the proton.
+
+\section{Acknowledgements}
+The authors wish to express their gratitude to \textbf{Kenichi Nakano (University of Virginia)} and \textbf{Ching Him Leung (Jefferson Laboratory)} for insightful discussions and valuable feedback. We also thank \textbf{Shivangi Prasad (University of Illinois Urbana-Champaign)} and \textbf{Harsha Kaluarachchi (New Mexico State University)} for their helpful conversations and support throughout this work.
+
+\clearpage
+
+\appendix
+\section{Appendix: Event Selection Criteria}
+\label{app:event_selection}
+
+The analysis relies on a standard set of selection criteria ("cuts") to identify high-quality dimuon events. These are defined for the positive track ($\mu^+$), negative track ($\mu^-$), and the combined dimuon vertex. The cuts are implemented as \texttt{TCut} objects in the ROOT analysis framework. The parameter \texttt{beamOffset} accounts for run-dependent shifts in the beam position.
+
+\subsection{Positive Track Cuts (\texttt{chuckCutsPositive\_2111v42})}
+\label{cut:chuck_positive}
+{\small\begin{verbatim}
+chisq1_target < 15 && pz1_st1 > 9 && pz1_st1 < 75 && nHits1 > 13
+&& x1_t*x1_t + (y1_t-beamOffset)*(y1_t-beamOffset) < 320
+&& x1_d*x1_d + (y1_d-beamOffset)*(y1_d-beamOffset) < 1100
+&& x1_d*x1_d + (y1_d-beamOffset)*(y1_d-beamOffset) > 16
+&& chisq1_target < 1.5*chisq1_upstream && chisq1_target < 1.5*chisq1_dump
+&& z1_v < -5 && z1_v > -320 && chisq1/(nHits1-5) < 12
+&& y1_st1/y1_st3 < 1 && abs(abs(px1_st1-px1_st3)-0.416) < 0.008
+&& abs(py1_st1-py1_st3) < 0.008 && abs(pz1_st1-pz1_st3) < 0.08
+&& y1_st1*y1_st3 > 0 && abs(py1_st1)>0.02
+\end{verbatim}}
+
+\subsection{Negative Track Cuts (\texttt{chuckCutsNegative\_2111v42})}
+\label{cut:chuck_negative}
+{\small\begin{verbatim}
+chisq2_target < 15 && pz2_st1 > 9 && pz2_st1 < 75 && nHits2 > 13
+&& x2_t*x2_t + (y2_t-beamOffset)*(y2_t-beamOffset) < 320
+&& x2_d*x2_d + (y2_d-beamOffset)*(y2_d-beamOffset) < 1100
+&& x2_d*x2_d + (y2_d-beamOffset)*(y2_d-beamOffset) > 16
+&& chisq2_target < 1.5*chisq2_upstream && chisq2_target < 1.5*chisq2_dump
+&& z2_v < -5 && z2_v > -320 && chisq2/(nHits2-5) < 12
+&& y2_st1/y2_st3 < 1 && abs(abs(px2_st1-px2_st3)-0.416) < 0.008
+&& abs(py2_st1-py2_st3) < 0.008 && abs(pz2_st1-pz2_st3) < 0.08
+&& y2_st1*y2_st3 > 0 && abs(py2_st1)>0.02
+\end{verbatim}}
+
+\subsection{Dimuon Cuts (\texttt{chuckCutsDimuon\_2111v42})}
+\label{cut:chuck_dimuon}
+{\small\begin{verbatim}
+abs(dx) < 0.25 && abs(dy-beamOffset) < 0.22 && dz > -280 && dz < -5
+&& abs(dpx) < 1.8 && abs(dpy) < 2 && dpx*dpx + dpy*dpy < 5 && dpz > 38
+&& dpz < 116 && dx*dx + (dy-beamOffset)*(dy-beamOffset) < 0.06
+&& abs(trackSeparation) < 270 && chisq_dimuon < 18
+&& abs(chisq1_target + chisq2_target - chisq_dimuon) < 2
+&& y1_st3*y2_st3 < 0 && nHits1 + nHits2 > 29 && nHits1St1 + nHits2St1 > 8
+&& abs(x1_st1+x2_st1) < 42
+\end{verbatim}}
+
+\subsection{Physics and Occupancy Cuts}
+\label{cut:physics_occ}
+{\small\begin{verbatim}
+// physicsCuts_2111v42
+mass > 4.2 && xF > 0 && xF < 0.8 && pt < 5 && pt > 0.1
+&& abs(pz1_st1-pz2_st1) < 50 && abs(px1_st1-px2_st1) < 3.5
+&& abs(py1_st1-py2_st1) < 3.5 && pz1_st1 > 15 && pz2_st1 > 15
+&& pz1_st1 < 75 && pz2_st1 < 75
+
+// occCuts_2111v42
+D1 < 150 && D2 < 150 && D3 < 150 && D4 < 150
+\end{verbatim}}
+
+\clearpage
+\section{Appendix: Table of Systematic Errors}
+\label{app:systematics_table}
+
+%--- The longtable for efficiency results ---
+\input{SystematicsTable}
+\clearpage
+
+
+\section{Appendix: Table of $M^{3}\frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}}$ Cross-Section Values}
+\label{app:xsec_table}
+
+%--- The longtable for efficiency results ---
+\input{XSecTable}
+\clearpage
+\begin{thebibliography}{99}
+    \bibitem{Drell1970}
+    S. D. Drell and T.-M. Yan,
+    \textit{Massive Lepton-Pair Production in Hadron-Hadron Collisions at High Energies},
+    Phys. Rev. Lett. \textbf{25}, 316 (1970).
+
+    \bibitem{alternativeDY} S. Pate and C. Kuruppu, 
+    \textit{An alternative proposal for determining DY yields}, DocDB 11322
+
+    \bibitem{charmonium}
+    C.H. Leung et al., \textit{Measurement of $J/\psi$ and $\psi$(2S) production in $p + p$ and $p + d$ interactions at 120 GeV},
+    Physics Letters B \textbf{858}, 139032 (2024).
+ 
+\end{thebibliography}
+
+\end{document}
