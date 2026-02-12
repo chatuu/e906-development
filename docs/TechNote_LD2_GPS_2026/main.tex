@@ -208,9 +208,9 @@ The double-differential cross-section in a given kinematic bin ($\Delta M, \Delt
 \begin{equation}
     \frac{\diffd^{2}\sigma}{\diffd M \diffd x_{F}} = \frac{1}{\epsilon_{\text{acc}} \Delta M \Delta x_{F}} 
     \left[ 
-        \frac{Y^{\text{LH2}}_{\text{total}} - Y^{\text{LH2}}_{\text{mixed}}}{\epsilon^{\text{LH2}}_{\text{signal}}} 
+        \frac{Y^{\text{LH2}}_{\text{total}} - Y^{\text{LH2}}_{\text{mixed}}}{\langle\epsilon^{\text{LH2}}_{\text{signal}}\rangle} 
         - \frac{I_{\text{LH2}}}{I_{\text{flask}}} 
-        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\epsilon^{\text{flask}}_{\text{signal}}} \right) 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right)
     \right]
     \label{eq:modified_cross_section}
 \end{equation}
@@ -220,26 +220,28 @@ where:
     \item $Y^{\text{LH2}}_{\text{mixed}}$ is the estimated mixed background yield from mixed events for the LH2 target.
     \item $Y^{\text{flask}}_{\text{total}}$ is the total flask target dimuon yield after the event selection criteria.
     \item $Y^{\text{flask}}_{\text{mixed}}$ is the estimated mixed background yield from mixed events for the flask target.
-    \item $\epsilon^{\text{LH2}}_{\text{signal}}$ is the average signal efficiency correction for the LH2 target dimuons.
-    \item $\epsilon^{\text{flask}}_{\text{signal}}$ is the average signal efficiency correction for the flask target dimuons.
+    \item $\langle\epsilon^{\text{LH2}}_{\text{signal}}\rangle$ is the average signal efficiency correction for the LH2 target dimuons.
+    \item $\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle$ is the average signal efficiency correction for the flask target dimuons.
     \item $\mathcal{L}$ is the integrated luminosity for the dataset.
 \end{itemize}
 The average signal efficiency correction can be calculated as:
 \begin{equation}
-    \epsilon_{\text{signal}} = \frac{1}{Y_{\text{total}} - Y_{\text{mixed}}}\left[\epsilon_{\text{total}}Y_{\text{total}} - \epsilon_{\text{mixed}}Y_{\text{mixed}}\right]
+    \langle\epsilon_{\text{signal}}\rangle = \frac{1}{Y_{\text{total}} - Y_{\text{mixed}}}\left[\langle\epsilon_{\text{total}}\rangleY_{\text{total}} - \langle\epsilon_{\text{mixed}}\rangleY_{\text{mixed}}\right]
 \end{equation}
 where:
 \begin{itemize}
-    \item $\epsilon_{\text{total}}$ is the average total efficiency correction for the total yield.
-    \item $\epsilon_{\text{mixed}}$ is the average mixed efficiency correction for the mixed background yield.
+    \item $\langle\epsilon_{\text{total}}\rangle$ is the average total efficiency correction for the total yield.
+    \item $\langle\epsilon_{\text{mixed}}\rangle$ is the average mixed efficiency correction for the mixed background yield.
 \end{itemize}
 as explained in DocDB 11448-V2.
 
 In each case, efficiency correction of the $i^{th}$ dimuon is defined as:
 \begin{equation}
+    \label{eq:total_eff}
     \epsilon^{i} = \epsilon^{i}_{\text{recon}} \cdot \epsilon^{i}_{\text{hodo}}
 \end{equation}
 where $\epsilon^{i}_{\text{recon}}$ is the reconstruction efficiency for the $i^{th}$ dimuon and $\epsilon^{i}_{\text{hodo}}$ is the hodoscope efficiency for the $i^{th}$ dimuon.
+The calculation of these efficiency corrections is detailed in the following sections.
 
 The integrated luminosity, $\mathcal{L}$, is given by the product of the total number of protons incident on the target and the number of target nuclei per unit area:
 \begin{equation}
@@ -247,12 +249,7 @@ The integrated luminosity, $\mathcal{L}$, is given by the product of the total n
 \label{eq:luminosity}
 \end{equation}
 Here, $N_{\text{incident}}$ is the number of protons on target, $N_A$ is Avogadro's number, $\rho$ is the target density, $L$ is the target length, $A$ is the molar mass, and $f_{\text{atten}}$ is a correction factor for beam attenuation within the thick target. For the $L=50.8$ cm long LH$_2$ target, with a density of $\rho_H=0.0708$~g/cm$^3$, the target thickness is 3.5966 g/cm$^2$ with a beam attenuation factor of 0.966.
-
-The total correction factor, $\epsilon_{\text{total}}$, is the product of three terms determined from MC simulations:
-\begin{equation}
-\epsilon_{\text{total}} = \epsilon_{\text{acc}}(M,x_{F}) \cdot \epsilon_{\text{recon}}(M,x_{F}) \cdot \epsilon_{\text{trigger}}
-\end{equation}
-where $\epsilon_{\text{acc}}$ is the geometric and kinematic acceptance of the spectrometer, $\epsilon_{\text{recon}}$ is the track reconstruction efficiency (often called ``kTracker efficiency''), and $\epsilon_{\text{trigger}}$ is the trigger efficiency. The calculation of these three terms is detailed in the following sections.
+Also, $\epsilon_{\text{acc}}$ is the geometric and kinematic acceptance of the spectrometer.
 
 \FloatBarrier
 \section{Acceptance and Efficiency Corrections}
@@ -736,81 +733,99 @@ The average reconstruction efficiency correction calculated for each kinematic b
 
 
 % \FloatBarrier
+\clearpage
 \section{Hodoscope Efficiency Correction}
 \label{sec:hodo_eff}
 Previously, a constant hodoscope efficiency correction of $0.845 \pm 0.125$ was used (DocDB 11383-v4).
 In this analysis, we calculate the hodoscope efficiency for both target dimuons and mixed dimuons on an event-by-event basis.
 This is done by determining the roadID for the positive track (`posRoad') and the negative track (`negRoad') and utilizing the hodoscope paddle efficiency table created by Harsha (DocDB 11467-v4).
 
-\begin{figure}[h!]
+% --- PAGE 1: Top Hodoscopes (Rows 1 & 2) ---
+\begin{figure}[h!] % 'p' encourages placing on a dedicated page
     \centering
-    % --- FIRST ROW: Top Hodoscopes (4 across) ---
-    \begin{subfigure}[b]{0.24\textwidth}
+    % Row 1
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./HodoEffPlots/H1T_efficiency.pdf} 
         \caption{H1T}
         \label{fig:h1t_eff}
     \end{subfigure}
-    \hfill % Adds horizontal stretching space
-    \begin{subfigure}[b]{0.24\textwidth}
+    \hfill 
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./HodoEffPlots/H2T_efficiency.pdf}
         \caption{H2T}
         \label{fig:h2t_eff}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.24\textwidth}
+
+\clearpage
+    
+    %\vspace{0.5cm}
+    
+    % Row 2
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./HodoEffPlots/H3T_efficiency.pdf} 
         \caption{H3T}
         \label{fig:h3t_eff}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.24\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./HodoEffPlots/H4T_efficiency.pdf}
         \caption{H4T}
         \label{fig:h4t_eff}
     \end{subfigure}
 
-    \vspace{0.5cm} % Vertical gap between the two rows
+    \caption{Hodoscope Paddle Efficiencies (Top Planes).}
+    \label{fig:hodo_grid_eff_1}
+\end{figure}
 
-    % --- SECOND ROW: Bottom Hodoscopes (4 across) ---
-    \begin{subfigure}[b]{0.24\textwidth}
+\clearpage % Forces a page break here
+
+% --- PAGE 2: Bottom Hodoscopes (Rows 3 & 4) ---
+\begin{figure}[h!]
+    \ContinuedFloat % Keeps the Figure number the same (e.g., Figure 1 cont.)
+    \centering
+    % Row 3
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./HodoEffPlots/H1B_efficiency.pdf} 
         \caption{H1B}
         \label{fig:h1b_eff}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.24\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./HodoEffPlots/H2B_efficiency.pdf}
         \caption{H2B}
         \label{fig:h2b_eff}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.24\textwidth}
+    
+    \vspace{0.5cm}
+
+    % Row 4
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./HodoEffPlots/H3B_efficiency.pdf} 
         \caption{H3B}
         \label{fig:h3b_eff}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.24\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./HodoEffPlots/H4B_efficiency.pdf}
         \caption{H4B}
         \label{fig:h4b_eff}
     \end{subfigure}
     
-    \caption{Hodoscope Paddle Efficiencies calculated in each plane.}
-    \label{fig:hodo_grid_eff}
+    \caption{Hodoscope Paddle Efficiencies (Bottom Planes) -- Continued.}
+    \label{fig:hodo_grid_eff_2}
 \end{figure}
+\clearpage
 
 We also calculated hit distributions for each hodoscope paddle and shown below in Figure \ref{fig:hodo_hit_dist}.
-
-\begin{figure}[p] % 'p' allows it to take up a full page if needed
+\begin{figure}[h!] % 'p' allows it to take up a full page if needed
     \centering
     
     % --- ROW 1: Plane 1 ---
@@ -912,7 +927,7 @@ The average hodoscope efficiency, $\langle \epsilon_{\text{hodo}} \rangle$, alon
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/HodoDists/E_mix_hodo_LD2.pdf}
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/HodoEffDists/E_mix_hodo_LD2.pdf}
         \caption{LD2 average hodoscope efficiency for mix}
     \end{subfigure}
 
@@ -938,10 +953,8 @@ The average hodoscope efficiency, $\langle \epsilon_{\text{hodo}} \rangle$, alon
 \section{Total Efficiency Correction}
 \label{sec:total_eff}
 
-The total efficiency correction $\epsilon_{\text{total}}$ is calculated on an event-by-event basis as the product of the reconstruction and hodoscope efficiencies:
-\begin{equation}
-    \epsilon_{\text{total}} = \epsilon_{\text{reco}} \times \epsilon_{\text{hodo}}
-\end{equation}
+The total efficiency correction $\epsilon^{i}_{\text{total}}$ for the $i^{th}$ is calculated on a dimuon-by-dimuon basis as the product of the reconstruction and hodoscope efficiencies as defined in the equation \ref{eq:total_eff}.
+
 The average total efficiencies for the total and mixed event yields, along with their propagated uncertainties, are calculated for each kinematic bin and are shown below in Figure \ref{fig:total_eff_2d}.
 
 \begin{figure}[h!]
@@ -969,7 +982,7 @@ The average total efficiencies for the total and mixed event yields, along with 
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/FinalDists/E_mix_final_LD2.pdf}
+        \includegraphics[width=\textwidth]{/root/github/e906-development/docs/TechNote_LD2_GPS_2026/FinalEffDists/E_mix_final_LD2.pdf}
         \caption{LD2 average total efficiency for mix}
     \end{subfigure}
 
