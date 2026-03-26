@@ -1,9 +1,17 @@
 import numpy as np
 import uproot
 import awkward as ak
-import matplotlib.pyplot as plt
+import ROOT
 from scipy.interpolate import interp1d
 import argparse
+import os
+
+# ==========================================
+# ROOT Configuration
+# ==========================================
+ROOT.gROOT.SetBatch(True)
+ROOT.gStyle.SetOptStat(0)
+ROOT.gStyle.SetPalette(ROOT.kBird)
 
 # ==========================================
 # CONFIGURATION
@@ -13,10 +21,14 @@ input_npz_file  = "../GlobalEfficiencyCurve/interpolation_data_d1.npz"
 
 # --- TOGGLES ---
 # Set to False to skip covariance matrix generation and speed up the script
-GENERATE_COVAR_MATRIX = False
+GENERATE_COVAR_MATRIX = True
 
 # Limit the covariance matrix size to prevent Out-Of-Memory errors
-max_covar_samples = 10000 
+max_covar_samples_per_bin = 5000 
+
+# Binning Definitions (Match your analysis)
+mass_bins_np = np.array([4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.7], dtype=float)
+xf_bins_np = np.round(np.arange(0.0, 0.85, 0.05), 2)
 
 # ==========================================
 # EVENT SELECTION (CHUCK CUTS)
@@ -170,39 +182,86 @@ def calculate_recoeff_and_error(d1_vals, x_curve, y_curve, y_err_low, y_err_high
     
     return track_effi, recoeff_error, idx_d_minus
 
-def generate_covariance_matrix(loc_data, errors, target_name, tree_name, max_samples=10000):
-    n_samples = min(len(loc_data), max_samples)
-    locs = loc_data[:n_samples]
-    errs = errors[:n_samples]
-
+def generate_covariance_matrix_per_bin(events_cut, loc_data_array, recoeff_error_array, target_name, tree_name):
+    """
+    Loops through double-differential bins, extracts events inside that bin,
+    and generates/saves a specific covariance matrix as a TH2D.
+    """
+    # Map the tree name to 'total' or 'mix'
+    tree_label = "mix" if tree_name == "result_mix" else "total"
+    
+    out_dir = f"CovarianceMatrices_{target_name}_{tree_label}"
+    os.makedirs(out_dir, exist_ok=True)
+    
+    print(f"    -> Generating per-bin Covariance Matrices (Saving to '{out_dir}/')...")
+    
+    mass_vals = np.asarray(events_cut.mass)
+    xf_vals = np.asarray(events_cut.xF)
+    
     inner_correl = 1.0
     neighbor_correl = 1.0
 
-    print(f"    -> Building {n_samples}x{n_samples} Covariance Matrix...")
-    diff_matrix = np.abs(locs[:, None] - locs[None, :])
-
-    correl_matrix = np.zeros((n_samples, n_samples))
-    correl_matrix[diff_matrix == 0] = inner_correl      
-    correl_matrix[diff_matrix == 1] = neighbor_correl   
-
-    covar_matrix = correl_matrix * np.outer(errs, errs)
+    bins_processed = 0
     
-    total_variance = np.sum(covar_matrix)
-    print(f"    -> Total Variance (subset sum) = {total_variance:.6f}")
+    for i_m in range(len(mass_bins_np) - 1):
+        m_low, m_high = mass_bins_np[i_m], mass_bins_np[i_m+1]
+        
+        for i_x in range(len(xf_bins_np) - 1):
+            x_low, x_high = xf_bins_np[i_x], xf_bins_np[i_x+1]
+            
+            # Mask to find events in this specific kinematic bin
+            mask = (mass_vals >= m_low) & (mass_vals < m_high) & (xf_vals >= x_low) & (xf_vals < x_high)
+            
+            locs_in_bin = loc_data_array[mask]
+            errs_in_bin = recoeff_error_array[mask]
+            
+            N = len(locs_in_bin)
+            if N == 0:
+                continue 
+                
+            bins_processed += 1
+            n_samples = min(N, max_covar_samples_per_bin)
+            
+            locs = locs_in_bin[:n_samples]
+            errs = errs_in_bin[:n_samples]
+            
+            # Create correlation matrix logic
+            diff_matrix = np.abs(locs[:, None] - locs[None, :])
+            correl_matrix = np.zeros((n_samples, n_samples))
+            correl_matrix[diff_matrix == 0] = inner_correl      
+            correl_matrix[diff_matrix == 1] = neighbor_correl   
+        
+            # Generate final Covariance Matrix in NumPy
+            covar_matrix = correl_matrix * np.outer(errs, errs)
+            
+            # Create ROOT TH2D
+            hist_name = f"covar_{target_name}_{tree_label}_xf{i_x}_m{i_m}"
+            hist_title = f"{target_name} ({tree_label}) Covariance | M: [{m_low:.1f}, {m_high:.1f}) xF: [{x_low:.2f}, {x_high:.2f});Event i;Event j"
+            
+            h_cov = ROOT.TH2D(hist_name, hist_title, n_samples, 0, n_samples, n_samples, 0, n_samples)
+            h_cov.SetStats(0)
+            h_cov.GetXaxis().CenterTitle()
+            h_cov.GetYaxis().CenterTitle()
+            h_cov.GetXaxis().SetTitleOffset(1.2)
+            h_cov.GetYaxis().SetTitleOffset(1.2)
 
-    plt.figure(figsize=(8, 8))
-    plt.imshow(covar_matrix, cmap='viridis', origin='lower')
-    plt.colorbar(label='Covariance')
-    plt.title(f'Covariance Matrix ({target_name} : {tree_name} - First {n_samples} events)')
-    plt.xlabel('Event Index i')
-    plt.ylabel('Event Index j')
-    
-    pdf_filename = f"covar_matrix_{target_name}_{tree_name}.pdf"
-    plt.savefig(pdf_filename)
-    plt.close()
-    print(f"    -> Covariance plot saved to {pdf_filename}")
+            # Highly optimized filling of sparse ROOT TH2D 
+            nonzero_i, nonzero_j = np.nonzero(covar_matrix)
+            for i, j in zip(nonzero_i, nonzero_j):
+                # TH2D indices are 1-based in ROOT
+                h_cov.SetBinContent(int(i) + 1, int(j) + 1, float(covar_matrix[i, j]))
 
-    return covar_matrix
+            # Setup Canvas and save as PDF
+            c = ROOT.TCanvas(f"c_{hist_name}", "", 800, 800)
+            c.SetRightMargin(0.15) # Leave space for COLZ palette
+            
+            h_cov.Draw("COLZ")
+            
+            pdf_filename = f"{out_dir}/CovarianceMatrix_{target_name}_{tree_label}_XfBin_{i_x}_MassBin_{i_m}.pdf"
+            c.SaveAs(pdf_filename)
+            c.Close()
+            
+    print(f"    -> Finished. Saved {bins_processed} covariance matrices to {out_dir}/.")
 
 # ==========================================
 # MAIN EXECUTION
@@ -243,7 +302,7 @@ def process_file(input_root_file, output_root_file, target_name):
                     print("  - No events passed cuts. Skipping efficiency calculations.")
                     continue
                 
-                # 2. Extract D1 values from the filtered awkward array
+                # 2. Extract D1 values
                 if t_name == 'result_mix':
                     if 'ptrk_D1' in events_cut.fields and 'ntrk_D1' in events_cut.fields:
                         d1_values = 0.5 * (events_cut.ptrk_D1 + events_cut.ntrk_D1)
@@ -259,16 +318,14 @@ def process_file(input_root_file, output_root_file, target_name):
                     x_curve, y_curve, y_err_low, y_err_high
                 )
                 
-                # 4. Add new arrays directly into the Awkward Array
                 events_cut["recoeff"] = recoeff
                 events_cut["recoeff_error"] = recoeff_error
                 
-                # Uproot expects a dictionary mapping branches to arrays for writing
                 output_trees[t_name] = {field: events_cut[field] for field in events_cut.fields}
 
-                # 5. Generate the covariance matrix ONLY if the flag is True
+                # 4. Generate the covariance matrices per bin
                 if GENERATE_COVAR_MATRIX:
-                    generate_covariance_matrix(loc_data, recoeff_error, target_name, t_name, max_samples=max_covar_samples)
+                    generate_covariance_matrix_per_bin(events_cut, loc_data, recoeff_error, target_name, t_name)
                 else:
                     print("    -> Skipping Covariance Matrix generation (Flag is set to False).")
 
