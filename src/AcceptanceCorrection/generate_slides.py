@@ -17,6 +17,16 @@ def make_frame_2cols(title, img_left, img_right):
 \\end{{frame}}
 """
 
+def make_frame_1col(title, img):
+    """Helper to generate a single-image Beamer slide."""
+    return f"""
+\\begin{{frame}}{{{title}}}
+    \\begin{{center}}
+        \\includegraphics[height=0.85\\textheight, keepaspectratio]{{{img}}}
+    \\end{{center}}
+\\end{{frame}}
+"""
+
 def main():
     output_tex = "acceptance_slides.tex"
 
@@ -28,6 +38,10 @@ def main():
     latex_content = r"""\documentclass[aspectratio=169]{beamer}
 \usepackage{graphicx}
 \usepackage{amsmath}
+
+% Use a blue theme that natively includes slide numbers at the bottom right
+\usetheme{Madrid}
+\usecolortheme{whale} % Enforces a strong blue palette
 
 % Remove navigation symbols for a cleaner look
 \setbeamertemplate{navigation symbols}{}
@@ -47,15 +61,12 @@ def main():
 % ==========================================
 \begin{frame}{Overview}
     \begin{itemize}
-        \item Files Used
-        \item Event Selection Criteria
-        \item Understanding the Acceptance Ratio Discrepancy
-        \item Plots Generated
-        \begin{itemize}
-            \item Fully Integrated 1D Plots
-            \item $x_F$ Binned Plots
-            \item $p_T$ Binned Plots
-        \end{itemize}
+        \item Files Used \& Event Selection
+        \item Invariant Mass Studies
+        \item $x_F$ Studies (Yields \& Acceptances)
+        \item $p_T$ Studies (Yields \& Acceptances)
+        \item Track Kinematics ($dp_x, dp_y$)
+        \item Binned Slice Studies ($x_F$ and $p_T$ bins)
     \end{itemize}
 \end{frame}
 
@@ -113,35 +124,80 @@ def main():
             \begin{itemize}
                 \item $4.2 < \text{Mass} < 8.8 \text{ GeV}$
                 \item $-0.1 < x_F < 0.95$
+                \item $0.0 < p_T \leq 3.0 \text{ GeV/c}$
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
-
-% \begin{frame}{Why is the LH2/LD2 Ratio $\neq$ 1 for Integrated Bins?}
-%     \textbf{The Phase-Space Convolution Trap:}
-%     \vspace{0.2cm}
-%   
-%     A 1D projected acceptance is not just the detector geometry; it is mathematically weighted by the generated physics distributions ($N_{\text{gen}}$):
-%     \begin{equation*}
-%         \epsilon(p_T) = \frac{\int \int A(x_F, m, p_T) N_{\text{gen}}(x_F, m, p_T) \,dx_F \,dm}{\int \int N_{\text{gen}}(x_F, m, p_T) \,dx_F \,dm}
-%     \end{equation*}
-%
-%     \vspace{0.2cm}
-%     \begin{itemize}
-%         \item \textbf{Different Physics:} Due to target isospin and PDFs, $N_{\text{gen}}^{\text{LH2}} \neq N_{\text{gen}}^{\text{LD2}}$. 
-%         \item \textbf{Steep Acceptance Gradients:} The spectrometer acceptance changes drastically across $x_F$ and Mass.
-%         \item \textbf{The Result:} When integrating out unbinned variables (like in a $p_T$ plot), the different LH2 and LD2 kinematic shapes sample the spectrometer's geometric acceptance differently, shifting the "average" ratio away from 1.0.
-%     \end{itemize}
-% \end{frame}
 """
 
     # ==========================================
-    # 1. Fully Integrated 1D Plots
+    # 1. Invariant Mass Studies
     # ==========================================
-    latex_content += r"\section{Fully Integrated Plots}" + "\n"
+    latex_content += r"\section{Invariant Mass Plots}" + "\n"
+    latex_content += make_frame_2cols("Overlay \\& Ratio: Mass (Integrated)", 
+                                      "acceptance_overlay_Integrated_mass.pdf", 
+                                      "acceptance_ratio_Integrated_mass.pdf")
     
-    # 4pi and Clean Yield differences (Separated Canvases)
+    latex_content += make_frame_1col("Invariant Mass Yields \\& Ratio (All $x_F$, $p_T$)", "Split_Mass_All_xF_pT.pdf")
+    latex_content += make_frame_1col("Invariant Mass Yields \\& Ratio ($0.0 < x_F \\leq 0.4$)", "Split_Mass_0.0_xF_0.4.pdf")
+    latex_content += make_frame_1col("Invariant Mass Yields \\& Ratio ($0.4 < x_F \\leq 0.8$)", "Split_Mass_0.4_xF_0.8.pdf")
+
+
+    # ==========================================
+    # 2. xF Studies
+    # ==========================================
+    latex_content += r"\section{$x_F$ Plots}" + "\n"
+    latex_content += make_frame_2cols("Overlay \\& Ratio: $x_F$ (Integrated)", 
+                                      "acceptance_overlay_Integrated_xF.pdf", 
+                                      "acceptance_ratio_Integrated_xF.pdf")
+    
+    # xF Yields
+    latex_content += make_frame_1col("$x_F$ Yields \\& Ratio (All Mass, $p_T$)", "Split_xF_All_Mass_pT.pdf")
+    latex_content += make_frame_1col("$x_F$ Yields \\& Ratio ($4.2 < \\text{Mass} \\leq 5.5$)", "Split_xF_4.2_Mass_5.5.pdf")
+    latex_content += make_frame_1col("$x_F$ Yields \\& Ratio ($5.5 < \\text{Mass} \\leq 8.8$)", "Split_xF_5.5_Mass_8.8.pdf")
+
+    # xF Acceptances (New Additions)
+    latex_content += make_frame_1col("$x_F$ Acceptance \\& Ratio (All Mass, $p_T$)", "Acceptance_xF_All_Mass_pT.pdf")
+    latex_content += make_frame_1col("$x_F$ Acceptance \\& Ratio ($4.2 < \\text{Mass} < 5.5$)", "Acceptance_xF_4.2_Mass_5.5.pdf")
+    latex_content += make_frame_1col("$x_F$ Acceptance \\& Ratio ($5.5 < \\text{Mass} < 8.7$)", "Acceptance_xF_5.5_Mass_8.7.pdf")
+
+
+    # ==========================================
+    # 3. pT Studies (Yields & Acceptances)
+    # ==========================================
+    latex_content += r"\section{$p_T$ Plots}" + "\n"
+    latex_content += make_frame_2cols("Overlay \\& Ratio: $p_T$ (Integrated)", 
+                                      "acceptance_overlay_Integrated_pT.pdf", 
+                                      "acceptance_ratio_Integrated_pT.pdf")
+    
+    # Fine Binning Yields
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, All Mass, $x_F$)", "Split_pT_Fine_All_Mass_xF.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $0.0 < x_F < 0.4$)", "Split_pT_Fine_0.0_xF_0.4.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $0.4 < x_F < 0.8$)", "Split_pT_Fine_0.4_xF_0.8.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $4.2 < \\text{Mass} < 5.5$)", "Split_pT_Fine_4.2_Mass_5.5.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $5.5 < \\text{Mass} < 8.7$)", "Split_pT_Fine_5.5_Mass_8.7.pdf")
+
+    # User Binning Yields
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, All Mass, $x_F$)", "Split_pT_User_All_Mass_xF.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $0.0 < x_F < 0.4$)", "Split_pT_User_0.0_xF_0.4.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $0.4 < x_F < 0.8$)", "Split_pT_User_0.4_xF_0.8.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $4.2 < \\text{Mass} < 5.5$)", "Split_pT_User_4.2_Mass_5.5.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $5.5 < \\text{Mass} < 8.7$)", "Split_pT_User_5.5_Mass_8.7.pdf")
+
+    # Acceptances
+    latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, All Mass, $x_F$)", "Acceptance_pT_All_Mass_xF.pdf")
+    latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $0.0 < x_F < 0.4$)", "Acceptance_pT_0.0_xF_0.4.pdf")
+    latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $0.4 < x_F < 0.8$)", "Acceptance_pT_0.4_xF_0.8.pdf")
+    latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $4.2 < \\text{Mass} < 5.5$)", "Acceptance_pT_4.2_Mass_5.5.pdf")
+    latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $5.5 < \\text{Mass} < 8.7$)", "Acceptance_pT_5.5_Mass_8.7.pdf")
+
+
+    # ==========================================
+    # 4. Momentum Kinematics (dp_x, dp_y)
+    # ==========================================
+    latex_content += r"\section{Track Kinematics ($dp_x, dp_y$)}" + "\n"
+    
     latex_content += make_frame_2cols("Kinematic Yields ($4\pi$ Thrown): Integrated", 
                                       "yield_th_dpx_integrated.pdf", 
                                       "yield_th_dpy_integrated.pdf")
@@ -156,22 +212,11 @@ def main():
                                       "yield_ac_dpx2_integrated.pdf", 
                                       "yield_ac_dpy2_integrated.pdf")
 
-    integrated_vars = [
-        ("pT", "$p_T$ (Integrated over $x_F$, Mass)"),
-        ("xF", "$x_F$ (Integrated over $p_T$, Mass)"),
-        ("mass", "Mass (Integrated over $x_F$, $p_T$)")
-    ]
-
-    for var_name, var_title in integrated_vars:
-        prefix = f"Integrated_{var_name}"
-        latex_content += make_frame_2cols(f"Overlay \\& Ratio: {var_title}", 
-                                          f"acceptance_overlay_{prefix}.pdf", 
-                                          f"acceptance_ratio_{prefix}.pdf")
 
     # ==========================================
-    # 2. xF Binned Plots
+    # 5. Binned Slice Studies (xF Slices)
     # ==========================================
-    latex_content += r"\section{$x_F$ Binned Plots}" + "\n"
+    latex_content += r"\section{Binned Studies: $x_F$ Slices}" + "\n"
     for i in range(num_xf_bins):
         prefix = f"xF_bin{i}"
         title = f"$x_F$ Bin {i}"
@@ -196,9 +241,9 @@ def main():
                                           f"acceptance_ratio_{prefix}.pdf")
 
     # ==========================================
-    # 3. pT Binned Plots
+    # 6. Binned Slice Studies (pT Slices)
     # ==========================================
-    latex_content += r"\section{$p_T$ Binned Plots}" + "\n"
+    latex_content += r"\section{Binned Studies: $p_T$ Slices}" + "\n"
     for i in range(num_pt_bins):
         prefix = f"pT_bin{i}"
         title = f"$p_T$ Bin {i}"
