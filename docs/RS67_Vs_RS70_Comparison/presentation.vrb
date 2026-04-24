@@ -1,0 +1,19 @@
+\frametitle{Event Selection Used}
+\fontsize{4.5pt}{5.5pt}\selectfont
+\begin{verbatim}
+def get_e906_chuck_cuts_string(cut_val=4.2):
+    bo = "(runID >= 11000 ? 1.6 : 0.4)"
+
+    dimuon_cut = (
+        f"(abs(dx) < 0.25) && (abs(dy - {bo}) < 0.22) && "
+        f"(dz < -5.) && (dz > -280.) && (abs(dpx) < 1.8) && (abs(dpy) < 2.0) && "
+        f"(dpx * dpx + dpy * dpy < 5.) && (dpz < 116.) && (dpz > 38.) && "
+        f"(mass > {cut_val}) && (mass < 8.8) && "
+        f"(dx * dx + (dy - {bo}) * (dy - {bo}) < 0.06) && "
+        f"(xF < 0.95) && (xF > -0.1) && (xT > 0.05) && (xT <= 0.58) && "
+        f"(abs(costh) < 0.5) && (abs(trackSeparation) < 270.) && "
+        f"(chisq_dimuon < 18)"
+    )
+    # ... track cuts continue
+
+\end{verbatim}

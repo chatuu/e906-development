@@ -1,0 +1,539 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\title{Comparison Between RS67 Vs RS57}
+\author{Chatura Kuruppu}
+\date{\today}
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+\begin{frame}{Slide 02: Input Files (Roadset \& Target Order)}
+\begin{columns}
+\column{0.5\textwidth}\tiny\begin{itemize}
+\item merged\_RS57\_LH2\_1\_1138.root
+\item merged\_RS57\_LD2\_3\_1138.root
+\item merged\_RS57\_Empty\_2\_1138.root
+\item merged\_RS59\_LH2\_1\_465.root
+\item merged\_RS59\_LD2\_3\_466.root
+\item merged\_RS59\_Empty\_2\_466.root
+\item merged\_RS62\_LH2\_1\_1234.root
+\item merged\_RS62\_LD2\_3\_1237.root
+\end{itemize}\column{0.5\textwidth}\tiny\begin{itemize}
+\item merged\_RS62\_Empty\_2\_1234.root
+\item merged\_RS67\_3089LH2.root
+\item merged\_RS67\_3089LD2.root
+\item merged\_RS67\_3089flask.root
+\item merged\_RS70\_LH2\_1\_264.root
+\item merged\_RS70\_LD2\_3\_266.root
+\item merged\_RS70\_Empty\_2\_267.root
+\end{itemize}\end{columns}
+\vspace{0.3cm}\centering\small\textbf{Remark:} Currently we don't process RS5a, RS5b files.
+\end{frame}
+\begin{frame}{Slide 03: Physics Constants \& Normalizations}
+\centering\footnotesize
+\begin{tabular}{ll}
+\toprule \textbf{Parameter} & \textbf{Value} \\ \midrule
+PoT LH$_2$ & $2.7639 \times 10^{17}$ \\
+PoT LD$_2$ & $1.3197 \times 10^{17}$ \\
+PoT Flask & $5.5905 \times 10^{16}$ \\
+LH$_2$ Target Density & $3.5966$ mol/cm$^2$ \\
+LD$_2$ Target Density & $8.0431$ mol/cm$^2$ \\
+LH$_2$ / LD$_2$ Target Length & $50.8$ cm \\
+Avogadro Constant & $6.022 \times 10^{23}$ \\
+xF Bin Width & $0.05$ \\
+Nuclear Int. Length (LH$_2$/LD$_2$) & $52.0$ / $54.7$ g/cm$^2$ \\
+\bottomrule \end{tabular}
+\end{frame}
+\begin{frame}{Slide 04: Event Selection Summary}
+\small
+\begin{description}
+\item[Dimuon Level] $|dx| < 0.25$, mass $\in [4.2, 8.8]$, $xF \in [-0.1, 0.95]$, $xT \in [0.05, 0.58]$, $\chi^2 < 18$.
+\item[Track Level] $\chi^2_{target} < 15$, $pz_{st1} \in [9, 75]$, Hits $> 13$, Station 1/3 $y$-ratio $< 1$.
+\item[Occupancy] $D1, D2, D3 < 400$ hits each; Total $D1+D2+D3 < 1000$.
+\item[Physics] $Z_{vertex} \in [-320, -5]$, Track Separation $< 270$, $|\cos\theta| < 0.5$.
+\end{description}
+\end{frame}
+\begin{frame}{Y\_total\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_total_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_total_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_total\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_total_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_total_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_total\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_total_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_total_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_mix\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_mix_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_mix_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_mix\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_mix_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_mix_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_mix\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_mix_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_mix_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_reco\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_reco_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_reco_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_reco\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_reco_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_reco_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_reco\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_reco_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_reco_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_reco\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_reco_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_reco_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_reco\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_reco_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_reco_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_reco\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_reco_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_reco_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_hodo\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_hodo_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_hodo\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_hodo_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_hodo\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_hodo_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_hodo\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_hodo_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_hodo\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_hodo_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_hodo\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_hodo_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_final\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_final_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_final_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_final\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_final_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_final_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_final\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_final_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_final_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_final\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_final_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_final_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_mix\_final\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_final_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_mix_final_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_total\_final\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_final_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_total_final_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_final\_signal\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_final_signal_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_final_signal_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_final\_signal\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_final_signal_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_final_signal_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{E\_final\_signal\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/E_final_signal_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/E_final_signal_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_corrected\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_corrected_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_corrected_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_corrected\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_corrected_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_corrected_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_corrected\_Flask}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_corrected_Flask.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_corrected_Flask.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_corrected\_Subtracted\_LH2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_corrected_Subtracted_LH2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_corrected_Subtracted_LH2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{Y\_corrected\_Subtracted\_LD2}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/Y_corrected_Subtracted_LD2.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/Y_corrected_Subtracted_LD2.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.00 $\le$ xF $<$ 0.05 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.00_0.05_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.00_0.05_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.00 $\le$ xF $<$ 0.05 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.00_0.05_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.00_0.05_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.05 $\le$ xF $<$ 0.10 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.05_0.10_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.05_0.10_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.05 $\le$ xF $<$ 0.10 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.05_0.10_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.05_0.10_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.10 $\le$ xF $<$ 0.15 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.10_0.15_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.10_0.15_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.10 $\le$ xF $<$ 0.15 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.10_0.15_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.10_0.15_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.15 $\le$ xF $<$ 0.20 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.15_0.20_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.15_0.20_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.15 $\le$ xF $<$ 0.20 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.15_0.20_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.15_0.20_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.20 $\le$ xF $<$ 0.25 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.20_0.25_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.20_0.25_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.20 $\le$ xF $<$ 0.25 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.20_0.25_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.20_0.25_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.25 $\le$ xF $<$ 0.30 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.25_0.30_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.25_0.30_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.25 $\le$ xF $<$ 0.30 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.25_0.30_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.25_0.30_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.30 $\le$ xF $<$ 0.35 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.30_0.35_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.30_0.35_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.30 $\le$ xF $<$ 0.35 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.30_0.35_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.30_0.35_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.35 $\le$ xF $<$ 0.40 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.35_0.40_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.35_0.40_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.35 $\le$ xF $<$ 0.40 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.35_0.40_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.35_0.40_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.40 $\le$ xF $<$ 0.45 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.40_0.45_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.40_0.45_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.40 $\le$ xF $<$ 0.45 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.40_0.45_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.40_0.45_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.45 $\le$ xF $<$ 0.50 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.45_0.50_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.45_0.50_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.45 $\le$ xF $<$ 0.50 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.45_0.50_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.45_0.50_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.50 $\le$ xF $<$ 0.55 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.50_0.55_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.50_0.55_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.50 $\le$ xF $<$ 0.55 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.50_0.55_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.50_0.55_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.55 $\le$ xF $<$ 0.60 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.55_0.60_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.55_0.60_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.55 $\le$ xF $<$ 0.60 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.55_0.60_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.55_0.60_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.60 $\le$ xF $<$ 0.65 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.60_0.65_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.60_0.65_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.60 $\le$ xF $<$ 0.65 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.60_0.65_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.60_0.65_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.65 $\le$ xF $<$ 0.70 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.65_0.70_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.65_0.70_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.65 $\le$ xF $<$ 0.70 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.65_0.70_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.65_0.70_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.70 $\le$ xF $<$ 0.75 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.70_0.75_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.70_0.75_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.70 $\le$ xF $<$ 0.75 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.70_0.75_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.70_0.75_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.75 $\le$ xF $<$ 0.80 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.75_0.80_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.75_0.80_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LH2 0.75 $\le$ xF $<$ 0.80 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LH2_xF_0.75_0.80_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LH2_xF_0.75_0.80_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.00 $\le$ xF $<$ 0.05 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.00_0.05_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.00_0.05_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.00 $\le$ xF $<$ 0.05 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.00_0.05_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.00_0.05_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.05 $\le$ xF $<$ 0.10 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.05_0.10_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.05_0.10_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.05 $\le$ xF $<$ 0.10 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.05_0.10_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.05_0.10_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.10 $\le$ xF $<$ 0.15 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.10_0.15_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.10_0.15_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.10 $\le$ xF $<$ 0.15 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.10_0.15_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.10_0.15_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.15 $\le$ xF $<$ 0.20 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.15_0.20_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.15_0.20_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.15 $\le$ xF $<$ 0.20 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.15_0.20_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.15_0.20_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.20 $\le$ xF $<$ 0.25 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.20_0.25_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.20_0.25_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.20 $\le$ xF $<$ 0.25 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.20_0.25_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.20_0.25_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.25 $\le$ xF $<$ 0.30 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.25_0.30_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.25_0.30_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.25 $\le$ xF $<$ 0.30 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.25_0.30_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.25_0.30_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.30 $\le$ xF $<$ 0.35 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.30_0.35_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.30_0.35_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.30 $\le$ xF $<$ 0.35 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.30_0.35_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.30_0.35_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.35 $\le$ xF $<$ 0.40 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.35_0.40_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.35_0.40_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.35 $\le$ xF $<$ 0.40 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.35_0.40_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.35_0.40_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.40 $\le$ xF $<$ 0.45 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.40_0.45_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.40_0.45_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.40 $\le$ xF $<$ 0.45 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.40_0.45_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.40_0.45_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.45 $\le$ xF $<$ 0.50 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.45_0.50_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.45_0.50_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.45 $\le$ xF $<$ 0.50 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.45_0.50_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.45_0.50_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.50 $\le$ xF $<$ 0.55 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.50_0.55_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.50_0.55_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.50 $\le$ xF $<$ 0.55 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.50_0.55_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.50_0.55_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.55 $\le$ xF $<$ 0.60 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.55_0.60_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.55_0.60_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.55 $\le$ xF $<$ 0.60 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.55_0.60_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.55_0.60_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.60 $\le$ xF $<$ 0.65 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.60_0.65_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.60_0.65_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.60 $\le$ xF $<$ 0.65 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.60_0.65_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.60_0.65_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.65 $\le$ xF $<$ 0.70 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.65_0.70_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.65_0.70_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.65 $\le$ xF $<$ 0.70 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.65_0.70_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.65_0.70_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.70 $\le$ xF $<$ 0.75 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.70_0.75_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.70_0.75_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.70 $\le$ xF $<$ 0.75 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.70_0.75_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.70_0.75_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.75 $\le$ xF $<$ 0.80 (Centroid)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.75_0.80_Centroid_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.75_0.80_Centroid_with_logo.pdf}
+\end{columns}\end{frame}
+\begin{frame}{CrossSection LD2 0.75 $\le$ xF $<$ 0.80 (GeoCenter)}
+\begin{columns}
+\column{0.5\textwidth}\centering \textbf{RS67} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/Final/CrossSection_LD2_xF_0.75_0.80_GeoCenter_with_logo.pdf}
+\column{0.5\textwidth}\centering \textbf{RS57} \\ \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57/CrossSection_LD2_xF_0.75_0.80_GeoCenter_with_logo.pdf}
+\end{columns}\end{frame}
+\end{document}
