@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Methodology: Efficiency and Uncertainty Calculations}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Reconstruction Efficiency and Correlated Uncertainties}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Final Efficiency Evaluation}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}LH2 Efficiency Corrections}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Total Yield}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Mix Yield}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Signal Efficiency Corrections}{8}{subsection.2.3}%
+\contentsline {section}{\numberline {3}LD2 Efficiency Corrections}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Total Yield}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Mix Yield}{11}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Signal Efficiency Corrections}{13}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Flask Efficiency Corrections}{14}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Total Yield}{14}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Mix Yield}{16}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Signal Efficiency Corrections}{18}{subsection.4.3}%

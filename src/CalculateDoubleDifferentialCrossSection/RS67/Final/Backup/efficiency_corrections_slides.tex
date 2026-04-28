@@ -1,0 +1,466 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% NMSU Brand Colors
+\definecolor{AggieCrimson}{HTML}{8C0B42}
+\definecolor{DesertMonsoon}{HTML}{6D6E71}
+
+% Clean, professional beamer theme customized for NMSU
+\usetheme{Madrid}
+\usecolortheme[named=AggieCrimson]{structure}
+\setbeamercolor{palette primary}{bg=AggieCrimson,fg=white}
+\setbeamercolor{palette secondary}{bg=DesertMonsoon,fg=white}
+\setbeamercolor{palette tertiary}{bg=AggieCrimson,fg=white}
+\setbeamercolor{palette quaternary}{bg=AggieCrimson,fg=white}
+\setbeamercolor{titlelike}{parent=palette primary,bg=AggieCrimson,fg=white}
+\setbeamercolor{item}{fg=AggieCrimson}
+\setbeamercolor{block title}{bg=AggieCrimson,fg=white}
+\setbeamercolor{block body}{bg=gray!10,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+
+\title{Efficiency Corrections Comparison}
+\subtitle{Current vs. Previous Results}
+\author{Chatura Kuruppu}
+\institute{Department of Physics \\ New Mexico State University}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\section{Methodology}
+
+\begin{frame}{Methodology}{Reconstruction Efficiency and Covariance}
+    \textbf{1. Mean Reconstruction Efficiency:}
+    Calculated as the arithmetic mean of event-by-event interpolated efficiencies for $N$ events in a bin:
+    \begin{equation*}
+        \bar{E}_{\rm reco} = \frac{1}{N} \sum_{i=1}^{N} E_{{\rm reco}, i}
+    \end{equation*}
+    
+    \vspace{0.3cm}
+    \textbf{2. Correlated Error Propagation:}
+    Because efficiencies are interpolated from the same $D_1$ nodes, event uncertainties ($\sigma_i$) are correlated. We construct a covariance matrix:
+    \begin{equation*}
+        Cov_{i,j} = \rho_{i,j} \sigma_i \sigma_j
+    \end{equation*}
+    \begin{itemize}
+        \item $\rho = 1$ if events share identical or adjacent $D_1$ occupancy.
+        \item $\rho = 0$ if events use entirely different nodes.
+    \end{itemize}
+    \begin{equation*}
+        \sigma_{\bar{E}_{\rm reco}} = \frac{1}{N} \sqrt{ \sum_{i=1}^{N} \sum_{j=1}^{N} Cov_{i,j} }
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Methodology}{Final Efficiency Corrections}
+    \textbf{1. Hodoscope Mean Efficiency:}
+    Evaluated with purely independent, standard weighted uncertainty:
+    \begin{equation*}
+        \sigma_{\bar{E}_{\rm hodo}} = \frac{1}{N} \sqrt{ \sum_{i=1}^{N} \sigma_{{\rm hodo}, i}^2 }
+    \end{equation*}
+    
+    \vspace{0.3cm}
+    \textbf{2. Final Bin Efficiency:}
+    Computed as the product of the independent bin averages:
+    \begin{equation*}
+        \bar{E}_{\rm final} = \bar{E}_{\rm reco} \times \bar{E}_{\rm hodo}
+    \end{equation*}
+    
+    \vspace{0.3cm}
+    \textbf{3. Final Propagated Uncertainty:}
+    \begin{equation*}
+        \sigma_{\bar{E}_{\rm final}} = \sqrt{ \left(\bar{E}_{\rm hodo} \cdot \sigma_{\bar{E}_{\rm reco}}\right)^2 + \left(\bar{E}_{\rm reco} \cdot \sigma_{\bar{E}_{\rm hodo}}\right)^2 }
+    \end{equation*}
+\end{frame}
+\section{LH2 Target}
+
+\begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}LH2 Efficiency Corrections\par%
+    \end{beamercolorbox}
+    \vfill
+\end{frame}
+
+\begin{frame}{LH2 Target: Total Yield}{Hodoscope Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_hodo_LH2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_hodo_LH2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LH2 Target: Total Yield}{Reconstruction Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_reco_LH2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_reco_LH2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LH2 Target: Total Yield}{Final Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_final_LH2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_final_LH2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LH2 Target: Mix Yield}{Hodoscope Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_hodo_LH2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_hodo_LH2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LH2 Target: Mix Yield}{Reconstruction Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_reco_LH2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_reco_LH2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LH2 Target: Mix Yield}{Final Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_final_LH2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_final_LH2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LH2 Target: Signal Efficiency}{Final Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_final_signal_LH2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_final_signal_LH2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+\section{LD2 Target}
+
+\begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}LD2 Efficiency Corrections\par%
+    \end{beamercolorbox}
+    \vfill
+\end{frame}
+
+\begin{frame}{LD2 Target: Total Yield}{Hodoscope Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_hodo_LD2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_hodo_LD2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LD2 Target: Total Yield}{Reconstruction Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_reco_LD2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_reco_LD2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LD2 Target: Total Yield}{Final Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_final_LD2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_final_LD2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LD2 Target: Mix Yield}{Hodoscope Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_hodo_LD2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_hodo_LD2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LD2 Target: Mix Yield}{Reconstruction Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_reco_LD2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_reco_LD2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LD2 Target: Mix Yield}{Final Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_final_LD2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_final_LD2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{LD2 Target: Signal Efficiency}{Final Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_final_signal_LD2.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_final_signal_LD2.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+\section{Flask Target}
+
+\begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}Flask Efficiency Corrections\par%
+    \end{beamercolorbox}
+    \vfill
+\end{frame}
+
+\begin{frame}{Flask Target: Total Yield}{Hodoscope Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_hodo_Flask.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_hodo_Flask.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Flask Target: Total Yield}{Reconstruction Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_reco_Flask.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_reco_Flask.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Flask Target: Total Yield}{Final Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_total_final_Flask.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_total_final_Flask.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Flask Target: Mix Yield}{Hodoscope Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_hodo_Flask.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_hodo_Flask.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Flask Target: Mix Yield}{Reconstruction Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_reco_Flask.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_reco_Flask.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Flask Target: Mix Yield}{Final Efficiency Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            % Constrain height so it fits on a 16:9 slide
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_mix_final_Flask.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_mix_final_Flask.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Flask Target: Signal Efficiency}{Final Corrections}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{../StepByStepPlots/E_final_signal_Flask.pdf}
+            \caption{Previous}
+        \end{subfigure}\hfill
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{./E_final_signal_Flask.pdf}
+            \caption{Current}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+\end{document}

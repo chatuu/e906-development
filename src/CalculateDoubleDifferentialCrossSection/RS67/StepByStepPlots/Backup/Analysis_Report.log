@@ -1,0 +1,343 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.19)  10 FEB 2026 14:49
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Analysis_Report.tex
+(./Analysis_Report.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count187
+\c@section=\count188
+\c@subsection=\count189
+\c@subsubsection=\count190
+\c@paragraph=\count191
+\c@subparagraph=\count192
+\c@figure=\count193
+\c@table=\count194
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen141
+\Gin@req@width=\dimen142
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen143
+\captionmargin=\dimen144
+\caption@leftmargin=\dimen145
+\caption@rightmargin=\dimen146
+\caption@width=\dimen147
+\caption@indent=\dimen148
+\caption@parindent=\dimen149
+\caption@hangindent=\dimen150
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count195
+\c@continuedfloat=\count196
+)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count197
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count198
+)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count199
+\Gm@cntv=\count266
+\c@Gm@tempcnt=\count267
+\Gm@bindingoffset=\dimen151
+\Gm@wd@mp=\dimen152
+\Gm@odd@mp=\dimen153
+\Gm@even@mp=\dimen154
+\Gm@layoutwidth=\dimen155
+\Gm@layoutheight=\dimen156
+\Gm@layouthoffset=\dimen157
+\Gm@layoutvoffset=\dimen158
+\Gm@dimlist=\toks20
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count268
+\float@exts=\toks21
+\float@box=\box51
+\@float@everytoks=\toks22
+\@floatcapt=\box52
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count269
+\l__pdf_internal_box=\box53
+)
+(./Analysis_Report.aux)
+\openout1 = `Analysis_Report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count270
+\scratchdimen=\dimen159
+\scratchbox=\box54
+\nofMPsegments=\count271
+\nofMParguments=\count272
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count273
+\MPscratchDim=\dimen160
+\MPnumerator=\count274
+\makeMPintoPDFobject=\count275
+\everyMPtoPDFconversion=\toks24
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(36.135pt, 542.02501pt, 36.135pt)
+* v-part:(T,H,B)=(36.135pt, 722.7pt, 36.135pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=542.02501pt
+* \textheight=722.7pt
+* \oddsidemargin=-36.135pt
+* \evensidemargin=-36.135pt
+* \topmargin=-73.135pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 14.
+<Y_total_LH2.pdf, id=1, 569.12625pt x 414.54875pt>
+File: Y_total_LH2.pdf Graphic file (type pdf)
+<use Y_total_LH2.pdf>
+Package pdftex.def Info: Y_total_LH2.pdf  used on input line 22.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<Y_mix_LH2.pdf, id=2, 569.12625pt x 414.54875pt>
+File: Y_mix_LH2.pdf Graphic file (type pdf)
+<use Y_mix_LH2.pdf>
+Package pdftex.def Info: Y_mix_LH2.pdf  used on input line 28.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_total_reco_LH2.pdf, id=3, 569.12625pt x 414.54875pt>
+File: E_total_reco_LH2.pdf Graphic file (type pdf)
+<use E_total_reco_LH2.pdf>
+Package pdftex.def Info: E_total_reco_LH2.pdf  used on input line 38.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_mix_reco_LH2.pdf, id=4, 569.12625pt x 414.54875pt>
+File: E_mix_reco_LH2.pdf Graphic file (type pdf)
+<use E_mix_reco_LH2.pdf>
+Package pdftex.def Info: E_mix_reco_LH2.pdf  used on input line 44.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_total_hodo_LH2.pdf, id=5, 569.12625pt x 414.54875pt>
+File: E_total_hodo_LH2.pdf Graphic file (type pdf)
+<use E_total_hodo_LH2.pdf>
+Package pdftex.def Info: E_total_hodo_LH2.pdf  used on input line 54.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_mix_hodo_LH2.pdf, id=6, 569.12625pt x 414.54875pt>
+File: E_mix_hodo_LH2.pdf Graphic file (type pdf)
+<use E_mix_hodo_LH2.pdf>
+Package pdftex.def Info: E_mix_hodo_LH2.pdf  used on input line 60.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Y_total_LH2.pdf, page is
+ rotated 90 degrees> <./Y_mix_LH2.pdf, page is rotated 90 degrees> <./E_total_r
+eco_LH2.pdf, page is rotated 90 degrees> <./E_mix_reco_LH2.pdf, page is rotated
+ 90 degrees>]
+<E_total_final_LH2.pdf, id=189, 569.12625pt x 414.54875pt>
+File: E_total_final_LH2.pdf Graphic file (type pdf)
+<use E_total_final_LH2.pdf>
+Package pdftex.def Info: E_total_final_LH2.pdf  used on input line 70.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_mix_final_LH2.pdf, id=190, 569.12625pt x 414.54875pt>
+File: E_mix_final_LH2.pdf Graphic file (type pdf)
+<use E_mix_final_LH2.pdf>
+Package pdftex.def Info: E_mix_final_LH2.pdf  used on input line 76.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<Y_corrected_LH2.pdf, id=191, 569.12625pt x 414.54875pt>
+File: Y_corrected_LH2.pdf Graphic file (type pdf)
+<use Y_corrected_LH2.pdf>
+Package pdftex.def Info: Y_corrected_LH2.pdf  used on input line 86.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_final_signal_LH2.pdf, id=192, 569.12625pt x 414.54875pt>
+File: E_final_signal_LH2.pdf Graphic file (type pdf)
+<use E_final_signal_LH2.pdf>
+Package pdftex.def Info: E_final_signal_LH2.pdf  used on input line 92.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+ [2 <./E_total_hodo_LH2.pdf, page is rotated 90 degrees> <./E_mix_hodo_LH2.pdf,
+ page is rotated 90 degrees> <./E_total_final_LH2.pdf, page is rotated 90 degre
+es> <./E_mix_final_LH2.pdf, page is rotated 90 degrees>]
+[3 <./Y_corrected_LH2.pdf, page is rotated 90 degrees> <./E_final_signal_LH2.pd
+f, page is rotated 90 degrees>]
+<Y_total_Flask.pdf, id=458, 569.12625pt x 414.54875pt>
+File: Y_total_Flask.pdf Graphic file (type pdf)
+<use Y_total_Flask.pdf>
+Package pdftex.def Info: Y_total_Flask.pdf  used on input line 104.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<Y_mix_Flask.pdf, id=459, 569.12625pt x 414.54875pt>
+File: Y_mix_Flask.pdf Graphic file (type pdf)
+<use Y_mix_Flask.pdf>
+Package pdftex.def Info: Y_mix_Flask.pdf  used on input line 110.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_total_reco_Flask.pdf, id=460, 569.12625pt x 414.54875pt>
+File: E_total_reco_Flask.pdf Graphic file (type pdf)
+<use E_total_reco_Flask.pdf>
+Package pdftex.def Info: E_total_reco_Flask.pdf  used on input line 120.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_mix_reco_Flask.pdf, id=461, 569.12625pt x 414.54875pt>
+File: E_mix_reco_Flask.pdf Graphic file (type pdf)
+<use E_mix_reco_Flask.pdf>
+Package pdftex.def Info: E_mix_reco_Flask.pdf  used on input line 126.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_total_hodo_Flask.pdf, id=462, 569.12625pt x 414.54875pt>
+File: E_total_hodo_Flask.pdf Graphic file (type pdf)
+<use E_total_hodo_Flask.pdf>
+Package pdftex.def Info: E_total_hodo_Flask.pdf  used on input line 136.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_mix_hodo_Flask.pdf, id=463, 569.12625pt x 414.54875pt>
+File: E_mix_hodo_Flask.pdf Graphic file (type pdf)
+<use E_mix_hodo_Flask.pdf>
+Package pdftex.def Info: E_mix_hodo_Flask.pdf  used on input line 142.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+ [4 <./Y_total_Flask.pdf, page is rotated 90 degrees> <./Y_mix_Flask.pdf, page 
+is rotated 90 degrees> <./E_total_reco_Flask.pdf, page is rotated 90 degrees> <
+./E_mix_reco_Flask.pdf, page is rotated 90 degrees>]
+<E_total_final_Flask.pdf, id=640, 569.12625pt x 414.54875pt>
+File: E_total_final_Flask.pdf Graphic file (type pdf)
+<use E_total_final_Flask.pdf>
+Package pdftex.def Info: E_total_final_Flask.pdf  used on input line 152.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_mix_final_Flask.pdf, id=641, 569.12625pt x 414.54875pt>
+File: E_mix_final_Flask.pdf Graphic file (type pdf)
+<use E_mix_final_Flask.pdf>
+Package pdftex.def Info: E_mix_final_Flask.pdf  used on input line 158.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<Y_corrected_Flask.pdf, id=642, 569.12625pt x 414.54875pt>
+File: Y_corrected_Flask.pdf Graphic file (type pdf)
+<use Y_corrected_Flask.pdf>
+Package pdftex.def Info: Y_corrected_Flask.pdf  used on input line 168.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+<E_final_signal_Flask.pdf, id=643, 569.12625pt x 414.54875pt>
+File: E_final_signal_Flask.pdf Graphic file (type pdf)
+<use E_final_signal_Flask.pdf>
+Package pdftex.def Info: E_final_signal_Flask.pdf  used on input line 174.
+(pdftex.def)             Requested size: 265.59523pt x 193.4653pt.
+ [5 <./E_total_hodo_Flask.pdf, page is rotated 90 degrees> <./E_mix_hodo_Flask.
+pdf, page is rotated 90 degrees> <./E_total_final_Flask.pdf, page is rotated 90
+ degrees> <./E_mix_final_Flask.pdf, page is rotated 90 degrees>] [6 <./Y_correc
+ted_Flask.pdf, page is rotated 90 degrees> <./E_final_signal_Flask.pdf, page is
+ rotated 90 degrees>] (./Analysis_Report.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
+ ***********
+ ) 
+Here is how much of TeX's memory you used:
+ 3551 strings out of 476182
+ 63631 string characters out of 5795595
+ 1928975 words of memory out of 5000000
+ 25562 multiletter control sequences out of 15000+600000
+ 562008 words of font info for 49 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 67i,8n,77p,326b,483s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
+Output written on Analysis_Report.pdf (6 pages, 387285 bytes).
+PDF statistics:
+ 931 PDF objects out of 1000 (max. 8388607)
+ 389 compressed objects within 4 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 101 words of extra memory for PDF output out of 10000 (max. 10000000)
+

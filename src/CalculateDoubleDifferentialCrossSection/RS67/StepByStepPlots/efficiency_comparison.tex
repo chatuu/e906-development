@@ -1,0 +1,115 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Set margins to fit large plots side-by-side comfortably
+\geometry{top=1in, bottom=1in, left=0.5in, right=0.5in}
+
+\title{Reconstruction Efficiency Comparison: Correlated vs. Uncorrelated Errors}
+\author{Automated Report}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+\section{LH2 Target}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/E_total_reco_LH2.pdf}
+        \caption{Old (Uncorrelated)}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_reco_LH2_correlated.pdf}
+        \caption{New (Correlated)}
+    \end{subfigure}
+    \caption{Comparison of Total Reconstruction Efficiency for LH2}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/E_mix_reco_LH2.pdf}
+        \caption{Old (Uncorrelated)}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_reco_LH2_correlated.pdf}
+        \caption{New (Correlated)}
+    \end{subfigure}
+    \caption{Comparison of Mix Reconstruction Efficiency for LH2}
+\end{figure}
+\clearpage
+\section{LD2 Target}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/E_total_reco_LD2.pdf}
+        \caption{Old (Uncorrelated)}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_reco_LD2_correlated.pdf}
+        \caption{New (Correlated)}
+    \end{subfigure}
+    \caption{Comparison of Total Reconstruction Efficiency for LD2}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/E_mix_reco_LD2.pdf}
+        \caption{Old (Uncorrelated)}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_reco_LD2_correlated.pdf}
+        \caption{New (Correlated)}
+    \end{subfigure}
+    \caption{Comparison of Mix Reconstruction Efficiency for LD2}
+\end{figure}
+\clearpage
+\section{Flask Target}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/E_total_reco_Flask.pdf}
+        \caption{Old (Uncorrelated)}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_reco_Flask_correlated.pdf}
+        \caption{New (Correlated)}
+    \end{subfigure}
+    \caption{Comparison of Total Reconstruction Efficiency for Flask}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/E_mix_reco_Flask.pdf}
+        \caption{Old (Uncorrelated)}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_reco_Flask_correlated.pdf}
+        \caption{New (Correlated)}
+    \end{subfigure}
+    \caption{Comparison of Mix Reconstruction Efficiency for Flask}
+\end{figure}
+\clearpage
+\end{document}

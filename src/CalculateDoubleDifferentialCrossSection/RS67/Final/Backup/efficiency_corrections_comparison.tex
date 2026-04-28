@@ -1,0 +1,426 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Efficiency Corrections Comparison},
+}
+
+\geometry{top=1in, bottom=1in, left=0.5in, right=0.5in}
+
+\title{Efficiency Corrections Comparison: Current vs. Previous Results}
+\author{Chatura Kuruppu}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\clearpage
+
+\listoffigures
+\clearpage
+
+\section{Methodology: Efficiency and Uncertainty Calculations}
+
+This section details the updated statistical methodologies used to evaluate the average efficiencies and propagate their associated uncertainties within each kinematic mass and $x_F$ bin.
+
+\subsection{Reconstruction Efficiency and Correlated Uncertainties}
+The reconstruction efficiency $E_{{\rm reco}, i}$ for a single event $i$ is interpolated from a global tracking efficiency curve evaluated at the chamber occupancy parameter, $D_1$. Because multiple events within the same kinematic bin frequently fall between the same $D_1$ occupancy, their interpolated uncertainties $\sigma_i$ are mathematically correlated.
+
+To account for this, we construct an $N \times N$ covariance matrix for the $N$ events within a given kinematic bin:
+\begin{equation}
+    Cov_{i,j} = \rho_{i,j} \sigma_i \sigma_j
+\end{equation}
+where the correlation coefficient $\rho_{i,j}$ is determined by the shared occupancy:
+\begin{itemize}
+    \item $\rho_{i,j} = 1$ if event $i$ and event $j$ share both bounding occupancy (same $D_1$ bin).
+    \item $\rho_{i,j} = 1$ if event $i$ and event $j$ share exactly one bounding interpolation node (adjacent $D_1$ bins).
+    \item $\rho_{i,j} = 0$ otherwise (assumed strictly independent).
+\end{itemize}
+
+The mean reconstruction efficiency for the kinematic bin is evaluated as the arithmetic mean of the event-by-event efficiencies:
+\begin{equation}
+    \bar{E}_{\rm reco} = \frac{1}{N} \sum_{i=1}^{N} E_{{\rm reco}, i}
+\end{equation}
+
+By accounting for the off-diagonal covariance elements, the correctly propagated, correlated uncertainty on the mean efficiency is:
+\begin{equation}
+    \sigma_{\bar{E}_{\rm reco}} = \frac{1}{N} \sqrt{ \sum_{i=1}^{N} \sum_{j=1}^{N} Cov_{i,j} }
+\end{equation}
+
+\subsection{Final Efficiency Evaluation}
+The mean hodoscope efficiency $\bar{E}_{\rm hodo}$ is derived similarly. However, because its event-by-event evaluations are independent of the global tracking $D_1$ curve, its uncertainty is evaluated assuming strictly independent events (a purely diagonal covariance matrix):
+\begin{equation}
+    \sigma_{\bar{E}_{\rm hodo}} = \frac{1}{N} \sqrt{ \sum_{i=1}^{N} \sigma_{{\rm hodo}, i}^2 }
+\end{equation}
+
+Previously, the final efficiency was calculated by multiplying $E_{\rm reco} \times E_{\rm hodo}$ on an event-by-event basis prior to averaging. To properly isolate and utilize the independent error characteristics of the tracking and hodoscope responses, the current methodology calculates the final efficiency as the product of the independently evaluated bin averages:
+\begin{equation}
+    \bar{E}_{\rm final} = \bar{E}_{\rm reco} \times \bar{E}_{\rm hodo}
+\end{equation}
+
+The final propagated uncertainty on this product is evaluated using standard error propagation for independent variables:
+\begin{equation}
+    \sigma_{\bar{E}_{\rm final}} = \sqrt{ \left(\bar{E}_{\rm hodo} \cdot \sigma_{\bar{E}_{\rm reco}}\right)^2 + \left(\bar{E}_{\rm reco} \cdot \sigma_{\bar{E}_{\rm hodo}}\right)^2 }
+\end{equation}
+\clearpage
+\section{LH2 Efficiency Corrections}
+
+\subsection{Total Yield}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_hodo_LH2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_hodo_LH2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LH2 Total - Hodoscope Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_reco_LH2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_reco_LH2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LH2 Total - Reconstruction Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_final_LH2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_final_LH2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LH2 Total - Final Efficiency Corrections}
+\end{figure}
+\clearpage
+\subsection{Mix Yield}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_hodo_LH2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_hodo_LH2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LH2 Mix - Hodoscope Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_reco_LH2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_reco_LH2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LH2 Mix - Reconstruction Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_final_LH2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_final_LH2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LH2 Mix - Final Efficiency Corrections}
+\end{figure}
+\clearpage
+\subsection{Signal Efficiency Corrections}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_final_signal_LH2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_final_signal_LH2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LH2 - Signal Efficiency Corrections}
+\end{figure}
+\clearpage
+\section{LD2 Efficiency Corrections}
+
+\subsection{Total Yield}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_hodo_LD2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_hodo_LD2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LD2 Total - Hodoscope Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_reco_LD2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_reco_LD2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LD2 Total - Reconstruction Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_final_LD2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_final_LD2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LD2 Total - Final Efficiency Corrections}
+\end{figure}
+\clearpage
+\subsection{Mix Yield}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_hodo_LD2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_hodo_LD2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LD2 Mix - Hodoscope Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_reco_LD2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_reco_LD2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LD2 Mix - Reconstruction Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_final_LD2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_final_LD2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LD2 Mix - Final Efficiency Corrections}
+\end{figure}
+\clearpage
+\subsection{Signal Efficiency Corrections}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_final_signal_LD2.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_final_signal_LD2.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{LD2 - Signal Efficiency Corrections}
+\end{figure}
+\clearpage
+\section{Flask Efficiency Corrections}
+
+\subsection{Total Yield}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_hodo_Flask.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_hodo_Flask.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{Flask Total - Hodoscope Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_reco_Flask.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_reco_Flask.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{Flask Total - Reconstruction Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_total_final_Flask.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_total_final_Flask.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{Flask Total - Final Efficiency Corrections}
+\end{figure}
+\clearpage
+\subsection{Mix Yield}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_hodo_Flask.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_hodo_Flask.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{Flask Mix - Hodoscope Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_reco_Flask.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_reco_Flask.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{Flask Mix - Reconstruction Efficiency Corrections}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_mix_final_Flask.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_mix_final_Flask.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{Flask Mix - Final Efficiency Corrections}
+\end{figure}
+\clearpage
+\subsection{Signal Efficiency Corrections}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../StepByStepPlots/E_final_signal_Flask.pdf}
+        \caption{Previous}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./E_final_signal_Flask.pdf}
+        \caption{Current}
+    \end{subfigure}
+    \caption{Flask - Signal Efficiency Corrections}
+\end{figure}
+\clearpage
+\end{document}

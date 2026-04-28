@@ -1,0 +1,597 @@
+/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/Generate2DHists_BinCentrioid.py:1056: SyntaxWarning: invalid escape sequence '\i'
+  sec_title = f"\\texorpdfstring{{Kinematics and Distributions for $x_F \in [{x_low:.2f}, {x_high:.2f})$}}{{Kinematics and Distributions for x\_F in [{x_low:.2f}, {x_high:.2f})]}}"
+/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/Generate2DHists_BinCentrioid.py:1056: SyntaxWarning: invalid escape sequence '\_'
+  sec_title = f"\\texorpdfstring{{Kinematics and Distributions for $x_F \in [{x_low:.2f}, {x_high:.2f})$}}{{Kinematics and Distributions for x\_F in [{x_low:.2f}, {x_high:.2f})]}}"
+/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/Generate2DHists_BinCentrioid.py:1069: SyntaxWarning: invalid escape sequence '\i'
+  """
+/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/Generate2DHists_BinCentrioid.py:1074: SyntaxWarning: invalid escape sequence '\i'
+  tex_file.write(f"    \\caption{{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [{x_low:.2f}, {x_high:.2f})$.}}\n")
+/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/Generate2DHists_BinCentrioid.py:1112: SyntaxWarning: invalid escape sequence '\i'
+  """
+/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS67/StepByStepPlots/Generate2DHists_BinCentrioid.py:1117: SyntaxWarning: invalid escape sequence '\i'
+  tex_file.write(f"    \\caption{{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [{x_low:.2f}, {x_high:.2f})$.}}\n")
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.00_0.05.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.00_0.05.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.05_0.10.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.05_0.10.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.10_0.15.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.10_0.15.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.15_0.20.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.15_0.20.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.20_0.25.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.20_0.25.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.25_0.30.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.25_0.30.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.30_0.35.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.30_0.35.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.35_0.40.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.35_0.40.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.40_0.45.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.40_0.45.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.45_0.50.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.45_0.50.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.50_0.55.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.50_0.55.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.55_0.60.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.55_0.60.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.60_0.65.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.60_0.65.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.65_0.70.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.65_0.70.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.70_0.75.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.70_0.75.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LH2_xF_0.75_0.80.pdf has been created
+Info in <TCanvas::Print>: pdf file ./MassBinCentroids/MassDist_LD2_xF_0.75_0.80.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_total_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_mix_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_reco_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_reco_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_hodo_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_hodo_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_final_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_final_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_final_signal_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_corrected_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_total_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_mix_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_reco_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_reco_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_hodo_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_hodo_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_final_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_final_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file E_final_signal_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_corrected_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_total_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_mix_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_reco_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_reco_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_hodo_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_hodo_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file E_total_final_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file E_mix_final_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file E_final_signal_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_corrected_Flask.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_corrected_Subtracted_LH2.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.00_0.05.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.05_0.10.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.10_0.15.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.15_0.20.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.20_0.25.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.25_0.30.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.30_0.35.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.35_0.40.pdf has been created
+=== Physics Constants ===
+PoT LH2:   1.5732e+17
+PoT LD2:   7.5111e+16
+PoT Flask: 3.5790e+16
+Flask Norm LH2: 4.3956
+Flask Norm LD2: 2.0986
+=========================
+Creating ROOT output file: Processed_Kinematic_Hists.root
+
+Extracting all data sets into memory to compute correct combined mass centroids...
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.00, 0.05)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.05, 0.10)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.10, 0.15)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.15, 0.20)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.20, 0.25)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.25, 0.30)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.30, 0.35)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.35, 0.40)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.40, 0.45)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.45, 0.50)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.50, 0.55)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.55, 0.60)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.60, 0.65)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.65, 0.70)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.70, 0.75)
+  Saved LH2 & LD2 1D Mass Dists and individual CSV Tables for xF: [0.75, 0.80)
+Saving 2D Histogram PDFs...
+
+Generating Subtracted Plot: Y_corrected_LH2 - Y_corrected_Flask...
+  Subtracted plot saved for LH2.
+
+Calculating and Plotting Double Differential Cross-Sections for LH2...
+
+--- LH2 xF Bin 0: 0.00 < xF < 0.05 ---
+  Mass Centroid 4.416 GeV: Acceptance = 0.00002 +/- 0.00002
+  Mass Centroid 4.740 GeV: Acceptance = 0.00028 +/- 0.00010
+  Mass Centroid 5.033 GeV: Acceptance = 0.00203 +/- 0.00027
+  Mass Centroid 5.250 GeV: Acceptance = 0.00464 +/- 0.00040
+  Mass Centroid 5.499 GeV: Acceptance = 0.00948 +/- 0.00058
+  Mass Centroid 5.826 GeV: Acceptance = 0.01276 +/- 0.00067
+  Mass Centroid 6.180 GeV: Acceptance = 0.01447 +/- 0.00071
+  Mass Centroid 6.423 GeV: Acceptance = 0.01565 +/- 0.00074
+  Mass Centroid 6.749 GeV: Acceptance = 0.01502 +/- 0.00072
+  Mass Centroid 7.171 GeV: Acceptance = 0.01289 +/- 0.00049
+  Mass Centroid 7.914 GeV: Acceptance = 0.00771 +/- 0.00030
+  Saved plot: CrossSection_LH2_xF_0.00_0.05.pdf
+
+--- LH2 xF Bin 1: 0.05 < xF < 0.10 ---
+  Mass Centroid 4.370 GeV: Acceptance = 0.00002 +/- 0.00003
+  Mass Centroid 4.625 GeV: Acceptance = 0.00094 +/- 0.00019
+  Mass Centroid 4.942 GeV: Acceptance = 0.00276 +/- 0.00032
+  Mass Centroid 5.250 GeV: Acceptance = 0.00749 +/- 0.00052
+  Mass Centroid 5.524 GeV: Acceptance = 0.01330 +/- 0.00069
+  Mass Centroid 5.867 GeV: Acceptance = 0.01589 +/- 0.00075
+  Mass Centroid 6.080 GeV: Acceptance = 0.01983 +/- 0.00084
+  Mass Centroid 6.415 GeV: Acceptance = 0.02108 +/- 0.00086
+  Mass Centroid 6.725 GeV: Acceptance = 0.02244 +/- 0.00089
+  Mass Centroid 7.125 GeV: Acceptance = 0.01718 +/- 0.00057
+  Mass Centroid 7.731 GeV: Acceptance = 0.01178 +/- 0.00038
+  Saved plot: CrossSection_LH2_xF_0.05_0.10.pdf
+
+--- LH2 xF Bin 2: 0.10 < xF < 0.15 ---
+  Mass Centroid 4.376 GeV: Acceptance = 0.00050 +/- 0.00014
+  Mass Centroid 4.686 GeV: Acceptance = 0.00198 +/- 0.00027
+  Mass Centroid 4.949 GeV: Acceptance = 0.00696 +/- 0.00050
+  Mass Centroid 5.229 GeV: Acceptance = 0.01150 +/- 0.00065
+  Mass Centroid 5.499 GeV: Acceptance = 0.01679 +/- 0.00078
+  Mass Centroid 5.815 GeV: Acceptance = 0.02067 +/- 0.00086
+  Mass Centroid 6.139 GeV: Acceptance = 0.02357 +/- 0.00091
+  Mass Centroid 6.441 GeV: Acceptance = 0.02558 +/- 0.00095
+  Mass Centroid 6.746 GeV: Acceptance = 0.02424 +/- 0.00093
+  Mass Centroid 7.114 GeV: Acceptance = 0.02186 +/- 0.00065
+  Mass Centroid 7.838 GeV: Acceptance = 0.01499 +/- 0.00043
+  Saved plot: CrossSection_LH2_xF_0.10_0.15.pdf
+
+--- LH2 xF Bin 3: 0.15 < xF < 0.20 ---
+  Mass Centroid 4.373 GeV: Acceptance = 0.00127 +/- 0.00022
+  Mass Centroid 4.658 GeV: Acceptance = 0.00462 +/- 0.00041
+  Mass Centroid 4.917 GeV: Acceptance = 0.01040 +/- 0.00062
+  Mass Centroid 5.251 GeV: Acceptance = 0.01473 +/- 0.00073
+  Mass Centroid 5.522 GeV: Acceptance = 0.02166 +/- 0.00089
+  Mass Centroid 5.835 GeV: Acceptance = 0.02384 +/- 0.00093
+  Mass Centroid 6.138 GeV: Acceptance = 0.02796 +/- 0.00100
+  Mass Centroid 6.467 GeV: Acceptance = 0.03113 +/- 0.00105
+  Mass Centroid 6.748 GeV: Acceptance = 0.03137 +/- 0.00106
+  Mass Centroid 6.912 GeV: Acceptance = 0.02584 +/- 0.00070
+  Mass Centroid 7.632 GeV: Acceptance = 0.01864 +/- 0.00048
+  Saved plot: CrossSection_LH2_xF_0.15_0.20.pdf
+
+--- LH2 xF Bin 4: 0.20 < xF < 0.25 ---
+  Mass Centroid 4.348 GeV: Acceptance = 0.00328 +/- 0.00035
+  Mass Centroid 4.653 GeV: Acceptance = 0.00718 +/- 0.00052
+  Mass Centroid 4.956 GeV: Acceptance = 0.01439 +/- 0.00073
+  Mass Centroid 5.237 GeV: Acceptance = 0.02122 +/- 0.00088
+  Mass Centroid 5.539 GeV: Acceptance = 0.02492 +/- 0.00095
+  Mass Centroid 5.832 GeV: Acceptance = 0.03046 +/- 0.00105
+  Mass Centroid 6.157 GeV: Acceptance = 0.03248 +/- 0.00109
+  Mass Centroid 6.438 GeV: Acceptance = 0.03577 +/- 0.00114
+  Mass Centroid 6.760 GeV: Acceptance = 0.03432 +/- 0.00111
+  Mass Centroid 7.133 GeV: Acceptance = 0.03167 +/- 0.00078
+  Mass Centroid 7.634 GeV: Acceptance = 0.02292 +/- 0.00054
+  Saved plot: CrossSection_LH2_xF_0.20_0.25.pdf
+
+--- LH2 xF Bin 5: 0.25 < xF < 0.30 ---
+  Mass Centroid 4.392 GeV: Acceptance = 0.00661 +/- 0.00050
+  Mass Centroid 4.652 GeV: Acceptance = 0.01110 +/- 0.00065
+  Mass Centroid 4.949 GeV: Acceptance = 0.01907 +/- 0.00085
+  Mass Centroid 5.244 GeV: Acceptance = 0.02499 +/- 0.00097
+  Mass Centroid 5.555 GeV: Acceptance = 0.02935 +/- 0.00104
+  Mass Centroid 5.846 GeV: Acceptance = 0.03536 +/- 0.00114
+  Mass Centroid 6.144 GeV: Acceptance = 0.03698 +/- 0.00117
+  Mass Centroid 6.473 GeV: Acceptance = 0.04266 +/- 0.00125
+  Mass Centroid 6.755 GeV: Acceptance = 0.04244 +/- 0.00125
+  Mass Centroid 7.107 GeV: Acceptance = 0.03895 +/- 0.00087
+  Mass Centroid 7.598 GeV: Acceptance = 0.02683 +/- 0.00058
+  Saved plot: CrossSection_LH2_xF_0.25_0.30.pdf
+
+--- LH2 xF Bin 6: 0.30 < xF < 0.35 ---
+  Mass Centroid 4.355 GeV: Acceptance = 0.00934 +/- 0.00061
+  Mass Centroid 4.666 GeV: Acceptance = 0.01564 +/- 0.00078
+  Mass Centroid 4.947 GeV: Acceptance = 0.02467 +/- 0.00097
+  Mass Centroid 5.249 GeV: Acceptance = 0.02914 +/- 0.00105
+  Mass Centroid 5.542 GeV: Acceptance = 0.03598 +/- 0.00117
+  Mass Centroid 5.844 GeV: Acceptance = 0.03806 +/- 0.00120
+  Mass Centroid 6.133 GeV: Acceptance = 0.04105 +/- 0.00124
+  Mass Centroid 6.376 GeV: Acceptance = 0.04216 +/- 0.00125
+  Mass Centroid 6.741 GeV: Acceptance = 0.04423 +/- 0.00128
+  Mass Centroid 7.045 GeV: Acceptance = 0.04382 +/- 0.00094
+  Mass Centroid 7.919 GeV: Acceptance = 0.03052 +/- 0.00063
+  Saved plot: CrossSection_LH2_xF_0.30_0.35.pdf
+
+--- LH2 xF Bin 7: 0.35 < xF < 0.40 ---
+  Mass Centroid 4.336 GeV: Acceptance = 0.01439 +/- 0.00076
+  Mass Centroid 4.640 GeV: Acceptance = 0.02078 +/- 0.00090
+  Mass Centroid 4.944 GeV: Acceptance = 0.02624 +/- 0.00101
+  Mass Centroid 5.239 GeV: Acceptance = 0.03448 +/- 0.00115
+  Mass Centroid 5.517 GeV: Acceptance = 0.03936 +/- 0.00123
+  Mass Centroid 5.835 GeV: Acceptance = 0.04280 +/- 0.00128
+  Mass Centroid 6.125 GeV: Acceptance = 0.04537 +/- 0.00132
+  Mass Centroid 6.446 GeV: Acceptance = 0.04883 +/- 0.00136
+  Mass Centroid 6.727 GeV: Acceptance = 0.04909 +/- 0.00135
+  Mass Centroid 7.175 GeV: Acceptance = 0.04895 +/- 0.00099
+  Mass Centroid 7.764 GeV: Acceptance = 0.03620 +/- 0.00068
+  Saved plot: CrossSection_LH2_xF_0.35_0.40.pdf
+
+--- LH2 xF Bin 8: 0.40 < xF < 0.45 ---
+  Mass Centroid 4.350 GeV: Acceptance = 0.01673 +/- 0.00082
+  Mass Centroid 4.643 GeV: Acceptance = 0.02465 +/- 0.00099
+  Mass Centroid 4.934 GeV: Acceptance = 0.03354 +/- 0.00115
+  Mass Centroid 5.231 GeV: Acceptance = 0.03634 +/- 0.00120
+  Mass Centroid 5.514 GeV: Acceptance = 0.04351 +/- 0.00131
+  Mass Centroid 5.856 GeV: Acceptance = 0.04708 +/- 0.00135
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.40_0.45.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.45_0.50.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.50_0.55.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.55_0.60.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.60_0.65.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.65_0.70.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.70_0.75.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LH2_xF_0.75_0.80.pdf has been created
+Info in <TCanvas::Print>: pdf file Y_corrected_Subtracted_LD2.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.00_0.05.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.05_0.10.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.10_0.15.pdf has been created
+  Mass Centroid 6.175 GeV: Acceptance = 0.05062 +/- 0.00139
+  Mass Centroid 6.422 GeV: Acceptance = 0.04960 +/- 0.00139
+  Mass Centroid 6.751 GeV: Acceptance = 0.05495 +/- 0.00145
+  Mass Centroid 7.100 GeV: Acceptance = 0.04969 +/- 0.00101
+  Mass Centroid 7.820 GeV: Acceptance = 0.03835 +/- 0.00071
+  Saved plot: CrossSection_LH2_xF_0.40_0.45.pdf
+
+--- LH2 xF Bin 9: 0.45 < xF < 0.50 ---
+  Mass Centroid 4.345 GeV: Acceptance = 0.02167 +/- 0.00094
+  Mass Centroid 4.642 GeV: Acceptance = 0.02796 +/- 0.00107
+  Mass Centroid 4.941 GeV: Acceptance = 0.03442 +/- 0.00118
+  Mass Centroid 5.238 GeV: Acceptance = 0.04189 +/- 0.00129
+  Mass Centroid 5.523 GeV: Acceptance = 0.04461 +/- 0.00132
+  Mass Centroid 5.841 GeV: Acceptance = 0.05057 +/- 0.00141
+  Mass Centroid 6.135 GeV: Acceptance = 0.05153 +/- 0.00142
+  Mass Centroid 6.437 GeV: Acceptance = 0.05622 +/- 0.00150
+  Mass Centroid 6.741 GeV: Acceptance = 0.05504 +/- 0.00146
+  Mass Centroid 7.198 GeV: Acceptance = 0.05302 +/- 0.00105
+  Mass Centroid 7.828 GeV: Acceptance = 0.04156 +/- 0.00075
+  Saved plot: CrossSection_LH2_xF_0.45_0.50.pdf
+
+--- LH2 xF Bin 10: 0.50 < xF < 0.55 ---
+  Mass Centroid 4.353 GeV: Acceptance = 0.02366 +/- 0.00099
+  Mass Centroid 4.621 GeV: Acceptance = 0.03437 +/- 0.00119
+  Mass Centroid 4.950 GeV: Acceptance = 0.03986 +/- 0.00128
+  Mass Centroid 5.246 GeV: Acceptance = 0.04368 +/- 0.00134
+  Mass Centroid 5.534 GeV: Acceptance = 0.04780 +/- 0.00139
+  Mass Centroid 5.843 GeV: Acceptance = 0.05518 +/- 0.00149
+  Mass Centroid 6.124 GeV: Acceptance = 0.05578 +/- 0.00150
+  Mass Centroid 6.417 GeV: Acceptance = 0.05401 +/- 0.00148
+  Mass Centroid 6.690 GeV: Acceptance = 0.05477 +/- 0.00148
+  Mass Centroid 7.135 GeV: Acceptance = 0.05740 +/- 0.00111
+  Mass Centroid 7.861 GeV: Acceptance = 0.04602 +/- 0.00079
+  Saved plot: CrossSection_LH2_xF_0.50_0.55.pdf
+
+--- LH2 xF Bin 11: 0.55 < xF < 0.60 ---
+  Mass Centroid 4.345 GeV: Acceptance = 0.02744 +/- 0.00108
+  Mass Centroid 4.635 GeV: Acceptance = 0.03564 +/- 0.00123
+  Mass Centroid 4.951 GeV: Acceptance = 0.03953 +/- 0.00129
+  Mass Centroid 5.247 GeV: Acceptance = 0.04827 +/- 0.00142
+  Mass Centroid 5.525 GeV: Acceptance = 0.05013 +/- 0.00144
+  Mass Centroid 5.830 GeV: Acceptance = 0.05767 +/- 0.00154
+  Mass Centroid 6.122 GeV: Acceptance = 0.06098 +/- 0.00158
+  Mass Centroid 6.419 GeV: Acceptance = 0.06104 +/- 0.00158
+  Mass Centroid 6.697 GeV: Acceptance = 0.06251 +/- 0.00159
+  Mass Centroid 7.185 GeV: Acceptance = 0.05811 +/- 0.00113
+  Mass Centroid 7.799 GeV: Acceptance = 0.04801 +/- 0.00082
+  Saved plot: CrossSection_LH2_xF_0.55_0.60.pdf
+
+--- LH2 xF Bin 12: 0.60 < xF < 0.65 ---
+  Mass Centroid 4.356 GeV: Acceptance = 0.02776 +/- 0.00110
+  Mass Centroid 4.664 GeV: Acceptance = 0.03804 +/- 0.00129
+  Mass Centroid 4.944 GeV: Acceptance = 0.04393 +/- 0.00138
+  Mass Centroid 5.240 GeV: Acceptance = 0.04827 +/- 0.00144
+  Mass Centroid 5.547 GeV: Acceptance = 0.05584 +/- 0.00155
+  Mass Centroid 5.817 GeV: Acceptance = 0.05747 +/- 0.00155
+  Mass Centroid 6.147 GeV: Acceptance = 0.05870 +/- 0.00157
+  Mass Centroid 6.406 GeV: Acceptance = 0.06231 +/- 0.00162
+  Mass Centroid 6.685 GeV: Acceptance = 0.05962 +/- 0.00158
+  Mass Centroid 7.225 GeV: Acceptance = 0.06400 +/- 0.00120
+  Mass Centroid 8.039 GeV: Acceptance = 0.04923 +/- 0.00084
+  Saved plot: CrossSection_LH2_xF_0.60_0.65.pdf
+
+--- LH2 xF Bin 13: 0.65 < xF < 0.70 ---
+  Mass Centroid 4.328 GeV: Acceptance = 0.02999 +/- 0.00117
+  Mass Centroid 4.650 GeV: Acceptance = 0.03786 +/- 0.00131
+  Mass Centroid 4.921 GeV: Acceptance = 0.04481 +/- 0.00141
+  Mass Centroid 5.213 GeV: Acceptance = 0.04896 +/- 0.00147
+  Mass Centroid 5.535 GeV: Acceptance = 0.05299 +/- 0.00153
+  Mass Centroid 5.840 GeV: Acceptance = 0.05793 +/- 0.00159
+  Mass Centroid 6.130 GeV: Acceptance = 0.06157 +/- 0.00163
+  Mass Centroid 6.442 GeV: Acceptance = 0.06398 +/- 0.00167
+  Mass Centroid 6.734 GeV: Acceptance = 0.06739 +/- 0.00171
+  Mass Centroid 7.164 GeV: Acceptance = 0.06217 +/- 0.00121
+  Mass Centroid 7.654 GeV: Acceptance = 0.05265 +/- 0.00088
+  Saved plot: CrossSection_LH2_xF_0.65_0.70.pdf
+
+--- LH2 xF Bin 14: 0.70 < xF < 0.75 ---
+  Mass Centroid 4.338 GeV: Acceptance = 0.02984 +/- 0.00118
+  Mass Centroid 4.634 GeV: Acceptance = 0.03771 +/- 0.00132
+  Mass Centroid 4.948 GeV: Acceptance = 0.04540 +/- 0.00144
+  Mass Centroid 5.259 GeV: Acceptance = 0.04858 +/- 0.00148
+  Mass Centroid 5.581 GeV: Acceptance = 0.05597 +/- 0.00159
+  Mass Centroid 5.829 GeV: Acceptance = 0.06012 +/- 0.00165
+  Mass Centroid 6.128 GeV: Acceptance = 0.06294 +/- 0.00168
+  Mass Centroid 6.475 GeV: Acceptance = 0.06396 +/- 0.00169
+  Mass Centroid 6.750 GeV: Acceptance = 0.06601 +/- 0.00171
+  Mass Centroid 7.168 GeV: Acceptance = 0.06411 +/- 0.00124
+  Mass Centroid 8.070 GeV: Acceptance = 0.05073 +/- 0.00088
+  Saved plot: CrossSection_LH2_xF_0.70_0.75.pdf
+
+--- LH2 xF Bin 15: 0.75 < xF < 0.80 ---
+  Mass Centroid 4.346 GeV: Acceptance = 0.03065 +/- 0.00122
+  Mass Centroid 4.609 GeV: Acceptance = 0.03952 +/- 0.00139
+  Mass Centroid 4.955 GeV: Acceptance = 0.04516 +/- 0.00147
+  Mass Centroid 5.257 GeV: Acceptance = 0.05026 +/- 0.00155
+  Mass Centroid 5.457 GeV: Acceptance = 0.05579 +/- 0.00163
+  Mass Centroid 5.823 GeV: Acceptance = 0.05941 +/- 0.00167
+  Mass Centroid 6.130 GeV: Acceptance = 0.05940 +/- 0.00167
+  Mass Centroid 6.448 GeV: Acceptance = 0.06283 +/- 0.00172
+  Mass Centroid 6.749 GeV: Acceptance = 0.06421 +/- 0.00174
+  Mass Centroid 6.988 GeV: Acceptance = 0.06199 +/- 0.00124
+  Mass Centroid 8.004 GeV: Acceptance = 0.05058 +/- 0.00089
+  Saved plot: CrossSection_LH2_xF_0.75_0.80.pdf
+
+Generating Subtracted Plot for LD2 pd formula...
+  Subtracted plot saved for LD2 pd equation.
+
+Calculating and Plotting Double Differential Cross-Sections for LD2...
+
+--- LD2 xF Bin 0: 0.00 < xF < 0.05 ---
+  Mass Centroid 4.490 GeV: Acceptance = 0.00000 +/- 0.00000
+  Mass Centroid 4.649 GeV: Acceptance = 0.00038 +/- 0.00012
+  Mass Centroid 4.995 GeV: Acceptance = 0.00149 +/- 0.00023
+  Mass Centroid 5.237 GeV: Acceptance = 0.00485 +/- 0.00041
+  Mass Centroid 5.514 GeV: Acceptance = 0.00840 +/- 0.00054
+  Mass Centroid 5.826 GeV: Acceptance = 0.01239 +/- 0.00066
+  Mass Centroid 6.149 GeV: Acceptance = 0.01608 +/- 0.00075
+  Mass Centroid 6.435 GeV: Acceptance = 0.01768 +/- 0.00079
+  Mass Centroid 6.728 GeV: Acceptance = 0.01546 +/- 0.00074
+  Mass Centroid 7.134 GeV: Acceptance = 0.01522 +/- 0.00053
+  Saved plot: CrossSection_LD2_xF_0.00_0.05.pdf
+
+--- LD2 xF Bin 1: 0.05 < xF < 0.10 ---
+  Mass Centroid 4.386 GeV: Acceptance = 0.00015 +/- 0.00007
+  Mass Centroid 4.630 GeV: Acceptance = 0.00075 +/- 0.00017
+  Mass Centroid 4.956 GeV: Acceptance = 0.00316 +/- 0.00034
+  Mass Centroid 5.234 GeV: Acceptance = 0.00847 +/- 0.00055
+  Mass Centroid 5.525 GeV: Acceptance = 0.01464 +/- 0.00072
+  Mass Centroid 5.830 GeV: Acceptance = 0.01776 +/- 0.00080
+  Mass Centroid 6.121 GeV: Acceptance = 0.02058 +/- 0.00085
+  Mass Centroid 6.408 GeV: Acceptance = 0.02135 +/- 0.00087
+  Mass Centroid 6.745 GeV: Acceptance = 0.02039 +/- 0.00085
+  Mass Centroid 7.101 GeV: Acceptance = 0.01727 +/- 0.00057
+  Mass Centroid 7.594 GeV: Acceptance = 0.01250 +/- 0.00039
+  Saved plot: CrossSection_LD2_xF_0.05_0.10.pdf
+
+--- LD2 xF Bin 2: 0.10 < xF < 0.15 ---
+  Mass Centroid 4.434 GeV: Acceptance = 0.00047 +/- 0.00013
+  Mass Centroid 4.661 GeV: Acceptance = 0.00268 +/- 0.00032
+  Mass Centroid 4.963 GeV: Acceptance = 0.00579 +/- 0.00046
+  Mass Centroid 5.236 GeV: Acceptance = 0.01108 +/- 0.00064
+  Mass Centroid 5.542 GeV: Acceptance = 0.01825 +/- 0.00081
+  Mass Centroid 5.822 GeV: Acceptance = 0.02300 +/- 0.00091
+  Mass Centroid 6.139 GeV: Acceptance = 0.02440 +/- 0.00093
+  Mass Centroid 6.448 GeV: Acceptance = 0.02556 +/- 0.00096
+  Mass Centroid 6.755 GeV: Acceptance = 0.02475 +/- 0.00094
+  Mass Centroid 7.062 GeV: Acceptance = 0.02334 +/- 0.00067
+  Mass Centroid 7.813 GeV: Acceptance = 0.01455 +/- 0.00042
+  Saved plot: CrossSection_LD2_xF_0.10_0.15.pdf
+
+--- LD2 xF Bin 3: 0.15 < xF < 0.20 ---
+  Mass Centroid 4.360 GeV: Acceptance = 0.00118 +/- 0.00021
+  Mass Centroid 4.652 GeV: Acceptance = 0.00461 +/- 0.00042
+  Mass Centroid 4.953 GeV: Acceptance = 0.00881 +/- 0.00057
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.15_0.20.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.20_0.25.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.25_0.30.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.30_0.35.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.35_0.40.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.40_0.45.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.45_0.50.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.50_0.55.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.55_0.60.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.60_0.65.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.65_0.70.pdf has been created
+  Mass Centroid 5.255 GeV: Acceptance = 0.01623 +/- 0.00077
+  Mass Centroid 5.548 GeV: Acceptance = 0.02171 +/- 0.00089
+  Mass Centroid 5.839 GeV: Acceptance = 0.02904 +/- 0.00103
+  Mass Centroid 6.127 GeV: Acceptance = 0.03096 +/- 0.00106
+  Mass Centroid 6.449 GeV: Acceptance = 0.02872 +/- 0.00101
+  Mass Centroid 6.742 GeV: Acceptance = 0.03047 +/- 0.00105
+  Mass Centroid 7.064 GeV: Acceptance = 0.02877 +/- 0.00075
+  Mass Centroid 7.777 GeV: Acceptance = 0.01979 +/- 0.00049
+  Saved plot: CrossSection_LD2_xF_0.15_0.20.pdf
+
+--- LD2 xF Bin 4: 0.20 < xF < 0.25 ---
+  Mass Centroid 4.366 GeV: Acceptance = 0.00304 +/- 0.00034
+  Mass Centroid 4.663 GeV: Acceptance = 0.00864 +/- 0.00057
+  Mass Centroid 4.937 GeV: Acceptance = 0.01534 +/- 0.00076
+  Mass Centroid 5.244 GeV: Acceptance = 0.01997 +/- 0.00086
+  Mass Centroid 5.533 GeV: Acceptance = 0.02537 +/- 0.00097
+  Mass Centroid 5.841 GeV: Acceptance = 0.03143 +/- 0.00107
+  Mass Centroid 6.123 GeV: Acceptance = 0.03421 +/- 0.00112
+  Mass Centroid 6.410 GeV: Acceptance = 0.03380 +/- 0.00111
+  Mass Centroid 6.740 GeV: Acceptance = 0.03685 +/- 0.00116
+  Mass Centroid 7.084 GeV: Acceptance = 0.03239 +/- 0.00080
+  Mass Centroid 7.720 GeV: Acceptance = 0.02432 +/- 0.00055
+  Saved plot: CrossSection_LD2_xF_0.20_0.25.pdf
+
+--- LD2 xF Bin 5: 0.25 < xF < 0.30 ---
+  Mass Centroid 4.361 GeV: Acceptance = 0.00522 +/- 0.00045
+  Mass Centroid 4.653 GeV: Acceptance = 0.01272 +/- 0.00070
+  Mass Centroid 4.942 GeV: Acceptance = 0.01930 +/- 0.00086
+  Mass Centroid 5.241 GeV: Acceptance = 0.02692 +/- 0.00101
+  Mass Centroid 5.539 GeV: Acceptance = 0.03330 +/- 0.00112
+  Mass Centroid 5.826 GeV: Acceptance = 0.03457 +/- 0.00113
+  Mass Centroid 6.146 GeV: Acceptance = 0.03878 +/- 0.00120
+  Mass Centroid 6.422 GeV: Acceptance = 0.04157 +/- 0.00124
+  Mass Centroid 6.732 GeV: Acceptance = 0.04086 +/- 0.00122
+  Mass Centroid 7.155 GeV: Acceptance = 0.03978 +/- 0.00088
+  Mass Centroid 7.587 GeV: Acceptance = 0.02845 +/- 0.00060
+  Saved plot: CrossSection_LD2_xF_0.25_0.30.pdf
+
+--- LD2 xF Bin 6: 0.30 < xF < 0.35 ---
+  Mass Centroid 4.346 GeV: Acceptance = 0.01128 +/- 0.00066
+  Mass Centroid 4.653 GeV: Acceptance = 0.01618 +/- 0.00079
+  Mass Centroid 4.943 GeV: Acceptance = 0.02418 +/- 0.00097
+  Mass Centroid 5.240 GeV: Acceptance = 0.02992 +/- 0.00107
+  Mass Centroid 5.554 GeV: Acceptance = 0.03435 +/- 0.00114
+  Mass Centroid 5.848 GeV: Acceptance = 0.03724 +/- 0.00119
+  Mass Centroid 6.127 GeV: Acceptance = 0.04115 +/- 0.00124
+  Mass Centroid 6.431 GeV: Acceptance = 0.04451 +/- 0.00129
+  Mass Centroid 6.732 GeV: Acceptance = 0.04627 +/- 0.00132
+  Mass Centroid 7.142 GeV: Acceptance = 0.04272 +/- 0.00093
+  Mass Centroid 7.780 GeV: Acceptance = 0.03267 +/- 0.00065
+  Saved plot: CrossSection_LD2_xF_0.30_0.35.pdf
+
+--- LD2 xF Bin 7: 0.35 < xF < 0.40 ---
+  Mass Centroid 4.353 GeV: Acceptance = 0.01303 +/- 0.00072
+  Mass Centroid 4.643 GeV: Acceptance = 0.02206 +/- 0.00093
+  Mass Centroid 4.947 GeV: Acceptance = 0.02866 +/- 0.00105
+  Mass Centroid 5.241 GeV: Acceptance = 0.03297 +/- 0.00113
+  Mass Centroid 5.533 GeV: Acceptance = 0.03948 +/- 0.00124
+  Mass Centroid 5.842 GeV: Acceptance = 0.04256 +/- 0.00128
+  Mass Centroid 6.120 GeV: Acceptance = 0.04845 +/- 0.00136
+  Mass Centroid 6.462 GeV: Acceptance = 0.04944 +/- 0.00138
+  Mass Centroid 6.726 GeV: Acceptance = 0.04538 +/- 0.00131
+  Mass Centroid 7.191 GeV: Acceptance = 0.04651 +/- 0.00097
+  Mass Centroid 7.782 GeV: Acceptance = 0.03654 +/- 0.00069
+  Saved plot: CrossSection_LD2_xF_0.35_0.40.pdf
+
+--- LD2 xF Bin 8: 0.40 < xF < 0.45 ---
+  Mass Centroid 4.341 GeV: Acceptance = 0.01732 +/- 0.00083
+  Mass Centroid 4.642 GeV: Acceptance = 0.02376 +/- 0.00097
+  Mass Centroid 4.934 GeV: Acceptance = 0.03150 +/- 0.00112
+  Mass Centroid 5.243 GeV: Acceptance = 0.03655 +/- 0.00120
+  Mass Centroid 5.527 GeV: Acceptance = 0.04407 +/- 0.00131
+  Mass Centroid 5.851 GeV: Acceptance = 0.04977 +/- 0.00139
+  Mass Centroid 6.153 GeV: Acceptance = 0.05355 +/- 0.00144
+  Mass Centroid 6.426 GeV: Acceptance = 0.05355 +/- 0.00144
+  Mass Centroid 6.708 GeV: Acceptance = 0.05156 +/- 0.00142
+  Mass Centroid 7.134 GeV: Acceptance = 0.05054 +/- 0.00102
+  Mass Centroid 7.776 GeV: Acceptance = 0.04028 +/- 0.00073
+  Saved plot: CrossSection_LD2_xF_0.40_0.45.pdf
+
+--- LD2 xF Bin 9: 0.45 < xF < 0.50 ---
+  Mass Centroid 4.345 GeV: Acceptance = 0.02153 +/- 0.00094
+  Mass Centroid 4.651 GeV: Acceptance = 0.02967 +/- 0.00110
+  Mass Centroid 4.945 GeV: Acceptance = 0.03618 +/- 0.00121
+  Mass Centroid 5.230 GeV: Acceptance = 0.04369 +/- 0.00132
+  Mass Centroid 5.534 GeV: Acceptance = 0.04617 +/- 0.00136
+  Mass Centroid 5.843 GeV: Acceptance = 0.05297 +/- 0.00144
+  Mass Centroid 6.126 GeV: Acceptance = 0.05299 +/- 0.00144
+  Mass Centroid 6.454 GeV: Acceptance = 0.05314 +/- 0.00145
+  Mass Centroid 6.740 GeV: Acceptance = 0.05467 +/- 0.00147
+  Mass Centroid 7.142 GeV: Acceptance = 0.05353 +/- 0.00107
+  Mass Centroid 7.821 GeV: Acceptance = 0.04297 +/- 0.00076
+  Saved plot: CrossSection_LD2_xF_0.45_0.50.pdf
+
+--- LD2 xF Bin 10: 0.50 < xF < 0.55 ---
+  Mass Centroid 4.346 GeV: Acceptance = 0.02370 +/- 0.00100
+  Mass Centroid 4.642 GeV: Acceptance = 0.03307 +/- 0.00117
+  Mass Centroid 4.940 GeV: Acceptance = 0.03792 +/- 0.00125
+  Mass Centroid 5.257 GeV: Acceptance = 0.04604 +/- 0.00137
+  Mass Centroid 5.534 GeV: Acceptance = 0.05100 +/- 0.00144
+  Mass Centroid 5.847 GeV: Acceptance = 0.05536 +/- 0.00149
+  Mass Centroid 6.144 GeV: Acceptance = 0.05608 +/- 0.00151
+  Mass Centroid 6.410 GeV: Acceptance = 0.05783 +/- 0.00153
+  Mass Centroid 6.745 GeV: Acceptance = 0.05814 +/- 0.00153
+  Mass Centroid 7.148 GeV: Acceptance = 0.05989 +/- 0.00113
+  Mass Centroid 8.079 GeV: Acceptance = 0.04738 +/- 0.00081
+  Saved plot: CrossSection_LD2_xF_0.50_0.55.pdf
+
+--- LD2 xF Bin 11: 0.55 < xF < 0.60 ---
+  Mass Centroid 4.349 GeV: Acceptance = 0.02842 +/- 0.00110
+  Mass Centroid 4.635 GeV: Acceptance = 0.03346 +/- 0.00120
+  Mass Centroid 4.944 GeV: Acceptance = 0.03919 +/- 0.00128
+  Mass Centroid 5.231 GeV: Acceptance = 0.04668 +/- 0.00140
+  Mass Centroid 5.537 GeV: Acceptance = 0.05239 +/- 0.00148
+  Mass Centroid 5.857 GeV: Acceptance = 0.05734 +/- 0.00154
+  Mass Centroid 6.117 GeV: Acceptance = 0.06085 +/- 0.00159
+  Mass Centroid 6.451 GeV: Acceptance = 0.06218 +/- 0.00160
+  Mass Centroid 6.720 GeV: Acceptance = 0.06140 +/- 0.00159
+  Mass Centroid 7.104 GeV: Acceptance = 0.05892 +/- 0.00114
+  Mass Centroid 7.658 GeV: Acceptance = 0.04800 +/- 0.00082
+  Saved plot: CrossSection_LD2_xF_0.55_0.60.pdf
+
+--- LD2 xF Bin 12: 0.60 < xF < 0.65 ---
+  Mass Centroid 4.346 GeV: Acceptance = 0.02732 +/- 0.00109
+  Mass Centroid 4.637 GeV: Acceptance = 0.03689 +/- 0.00127
+  Mass Centroid 4.944 GeV: Acceptance = 0.04087 +/- 0.00133
+  Mass Centroid 5.259 GeV: Acceptance = 0.05062 +/- 0.00148
+  Mass Centroid 5.532 GeV: Acceptance = 0.05526 +/- 0.00153
+  Mass Centroid 5.814 GeV: Acceptance = 0.05947 +/- 0.00159
+  Mass Centroid 6.141 GeV: Acceptance = 0.05817 +/- 0.00156
+  Mass Centroid 6.440 GeV: Acceptance = 0.06314 +/- 0.00164
+  Mass Centroid 6.729 GeV: Acceptance = 0.05986 +/- 0.00160
+  Mass Centroid 7.128 GeV: Acceptance = 0.06122 +/- 0.00118
+  Mass Centroid 8.326 GeV: Acceptance = 0.04963 +/- 0.00085
+  Saved plot: CrossSection_LD2_xF_0.60_0.65.pdf
+
+--- LD2 xF Bin 13: 0.65 < xF < 0.70 ---
+  Mass Centroid 4.351 GeV: Acceptance = 0.03023 +/- 0.00117
+  Mass Centroid 4.641 GeV: Acceptance = 0.03766 +/- 0.00131
+  Mass Centroid 4.925 GeV: Acceptance = 0.04536 +/- 0.00142
+  Mass Centroid 5.226 GeV: Acceptance = 0.04984 +/- 0.00149
+  Mass Centroid 5.556 GeV: Acceptance = 0.05646 +/- 0.00157
+  Mass Centroid 5.831 GeV: Acceptance = 0.05886 +/- 0.00160
+  Mass Centroid 6.104 GeV: Acceptance = 0.06110 +/- 0.00164
+  Mass Centroid 6.354 GeV: Acceptance = 0.06689 +/- 0.00171
+  Mass Centroid 6.737 GeV: Acceptance = 0.06454 +/- 0.00168
+  Mass Centroid 7.177 GeV: Acceptance = 0.06093 +/- 0.00119
+  Mass Centroid 7.873 GeV: Acceptance = 0.05194 +/- 0.00088
+  Saved plot: CrossSection_LD2_xF_0.65_0.70.pdf
+
+--- LD2 xF Bin 14: 0.70 < xF < 0.75 ---
+  Mass Centroid 4.339 GeV: Acceptance = 0.02989 +/- 0.00119
+  Mass Centroid 4.656 GeV: Acceptance = 0.03832 +/- 0.00134
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.70_0.75.pdf has been created
+Info in <TCanvas::Print>: pdf file CrossSection_LD2_xF_0.75_0.80.pdf has been created
+  Mass Centroid 4.958 GeV: Acceptance = 0.04350 +/- 0.00142
+  Mass Centroid 5.250 GeV: Acceptance = 0.04984 +/- 0.00151
+  Mass Centroid 5.533 GeV: Acceptance = 0.05562 +/- 0.00160
+  Mass Centroid 5.846 GeV: Acceptance = 0.05820 +/- 0.00162
+  Mass Centroid 6.143 GeV: Acceptance = 0.06084 +/- 0.00166
+  Mass Centroid 6.464 GeV: Acceptance = 0.06576 +/- 0.00172
+  Mass Centroid 6.809 GeV: Acceptance = 0.06450 +/- 0.00170
+  Mass Centroid 7.010 GeV: Acceptance = 0.06284 +/- 0.00123
+  Mass Centroid 7.903 GeV: Acceptance = 0.05315 +/- 0.00090
+  Saved plot: CrossSection_LD2_xF_0.70_0.75.pdf
+
+--- LD2 xF Bin 15: 0.75 < xF < 0.80 ---
+  Mass Centroid 4.317 GeV: Acceptance = 0.03006 +/- 0.00122
+  Mass Centroid 4.624 GeV: Acceptance = 0.03666 +/- 0.00133
+  Mass Centroid 4.934 GeV: Acceptance = 0.04495 +/- 0.00147
+  Mass Centroid 5.227 GeV: Acceptance = 0.05012 +/- 0.00155
+  Mass Centroid 5.475 GeV: Acceptance = 0.05489 +/- 0.00161
+  Mass Centroid 5.874 GeV: Acceptance = 0.05572 +/- 0.00163
+  Mass Centroid 6.157 GeV: Acceptance = 0.06397 +/- 0.00175
+  Mass Centroid 6.392 GeV: Acceptance = 0.06527 +/- 0.00175
+  Mass Centroid 6.766 GeV: Acceptance = 0.06721 +/- 0.00179
+  Mass Centroid 7.087 GeV: Acceptance = 0.06121 +/- 0.00124
+  Mass Centroid 7.622 GeV: Acceptance = 0.05517 +/- 0.00094
+  Saved plot: CrossSection_LD2_xF_0.75_0.80.pdf
+
+All histograms, tables, and cross-section plots generated successfully.
+
+Generating LaTeX Appendix...
+LaTeX appendix successfully generated: Appendix_MassCentroids.tex

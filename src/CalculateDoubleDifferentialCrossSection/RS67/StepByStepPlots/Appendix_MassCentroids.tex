@@ -1,0 +1,1146 @@
+
+\section{Appendix: Determination of Mass Bin Centroids}
+\label{sec:appendix_mass_centroids}
+
+In order to accurately plot the double-differential cross-sections, the horizontal placement of the data points must reflect the true physical average of the invariant mass within each finite mass bin, rather than the simple geometric center. Because the dimuon mass distribution falls exponentially, the true centroid is typically skewed toward the lower edge of the bin.
+
+To account for combinatoric backgrounds, efficiency corrections, and flask contributions, the centroid calculation must be weighted using the fully corrected equations for the yields. 
+
+For the LH$_2$ target, the corrected yield is given by:
+\begin{equation}
+    \label{eq:appendix_yield_lh2}
+    Y_{\text{corrected}}^{\text{LH}_2} = \frac{Y^{\text{LH}_2}_{\text{total}} - Y^{\text{LH}_2}_{\text{mixed}}}{\langle\epsilon^{\text{LH}_2}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LH}_2}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right)
+\end{equation}
+
+For the LD$_2$ target, the corrected yield accounts for both the empty flask and the hydrogen contribution:
+\begin{align}
+    \label{eq:appendix_yield_ld2}
+    Y_{\text{corrected}}^{\text{LD}_2} &= 
+        \frac{Y^{\text{LD}_2}_{\text{total}} - Y^{\text{LD}_2}_{\text{mixed}}}{\langle\epsilon^{\text{LD}_2}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LD}_2}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right) \nonumber \\
+    &\quad - \frac{T_{\text{HD}}}{T_{\text{HH}}} \frac{I_{\text{LD}_2}}{I_{\text{LH}_2}}\left[ 
+        \frac{Y^{\text{LH}_2}_{\text{total}} - Y^{\text{LH}_2}_{\text{mixed}}}{\langle\epsilon^{\text{LH}_2}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LH}_2}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right)
+    \right]
+\end{align}
+
+The mass bin centroid for the LH$_2$ target is then calculated as the efficiency-corrected, background-subtracted mass sum divided by the corrected yield:
+\begin{equation}
+    \langle M \rangle_{\text{LH}_2} = \frac{1}{Y^{\text{LH}_2}_{\text{corrected}}} \left[ \frac{\sum M^{\text{LH}_2}_{\text{total}} - \sum M^{\text{LH}_2}_{\text{mixed}}}{\langle\epsilon^{\text{LH}_2}_{\text{signal}}\rangle} - \frac{I_{\text{LH}_2}}{I_{\text{flask}}}\left( \frac{\sum M^{\text{flask}}_{\text{total}} - \sum M^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right) \right]
+\end{equation}
+
+Similarly, we calculate the mass bin centroid for the LD$_2$ target using the fully corrected yield and mass sums:
+\begin{align}
+    \langle M \rangle_{\text{LD}_2} &= \frac{1}{Y^{\text{LD}_2}_{\text{corrected}}} \Bigg\{ \frac{\sum M^{\text{LD}_2}_{\text{total}} - \sum M^{\text{LD}_2}_{\text{mixed}}}{\langle\epsilon^{\text{LD}_2}_{\text{signal}}\rangle} - \frac{I_{\text{LD}_2}}{I_{\text{flask}}}\left( \frac{\sum M^{\text{flask}}_{\text{total}} - \sum M^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right) \nonumber \\
+    &\quad - \frac{T_{\text{HD}}}{T_{\text{HH}}} \frac{I_{\text{LD}_2}}{I_{\text{LH}_2}}\left[\frac{\sum M^{\text{LH}_2}_{\text{total}} - \sum M^{\text{LH}_2}_{\text{mixed}}}{\langle\epsilon^{\text{LH}_2}_{\text{signal}}\rangle} - \frac{I_{\text{LH}_2}}{I_{\text{flask}}}\left( \frac{\sum M^{\text{flask}}_{\text{total}} - \sum M^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right)\right] \Bigg\}
+\end{align}
+
+Here, we plot dimuon yield distributions for LH$_2$ cross-section calculations for the following components:
+\begin{itemize}
+    \item LH$_2$ total (red)
+    \item LH$_2$ mixed (blue)
+    \item Flask total (green)
+    \item Flask mixed (orange)
+\end{itemize}
+
+Then, the table of each dimuon component, efficiency corrections, and resulting mass bin centroids are presented for each $x_F$ bin. Similarly, for LD$_2$ cross-section calculations, we plot the following components:
+\begin{itemize}
+    \item LD$_2$ total (red)
+    \item LD$_2$ mixed (blue)
+    \item Flask total (green)
+    \item Flask mixed (orange)
+\end{itemize}
+
+These represent the total, mixed background, and flask components used in these calculations. Alongside the distributions are the precise kinematic values, raw counts, and resulting mass bin centroids for each $x_F$ bin. Finally, the table of each dimuon component, efficiency corrections, and resulting mass bin centroids are presented for each $x_F$ bin for the LD$_2$ target as well. This detailed breakdown allows for a clear understanding of how the final cross-section points are derived from the raw data and corrections.
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.00, 0.05)$}{Mass bin centroid calculations in x\_F in [0.00, 0.05)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.00_0.05.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.00, 0.05)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_0}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.00, 0.05)$.}
+    \label{tab:kinematics_lh2_xf_0}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.416 & 1 & 0 & 0 & 0 & 0.6494 & 0.5373 & 0.0000 & 6.7998 & 1.5398 \\
+        {[4.50, 4.80)} & 4.65 & 4.740 & 9 & 1 & 0 & 0 & 0.5586 & 0.5757 & 0.0000 & 67.8769 & 14.3209 \\
+        {[4.80, 5.10)} & 4.95 & 5.033 & 41 & 9 & 3 & 1 & 0.5349 & 0.5310 & 0.3663 & 180.2936 & 35.8247 \\
+        {[5.10, 5.40)} & 5.25 & 5.250 & 72 & 7 & 5 & 1 & 0.4684 & 0.4850 & 0.4049 & 500.6185 & 95.3613 \\
+        {[5.40, 5.70)} & 5.55 & 5.499 & 66 & 8 & 6 & 1 & 0.4860 & 0.4636 & 0.3813 & 339.3160 & 61.7094 \\
+        {[5.70, 6.00)} & 5.85 & 5.826 & 37 & 1 & 3 & 1 & 0.4947 & 0.5223 & 0.4103 & 299.1022 & 51.3405 \\
+        {[6.00, 6.30)} & 6.15 & 6.180 & 27 & 1 & 1 & 0 & 0.4757 & 0.4706 & 0.3954 & 269.0300 & 43.5350 \\
+        {[6.30, 6.60)} & 6.45 & 6.433 & 15 & 0 & 0 & 1 & 0.4754 & 0.4572 & 0.3895 & 275.5921 & 42.8396 \\
+        {[6.60, 6.90)} & 6.75 & 6.749 & 12 & 0 & 0 & 0 & 0.5021 & 0.5216 & 0.0000 & 161.2926 & 23.8975 \\
+        {[6.90, 7.50)} & 7.20 & 7.171 & 9 & 0 & 0 & 0 & 0.4322 & 0.5026 & 0.0000 & 149.3222 & 20.8238 \\
+        {[7.50, 8.70)} & 8.10 & 7.914 & 1 & 0 & 0 & 0 & 0.4512 & 0.0000 & 0.0000 & 17.5383 & 2.2161 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.00_0.05.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.00, 0.05)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_0}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.00, 0.05)$.}
+    \label{tab:kinematics_ld2_xf_0}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.490 & 1 & 0 & 1 & 0 & 0 & 0 & 0.6494 & 0.5373 & 0.0000 & 8.2585 & 1.8392 \\
+        {[4.50, 4.80)} & 4.65 & 4.649 & 7 & 3 & 9 & 1 & 0 & 0 & 0.5586 & 0.5757 & 0.0000 & 31.3423 & 6.7416 \\
+        {[4.80, 5.10)} & 4.95 & 4.995 & 38 & 3 & 41 & 9 & 3 & 1 & 0.5349 & 0.5310 & 0.3663 & 269.4289 & 53.9374 \\
+        {[5.10, 5.40)} & 5.25 & 5.237 & 48 & 8 & 72 & 7 & 5 & 1 & 0.4684 & 0.4850 & 0.4049 & 316.1812 & 60.3762 \\
+        {[5.40, 5.70)} & 5.55 & 5.514 & 54 & 5 & 66 & 8 & 6 & 1 & 0.4860 & 0.4636 & 0.3813 & 426.2461 & 77.2961 \\
+        {[5.70, 6.00)} & 5.85 & 5.826 & 39 & 7 & 37 & 1 & 3 & 1 & 0.4947 & 0.5223 & 0.4103 & 293.0269 & 50.2939 \\
+        {[6.00, 6.30)} & 6.15 & 6.149 & 36 & 3 & 27 & 1 & 1 & 0 & 0.4757 & 0.4706 & 0.3954 & 394.6746 & 64.1881 \\
+        {[6.30, 6.60)} & 6.45 & 6.438 & 22 & 1 & 15 & 0 & 0 & 1 & 0.4754 & 0.4572 & 0.3895 & 326.4352 & 50.7049 \\
+        {[6.60, 6.90)} & 6.75 & 6.728 & 6 & 0 & 12 & 0 & 0 & 0 & 0.5021 & 0.5216 & 0.0000 & 75.0796 & 11.1588 \\
+        {[6.90, 7.50)} & 7.20 & 7.134 & 14 & 0 & 9 & 0 & 0 & 0 & 0.4322 & 0.5026 & 0.0000 & 196.5794 & 27.5545 \\
+        {[7.50, 8.70)} & 8.10 & 7.914 & 0 & 0 & 1 & 0 & 0 & 0 & 0.4512 & 0.0000 & 0.0000 & -0.2524 & -0.0319 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.05, 0.10)$}{Mass bin centroid calculations in x\_F in [0.05, 0.10)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.05_0.10.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.05, 0.10)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_1}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.05, 0.10)$.}
+    \label{tab:kinematics_lh2_xf_1}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.370 & 2 & 1 & 0 & 0 & 0.8712 & 0.3502 & 0.0000 & 5.0156 & 1.1479 \\
+        {[4.50, 4.80)} & 4.65 & 4.625 & 39 & 5 & 4 & 1 & 0.5110 & 0.5031 & 0.4830 & 181.4894 & 39.2381 \\
+        {[4.80, 5.10)} & 4.95 & 4.942 & 83 & 21 & 4 & 2 & 0.4931 & 0.4643 & 0.6403 & 553.6282 & 112.0150 \\
+        {[5.10, 5.40)} & 5.25 & 5.250 & 97 & 17 & 6 & 1 & 0.5069 & 0.4868 & 0.4415 & 567.1652 & 108.0304 \\
+        {[5.40, 5.70)} & 5.55 & 5.524 & 78 & 17 & 3 & 0 & 0.5219 & 0.4924 & 0.4729 & 491.6348 & 88.9959 \\
+        {[5.70, 6.00)} & 5.85 & 5.867 & 54 & 4 & 4 & 0 & 0.5055 & 0.4750 & 0.4576 & 354.9319 & 60.5006 \\
+        {[6.00, 6.30)} & 6.15 & 6.080 & 39 & 2 & 2 & 1 & 0.5134 & 0.4800 & 0.4489 & 378.6591 & 62.2802 \\
+        {[6.30, 6.60)} & 6.45 & 6.415 & 25 & 0 & 1 & 0 & 0.4610 & 0.4526 & 0.6373 & 303.5984 & 47.3295 \\
+        {[6.60, 6.90)} & 6.75 & 6.725 & 5 & 2 & 0 & 0 & 0.3960 & 0.4969 & 0.0000 & 50.9435 & 7.5757 \\
+        {[6.90, 7.50)} & 7.20 & 7.125 & 7 & 0 & 0 & 0 & 0.4634 & 0.5029 & 0.0000 & 107.6402 & 15.1065 \\
+        {[7.50, 8.70)} & 8.10 & 7.731 & 6 & 0 & 0 & 0 & 0.4436 & 0.5684 & 0.0000 & 104.5820 & 13.5269 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.05_0.10.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.05, 0.10)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_1}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.05, 0.10)$.}
+    \label{tab:kinematics_ld2_xf_1}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.386 & 3 & 1 & 2 & 1 & 0 & 0 & 0.8712 & 0.3502 & 0.0000 & 24.9751 & 5.6949 \\
+        {[4.50, 4.80)} & 4.65 & 4.630 & 25 & 5 & 39 & 5 & 4 & 1 & 0.5110 & 0.5031 & 0.4830 & 121.1075 & 26.1544 \\
+        {[4.80, 5.10)} & 4.95 & 4.956 & 78 & 5 & 83 & 21 & 4 & 2 & 0.4931 & 0.4643 & 0.6403 & 738.7109 & 149.0451 \\
+        {[5.10, 5.40)} & 5.25 & 5.234 & 89 & 20 & 97 & 17 & 6 & 1 & 0.5069 & 0.4868 & 0.4415 & 609.2577 & 116.4136 \\
+        {[5.40, 5.70)} & 5.55 & 5.525 & 79 & 15 & 78 & 17 & 3 & 0 & 0.5219 & 0.4924 & 0.4729 & 637.4566 & 115.3832 \\
+        {[5.70, 6.00)} & 5.85 & 5.830 & 78 & 8 & 54 & 4 & 4 & 0 & 0.5055 & 0.4750 & 0.4576 & 747.2044 & 128.1574 \\
+        {[6.00, 6.30)} & 6.15 & 6.121 & 38 & 1 & 39 & 2 & 2 & 1 & 0.5134 & 0.4800 & 0.4489 & 437.7090 & 71.5117 \\
+        {[6.30, 6.60)} & 6.45 & 6.408 & 28 & 0 & 25 & 0 & 1 & 0 & 0.4610 & 0.4526 & 0.6373 & 370.9822 & 57.8947 \\
+        {[6.60, 6.90)} & 6.75 & 6.745 & 15 & 1 & 5 & 2 & 0 & 0 & 0.3960 & 0.4969 & 0.0000 & 189.2935 & 28.0663 \\
+        {[6.90, 7.50)} & 7.20 & 7.101 & 8 & 0 & 7 & 0 & 0 & 0 & 0.4634 & 0.5029 & 0.0000 & 111.4172 & 15.6908 \\
+        {[7.50, 8.70)} & 8.10 & 7.594 & 3 & 0 & 6 & 0 & 0 & 0 & 0.4436 & 0.5684 & 0.0000 & 38.5989 & 5.0830 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.10, 0.15)$}{Mass bin centroid calculations in x\_F in [0.10, 0.15)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.10_0.15.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.10, 0.15)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_2}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.10, 0.15)$.}
+    \label{tab:kinematics_lh2_xf_2}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.374 & 32 & 9 & 0 & 1 & 0.5097 & 0.4898 & 0.3670 & 249.7608 & 57.0975 \\
+        {[4.50, 4.80)} & 4.65 & 4.686 & 99 & 16 & 6 & 1 & 0.5114 & 0.5006 & 0.4839 & 547.7712 & 116.9004 \\
+        {[4.80, 5.10)} & 4.95 & 4.949 & 138 & 33 & 8 & 3 & 0.5173 & 0.4962 & 0.3791 & 717.5914 & 144.9975 \\
+        {[5.10, 5.40)} & 5.25 & 5.229 & 136 & 13 & 5 & 2 & 0.4822 & 0.4829 & 0.4153 & 1167.9167 & 223.3499 \\
+        {[5.40, 5.70)} & 5.55 & 5.499 & 87 & 8 & 6 & 1 & 0.5104 & 0.4936 & 0.5008 & 609.8187 & 110.8903 \\
+        {[5.70, 6.00)} & 5.85 & 5.815 & 78 & 6 & 5 & 0 & 0.5077 & 0.4932 & 0.5004 & 569.2487 & 97.8856 \\
+        {[6.00, 6.30)} & 6.15 & 6.139 & 52 & 4 & 0 & 0 & 0.4778 & 0.5080 & 0.0000 & 616.6852 & 100.4597 \\
+        {[6.30, 6.60)} & 6.45 & 6.441 & 28 & 0 & 1 & 0 & 0.5134 & 0.5011 & 0.4263 & 284.8498 & 44.2233 \\
+        {[6.60, 6.90)} & 6.75 & 6.746 & 10 & 0 & 0 & 0 & 0.5302 & 0.5025 & 0.0000 & 127.2270 & 18.8606 \\
+        {[6.90, 7.50)} & 7.20 & 7.114 & 11 & 1 & 0 & 0 & 0.4480 & 0.5246 & 0.0000 & 158.7891 & 22.3205 \\
+        {[7.50, 8.70)} & 8.10 & 7.838 & 7 & 0 & 0 & 0 & 0.4926 & 0.4386 & 0.0000 & 111.3862 & 14.2112 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.10_0.15.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.10, 0.15)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_2}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.10, 0.15)$.}
+    \label{tab:kinematics_ld2_xf_2}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.428 & 32 & 4 & 32 & 9 & 0 & 1 & 0.5097 & 0.4898 & 0.3670 & 274.7899 & 62.0616 \\
+        {[4.50, 4.80)} & 4.65 & 4.661 & 97 & 17 & 99 & 16 & 6 & 1 & 0.5114 & 0.5006 & 0.4839 & 636.0483 & 136.4495 \\
+        {[4.80, 5.10)} & 4.95 & 4.963 & 163 & 19 & 138 & 33 & 8 & 3 & 0.5173 & 0.4962 & 0.3791 & 1292.3793 & 260.4249 \\
+        {[5.10, 5.40)} & 5.25 & 5.236 & 139 & 20 & 136 & 13 & 5 & 2 & 0.4822 & 0.4829 & 0.4153 & 1194.0605 & 228.0422 \\
+        {[5.40, 5.70)} & 5.55 & 5.542 & 114 & 16 & 87 & 8 & 6 & 1 & 0.5104 & 0.4936 & 0.5008 & 975.4395 & 176.0041 \\
+        {[5.70, 6.00)} & 5.85 & 5.822 & 71 & 4 & 78 & 6 & 5 & 0 & 0.5077 & 0.4932 & 0.5004 & 660.6345 & 113.4654 \\
+        {[6.00, 6.30)} & 6.15 & 6.139 & 58 & 2 & 52 & 4 & 0 & 0 & 0.4778 & 0.5080 & 0.0000 & 667.8679 & 108.7901 \\
+        {[6.30, 6.60)} & 6.45 & 6.448 & 29 & 2 & 28 & 0 & 1 & 0 & 0.5134 & 0.5011 & 0.4263 & 311.5571 & 48.3221 \\
+        {[6.60, 6.90)} & 6.75 & 6.755 & 26 & 0 & 10 & 0 & 0 & 0 & 0.5302 & 0.5025 & 0.0000 & 347.7162 & 51.4723 \\
+        {[6.90, 7.50)} & 7.20 & 7.062 & 11 & 1 & 11 & 1 & 0 & 0 & 0.4480 & 0.5246 & 0.0000 & 132.3330 & 18.7401 \\
+        {[7.50, 8.70)} & 8.10 & 7.813 & 1 & 0 & 7 & 0 & 0 & 0 & 0.4926 & 0.4386 & 0.0000 & 16.2159 & 2.0755 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.15, 0.20)$}{Mass bin centroid calculations in x\_F in [0.15, 0.20)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.15_0.20.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.15, 0.20)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_3}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.15, 0.20)$.}
+    \label{tab:kinematics_lh2_xf_3}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.373 & 84 & 27 & 1 & 3 & 0.5286 & 0.5172 & 0.4530 & 556.3495 & 127.2349 \\
+        {[4.50, 4.80)} & 4.65 & 4.658 & 167 & 34 & 8 & 3 & 0.5081 & 0.4913 & 0.5656 & 1038.2458 & 222.9144 \\
+        {[4.80, 5.10)} & 4.95 & 4.917 & 232 & 41 & 12 & 3 & 0.4922 & 0.4962 & 0.4467 & 1472.7202 & 299.4881 \\
+        {[5.10, 5.40)} & 5.25 & 5.251 & 205 & 21 & 10 & 1 & 0.4846 & 0.4951 & 0.5086 & 1585.1301 & 301.8812 \\
+        {[5.40, 5.70)} & 5.55 & 5.522 & 113 & 6 & 4 & 3 & 0.4776 & 0.5415 & 0.6553 & 1200.1446 & 217.3331 \\
+        {[5.70, 6.00)} & 5.85 & 5.835 & 94 & 2 & 2 & 1 & 0.4877 & 0.4980 & 0.6695 & 1062.4184 & 182.0682 \\
+        {[6.00, 6.30)} & 6.15 & 6.138 & 67 & 1 & 4 & 0 & 0.4876 & 0.5231 & 0.4907 & 610.9264 & 99.5338 \\
+        {[6.30, 6.60)} & 6.45 & 6.467 & 35 & 0 & 2 & 0 & 0.5322 & 0.4876 & 0.6315 & 335.2777 & 51.8473 \\
+        {[6.60, 6.90)} & 6.75 & 6.748 & 16 & 0 & 0 & 0 & 0.5152 & 0.4854 & 0.0000 & 209.5684 & 31.0548 \\
+        {[6.90, 7.50)} & 7.20 & 6.912 & 13 & 0 & 1 & 0 & 0.4856 & 0.4978 & 0.4731 & 120.8094 & 17.4787 \\
+        {[7.50, 8.70)} & 8.10 & 7.632 & 3 & 0 & 0 & 0 & 0.5078 & 0.4635 & 0.0000 & 45.0881 & 5.9077 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.15_0.20.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.15, 0.20)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_3}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.15, 0.20)$.}
+    \label{tab:kinematics_ld2_xf_3}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.361 & 71 & 19 & 84 & 27 & 1 & 3 & 0.5286 & 0.5172 & 0.4530 & 470.9254 & 107.9859 \\
+        {[4.50, 4.80)} & 4.65 & 4.652 & 202 & 22 & 167 & 34 & 8 & 3 & 0.5081 & 0.4913 & 0.5656 & 1603.3125 & 344.6176 \\
+        {[4.80, 5.10)} & 4.95 & 4.953 & 229 & 32 & 232 & 41 & 12 & 3 & 0.4922 & 0.4962 & 0.4467 & 1735.5105 & 350.4244 \\
+        {[5.10, 5.40)} & 5.25 & 5.255 & 202 & 22 & 205 & 21 & 10 & 1 & 0.4846 & 0.4951 & 0.5086 & 1692.4898 & 322.0962 \\
+        {[5.40, 5.70)} & 5.55 & 5.548 & 127 & 18 & 113 & 6 & 4 & 3 & 0.4776 & 0.5415 & 0.6553 & 1081.4909 & 194.9510 \\
+        {[5.70, 6.00)} & 5.85 & 5.839 & 117 & 6 & 94 & 2 & 2 & 1 & 0.4877 & 0.4980 & 0.6695 & 1267.8607 & 217.1474 \\
+        {[6.00, 6.30)} & 6.15 & 6.127 & 60 & 4 & 67 & 1 & 4 & 0 & 0.4876 & 0.5231 & 0.4907 & 542.2939 & 88.5115 \\
+        {[6.30, 6.60)} & 6.45 & 6.449 & 34 & 1 & 35 & 0 & 2 & 0 & 0.5322 & 0.4876 & 0.6315 & 388.7509 & 60.2847 \\
+        {[6.60, 6.90)} & 6.75 & 6.742 & 20 & 0 & 16 & 0 & 0 & 0 & 0.5152 & 0.4854 & 0.0000 & 274.7661 & 40.7526 \\
+        {[6.90, 7.50)} & 7.20 & 7.064 & 16 & 0 & 13 & 0 & 1 & 0 & 0.4856 & 0.4978 & 0.4731 & 193.9430 & 27.4548 \\
+        {[7.50, 8.70)} & 8.10 & 7.777 & 8 & 0 & 3 & 0 & 0 & 0 & 0.5078 & 0.4635 & 0.0000 & 133.5582 & 17.1744 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.20, 0.25)$}{Mass bin centroid calculations in x\_F in [0.20, 0.25)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.20_0.25.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.20, 0.25)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_4}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.20, 0.25)$.}
+    \label{tab:kinematics_lh2_xf_4}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.348 & 184 & 48 & 12 & 4 & 0.5225 & 0.5148 & 0.5424 & 849.7774 & 195.4540 \\
+        {[4.50, 4.80)} & 4.65 & 4.653 & 284 & 44 & 20 & 5 & 0.4995 & 0.5055 & 0.4545 & 1560.7659 & 335.4556 \\
+        {[4.80, 5.10)} & 4.95 & 4.956 & 273 & 39 & 7 & 8 & 0.5139 & 0.4887 & -0.4617 & 2256.4780 & 455.3256 \\
+        {[5.10, 5.40)} & 5.25 & 5.237 & 208 & 21 & 10 & 2 & 0.4960 & 0.4944 & 0.4927 & 1600.8694 & 305.6673 \\
+        {[5.40, 5.70)} & 5.55 & 5.539 & 144 & 11 & 3 & 0 & 0.4977 & 0.5047 & 0.4842 & 1329.2264 & 239.9713 \\
+        {[5.70, 6.00)} & 5.85 & 5.832 & 106 & 7 & 2 & 1 & 0.5132 & 0.4811 & 0.3850 & 1058.4766 & 181.4801 \\
+        {[6.00, 6.30)} & 6.15 & 6.157 & 56 & 1 & 4 & 0 & 0.5163 & 0.5179 & 0.4745 & 427.7471 & 69.4688 \\
+        {[6.30, 6.60)} & 6.45 & 6.438 & 46 & 1 & 1 & 1 & 0.5264 & 0.5080 & 0.0000 & 550.4098 & 85.4929 \\
+        {[6.60, 6.90)} & 6.75 & 6.760 & 21 & 1 & 1 & 0 & 0.5377 & 0.5693 & 0.5570 & 198.0963 & 29.3030 \\
+        {[6.90, 7.50)} & 7.20 & 7.133 & 10 & 1 & 1 & 0 & 0.5145 & 0.4863 & 0.4949 & 61.4268 & 8.6110 \\
+        {[7.50, 8.70)} & 8.10 & 7.634 & 6 & 0 & 0 & 0 & 0.5635 & 0.5460 & 0.0000 & 81.2758 & 10.6471 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.20_0.25.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.20, 0.25)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_4}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.20, 0.25)$.}
+    \label{tab:kinematics_ld2_xf_4}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.366 & 204 & 37 & 184 & 48 & 12 & 4 & 0.5225 & 0.5148 & 0.5424 & 1268.8937 & 290.6383 \\
+        {[4.50, 4.80)} & 4.65 & 4.663 & 294 & 48 & 284 & 44 & 20 & 5 & 0.4995 & 0.5055 & 0.4545 & 1923.8186 & 412.5364 \\
+        {[4.80, 5.10)} & 4.95 & 4.937 & 323 & 21 & 273 & 39 & 7 & 8 & 0.5139 & 0.4887 & -0.4617 & 3018.7986 & 611.4060 \\
+        {[5.10, 5.40)} & 5.25 & 5.244 & 248 & 21 & 208 & 21 & 10 & 2 & 0.4960 & 0.4944 & 0.4927 & 2205.9561 & 420.6262 \\
+        {[5.40, 5.70)} & 5.55 & 5.533 & 165 & 7 & 144 & 11 & 3 & 0 & 0.4977 & 0.5047 & 0.4842 & 1640.9515 & 296.5898 \\
+        {[5.70, 6.00)} & 5.85 & 5.841 & 126 & 5 & 106 & 7 & 2 & 1 & 0.5132 & 0.4811 & 0.3850 & 1422.1124 & 243.4704 \\
+        {[6.00, 6.30)} & 6.15 & 6.123 & 77 & 2 & 56 & 1 & 4 & 0 & 0.5163 & 0.5179 & 0.4745 & 772.2864 & 126.1341 \\
+        {[6.30, 6.60)} & 6.45 & 6.410 & 47 & 1 & 46 & 1 & 1 & 1 & 0.5264 & 0.5080 & 0.0000 & 572.5510 & 89.3178 \\
+        {[6.60, 6.90)} & 6.75 & 6.740 & 18 & 0 & 21 & 1 & 1 & 0 & 0.5377 & 0.5693 & 0.5570 & 184.8543 & 27.4285 \\
+        {[6.90, 7.50)} & 7.20 & 7.084 & 18 & 0 & 10 & 1 & 1 & 0 & 0.5145 & 0.4863 & 0.4949 & 231.2807 & 32.6502 \\
+        {[7.50, 8.70)} & 8.10 & 7.720 & 6 & 0 & 6 & 0 & 0 & 0 & 0.5635 & 0.5460 & 0.0000 & 83.6588 & 10.8368 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.25, 0.30)$}{Mass bin centroid calculations in x\_F in [0.25, 0.30)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.25_0.30.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.25, 0.30)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_5}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.25, 0.30)$.}
+    \label{tab:kinematics_lh2_xf_5}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.392 & 363 & 58 & 23 & 3 & 0.5147 & 0.5157 & 0.4894 & 1813.4698 & 412.9125 \\
+        {[4.50, 4.80)} & 4.65 & 4.652 & 402 & 64 & 18 & 7 & 0.5063 & 0.5026 & 0.5422 & 2690.7315 & 578.3617 \\
+        {[4.80, 5.10)} & 4.95 & 4.949 & 315 & 27 & 12 & 3 & 0.5032 & 0.5037 & 0.6070 & 2509.8875 & 507.2003 \\
+        {[5.10, 5.40)} & 5.25 & 5.244 & 243 & 28 & 6 & 0 & 0.5028 & 0.5012 & 0.4081 & 1903.3407 & 362.9712 \\
+        {[5.40, 5.70)} & 5.55 & 5.555 & 180 & 11 & 7 & 1 & 0.4907 & 0.4937 & 0.5195 & 1631.1220 & 293.6527 \\
+        {[5.70, 6.00)} & 5.85 & 5.839 & 89 & 8 & 0 & 1 & 0.5153 & 0.5043 & 0.4428 & 975.8315 & 167.1199 \\
+        {[6.00, 6.30)} & 6.15 & 6.144 & 60 & 0 & 1 & 1 & 0.5239 & 0.4989 & 0.0000 & 703.5422 & 114.5149 \\
+        {[6.30, 6.60)} & 6.45 & 6.473 & 38 & 3 & 2 & 0 & 0.5455 & 0.5098 & 0.4356 & 284.7006 & 43.9800 \\
+        {[6.60, 6.90)} & 6.75 & 6.755 & 26 & 1 & 1 & 0 & 0.5265 & 0.5124 & 0.5485 & 266.5882 & 39.4682 \\
+        {[6.90, 7.50)} & 7.20 & 7.107 & 24 & 1 & 0 & 0 & 0.5310 & 0.5156 & 0.0000 & 307.8096 & 43.3117 \\
+        {[7.50, 8.70)} & 8.10 & 7.598 & 2 & 0 & 0 & 0 & 0.4258 & 0.4489 & 0.0000 & 35.6911 & 4.6973 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.25_0.30.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.25, 0.30)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_5}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.25, 0.30)$.}
+    \label{tab:kinematics_ld2_xf_5}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.361 & 398 & 62 & 363 & 58 & 23 & 3 & 0.5147 & 0.5157 & 0.4894 & 2441.1578 & 559.8268 \\
+        {[4.50, 4.80)} & 4.65 & 4.653 & 415 & 52 & 402 & 64 & 18 & 7 & 0.5063 & 0.5026 & 0.5422 & 3124.0930 & 671.3725 \\
+        {[4.80, 5.10)} & 4.95 & 4.942 & 347 & 45 & 315 & 27 & 12 & 3 & 0.5032 & 0.5037 & 0.6070 & 2772.8869 & 561.1319 \\
+        {[5.10, 5.40)} & 5.25 & 5.241 & 270 & 21 & 243 & 28 & 6 & 0 & 0.5028 & 0.5012 & 0.4081 & 2414.4346 & 460.7259 \\
+        {[5.40, 5.70)} & 5.55 & 5.539 & 185 & 9 & 180 & 11 & 7 & 1 & 0.4907 & 0.4937 & 0.5195 & 1817.1494 & 328.0498 \\
+        {[5.70, 6.00)} & 5.85 & 5.824 & 112 & 8 & 89 & 8 & 0 & 1 & 0.5153 & 0.5043 & 0.4428 & 1214.6447 & 208.5595 \\
+        {[6.00, 6.30)} & 6.15 & 6.146 & 79 & 0 & 60 & 0 & 1 & 1 & 0.5239 & 0.4989 & 0.0000 & 963.0914 & 156.7021 \\
+        {[6.30, 6.60)} & 6.45 & 6.422 & 44 & 0 & 38 & 3 & 2 & 0 & 0.5455 & 0.5098 & 0.4356 & 488.2934 & 76.0358 \\
+        {[6.60, 6.90)} & 6.75 & 6.732 & 16 & 1 & 26 & 1 & 1 & 0 & 0.5265 & 0.5124 & 0.5485 & 167.4945 & 24.8815 \\
+        {[6.90, 7.50)} & 7.20 & 7.155 & 30 & 0 & 24 & 1 & 0 & 0 & 0.5310 & 0.5156 & 0.0000 & 411.7907 & 57.5562 \\
+        {[7.50, 8.70)} & 8.10 & 7.587 & 5 & 0 & 2 & 0 & 0 & 0 & 0.4258 & 0.4489 & 0.0000 & 83.9894 & 11.0699 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.30, 0.35)$}{Mass bin centroid calculations in x\_F in [0.30, 0.35)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.30_0.35.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.30, 0.35)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_6}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.30, 0.35)$.}
+    \label{tab:kinematics_lh2_xf_6}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.355 & 540 & 81 & 30 & 3 & 0.5114 & 0.4917 & 0.5141 & 2903.7186 & 666.7770 \\
+        {[4.50, 4.80)} & 4.65 & 4.666 & 487 & 62 & 23 & 3 & 0.5119 & 0.4937 & 0.4912 & 3038.7688 & 651.3263 \\
+        {[4.80, 5.10)} & 4.95 & 4.947 & 384 & 26 & 9 & 2 & 0.5109 & 0.4923 & 0.5068 & 3166.0168 & 639.9740 \\
+        {[5.10, 5.40)} & 5.25 & 5.249 & 273 & 11 & 8 & 2 & 0.5007 & 0.4902 & 0.5486 & 2494.4808 & 475.2328 \\
+        {[5.40, 5.70)} & 5.55 & 5.542 & 188 & 7 & 7 & 0 & 0.5094 & 0.5098 & 0.4799 & 1613.9740 & 291.2323 \\
+        {[5.70, 6.00)} & 5.85 & 5.844 & 93 & 4 & 3 & 0 & 0.5021 & 0.5055 & 0.4970 & 880.7042 & 150.7089 \\
+        {[6.00, 6.30)} & 6.15 & 6.133 & 60 & 2 & 0 & 0 & 0.5199 & 0.5260 & 0.0000 & 684.1149 & 111.5505 \\
+        {[6.30, 6.60)} & 6.45 & 6.376 & 45 & 0 & 2 & 0 & 0.5385 & 0.4886 & 0.4358 & 404.2769 & 63.4017 \\
+        {[6.60, 6.90)} & 6.75 & 6.741 & 25 & 0 & 0 & 0 & 0.5008 & 0.5025 & 0.0000 & 336.5274 & 49.9209 \\
+        {[6.90, 7.50)} & 7.20 & 7.045 & 19 & 0 & 0 & 0 & 0.5302 & 0.5058 & 0.0000 & 252.4916 & 35.8386 \\
+        {[7.50, 8.70)} & 8.10 & 7.919 & 9 & 0 & 0 & 0 & 0.5114 & 0.5042 & 0.0000 & 139.3574 & 17.5975 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.30_0.35.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.30, 0.35)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_6}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.30, 0.35)$.}
+    \label{tab:kinematics_ld2_xf_6}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.346 & 552 & 84 & 540 & 81 & 30 & 3 & 0.5114 & 0.4917 & 0.5141 & 3615.8430 & 831.9812 \\
+        {[4.50, 4.80)} & 4.65 & 4.653 & 514 & 66 & 487 & 62 & 23 & 3 & 0.5119 & 0.4937 & 0.4912 & 3781.1345 & 812.5723 \\
+        {[4.80, 5.10)} & 4.95 & 4.943 & 419 & 31 & 384 & 26 & 9 & 2 & 0.5109 & 0.4923 & 0.5068 & 3707.0056 & 749.9868 \\
+        {[5.10, 5.40)} & 5.25 & 5.240 & 294 & 11 & 273 & 11 & 8 & 2 & 0.5007 & 0.4902 & 0.5486 & 2868.7115 & 547.4693 \\
+        {[5.40, 5.70)} & 5.55 & 5.554 & 189 & 12 & 188 & 7 & 7 & 0 & 0.5094 & 0.5098 & 0.4799 & 1734.9115 & 312.3921 \\
+        {[5.70, 6.00)} & 5.85 & 5.848 & 128 & 3 & 93 & 4 & 3 & 0 & 0.5021 & 0.5055 & 0.4970 & 1359.2760 & 232.4282 \\
+        {[6.00, 6.30)} & 6.15 & 6.127 & 85 & 6 & 60 & 2 & 0 & 0 & 0.5199 & 0.5260 & 0.0000 & 910.4013 & 148.5880 \\
+        {[6.30, 6.60)} & 6.45 & 6.431 & 50 & 0 & 45 & 0 & 2 & 0 & 0.5385 & 0.4886 & 0.4358 & 590.2432 & 91.7817 \\
+        {[6.60, 6.90)} & 6.75 & 6.732 & 33 & 0 & 25 & 0 & 0 & 0 & 0.5008 & 0.5025 & 0.0000 & 437.2951 & 64.9546 \\
+        {[6.90, 7.50)} & 7.20 & 7.142 & 21 & 0 & 19 & 0 & 0 & 0 & 0.5302 & 0.5058 & 0.0000 & 292.8265 & 41.0018 \\
+        {[7.50, 8.70)} & 8.10 & 7.780 & 10 & 0 & 9 & 0 & 0 & 0 & 0.5114 & 0.5042 & 0.0000 & 152.3259 & 19.5804 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.35, 0.40)$}{Mass bin centroid calculations in x\_F in [0.35, 0.40)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.35_0.40.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.35, 0.40)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_7}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.35, 0.40)$.}
+    \label{tab:kinematics_lh2_xf_7}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.336 & 624 & 83 & 31 & 4 & 0.5180 & 0.5083 & 0.4793 & 3455.0394 & 796.8315 \\
+        {[4.50, 4.80)} & 4.65 & 4.640 & 542 & 44 & 16 & 0 & 0.5045 & 0.4974 & 0.5526 & 3989.4672 & 859.8243 \\
+        {[4.80, 5.10)} & 4.95 & 4.944 & 400 & 24 & 12 & 2 & 0.5115 & 0.4967 & 0.5159 & 3212.9033 & 649.9225 \\
+        {[5.10, 5.40)} & 5.25 & 5.239 & 283 & 11 & 4 & 1 & 0.5164 & 0.4993 & 0.3753 & 2575.5627 & 491.5673 \\
+        {[5.40, 5.70)} & 5.55 & 5.517 & 147 & 3 & 9 & 0 & 0.5221 & 0.5140 & 0.5552 & 1128.4843 & 204.5489 \\
+        {[5.70, 6.00)} & 5.85 & 5.835 & 110 & 2 & 2 & 0 & 0.5213 & 0.4985 & 0.6177 & 1125.8140 & 192.9485 \\
+        {[6.00, 6.30)} & 6.15 & 6.125 & 68 & 0 & 2 & 0 & 0.5347 & 0.5167 & 0.5861 & 687.1916 & 112.1869 \\
+        {[6.30, 6.60)} & 6.45 & 6.446 & 43 & 1 & 4 & 0 & 0.5481 & 0.5003 & 0.5202 & 276.1103 & 42.8332 \\
+        {[6.60, 6.90)} & 6.75 & 6.727 & 20 & 0 & 0 & 0 & 0.5421 & 0.5070 & 0.0000 & 248.1659 & 36.8926 \\
+        {[6.90, 7.50)} & 7.20 & 7.175 & 19 & 0 & 0 & 0 & 0.5190 & 0.4941 & 0.0000 & 262.6775 & 36.6110 \\
+        {[7.50, 8.70)} & 8.10 & 7.764 & 8 & 0 & 0 & 0 & 0.5009 & 0.5038 & 0.0000 & 124.0016 & 15.9705 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.35_0.40.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.35, 0.40)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_7}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.35, 0.40)$.}
+    \label{tab:kinematics_ld2_xf_7}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.353 & 626 & 97 & 624 & 83 & 31 & 4 & 0.5180 & 0.5083 & 0.4793 & 3966.2293 & 911.0519 \\
+        {[4.50, 4.80)} & 4.65 & 4.643 & 577 & 48 & 542 & 44 & 16 & 0 & 0.5045 & 0.4974 & 0.5526 & 4598.6303 & 990.4119 \\
+        {[4.80, 5.10)} & 4.95 & 4.947 & 464 & 36 & 400 & 24 & 12 & 2 & 0.5115 & 0.4967 & 0.5159 & 4015.2907 & 811.7330 \\
+        {[5.10, 5.40)} & 5.25 & 5.241 & 290 & 13 & 283 & 11 & 4 & 1 & 0.5164 & 0.4993 & 0.3753 & 2782.5322 & 530.8908 \\
+        {[5.40, 5.70)} & 5.55 & 5.533 & 201 & 6 & 147 & 3 & 9 & 0 & 0.5221 & 0.5140 & 0.5552 & 1894.7067 & 342.4499 \\
+        {[5.70, 6.00)} & 5.85 & 5.842 & 136 & 3 & 110 & 2 & 2 & 0 & 0.5213 & 0.4985 & 0.6177 & 1502.5416 & 257.2152 \\
+        {[6.00, 6.30)} & 6.15 & 6.120 & 77 & 1 & 68 & 0 & 2 & 0 & 0.5347 & 0.5167 & 0.5861 & 846.5433 & 138.3250 \\
+        {[6.30, 6.60)} & 6.45 & 6.462 & 45 & 1 & 43 & 1 & 4 & 0 & 0.5481 & 0.5003 & 0.5202 & 460.0987 & 71.1969 \\
+        {[6.60, 6.90)} & 6.75 & 6.726 & 32 & 1 & 20 & 0 & 0 & 0 & 0.5421 & 0.5070 & 0.0000 & 407.6201 & 60.6077 \\
+        {[6.90, 7.50)} & 7.20 & 7.191 & 30 & 1 & 19 & 0 & 0 & 0 & 0.5190 & 0.4941 & 0.0000 & 418.3077 & 58.1689 \\
+        {[7.50, 8.70)} & 8.10 & 7.782 & 8 & 0 & 8 & 0 & 0 & 0 & 0.5009 & 0.5038 & 0.0000 & 121.7674 & 15.6483 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.40, 0.45)$}{Mass bin centroid calculations in x\_F in [0.40, 0.45)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.40_0.45.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.40, 0.45)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_8}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.40, 0.45)$.}
+    \label{tab:kinematics_lh2_xf_8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.350 & 653 & 76 & 37 & 6 & 0.5142 & 0.5034 & 0.5358 & 3774.7043 & 867.7781 \\
+        {[4.50, 4.80)} & 4.65 & 4.643 & 494 & 37 & 19 & 2 & 0.5128 & 0.5003 & 0.4980 & 3440.7783 & 741.0819 \\
+        {[4.80, 5.10)} & 4.95 & 4.934 & 400 & 19 & 14 & 0 & 0.5144 & 0.4979 & 0.5157 & 3065.3669 & 621.2994 \\
+        {[5.10, 5.40)} & 5.25 & 5.231 & 244 & 6 & 9 & 1 & 0.5167 & 0.5083 & 0.5325 & 2063.8964 & 394.5657 \\
+        {[5.40, 5.70)} & 5.55 & 5.514 & 180 & 4 & 4 & 0 & 0.5090 & 0.4949 & 0.4579 & 1694.5716 & 307.3449 \\
+        {[5.70, 6.00)} & 5.85 & 5.856 & 94 & 2 & 4 & 1 & 0.5193 & 0.5050 & 0.4610 & 870.0097 & 148.5659 \\
+        {[6.00, 6.30)} & 6.15 & 6.175 & 82 & 1 & 2 & 0 & 0.5336 & 0.5240 & 0.5872 & 844.8677 & 136.8225 \\
+        {[6.30, 6.60)} & 6.45 & 6.422 & 47 & 0 & 0 & 0 & 0.5264 & 0.5222 & 0.0000 & 573.3919 & 89.2836 \\
+        {[6.60, 6.90)} & 6.75 & 6.751 & 24 & 0 & 0 & 0 & 0.5349 & 0.4834 & 0.0000 & 302.8656 & 44.8649 \\
+        {[6.90, 7.50)} & 7.20 & 7.100 & 20 & 1 & 1 & 0 & 0.4986 & 0.5283 & 0.4984 & 207.9480 & 29.2882 \\
+        {[7.50, 8.70)} & 8.10 & 7.820 & 8 & 0 & 1 & 0 & 0.5387 & 0.5157 & 0.5270 & 50.9102 & 6.5107 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.40_0.45.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.40, 0.45)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_8}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.40, 0.45)$.}
+    \label{tab:kinematics_ld2_xf_8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.341 & 712 & 97 & 653 & 76 & 37 & 6 & 0.5142 & 0.5034 & 0.5358 & 4722.4401 & 1087.7501 \\
+        {[4.50, 4.80)} & 4.65 & 4.642 & 577 & 46 & 494 & 37 & 19 & 2 & 0.5128 & 0.5003 & 0.4980 & 4545.0959 & 979.1113 \\
+        {[4.80, 5.10)} & 4.95 & 4.934 & 456 & 19 & 400 & 19 & 14 & 0 & 0.5144 & 0.4979 & 0.5157 & 4005.2284 & 811.7660 \\
+        {[5.10, 5.40)} & 5.25 & 5.243 & 263 & 11 & 244 & 6 & 9 & 1 & 0.5167 & 0.5083 & 0.5325 & 2404.1459 & 458.5667 \\
+        {[5.40, 5.70)} & 5.55 & 5.527 & 186 & 3 & 180 & 4 & 4 & 0 & 0.5090 & 0.4949 & 0.4579 & 1917.7415 & 346.9796 \\
+        {[5.70, 6.00)} & 5.85 & 5.851 & 130 & 4 & 94 & 2 & 4 & 1 & 0.5193 & 0.5050 & 0.4610 & 1367.4861 & 233.7068 \\
+        {[6.00, 6.30)} & 6.15 & 6.153 & 69 & 1 & 82 & 1 & 2 & 0 & 0.5336 & 0.5240 & 0.5872 & 742.3969 & 120.6594 \\
+        {[6.30, 6.60)} & 6.45 & 6.426 & 56 & 3 & 47 & 0 & 0 & 0 & 0.5264 & 0.5222 & 0.0000 & 644.0226 & 100.2172 \\
+        {[6.60, 6.90)} & 6.75 & 6.708 & 28 & 1 & 24 & 0 & 0 & 0 & 0.5349 & 0.4834 & 0.0000 & 370.3046 & 55.2039 \\
+        {[6.90, 7.50)} & 7.20 & 7.134 & 27 & 0 & 20 & 1 & 1 & 0 & 0.4986 & 0.5283 & 0.4984 & 331.5057 & 46.4713 \\
+        {[7.50, 8.70)} & 8.10 & 7.776 & 6 & 0 & 8 & 0 & 1 & 0 & 0.5387 & 0.5157 & 0.5270 & 58.7789 & 7.5586 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.45, 0.50)$}{Mass bin centroid calculations in x\_F in [0.45, 0.50)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.45_0.50.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.45, 0.50)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_9}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.45, 0.50)$.}
+    \label{tab:kinematics_lh2_xf_9}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.345 & 665 & 64 & 34 & 2 & 0.5208 & 0.4965 & 0.5362 & 3873.8623 & 891.6476 \\
+        {[4.50, 4.80)} & 4.65 & 4.642 & 507 & 32 & 17 & 0 & 0.5077 & 0.4946 & 0.5342 & 3693.6419 & 795.7268 \\
+        {[4.80, 5.10)} & 4.95 & 4.941 & 351 & 10 & 5 & 0 & 0.5123 & 0.5022 & 0.5356 & 3086.2595 & 624.6048 \\
+        {[5.10, 5.40)} & 5.25 & 5.238 & 219 & 7 & 8 & 0 & 0.5084 & 0.4926 & 0.4936 & 1810.8808 & 345.7319 \\
+        {[5.40, 5.70)} & 5.55 & 5.523 & 144 & 3 & 4 & 0 & 0.4991 & 0.5129 & 0.4989 & 1365.6411 & 247.2480 \\
+        {[5.70, 6.00)} & 5.85 & 5.841 & 96 & 1 & 2 & 0 & 0.5294 & 0.5013 & 0.4955 & 944.4068 & 161.6899 \\
+        {[6.00, 6.30)} & 6.15 & 6.135 & 58 & 1 & 1 & 0 & 0.5296 & 0.4931 & 0.5952 & 614.9792 & 100.2385 \\
+        {[6.30, 6.60)} & 6.45 & 6.437 & 49 & 0 & 0 & 0 & 0.5194 & 0.4905 & 0.0000 & 607.3368 & 94.3451 \\
+        {[6.60, 6.90)} & 6.75 & 6.741 & 17 & 1 & 0 & 0 & 0.5085 & 0.4813 & 0.0000 & 212.1303 & 31.4677 \\
+        {[6.90, 7.50)} & 7.20 & 7.198 & 27 & 0 & 0 & 0 & 0.5433 & 0.5015 & 0.0000 & 357.6699 & 49.6922 \\
+        {[7.50, 8.70)} & 8.10 & 7.828 & 8 & 0 & 0 & 0 & 0.5181 & 0.4924 & 0.0000 & 120.8757 & 15.4422 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.45_0.50.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.45, 0.50)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_9}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.45, 0.50)$.}
+    \label{tab:kinematics_ld2_xf_9}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.345 & 722 & 75 & 665 & 64 & 34 & 2 & 0.5208 & 0.4965 & 0.5362 & 5061.5456 & 1165.0141 \\
+        {[4.50, 4.80)} & 4.65 & 4.651 & 549 & 38 & 507 & 32 & 17 & 0 & 0.5077 & 0.4946 & 0.5342 & 4441.1827 & 954.8695 \\
+        {[4.80, 5.10)} & 4.95 & 4.945 & 391 & 24 & 351 & 10 & 5 & 0 & 0.5123 & 0.5022 & 0.5356 & 3472.1561 & 702.2115 \\
+        {[5.10, 5.40)} & 5.25 & 5.230 & 274 & 7 & 219 & 7 & 8 & 0 & 0.5084 & 0.4926 & 0.4936 & 2630.4452 & 502.9811 \\
+        {[5.40, 5.70)} & 5.55 & 5.534 & 174 & 8 & 144 & 3 & 4 & 0 & 0.4991 & 0.5129 & 0.4989 & 1678.1735 & 303.2372 \\
+        {[5.70, 6.00)} & 5.85 & 5.843 & 132 & 3 & 96 & 1 & 2 & 0 & 0.5294 & 0.5013 & 0.4955 & 1440.4735 & 246.5342 \\
+        {[6.00, 6.30)} & 6.15 & 6.126 & 69 & 0 & 58 & 1 & 1 & 0 & 0.5296 & 0.4931 & 0.5952 & 826.7524 & 134.9659 \\
+        {[6.30, 6.60)} & 6.45 & 6.454 & 45 & 0 & 49 & 0 & 0 & 0 & 0.5194 & 0.4905 & 0.0000 & 583.4090 & 90.3928 \\
+        {[6.60, 6.90)} & 6.75 & 6.740 & 18 & 0 & 17 & 1 & 0 & 0 & 0.5085 & 0.4813 & 0.0000 & 249.0349 & 36.9471 \\
+        {[6.90, 7.50)} & 7.20 & 7.142 & 29 & 0 & 27 & 0 & 0 & 0 & 0.5433 & 0.5015 & 0.0000 & 407.8748 & 57.1108 \\
+        {[7.50, 8.70)} & 8.10 & 7.821 & 7 & 0 & 8 & 0 & 0 & 0 & 0.5181 & 0.4924 & 0.0000 & 109.4477 & 13.9942 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.50, 0.55)$}{Mass bin centroid calculations in x\_F in [0.50, 0.55)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.50_0.55.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.50, 0.55)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_10}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.50, 0.55)$.}
+    \label{tab:kinematics_lh2_xf_10}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.353 & 609 & 40 & 16 & 3 & 0.5059 & 0.5016 & 0.5562 & 4448.4213 & 1021.9635 \\
+        {[4.50, 4.80)} & 4.65 & 4.621 & 386 & 25 & 20 & 0 & 0.5143 & 0.4966 & 0.5218 & 2464.7999 & 533.3947 \\
+        {[4.80, 5.10)} & 4.95 & 4.950 & 282 & 12 & 7 & 1 & 0.5069 & 0.4972 & 0.5807 & 2411.4753 & 487.1827 \\
+        {[5.10, 5.40)} & 5.25 & 5.246 & 208 & 9 & 6 & 0 & 0.5160 & 0.4966 & 0.5210 & 1757.4828 & 335.0367 \\
+        {[5.40, 5.70)} & 5.55 & 5.534 & 152 & 2 & 8 & 0 & 0.5270 & 0.5090 & 0.5241 & 1203.7964 & 217.5327 \\
+        {[5.70, 6.00)} & 5.85 & 5.843 & 78 & 1 & 3 & 0 & 0.5205 & 0.5089 & 0.5340 & 720.1191 & 123.2478 \\
+        {[6.00, 6.30)} & 6.15 & 6.124 & 42 & 1 & 2 & 0 & 0.5037 & 0.5153 & 0.6153 & 410.9590 & 67.1047 \\
+        {[6.30, 6.60)} & 6.45 & 6.417 & 38 & 0 & 1 & 0 & 0.5396 & 0.5031 & 0.6484 & 408.4294 & 63.6487 \\
+        {[6.60, 6.90)} & 6.75 & 6.690 & 16 & 0 & 0 & 0 & 0.5432 & 0.5135 & 0.0000 & 197.0444 & 29.4524 \\
+        {[6.90, 7.50)} & 7.20 & 7.135 & 14 & 0 & 0 & 0 & 0.5384 & 0.4827 & 0.0000 & 185.5301 & 26.0023 \\
+        {[7.50, 8.70)} & 8.10 & 7.861 & 10 & 0 & 0 & 0 & 0.5129 & 0.5207 & 0.0000 & 153.2571 & 19.4954 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.50_0.55.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.50, 0.55)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_10}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.50, 0.55)$.}
+    \label{tab:kinematics_ld2_xf_10}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.346 & 663 & 64 & 609 & 40 & 16 & 3 & 0.5059 & 0.5016 & 0.5562 & 4911.9052 & 1130.3203 \\
+        {[4.50, 4.80)} & 4.65 & 4.642 & 497 & 23 & 386 & 25 & 20 & 0 & 0.5143 & 0.4966 & 0.5218 & 4021.0474 & 866.3062 \\
+        {[4.80, 5.10)} & 4.95 & 4.940 & 329 & 10 & 282 & 12 & 7 & 1 & 0.5069 & 0.4972 & 0.5807 & 3027.2644 & 612.8650 \\
+        {[5.10, 5.40)} & 5.25 & 5.257 & 219 & 8 & 208 & 9 & 6 & 0 & 0.5160 & 0.4966 & 0.5210 & 2081.5029 & 395.9439 \\
+        {[5.40, 5.70)} & 5.55 & 5.534 & 161 & 5 & 152 & 2 & 8 & 0 & 0.5270 & 0.5090 & 0.5241 & 1501.2938 & 271.3053 \\
+        {[5.70, 6.00)} & 5.85 & 5.847 & 93 & 2 & 78 & 1 & 3 & 0 & 0.5205 & 0.5089 & 0.5340 & 966.1701 & 165.2398 \\
+        {[6.00, 6.30)} & 6.15 & 6.144 & 67 & 1 & 42 & 1 & 2 & 0 & 0.5037 & 0.5153 & 0.6153 & 739.0735 & 120.2880 \\
+        {[6.30, 6.60)} & 6.45 & 6.410 & 32 & 0 & 38 & 0 & 1 & 0 & 0.5396 & 0.5031 & 0.6484 & 381.1390 & 59.4577 \\
+        {[6.60, 6.90)} & 6.75 & 6.745 & 32 & 0 & 16 & 0 & 0 & 0 & 0.5432 & 0.5135 & 0.0000 & 417.4386 & 61.8928 \\
+        {[6.90, 7.50)} & 7.20 & 7.148 & 19 & 2 & 14 & 0 & 0 & 0 & 0.5384 & 0.4827 & 0.0000 & 249.0644 & 34.8456 \\
+        {[7.50, 8.70)} & 8.10 & 8.079 & 5 & 0 & 10 & 0 & 0 & 0 & 0.5129 & 0.5207 & 0.0000 & 75.3126 & 9.3219 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.55, 0.60)$}{Mass bin centroid calculations in x\_F in [0.55, 0.60)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.55_0.60.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.55, 0.60)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_11}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.55, 0.60)$.}
+    \label{tab:kinematics_lh2_xf_11}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.345 & 477 & 42 & 17 & 4 & 0.5122 & 0.4986 & 0.5798 & 3262.0459 & 750.7943 \\
+        {[4.50, 4.80)} & 4.65 & 4.635 & 379 & 14 & 6 & 1 & 0.5194 & 0.5029 & 0.5250 & 3062.7927 & 660.8116 \\
+        {[4.80, 5.10)} & 4.95 & 4.951 & 241 & 7 & 5 & 0 & 0.5207 & 0.5058 & 0.5208 & 2015.8644 & 407.1656 \\
+        {[5.10, 5.40)} & 5.25 & 5.247 & 153 & 4 & 2 & 0 & 0.5320 & 0.4999 & 0.4518 & 1367.3328 & 260.5952 \\
+        {[5.40, 5.70)} & 5.55 & 5.525 & 90 & 3 & 3 & 0 & 0.5122 & 0.4975 & 0.5334 & 801.7830 & 145.1304 \\
+        {[5.70, 6.00)} & 5.85 & 5.830 & 59 & 0 & 3 & 0 & 0.5263 & 0.5356 & 0.5032 & 500.7378 & 85.8927 \\
+        {[6.00, 6.30)} & 6.15 & 6.122 & 42 & 0 & 4 & 0 & 0.5417 & 0.5135 & 0.6467 & 308.2363 & 50.3521 \\
+        {[6.30, 6.60)} & 6.45 & 6.419 & 22 & 0 & 1 & 0 & 0.5525 & 0.4884 & 0.4926 & 198.3128 & 30.8924 \\
+        {[6.60, 6.90)} & 6.75 & 6.697 & 16 & 0 & 0 & 0 & 0.5444 & 0.5190 & 0.0000 & 196.8407 & 29.3927 \\
+        {[6.90, 7.50)} & 7.20 & 7.185 & 14 & 0 & 0 & 0 & 0.5437 & 0.5198 & 0.0000 & 185.0287 & 25.7514 \\
+        {[7.50, 8.70)} & 8.10 & 7.799 & 5 & 0 & 0 & 0 & 0.5080 & 0.5289 & 0.0000 & 76.7604 & 9.8428 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.55_0.60.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.55, 0.60)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_11}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.55, 0.60)$.}
+    \label{tab:kinematics_ld2_xf_11}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.349 & 561 & 56 & 477 & 42 & 17 & 4 & 0.5122 & 0.4986 & 0.5798 & 4153.2590 & 955.0744 \\
+        {[4.50, 4.80)} & 4.65 & 4.635 & 364 & 22 & 379 & 14 & 6 & 1 & 0.5194 & 0.5029 & 0.5250 & 3015.3126 & 650.5229 \\
+        {[4.80, 5.10)} & 4.95 & 4.944 & 291 & 4 & 241 & 7 & 5 & 0 & 0.5207 & 0.5058 & 0.5208 & 2676.3040 & 541.3583 \\
+        {[5.10, 5.40)} & 5.25 & 5.231 & 162 & 2 & 153 & 4 & 2 & 0 & 0.5320 & 0.4999 & 0.4518 & 1605.8395 & 306.9928 \\
+        {[5.40, 5.70)} & 5.55 & 5.537 & 128 & 6 & 90 & 3 & 3 & 0 & 0.5122 & 0.4975 & 0.5334 & 1280.9565 & 231.3347 \\
+        {[5.70, 6.00)} & 5.85 & 5.857 & 64 & 1 & 59 & 0 & 3 & 0 & 0.5263 & 0.5356 & 0.5032 & 608.4089 & 103.8743 \\
+        {[6.00, 6.30)} & 6.15 & 6.117 & 46 & 0 & 42 & 0 & 4 & 0 & 0.5417 & 0.5135 & 0.6467 & 464.1622 & 75.8760 \\
+        {[6.30, 6.60)} & 6.45 & 6.451 & 30 & 0 & 22 & 0 & 1 & 0 & 0.5525 & 0.4884 & 0.4926 & 365.9023 & 56.7161 \\
+        {[6.60, 6.90)} & 6.75 & 6.720 & 18 & 0 & 16 & 0 & 0 & 0 & 0.5444 & 0.5190 & 0.0000 & 230.2276 & 34.2582 \\
+        {[6.90, 7.50)} & 7.20 & 7.104 & 18 & 0 & 14 & 0 & 0 & 0 & 0.5437 & 0.5198 & 0.0000 & 243.4042 & 34.2612 \\
+        {[7.50, 8.70)} & 8.10 & 7.658 & 5 & 0 & 5 & 0 & 0 & 0 & 0.5080 & 0.5289 & 0.0000 & 71.3107 & 9.3116 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.60, 0.65)$}{Mass bin centroid calculations in x\_F in [0.60, 0.65)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.60_0.65.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.60, 0.65)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_12}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.60, 0.65)$.}
+    \label{tab:kinematics_lh2_xf_12}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.356 & 370 & 34 & 9 & 2 & 0.5178 & 0.4932 & 0.5587 & 2586.7099 & 593.8374 \\
+        {[4.50, 4.80)} & 4.65 & 4.664 & 243 & 12 & 9 & 1 & 0.5105 & 0.4915 & 0.5542 & 1814.4824 & 389.0589 \\
+        {[4.80, 5.10)} & 4.95 & 4.944 & 163 & 9 & 4 & 0 & 0.5216 & 0.4932 & 0.5027 & 1286.8584 & 260.2670 \\
+        {[5.10, 5.40)} & 5.25 & 5.240 & 107 & 3 & 4 & 0 & 0.5321 & 0.5152 & 0.5708 & 862.8458 & 164.6604 \\
+        {[5.40, 5.70)} & 5.55 & 5.547 & 66 & 2 & 2 & 0 & 0.5410 & 0.4870 & 0.4972 & 558.0861 & 100.6093 \\
+        {[5.70, 6.00)} & 5.85 & 5.817 & 49 & 0 & 3 & 0 & 0.5091 & 0.5286 & 0.4923 & 404.0685 & 69.4596 \\
+        {[6.00, 6.30)} & 6.15 & 6.147 & 38 & 1 & 2 & 0 & 0.5447 & 0.4886 & 0.4916 & 307.6228 & 50.0404 \\
+        {[6.30, 6.60)} & 6.45 & 6.406 & 19 & 0 & 0 & 0 & 0.5594 & 0.4924 & 0.0000 & 217.5984 & 33.9670 \\
+        {[6.60, 6.90)} & 6.75 & 6.685 & 12 & 0 & 1 & 0 & 0.5859 & 0.5400 & 0.4518 & 71.8776 & 10.7519 \\
+        {[6.90, 7.50)} & 7.20 & 7.225 & 10 & 1 & 0 & 0 & 0.5215 & 0.4865 & 0.0000 & 124.6918 & 17.2574 \\
+        {[7.50, 8.70)} & 8.10 & 8.039 & 3 & 0 & 0 & 0 & 0.4447 & 0.4827 & 0.0000 & 54.2329 & 6.7460 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.60_0.65.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.60, 0.65)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_12}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.60, 0.65)$.}
+    \label{tab:kinematics_ld2_xf_12}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.346 & 402 & 44 & 370 & 34 & 9 & 2 & 0.5178 & 0.4932 & 0.5587 & 3003.2821 & 691.0433 \\
+        {[4.50, 4.80)} & 4.65 & 4.637 & 348 & 15 & 243 & 12 & 9 & 1 & 0.5105 & 0.4915 & 0.5542 & 2975.3272 & 641.6334 \\
+        {[4.80, 5.10)} & 4.95 & 4.944 & 210 & 15 & 163 & 9 & 4 & 0 & 0.5216 & 0.4932 & 0.5027 & 1853.7536 & 374.9246 \\
+        {[5.10, 5.40)} & 5.25 & 5.259 & 140 & 3 & 107 & 3 & 4 & 0 & 0.5321 & 0.5152 & 0.5708 & 1308.7492 & 248.8414 \\
+        {[5.40, 5.70)} & 5.55 & 5.532 & 97 & 3 & 66 & 2 & 2 & 0 & 0.5410 & 0.4870 & 0.4972 & 1013.0783 & 183.1413 \\
+        {[5.70, 6.00)} & 5.85 & 5.814 & 60 & 0 & 49 & 0 & 3 & 0 & 0.5091 & 0.5286 & 0.4923 & 579.8578 & 99.7293 \\
+        {[6.00, 6.30)} & 6.15 & 6.141 & 43 & 0 & 38 & 1 & 2 & 0 & 0.5447 & 0.4886 & 0.4916 & 483.5994 & 78.7520 \\
+        {[6.30, 6.60)} & 6.45 & 6.440 & 24 & 0 & 19 & 0 & 0 & 0 & 0.5594 & 0.4924 & 0.0000 & 310.7289 & 48.2535 \\
+        {[6.60, 6.90)} & 6.75 & 6.729 & 17 & 0 & 12 & 0 & 1 & 0 & 0.5859 & 0.5400 & 0.4518 & 179.5672 & 26.6842 \\
+        {[6.90, 7.50)} & 7.20 & 7.128 & 8 & 0 & 10 & 1 & 0 & 0 & 0.5215 & 0.4865 & 0.0000 & 115.4384 & 16.1951 \\
+        {[7.50, 8.70)} & 8.10 & 8.326 & 4 & 0 & 3 & 0 & 0 & 0 & 0.4447 & 0.4827 & 0.0000 & 68.1898 & 8.1895 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.65, 0.70)$}{Mass bin centroid calculations in x\_F in [0.65, 0.70)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.65_0.70.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.65, 0.70)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_13}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.65, 0.70)$.}
+    \label{tab:kinematics_lh2_xf_13}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.328 & 229 & 26 & 4 & 1 & 0.5104 & 0.5060 & 0.5343 & 1614.5213 & 373.0327 \\
+        {[4.50, 4.80)} & 4.65 & 4.650 & 178 & 9 & 5 & 0 & 0.5391 & 0.5126 & 0.5147 & 1259.0746 & 270.7620 \\
+        {[4.80, 5.10)} & 4.95 & 4.921 & 110 & 3 & 4 & 0 & 0.5300 & 0.5031 & 0.4721 & 810.2185 & 164.6342 \\
+        {[5.10, 5.40)} & 5.25 & 5.213 & 91 & 2 & 5 & 0 & 0.5306 & 0.5154 & 0.4407 & 614.4418 & 117.8617 \\
+        {[5.40, 5.70)} & 5.55 & 5.535 & 55 & 1 & 0 & 0 & 0.5295 & 0.4890 & 0.0000 & 564.4366 & 101.9790 \\
+        {[5.70, 6.00)} & 5.85 & 5.840 & 31 & 1 & 0 & 0 & 0.5134 & 0.5113 & 0.0000 & 341.2306 & 58.4309 \\
+        {[6.00, 6.30)} & 6.15 & 6.130 & 23 & 1 & 1 & 0 & 0.5197 & 0.5625 & 0.6329 & 216.9123 & 35.3850 \\
+        {[6.30, 6.60)} & 6.45 & 6.442 & 9 & 0 & 1 & 0 & 0.4902 & 0.5597 & 0.5880 & 70.1225 & 10.8851 \\
+        {[6.60, 6.90)} & 6.75 & 6.734 & 9 & 0 & 0 & 0 & 0.5111 & 0.5134 & 0.0000 & 118.5885 & 17.6100 \\
+        {[6.90, 7.50)} & 7.20 & 7.164 & 15 & 0 & 0 & 0 & 0.5628 & 0.5462 & 0.0000 & 190.9453 & 26.6547 \\
+        {[7.50, 8.70)} & 8.10 & 7.654 & 5 & 0 & 0 & 0 & 0.5181 & 0.5731 & 0.0000 & 73.8638 & 9.6509 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.65_0.70.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.65, 0.70)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_13}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.65, 0.70)$.}
+    \label{tab:kinematics_ld2_xf_13}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.351 & 300 & 34 & 229 & 26 & 4 & 1 & 0.5104 & 0.5060 & 0.5343 & 2212.5222 & 508.5613 \\
+        {[4.50, 4.80)} & 4.65 & 4.641 & 196 & 11 & 178 & 9 & 5 & 0 & 0.5391 & 0.5126 & 0.5147 & 1562.1423 & 336.6246 \\
+        {[4.80, 5.10)} & 4.95 & 4.925 & 141 & 4 & 110 & 3 & 4 & 0 & 0.5300 & 0.5031 & 0.4721 & 1241.8401 & 252.1463 \\
+        {[5.10, 5.40)} & 5.25 & 5.226 & 70 & 1 & 91 & 2 & 5 & 0 & 0.5306 & 0.5154 & 0.4407 & 566.3023 & 108.3621 \\
+        {[5.40, 5.70)} & 5.55 & 5.556 & 63 & 1 & 55 & 1 & 0 & 0 & 0.5295 & 0.4890 & 0.0000 & 696.2754 & 125.3288 \\
+        {[5.70, 6.00)} & 5.85 & 5.831 & 42 & 0 & 31 & 1 & 0 & 0 & 0.5134 & 0.5113 & 0.0000 & 474.0176 & 81.2966 \\
+        {[6.00, 6.30)} & 6.15 & 6.104 & 26 & 0 & 23 & 1 & 1 & 0 & 0.5197 & 0.5625 & 0.6329 & 258.7918 & 42.4004 \\
+        {[6.30, 6.60)} & 6.45 & 6.354 & 7 & 0 & 9 & 0 & 1 & 0 & 0.4902 & 0.5597 & 0.5880 & 55.7963 & 8.7812 \\
+        {[6.60, 6.90)} & 6.75 & 6.737 & 9 & 0 & 9 & 0 & 0 & 0 & 0.5111 & 0.5134 & 0.0000 & 116.3977 & 17.2774 \\
+        {[6.90, 7.50)} & 7.20 & 7.177 & 5 & 0 & 15 & 0 & 0 & 0 & 0.5628 & 0.5462 & 0.0000 & 62.9414 & 8.7699 \\
+        {[7.50, 8.70)} & 8.10 & 7.873 & 5 & 0 & 5 & 0 & 0 & 0 & 0.5181 & 0.5731 & 0.0000 & 67.6008 & 8.5864 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.70, 0.75)$}{Mass bin centroid calculations in x\_F in [0.70, 0.75)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.70_0.75.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.70, 0.75)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_14}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.70, 0.75)$.}
+    \label{tab:kinematics_lh2_xf_14}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.338 & 159 & 15 & 5 & 0 & 0.5135 & 0.5005 & 0.5515 & 1043.5578 & 240.5730 \\
+        {[4.50, 4.80)} & 4.65 & 4.634 & 130 & 5 & 3 & 0 & 0.5084 & 0.5199 & 0.5685 & 1031.7333 & 222.6551 \\
+        {[4.80, 5.10)} & 4.95 & 4.948 & 84 & 1 & 2 & 0 & 0.5230 & 0.4972 & 0.4200 & 681.6890 & 137.7682 \\
+        {[5.10, 5.40)} & 5.25 & 5.259 & 43 & 2 & 1 & 0 & 0.5190 & 0.5329 & 0.4707 & 366.3536 & 69.6586 \\
+        {[5.40, 5.70)} & 5.55 & 5.581 & 25 & 0 & 1 & 0 & 0.5371 & 0.4992 & 0.6003 & 218.9100 & 39.2232 \\
+        {[5.70, 6.00)} & 5.85 & 5.829 & 17 & 0 & 0 & 0 & 0.5215 & 0.4814 & 0.0000 & 189.9993 & 32.5959 \\
+        {[6.00, 6.30)} & 6.15 & 6.128 & 15 & 0 & 0 & 0 & 0.5385 & 0.4348 & 0.0000 & 170.7012 & 27.8546 \\
+        {[6.30, 6.60)} & 6.45 & 6.475 & 11 & 0 & 0 & 0 & 0.5516 & 0.4718 & 0.0000 & 129.1253 & 19.9419 \\
+        {[6.60, 6.90)} & 6.75 & 7.743 & 4 & 0 & 1 & 0 & 0.4475 & 0.5303 & 0.5646 & 8.9237 & 1.1525 \\
+        {[6.90, 7.50)} & 7.20 & 7.168 & 3 & 0 & 0 & 0 & 0.4489 & 0.4396 & 0.0000 & 47.9088 & 6.6837 \\
+        {[7.50, 8.70)} & 8.10 & 8.070 & 2 & 0 & 0 & 0 & 0.4539 & 0.5278 & 0.0000 & 35.5542 & 4.4058 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.70_0.75.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.70, 0.75)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_14}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.70, 0.75)$.}
+    \label{tab:kinematics_ld2_xf_14}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.339 & 175 & 17 & 159 & 15 & 5 & 0 & 0.5135 & 0.5005 & 0.5515 & 1272.1660 & 293.1846 \\
+        {[4.50, 4.80)} & 4.65 & 4.656 & 139 & 9 & 130 & 5 & 3 & 0 & 0.5084 & 0.5199 & 0.5685 & 1097.6753 & 235.7674 \\
+        {[4.80, 5.10)} & 4.95 & 4.958 & 85 & 5 & 84 & 1 & 2 & 0 & 0.5230 & 0.4972 & 0.4200 & 738.3730 & 148.9338 \\
+        {[5.10, 5.40)} & 5.25 & 5.250 & 59 & 1 & 43 & 2 & 1 & 0 & 0.5190 & 0.5329 & 0.4707 & 542.7367 & 103.3736 \\
+        {[5.40, 5.70)} & 5.55 & 5.533 & 42 & 1 & 25 & 0 & 1 & 0 & 0.5371 & 0.4992 & 0.6003 & 432.0106 & 78.0721 \\
+        {[5.70, 6.00)} & 5.85 & 5.846 & 25 & 0 & 17 & 0 & 0 & 0 & 0.5215 & 0.4814 & 0.0000 & 300.8615 & 51.4601 \\
+        {[6.00, 6.30)} & 6.15 & 6.143 & 10 & 1 & 15 & 0 & 0 & 0 & 0.5385 & 0.4348 & 0.0000 & 124.7041 & 20.2999 \\
+        {[6.30, 6.60)} & 6.45 & 6.464 & 7 & 0 & 11 & 0 & 0 & 0 & 0.5516 & 0.4718 & 0.0000 & 94.0442 & 14.5498 \\
+        {[6.60, 6.90)} & 6.75 & 6.809 & 4 & 0 & 4 & 0 & 1 & 0 & 0.4475 & 0.5303 & 0.5646 & 25.9348 & 3.8088 \\
+        {[6.90, 7.50)} & 7.20 & 7.010 & 3 & 1 & 3 & 0 & 0 & 0 & 0.4489 & 0.4396 & 0.0000 & 31.2165 & 4.4532 \\
+        {[7.50, 8.70)} & 8.10 & 7.903 & 1 & 0 & 2 & 0 & 0 & 0 & 0.4539 & 0.5278 & 0.0000 & 14.4727 & 1.8314 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+\clearpage
+\subsection{\texorpdfstring{Mass bin centroid calculations in $x_F \in [0.75, 0.80)$}{Mass bin centroid calculations in x\_F in [0.75, 0.80)]}}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LH2_xF_0.75_0.80.pdf}
+    \caption{Invariant Mass distributions for LH$_2$ in the range $x_F \in [0.75, 0.80)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_lh2_xf_15}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LH$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.75, 0.80)$.}
+    \label{tab:kinematics_lh2_xf_15}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\text{tot}}^{\text{LH}_2}$ & $N_{\text{mix}}^{\text{LH}_2}$ & $N_{\text{tot}}^{\text{fl}}$ & $N_{\text{mix}}^{\text{fl}}$ & $\langle\epsilon^{\text{LH}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{LD}_2}_{\text{sig.}}\rangle$ & $\langle\epsilon^{\text{fl}}_{\text{sig.}}\rangle$ & $\sum M_{\text{corr}}^{\text{LH}_2}$ & $Y_{\text{corr}}^{\text{LH}_2}$ \\
+        Bin (GeV) & $\langle M \rangle$ & (LH$_2$) & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.346 & 100 & 9 & 2 & 2 & 0.5115 & 0.5097 & 0.0000 & 773.3347 & 177.9246 \\
+        {[4.50, 4.80)} & 4.65 & 4.609 & 48 & 7 & 5 & 0 & 0.5286 & 0.5246 & 0.5600 & 176.6078 & 38.3167 \\
+        {[4.80, 5.10)} & 4.95 & 4.955 & 34 & 1 & 2 & 0 & 0.5113 & 0.5142 & 0.7115 & 258.5722 & 52.1815 \\
+        {[5.10, 5.40)} & 5.25 & 5.257 & 22 & 0 & 0 & 0 & 0.5323 & 0.4824 & 0.0000 & 217.2482 & 41.3278 \\
+        {[5.40, 5.70)} & 5.55 & 5.457 & 18 & 0 & 1 & 0 & 0.5513 & 0.4862 & 0.6582 & 141.7319 & 25.9716 \\
+        {[5.70, 6.00)} & 5.85 & 5.823 & 15 & 0 & 0 & 0 & 0.5146 & 0.4888 & 0.0000 & 169.7575 & 29.1515 \\
+        {[6.00, 6.30)} & 6.15 & 6.130 & 13 & 0 & 0 & 0 & 0.5953 & 0.5113 & 0.0000 & 133.8715 & 21.8384 \\
+        {[6.30, 6.60)} & 6.45 & 6.448 & 4 & 0 & 0 & 0 & 0.4197 & 0.5162 & 0.0000 & 61.4569 & 9.5313 \\
+        {[6.60, 6.90)} & 6.75 & 6.749 & 2 & 0 & 0 & 0 & 0.5992 & 0.6439 & 0.0000 & 22.5261 & 3.3378 \\
+        {[6.90, 7.50)} & 7.20 & 6.988 & 1 & 0 & 0 & 0 & 0.6510 & 0.5786 & 0.0000 & 10.7348 & 1.5361 \\
+        {[7.50, 8.70)} & 8.10 & 8.004 & 2 & 0 & 0 & 0 & 0.5401 & 0.5301 & 0.0000 & 29.6385 & 3.7027 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./MassBinCentroids/MassDist_LD2_xF_0.75_0.80.pdf}
+    \caption{Invariant Mass distributions for LD$_2$ in the range $x_F \in [0.75, 0.80)$. Components shown include target total (red), target mix (blue), flask total (green), and flask mix (orange). The values listed above each bin represent the efficiency-weighted corrected mass $\sum M / \epsilon$ and the raw counts $(N)$.}
+    \label{fig:mass_dist_ld2_xf_15}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{LD$_2$ raw counts, efficiency corrections, yields, and final data-driven centroids for $x_F \in [0.75, 0.80)$.}
+    \label{tab:kinematics_ld2_xf_15}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cc|c|cccccc|ccc|cc}
+        \hline\hline
+        Mass & Geo. &  $\langle M \rangle$ & $N_{\rm tot}^{\rm LD2}$ & $N_{\rm mix}^{\rm LD2}$ & $N_{\rm tot}^{\rm LH2}$ & $N_{\rm mix}^{\rm LH2}$ & $N_{\rm tot}^{\rm fl}$ & $N_{\rm mix}^{\rm fl}$ & $\langle\epsilon^{\rm LH2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm LD2}_{\rm sig.}\rangle$ & $\langle\epsilon^{\rm fl}_{\rm sig.}\rangle$ & $\sum M_{\rm corr}^{\rm LD2}$ & $Y_{\rm corr}^{\rm LD2}$ \\
+        Mass Bin (GeV) & $\langle M \rangle$ & (LD2) & & & & & & & & & & (Num.) & (Denom.) \\
+        \hline
+        {[4.20, 4.50)} & 4.35 & 4.317 & 104 & 5 & 100 & 9 & 2 & 2 & 0.5115 & 0.5097 & 0.0000 & 827.3672 & 191.6632 \\
+        {[4.50, 4.80)} & 4.65 & 4.624 & 65 & 2 & 48 & 7 & 5 & 0 & 0.5286 & 0.5246 & 0.5600 & 466.1328 & 100.8035 \\
+        {[4.80, 5.10)} & 4.95 & 4.934 & 43 & 0 & 34 & 1 & 2 & 0 & 0.5113 & 0.5142 & 0.7115 & 379.8061 & 76.9715 \\
+        {[5.10, 5.40)} & 5.25 & 5.227 & 36 & 1 & 22 & 0 & 0 & 0 & 0.5323 & 0.4824 & 0.0000 & 376.1295 & 71.9579 \\
+        {[5.40, 5.70)} & 5.55 & 5.475 & 21 & 0 & 18 & 0 & 1 & 0 & 0.5513 & 0.4862 & 0.6582 & 216.9670 & 39.6300 \\
+        {[5.70, 6.00)} & 5.85 & 5.874 & 14 & 1 & 15 & 0 & 0 & 0 & 0.5146 & 0.4888 & 0.0000 & 153.7675 & 26.1761 \\
+        {[6.00, 6.30)} & 6.15 & 6.157 & 10 & 0 & 13 & 0 & 0 & 0 & 0.5953 & 0.5113 & 0.0000 & 118.4778 & 19.2434 \\
+        {[6.30, 6.60)} & 6.45 & 6.392 & 7 & 0 & 4 & 0 & 0 & 0 & 0.4197 & 0.5162 & 0.0000 & 85.8021 & 13.4225 \\
+        {[6.60, 6.90)} & 6.75 & 6.766 & 2 & 0 & 2 & 0 & 0 & 0 & 0.5992 & 0.6439 & 0.0000 & 20.6920 & 3.0582 \\
+        {[6.90, 7.50)} & 7.20 & 7.087 & 3 & 0 & 1 & 0 & 0 & 0 & 0.6510 & 0.5786 & 0.0000 & 36.5846 & 5.1625 \\
+        {[7.50, 8.70)} & 8.10 & 7.622 & 4 & 0 & 2 & 0 & 0 & 0 & 0.5401 & 0.5301 & 0.0000 & 57.1093 & 7.4930 \\
+        \hline\hline
+    \end{tabular}
+    }
+\end{table}
