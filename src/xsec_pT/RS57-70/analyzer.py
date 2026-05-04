@@ -49,6 +49,7 @@ class DYCrossSectionAnalyzer:
         ROOT.gROOT.SetBatch(True)
         ROOT.gStyle.SetOptStat(0)
         ROOT.gStyle.SetPalette(ROOT.kBird)
+        ROOT.gStyle.SetEndErrorSize(5) # Globally sets the width of the error bar caps (edges)
         
         # Mute all ROOT terminal output (Info and Warnings) to protect the progress bars
         ROOT.gErrorIgnoreLevel = ROOT.kFatal
@@ -159,9 +160,8 @@ class DYCrossSectionAnalyzer:
     def create_histograms(file_label):
         hists = {}
         
-        def make_th2(name, title):
-            h = ROOT.TH2D(f"{name}_{file_label}", f"{title} ({file_label});Mass [GeV];p_{{T}} [GeV]", 
-                          len(config.MASS_BINS)-1, config.MASS_BINS, 
+        def make_th1(name, title, y_title=""):
+            h = ROOT.TH1D(f"{name}_{file_label}", f"{title} ({file_label});p_{{T}} [GeV];{y_title}", 
                           len(config.PT_BINS)-1, config.PT_BINS)
             h.Sumw2()
             h.SetStats(0)
@@ -171,20 +171,20 @@ class DYCrossSectionAnalyzer:
             h.GetYaxis().SetTitleOffset(1.7)
             return h
 
-        hists["Y_total"] = make_th2("Y_total", "Total Yield (result)")
-        hists["Y_mix"] = make_th2("Y_mix", "Mix Yield (result_mix)")
-        hists["E_total_reco"] = make_th2("E_total_reco", "Avg Reco Eff (Total)")
-        hists["E_mix_reco"] = make_th2("E_mix_reco", "Avg Reco Eff (Mix)")
-        hists["E_total_hodo"] = make_th2("E_total_hodo", "Avg Hodo Eff (Total)")
-        hists["E_mix_hodo"] = make_th2("E_mix_hodo", "Avg Hodo Eff (Mix)")
-        hists["E_total_final"] = make_th2("E_total_final", "Avg Final Eff (Total)")
-        hists["E_mix_final"] = make_th2("E_mix_final", "Avg Final Eff (Mix)")
-        hists["E_final_signal"] = make_th2("E_final_signal", "Avg Signal Efficiency")
+        hists["Y_total"] = make_th1("Y_total", "Total Yield (result)", "Yield")
+        hists["Y_mix"] = make_th1("Y_mix", "Mix Yield (result_mix)", "Yield")
+        hists["E_total_reco"] = make_th1("E_total_reco", "Avg Reco Eff (Total)", "Efficiency")
+        hists["E_mix_reco"] = make_th1("E_mix_reco", "Avg Reco Eff (Mix)", "Efficiency")
+        hists["E_total_hodo"] = make_th1("E_total_hodo", "Avg Hodo Eff (Total)", "Efficiency")
+        hists["E_mix_hodo"] = make_th1("E_mix_hodo", "Avg Hodo Eff (Mix)", "Efficiency")
+        hists["E_total_final"] = make_th1("E_total_final", "Avg Final Eff (Total)", "Efficiency")
+        hists["E_mix_final"] = make_th1("E_mix_final", "Avg Final Eff (Mix)", "Efficiency")
+        hists["E_final_signal"] = make_th1("E_final_signal", "Avg Signal Efficiency", "Efficiency")
         
-        hists["Y_corrected"] = make_th2("Y_corrected", "Corrected Yield (Total Error)")
-        hists["Y_corrected_stat"] = make_th2("Y_corrected_stat", "Corrected Yield (Stat Error)")
-        hists["Y_corrected_sys"] = make_th2("Y_corrected_sys", "Corrected Yield (Sys Error)")
-        hists["Mass_Centroid"] = make_th2("Mass_Centroid", "Data-Driven Mass Centroid")
+        hists["Y_corrected"] = make_th1("Y_corrected", "Corrected Yield (Total Error)", "Yield")
+        hists["Y_corrected_stat"] = make_th1("Y_corrected_stat", "Corrected Yield (Stat Error)", "Yield")
+        hists["Y_corrected_sys"] = make_th1("Y_corrected_sys", "Corrected Yield (Sys Error)", "Yield")
+        hists["Mass_Centroid"] = make_th1("Mass_Centroid", "Data-Driven Mass Centroid", "Mass [GeV]")
 
         return hists
 
@@ -198,6 +198,7 @@ class DYCrossSectionAnalyzer:
     @staticmethod
     def get_correlated_mean_and_error(eff_arr, err_arr, loc_arr):
         N = len(eff_arr)
+        print(loc_arr)
         if N == 0: return 0.0, 0.0
         mean_eff = np.mean(eff_arr)
         
@@ -211,17 +212,25 @@ class DYCrossSectionAnalyzer:
         return mean_eff, err_on_mean
 
     @staticmethod
-    def add_latex_to_bin(hist, x_center, y_center, value, error):
+    def add_latex_to_bin(hist, x_center, value, error):
         val_f = float(value)
         err_f = float(error)
         if np.isnan(val_f) or np.isinf(val_f): val_f = 0.0
         if np.isnan(err_f) or np.isinf(err_f): err_f = 0.0
         
-        latex_text = f"#splitline{{{val_f:.3f}}}{{#pm {err_f:.3f}}}"
-        l = ROOT.TLatex(x_center, y_center, latex_text)
-        l.SetTextSize(0.015)
-        l.SetTextAlign(22)
+        latex_text = f"#splitline{{{val_f:.4f}}}{{#pm {err_f:.4f}}}"
+        
+        # Determine the top of the point + error, and add an 8% padding
+        offset = abs(val_f) * 0.08
+        if offset == 0: offset = 0.005
+        y_pos = val_f + err_f + offset
+        
+        l = ROOT.TLatex(x_center, y_pos, latex_text)
+        l.SetTextSize(0.022)
+        l.SetTextAlign(21) # Bottom center alignment pushes text upward
         l.SetTextColor(ROOT.kBlack)
+        
+        # Appending it to the functions list instructs ROOT to dynamically draw this on the pad
         hist.GetListOfFunctions().Add(l)
 
     def extract_target_stats(self, data_tot, data_mix, loc_tot, loc_mix, m_low, m_high, pt_low, pt_high):
@@ -271,7 +280,7 @@ class DYCrossSectionAnalyzer:
 
         return N_tot, N_mix, sum_mass_tot, sum_mass_mix, val_sig_eff, err_sig_eff, diff_yield, means
 
-    def fill_histograms(self, hists, root_x, root_y, N_tot, N_mix, m_center, pt_center, sig_eff, err_sig_eff, diff_yield, means, final_centroid):
+    def fill_histograms(self, hists, root_x, pt_center, N_tot, N_mix, sig_eff, err_sig_eff, diff_yield, means, final_centroid):
         err_N_tot = np.sqrt(N_tot)
         err_N_mix = np.sqrt(N_mix)
 
@@ -283,10 +292,8 @@ class DYCrossSectionAnalyzer:
             err_corr_total = np.sqrt(err_corr_stat**2 + err_corr_sys**2)
 
         def set_bin(key, val, err):
-            hists[key].SetBinContent(root_x, root_y, val)
-            hists[key].SetBinError(root_x, root_y, err)
-            if "stat" not in key and "sys" not in key and "Centroid" not in key:
-                self.add_latex_to_bin(hists[key], m_center, pt_center, val, err)
+            hists[key].SetBinContent(root_x, val)
+            hists[key].SetBinError(root_x, err)
 
         set_bin("Y_total", N_tot, err_N_tot)
         set_bin("Y_mix", N_mix, err_N_mix)
@@ -301,36 +308,111 @@ class DYCrossSectionAnalyzer:
         set_bin("Y_corrected_stat", val_corr_yield, err_corr_stat)
         set_bin("Y_corrected_sys", val_corr_yield, err_corr_sys)
         
-        hists["Mass_Centroid"].SetBinContent(root_x, root_y, final_centroid)
+        hists["Mass_Centroid"].SetBinContent(root_x, final_centroid)
 
-    def save_2d_pdfs(self, hists_dict, label):
-        """Saves all generated TH2D histograms as separate PDF files."""
+    def save_1d_pdfs(self, hists_dict, label):
+        """Saves all generated TH1D histograms as separate PDF files."""
         for name, hist in hists_dict.items():
             if "stat" in name or "sys" in name or "Centroid" in name: continue 
             c = ROOT.TCanvas(f"c_{name}_{label}", "", 1200, 900)
-            c.SetRightMargin(0.15)
+            c.SetRightMargin(0.05)
             c.SetLeftMargin(0.16)
             c.SetBottomMargin(0.14)
             c.SetTickx(1)
             c.SetTicky(1)
             
-            if hist.GetMinimum() < 0:
-                hist.SetMinimum(0)
+            # Find true maximums to comfortably fit TLatex splitline text
+            max_y = -1e9
+            min_y = 1e9
+            for i in range(1, hist.GetNbinsX() + 1):
+                val = hist.GetBinContent(i)
+                err = hist.GetBinError(i)
+                if val == 0 and err == 0: continue
+                if val + err > max_y: max_y = val + err
+                if val - err < min_y: min_y = val - err
+                
+            if max_y > -1e8:
+                hist.SetMaximum(max_y * 1.5) 
+                if min_y < 0:
+                    hist.SetMinimum(min_y * 1.2)
+                else:
+                    hist.SetMinimum(0.0)
+            else:
+                hist.SetMinimum(0.0)
+                hist.SetMaximum(1.0)
             
-            hist.Draw("COLZ")
+            hist.SetLineColor(ROOT.kBlue)
+            hist.SetLineWidth(2)
+            hist.Draw("HIST E1")
+            
+            # Explicitly draw TLatex objects to avoid garbage collection
+            latex_draws = []
+            offset = (max_y if max_y > -1e8 else 1.0) * 0.08
+            for i in range(1, hist.GetNbinsX() + 1):
+                val = hist.GetBinContent(i)
+                err = hist.GetBinError(i)
+                if val == 0 and err == 0: continue
+                pt_center = hist.GetBinCenter(i)
+                y_pos = val + err + offset
+                txt = ROOT.TLatex(pt_center, y_pos, f"#splitline{{{val:.4f}}}{{#pm {err:.4f}}}")
+                txt.SetTextSize(0.022)
+                txt.SetTextAlign(21)
+                txt.SetTextColor(ROOT.kBlack)
+                txt.Draw()
+                latex_draws.append(txt)
+
             c.SaveAs(f"{name}_{label}.pdf")
             c.Close()
 
+    def generate_efficiency_csv(self, data_tot, loc_tot, m_low, m_high, pt_low, pt_high, pt_idx, target_label):
+        """Filters data for the bin and generates a detailed CSV of event efficiencies."""
+        mask = (data_tot["mass"] >= m_low) & (data_tot["mass"] < m_high) & \
+               (data_tot["pT"] >= pt_low) & (data_tot["pT"] < pt_high)
+        
+        reco = data_tot["recoeff"][mask]
+        reco_err = data_tot["recoeff_error"][mask]
+        hodo = data_tot["hodoeff"][mask]
+        hodo_err = data_tot["hodoeff_error"][mask]
+        locs = loc_tot[mask]
+        
+        filename = f"reco_pT_{pt_idx}_{target_label}.csv"
+        
+        N = len(reco)
+        if N == 0:
+            avg_reco, reco_err_uncorr, reco_err_corr = 0.0, 0.0, 0.0
+            avg_hodo, hodo_err_stat = 0.0, 0.0
+            total_eff, total_eff_err = 0.0, 0.0
+        else:
+            avg_reco, reco_err_uncorr = self.get_weighted_mean_and_error(reco, reco_err)
+            _, reco_err_corr = self.get_correlated_mean_and_error(reco, reco_err, locs)
+            avg_hodo, hodo_err_stat = self.get_weighted_mean_and_error(hodo, hodo_err)
+            
+            total_eff = avg_reco * avg_hodo
+            total_eff_err = np.sqrt((avg_hodo * reco_err_corr)**2 + (avg_reco * hodo_err_stat)**2)
+            
+        with open(filename, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(["recoeff", "recoeff_error", "hodoeff", "hodoeff_error"])
+            for i in range(N):
+                writer.writerow([reco[i], reco_err[i], hodo[i], hodo_err[i]])
+                
+            writer.writerow([])
+            writer.writerow(["average recoeff", avg_reco])
+            writer.writerow(["propagated recoeff_error (without correlations)", reco_err_uncorr])
+            writer.writerow(["propagated recoeff_error (with correlations)", reco_err_corr])
+            writer.writerow(["average hodoeff", avg_hodo])
+            writer.writerow(["propagated hodoeff_error", hodo_err_stat])
+            writer.writerow(["total_eff = average recoeff (with correlations) * average hodoeff", total_eff])
+            writer.writerow(["total_eff_error = propagated error of total_eff", total_eff_err])
+
     def process_kinematics(self):
-        """Processes uproot data, creates histograms, and saves 1D/2D PDFs."""
+        """Processes uproot data, creates 1D histograms vs pT, and saves PDFs."""
         def get_loc_data(data_dict, is_mix=False):
             if is_mix and 'ptrk_D1' in data_dict and 'ntrk_D1' in data_dict:
                 d1_vals = 0.5 * (data_dict['ptrk_D1'] + data_dict['ntrk_D1'])
             else:
                 d1_vals = data_dict['D1']
             return np.digitize(d1_vals, self.x_curve) - 1
-
-        os.makedirs("./MassBinCentroids", exist_ok=True)
         
         # Iteratively load, cut, and concatenate all files
         data_lh2_tot = self.get_concatenated_events(self.lh2_paths, "result")
@@ -365,270 +447,121 @@ class DYCrossSectionAnalyzer:
         dir_fl.cd()
         self.hists_fl = self.create_histograms("Flask")
 
-        colors = {
-            "LD2_tot": ROOT.kRed, "LD2_mix": ROOT.kBlue,
-            "LH2_tot": ROOT.kRed,  "LH2_mix": ROOT.kBlue,
-            "Fl_tot": ROOT.kGreen+2, "Fl_mix": ROOT.kOrange+1
-        }
-
-        dir_mass1d = self.get_or_create_dir(self.out_file, "Mass_Distributions_1D")
         dir_csv = self.get_or_create_dir(self.out_file, "CSV_Tables")
+        csv_filename_lh2 = "Table_Kinematics_LH2_vs_pT.csv"
+        csv_filename_ld2 = "Table_Kinematics_LD2_vs_pT.csv"
+        
+        csv_rows_lh2 = []
+        csv_rows_ld2 = []
+
+        m_low, m_high = config.MASS_BINS[0], config.MASS_BINS[-1]
+        m_center_overall = (m_low + m_high) / 2.0
 
         for i_pt in range(len(config.PT_BINS) - 1):
             pt_low, pt_high = config.PT_BINS[i_pt], config.PT_BINS[i_pt+1]
             pt_center = (pt_low + pt_high) / 2.0
-            root_y = i_pt + 1
-
-            csv_filename_lh2 = f"Table_Kinematics_LH2_pT_{pt_low:.2f}_{pt_high:.2f}.csv"
-            csv_filename_ld2 = f"Table_Kinematics_LD2_pT_{pt_low:.2f}_{pt_high:.2f}.csv"
+            root_x = i_pt + 1
             
-            csv_rows_lh2 = []
-            csv_rows_ld2 = []
+            # Generate the specific event efficiency CSVs requested
+            self.generate_efficiency_csv(data_lh2_tot, loc_lh2_tot, m_low, m_high, pt_low, pt_high, i_pt, "LH2")
+            self.generate_efficiency_csv(data_ld2_tot, loc_ld2_tot, m_low, m_high, pt_low, pt_high, i_pt, "LD2")
+            self.generate_efficiency_csv(data_fl_tot, loc_fl_tot, m_low, m_high, pt_low, pt_high, i_pt, "Flask")
 
-            dir_mass1d.cd()
-            h1_ld2_tot = ROOT.TH1D(f"h1_ld2_tot_{i_pt}", "", len(config.MASS_BINS)-1, config.MASS_BINS)
-            h1_ld2_mix = ROOT.TH1D(f"h1_ld2_mix_{i_pt}", "", len(config.MASS_BINS)-1, config.MASS_BINS)
-            h1_lh2_tot = ROOT.TH1D(f"h1_lh2_tot_{i_pt}", "", len(config.MASS_BINS)-1, config.MASS_BINS)
-            h1_lh2_mix = ROOT.TH1D(f"h1_lh2_mix_{i_pt}", "", len(config.MASS_BINS)-1, config.MASS_BINS)
-            h1_fl_tot = ROOT.TH1D(f"h1_fl_tot_{i_pt}", "", len(config.MASS_BINS)-1, config.MASS_BINS)
-            h1_fl_mix = ROOT.TH1D(f"h1_fl_mix_{i_pt}", "", len(config.MASS_BINS)-1, config.MASS_BINS)
+            N_l2_t, N_l2_m, M_l2_t, M_l2_m, eps_ld2, err_eps_ld2, diff_l2, mean_l2 = self.extract_target_stats(data_ld2_tot, data_ld2_mix, loc_ld2_tot, loc_ld2_mix, m_low, m_high, pt_low, pt_high)
+            N_lh_t, N_lh_m, M_lh_t, M_lh_m, eps_lh2, err_eps_lh2, diff_lh, mean_lh = self.extract_target_stats(data_lh2_tot, data_lh2_mix, loc_lh2_tot, loc_lh2_mix, m_low, m_high, pt_low, pt_high)
+            N_fl_t, N_fl_m, M_fl_t, M_fl_m, eps_fl, err_eps_fl, diff_fl, mean_fl = self.extract_target_stats(data_fl_tot, data_fl_mix, loc_fl_tot, loc_fl_mix, m_low, m_high, pt_low, pt_high)
 
-            h1s = {"LD2_tot": h1_ld2_tot, "LD2_mix": h1_ld2_mix, "LH2_tot": h1_lh2_tot, 
-                   "LH2_mix": h1_lh2_mix, "Fl_tot": h1_fl_tot, "Fl_mix": h1_fl_mix}
-            for k, h in h1s.items():
-                h.SetLineColor(colors[k])
-                h.SetLineWidth(2)
+            if eps_lh2 > 0:
+                cY_lh_t, cM_lh_t = N_lh_t / eps_lh2, M_lh_t / eps_lh2
+                cY_lh_m, cM_lh_m = N_lh_m / eps_lh2, M_lh_m / eps_lh2
+            else:
+                cY_lh_t, cM_lh_t, cY_lh_m, cM_lh_m = 0.0, 0.0, 0.0, 0.0
+
+            if eps_ld2 > 0:
+                cY_l2_t, cM_l2_t = N_l2_t / eps_ld2, M_l2_t / eps_ld2
+                cY_l2_m, cM_l2_m = N_l2_m / eps_ld2, M_l2_m / eps_ld2
+            else:
+                cY_l2_t, cM_l2_t, cY_l2_m, cM_l2_m = 0.0, 0.0, 0.0, 0.0
+
+            if eps_fl > 0:
+                cY_fl_t_lh, cM_fl_t_lh = (config.FLASK_NORM_LH2 * N_fl_t) / eps_fl, (config.FLASK_NORM_LH2 * M_fl_t) / eps_fl
+                cY_fl_m_lh, cM_fl_m_lh = (config.FLASK_NORM_LH2 * N_fl_m) / eps_fl, (config.FLASK_NORM_LH2 * M_fl_m) / eps_fl
+                cY_fl_t_l2, cM_fl_t_l2 = (config.FLASK_NORM_LD2 * N_fl_t) / eps_fl, (config.FLASK_NORM_LD2 * M_fl_t) / eps_fl
+                cY_fl_m_l2, cM_fl_m_l2 = (config.FLASK_NORM_LD2 * N_fl_m) / eps_fl, (config.FLASK_NORM_LD2 * M_fl_m) / eps_fl
+            else:
+                cY_fl_t_lh, cM_fl_t_lh, cY_fl_m_lh, cM_fl_m_lh = 0.0, 0.0, 0.0, 0.0
+                cY_fl_t_l2, cM_fl_t_l2, cY_fl_m_l2, cM_fl_m_l2 = 0.0, 0.0, 0.0, 0.0
+
+            num_LH2 = (cM_lh_t - cM_lh_m) - (cM_fl_t_lh - cM_fl_m_lh)
+            den_LH2 = (cY_lh_t - cY_lh_m) - (cY_fl_t_lh - cY_fl_m_lh)
+            cent_LH2 = num_LH2 / den_LH2 if den_LH2 != 0 else m_center_overall
+
+            num_LD2 = (cM_l2_t - cM_l2_m) - (cM_fl_t_l2 - cM_fl_m_l2) - (config.LH2_TO_LD2_NORM * num_LH2)
+            den_LD2 = (cY_l2_t - cY_l2_m) - (cY_fl_t_l2 - cY_fl_m_l2) - (config.LH2_TO_LD2_NORM * den_LH2)
+            cent_LD2 = num_LD2 / den_LD2 if den_LD2 != 0 else m_center_overall
+
+            self.fill_histograms(self.hists_ld2, root_x, pt_center, N_l2_t, N_l2_m, eps_ld2, err_eps_ld2, diff_l2, mean_l2, cent_LD2)
+            self.fill_histograms(self.hists_lh2, root_x, pt_center, N_lh_t, N_lh_m, eps_lh2, err_eps_lh2, diff_lh, mean_lh, cent_LH2)
+            num_fl = (M_fl_t - M_fl_m) / (eps_fl if eps_fl > 0 else 1e-9)
+            den_fl = (N_fl_t - N_fl_m) / (eps_fl if eps_fl > 0 else 1e-9)
+            cent_fl = num_fl / den_fl if den_fl != 0 else m_center_overall
+            self.fill_histograms(self.hists_fl, root_x, pt_center, N_fl_t, N_fl_m, eps_fl, err_eps_fl, diff_fl, mean_fl, cent_fl)
+
+            csv_rows_lh2.append({
+                "pT Bin": f"[{pt_low:.2f}, {pt_high:.2f})",
+                "pT Center": pt_center,
+                "LH2 Mass Centroid": cent_LH2,
+                "N_LH2_total": N_lh_t,
+                "N_LH2_mixed": N_lh_m,
+                "N_flask_total": N_fl_t,
+                "N_flask_mixed": N_fl_m,
+                "eps_LH2": eps_lh2,
+                "eps_LD2": eps_ld2,
+                "eps_flask": eps_fl,
+                "Corrected Total Mass LH2 (num)": num_LH2,
+                "Corrected Yield LH2 (denom)": den_LH2
+            })
+
+            csv_rows_ld2.append({
+                "pT Bin": f"[{pt_low:.2f}, {pt_high:.2f})",
+                "pT Center": pt_center,
+                "LD2 Mass Centroid": cent_LD2,
+                "N_LD2_total": N_l2_t,
+                "N_LD2_mixed": N_l2_m,
+                "N_LH2_total": N_lh_t,
+                "N_LH2_mixed": N_lh_m,
+                "N_flask_total": N_fl_t,
+                "N_flask_mixed": N_fl_m,
+                "eps_LH2": eps_lh2,
+                "eps_LD2": eps_ld2,
+                "eps_flask": eps_fl,
+                "Corrected Total Mass LD2 (num)": num_LD2,
+                "Corrected Yield LD2 (denom)": den_LD2
+            })
+
+        with open(csv_filename_lh2, "w", newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=csv_rows_lh2[0].keys())
+            writer.writeheader()
+            writer.writerows(csv_rows_lh2)
             
-            latex_draws_lh2 = []
-            latex_draws_ld2 = []
+        with open(csv_filename_ld2, "w", newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=csv_rows_ld2[0].keys())
+            writer.writeheader()
+            writer.writerows(csv_rows_ld2)
             
-            max_label_y_lh2 = 0.5
-            max_label_y_ld2 = 0.5
+        dir_csv.cd()
+        macro_lh2 = ROOT.TMacro(csv_filename_lh2)
+        macro_lh2.Write(csv_filename_lh2)
+        
+        macro_ld2 = ROOT.TMacro(csv_filename_ld2)
+        macro_ld2.Write(csv_filename_ld2)
 
-            for i_m in range(len(config.MASS_BINS) - 1):
-                m_low, m_high = config.MASS_BINS[i_m], config.MASS_BINS[i_m+1]
-                m_center = (m_low + m_high) / 2.0
-                root_x = i_m + 1
-
-                N_l2_t, N_l2_m, M_l2_t, M_l2_m, eps_ld2, err_eps_ld2, diff_l2, mean_l2 = self.extract_target_stats(data_ld2_tot, data_ld2_mix, loc_ld2_tot, loc_ld2_mix, m_low, m_high, pt_low, pt_high)
-                N_lh_t, N_lh_m, M_lh_t, M_lh_m, eps_lh2, err_eps_lh2, diff_lh, mean_lh = self.extract_target_stats(data_lh2_tot, data_lh2_mix, loc_lh2_tot, loc_lh2_mix, m_low, m_high, pt_low, pt_high)
-                N_fl_t, N_fl_m, M_fl_t, M_fl_m, eps_fl, err_eps_fl, diff_fl, mean_fl = self.extract_target_stats(data_fl_tot, data_fl_mix, loc_fl_tot, loc_fl_mix, m_low, m_high, pt_low, pt_high)
-
-                h1_ld2_tot.SetBinContent(root_x, N_l2_t)
-                h1_ld2_mix.SetBinContent(root_x, N_l2_m)
-                h1_lh2_tot.SetBinContent(root_x, N_lh_t)
-                h1_lh2_mix.SetBinContent(root_x, N_lh_m)
-                h1_fl_tot.SetBinContent(root_x, N_fl_t)
-                h1_fl_mix.SetBinContent(root_x, N_fl_m)
-
-                if eps_lh2 > 0:
-                    cY_lh_t, cM_lh_t = N_lh_t / eps_lh2, M_lh_t / eps_lh2
-                    cY_lh_m, cM_lh_m = N_lh_m / eps_lh2, M_lh_m / eps_lh2
-                else:
-                    cY_lh_t, cM_lh_t, cY_lh_m, cM_lh_m = 0.0, 0.0, 0.0, 0.0
-
-                if eps_ld2 > 0:
-                    cY_l2_t, cM_l2_t = N_l2_t / eps_ld2, M_l2_t / eps_ld2
-                    cY_l2_m, cM_l2_m = N_l2_m / eps_ld2, M_l2_m / eps_ld2
-                else:
-                    cY_l2_t, cM_l2_t, cY_l2_m, cM_l2_m = 0.0, 0.0, 0.0, 0.0
-
-                if eps_fl > 0:
-                    cY_fl_t_lh, cM_fl_t_lh = (config.FLASK_NORM_LH2 * N_fl_t) / eps_fl, (config.FLASK_NORM_LH2 * M_fl_t) / eps_fl
-                    cY_fl_m_lh, cM_fl_m_lh = (config.FLASK_NORM_LH2 * N_fl_m) / eps_fl, (config.FLASK_NORM_LH2 * M_fl_m) / eps_fl
-                    cY_fl_t_l2, cM_fl_t_l2 = (config.FLASK_NORM_LD2 * N_fl_t) / eps_fl, (config.FLASK_NORM_LD2 * M_fl_t) / eps_fl
-                    cY_fl_m_l2, cM_fl_m_l2 = (config.FLASK_NORM_LD2 * N_fl_m) / eps_fl, (config.FLASK_NORM_LD2 * M_fl_m) / eps_fl
-                else:
-                    cY_fl_t_lh, cM_fl_t_lh, cY_fl_m_lh, cM_fl_m_lh = 0.0, 0.0, 0.0, 0.0
-                    cY_fl_t_l2, cM_fl_t_l2, cY_fl_m_l2, cM_fl_m_l2 = 0.0, 0.0, 0.0, 0.0
-
-                num_LH2 = (cM_lh_t - cM_lh_m) - (cM_fl_t_lh - cM_fl_m_lh)
-                den_LH2 = (cY_lh_t - cY_lh_m) - (cY_fl_t_lh - cY_fl_m_lh)
-                cent_LH2 = num_LH2 / den_LH2 if den_LH2 != 0 else m_center
-
-                num_LD2 = (cM_l2_t - cM_l2_m) - (cM_fl_t_l2 - cM_fl_m_l2) - (config.LH2_TO_LD2_NORM * num_LH2)
-                den_LD2 = (cY_l2_t - cY_l2_m) - (cY_fl_t_l2 - cY_fl_m_l2) - (config.LH2_TO_LD2_NORM * den_LH2)
-                cent_LD2 = num_LD2 / den_LD2 if den_LD2 != 0 else m_center
-
-                self.fill_histograms(self.hists_ld2, root_x, root_y, N_l2_t, N_l2_m, m_center, pt_center, eps_ld2, err_eps_ld2, diff_l2, mean_l2, cent_LD2)
-                self.fill_histograms(self.hists_lh2, root_x, root_y, N_lh_t, N_lh_m, m_center, pt_center, eps_lh2, err_eps_lh2, diff_lh, mean_lh, cent_LH2)
-                num_fl = (M_fl_t - M_fl_m) / (eps_fl if eps_fl > 0 else 1e-9)
-                den_fl = (N_fl_t - N_fl_m) / (eps_fl if eps_fl > 0 else 1e-9)
-                cent_fl = num_fl / den_fl if den_fl != 0 else m_center
-                self.fill_histograms(self.hists_fl, root_x, root_y, N_fl_t, N_fl_m, m_center, pt_center, eps_fl, err_eps_fl, diff_fl, mean_fl, cent_fl)
-
-                jitter_x = [-0.05, 0.05]
-                
-                comp_data_lh2 = [
-                    ("LH2_tot", cM_lh_t, N_lh_t), ("LH2_mix", cM_lh_m, N_lh_m),
-                    ("Fl_tot", cM_fl_t_lh, N_fl_t), ("Fl_mix", cM_fl_m_lh, N_fl_m)
-                ]
-                valid_lh2 = [(lbl, cM, N) for lbl, cM, N in comp_data_lh2 if N > 0]
-                valid_lh2.sort(key=lambda x: x[2])
-                
-                last_y = 1e-9
-                for j, (lbl, cM, N) in enumerate(valid_lh2):
-                    desired_y = N * 1.5
-                    actual_y = max(desired_y, last_y * 2.5)
-                    x_pos = m_center + jitter_x[j % 2]
-                    txt = ROOT.TLatex(x_pos, actual_y, f"#splitline{{{cM:.2f}}}{{({N})}}")
-                    txt.SetTextSize(0.025)
-                    txt.SetTextColor(colors[lbl])
-                    txt.SetTextAlign(22)
-                    latex_draws_lh2.append(txt)
-                    last_y = actual_y
-                    max_label_y_lh2 = max(max_label_y_lh2, actual_y)
-
-                comp_data_ld2 = [
-                    ("LD2_tot", cM_l2_t, N_l2_t), ("LD2_mix", cM_l2_m, N_l2_m),
-                    ("Fl_tot", cM_fl_t_l2, N_fl_t), ("Fl_mix", cM_fl_m_l2, N_fl_m)
-                ]
-                valid_ld2 = [(lbl, cM, N) for lbl, cM, N in comp_data_ld2 if N > 0]
-                valid_ld2.sort(key=lambda x: x[2])
-                
-                last_y = 1e-9
-                for j, (lbl, cM, N) in enumerate(valid_ld2):
-                    desired_y = N * 1.5
-                    actual_y = max(desired_y, last_y * 2.5)
-                    x_pos = m_center + jitter_x[j % 2]
-                    txt = ROOT.TLatex(x_pos, actual_y, f"#splitline{{{cM:.2f}}}{{({N})}}")
-                    txt.SetTextSize(0.025)
-                    txt.SetTextColor(colors[lbl])
-                    txt.SetTextAlign(22)
-                    latex_draws_ld2.append(txt)
-                    last_y = actual_y
-                    max_label_y_ld2 = max(max_label_y_ld2, actual_y)
-
-                csv_rows_lh2.append({
-                    "Mass Bin": f"[{m_low:.2f}, {m_high:.2f})",
-                    "Mass Center": m_center,
-                    "LH2 Mass Bin Average": cent_LH2,
-                    "N_LH2_total": N_lh_t,
-                    "N_LH2_mixed": N_lh_m,
-                    "N_flask_total": N_fl_t,
-                    "N_flask_mixed": N_fl_m,
-                    "eps_LH2": eps_lh2,
-                    "eps_LD2": eps_ld2,
-                    "eps_flask": eps_fl,
-                    "Corrected Total Mass LH2 (num)": num_LH2,
-                    "Corrected Yield LH2 (denom)": den_LH2
-                })
-
-                csv_rows_ld2.append({
-                    "Mass Bin": f"[{m_low:.2f}, {m_high:.2f})",
-                    "Mass Center": m_center,
-                    "LD2 Mass Bin Average": cent_LD2,
-                    "N_LD2_total": N_l2_t,
-                    "N_LD2_mixed": N_l2_m,
-                    "N_LH2_total": N_lh_t,
-                    "N_LH2_mixed": N_lh_m,
-                    "N_flask_total": N_fl_t,
-                    "N_flask_mixed": N_fl_m,
-                    "eps_LH2": eps_lh2,
-                    "eps_LD2": eps_ld2,
-                    "eps_flask": eps_fl,
-                    "Corrected Total Mass LD2 (num)": num_LD2,
-                    "Corrected Yield LD2 (denom)": den_LD2
-                })
-
-            c_lh2 = ROOT.TCanvas(f"c_1d_mass_lh2_{i_pt}", "", 1000, 700)
-            c_lh2.SetRightMargin(0.05)
-            c_lh2.SetLeftMargin(0.16)
-            c_lh2.SetBottomMargin(0.14)
-            c_lh2.SetLogy() 
-            c_lh2.SetTickx(1) 
-            c_lh2.SetTicky(1) 
-            
-            max_y_hist_lh2 = max([h1_lh2_tot.GetMaximum(), h1_lh2_mix.GetMaximum(), h1_fl_tot.GetMaximum(), h1_fl_mix.GetMaximum()])
-            overall_max_lh2 = max(max_y_hist_lh2, max_label_y_lh2)
-            if overall_max_lh2 <= 0: overall_max_lh2 = 1.0
-            h1_lh2_tot.SetMaximum(overall_max_lh2 * 10.0) 
-            h1_lh2_tot.SetMinimum(0.5) 
-            
-            h1_lh2_tot.SetTitle(f"Mass Distributions (LH2) {pt_low:.2f} <= p_{{T}} < {pt_high:.2f};Mass [GeV];Counts")
-            h1_lh2_tot.GetXaxis().CenterTitle(True)
-            h1_lh2_tot.GetYaxis().CenterTitle(True)
-            h1_lh2_tot.GetXaxis().SetTitleOffset(1.3)
-            h1_lh2_tot.GetYaxis().SetTitleOffset(1.7)
-            h1_lh2_tot.Draw("HIST")
-            h1_lh2_mix.Draw("HIST SAME")
-            h1_fl_tot.Draw("HIST SAME")
-            h1_fl_mix.Draw("HIST SAME")
-            
-            for l in latex_draws_lh2: l.Draw()
-            
-            leg_lh2 = ROOT.TLegend(0.75, 0.72, 0.93, 0.88)
-            leg_lh2.SetBorderSize(0)
-            leg_lh2.AddEntry(h1_lh2_tot, "LH2 Total", "l")
-            leg_lh2.AddEntry(h1_lh2_mix, "LH2 Mix", "l")
-            leg_lh2.AddEntry(h1_fl_tot,  "Flask Total", "l")
-            leg_lh2.AddEntry(h1_fl_mix,  "Flask Mix", "l")
-            leg_lh2.Draw()
-            
-            c_lh2.SaveAs(f"./MassBinCentroids/MassDist_LH2_pT_{pt_low:.2f}_{pt_high:.2f}.pdf")
-            c_lh2.Close()
-
-            c_ld2 = ROOT.TCanvas(f"c_1d_mass_ld2_{i_pt}", "", 1000, 700)
-            c_ld2.SetRightMargin(0.05)
-            c_ld2.SetLeftMargin(0.16)
-            c_ld2.SetBottomMargin(0.14)
-            c_ld2.SetLogy() 
-            c_ld2.SetTickx(1) 
-            c_ld2.SetTicky(1) 
-            
-            max_y_hist_ld2 = max([h1_ld2_tot.GetMaximum(), h1_ld2_mix.GetMaximum(), h1_fl_tot.GetMaximum(), h1_fl_mix.GetMaximum()])
-            overall_max_ld2 = max(max_y_hist_ld2, max_label_y_ld2)
-            if overall_max_ld2 <= 0: overall_max_ld2 = 1.0
-            h1_ld2_tot.SetMaximum(overall_max_ld2 * 10.0) 
-            h1_ld2_tot.SetMinimum(0.5)
-            
-            h1_ld2_tot.SetTitle(f"Mass Distributions (LD2) {pt_low:.2f} <= p_{{T}} < {pt_high:.2f};Mass [GeV];Counts")
-            h1_ld2_tot.GetXaxis().CenterTitle(True)
-            h1_ld2_tot.GetYaxis().CenterTitle(True)
-            h1_ld2_tot.GetXaxis().SetTitleOffset(1.3)
-            h1_ld2_tot.GetYaxis().SetTitleOffset(1.7)
-            h1_ld2_tot.Draw("HIST")
-            h1_ld2_mix.Draw("HIST SAME")
-            h1_fl_tot.Draw("HIST SAME")
-            h1_fl_mix.Draw("HIST SAME")
-            
-            for l in latex_draws_ld2: l.Draw()
-            
-            leg_ld2 = ROOT.TLegend(0.75, 0.72, 0.93, 0.88)
-            leg_ld2.SetBorderSize(0)
-            leg_ld2.AddEntry(h1_ld2_tot, "LD2 Total", "l")
-            leg_ld2.AddEntry(h1_ld2_mix, "LD2 Mix", "l")
-            leg_ld2.AddEntry(h1_fl_tot,  "Flask Total", "l")
-            leg_ld2.AddEntry(h1_fl_mix,  "Flask Mix", "l")
-            leg_ld2.Draw()
-            
-            c_ld2.SaveAs(f"./MassBinCentroids/MassDist_LD2_pT_{pt_low:.2f}_{pt_high:.2f}.pdf")
-            c_ld2.Close()
-
-            with open(csv_filename_lh2, "w", newline='') as f:
-                writer = csv.DictWriter(f, fieldnames=csv_rows_lh2[0].keys())
-                writer.writeheader()
-                writer.writerows(csv_rows_lh2)
-                
-            with open(csv_filename_ld2, "w", newline='') as f:
-                writer = csv.DictWriter(f, fieldnames=csv_rows_ld2[0].keys())
-                writer.writeheader()
-                writer.writerows(csv_rows_ld2)
-                
-            dir_csv.cd()
-            macro_lh2 = ROOT.TMacro(csv_filename_lh2)
-            macro_lh2.Write(csv_filename_lh2)
-            
-            macro_ld2 = ROOT.TMacro(csv_filename_ld2)
-            macro_ld2.Write(csv_filename_ld2)
-
-        # Ensure all collected 2D Heatmaps (TH2D) are saved as PDFs 
-        self.save_2d_pdfs(self.hists_lh2, "LH2")
-        self.save_2d_pdfs(self.hists_ld2, "LD2")
-        self.save_2d_pdfs(self.hists_fl, "Flask")
+        self.save_1d_pdfs(self.hists_lh2, "LH2")
+        self.save_1d_pdfs(self.hists_ld2, "LD2")
+        self.save_1d_pdfs(self.hists_fl, "Flask")
 
     def generate_subtracted_plot(self, hists_target, hists_flask, flask_norm, target_label):
-        """Generates and saves 2D subtracted yield plot PDFs for LH2."""
+        """Generates and saves 1D subtracted yield plot PDFs for LH2."""
         if "Y_corrected_stat" not in hists_target or "Y_corrected_stat" not in hists_flask:
             print("Error: Y_corrected_stat histogram missing.")
             return None
@@ -643,8 +576,7 @@ class DYCrossSectionAnalyzer:
         
         name = f"Y_corrected_Subtracted_{target_label}"
         title = f"Corrected Yield ({target_label} - Flask)"
-        h_sub = ROOT.TH2D(name, f"{title};Mass [GeV];p_{{T}} [GeV]", 
-                          len(config.MASS_BINS)-1, config.MASS_BINS, 
+        h_sub = ROOT.TH1D(name, f"{title};p_{{T}} [GeV];Yield", 
                           len(config.PT_BINS)-1, config.PT_BINS)
         h_sub.Sumw2()
         h_sub.SetStats(0)
@@ -657,67 +589,79 @@ class DYCrossSectionAnalyzer:
         h_sub_sys = h_sub.Clone(f"{name}_sys")
         h_sub_centroid = hists_target["Mass_Centroid"].Clone(f"{name}_Mass_Centroid")
 
-        for i_m in range(len(config.MASS_BINS) - 1):
-            m_center = (config.MASS_BINS[i_m] + config.MASS_BINS[i_m+1]) / 2.0
-            bin_x = i_m + 1
+        for i_pt in range(len(config.PT_BINS) - 1):
+            bin_x = i_pt + 1
+            pt_center = (config.PT_BINS[i_pt] + config.PT_BINS[i_pt+1]) / 2.0
             
-            for i_pt in range(len(config.PT_BINS) - 1):
-                pt_center = (config.PT_BINS[i_pt] + config.PT_BINS[i_pt+1]) / 2.0
-                bin_y = i_pt + 1
-                
-                y_target = h_target_stat.GetBinContent(bin_x, bin_y)
-                e_target_stat = h_target_stat.GetBinError(bin_x, bin_y)
-                e_target_sys = h_target_sys.GetBinError(bin_x, bin_y)
-                
-                y_flask = h_flask_stat.GetBinContent(bin_x, bin_y)
-                e_flask_stat = h_flask_stat.GetBinError(bin_x, bin_y)
-                e_flask_sys = h_flask_sys.GetBinError(bin_x, bin_y)
-                
-                val_sub = y_target - (flask_norm * y_flask)
-                
-                err_sub_stat = np.sqrt(e_target_stat**2 + (flask_norm * e_flask_stat)**2)
-                err_sub_sys = np.sqrt(e_target_sys**2 + (flask_norm * e_flask_sys)**2)
-                err_sub_total = np.sqrt(err_sub_stat**2 + err_sub_sys**2)
-                
-                h_sub.SetBinContent(bin_x, bin_y, val_sub)
-                h_sub.SetBinError(bin_x, bin_y, err_sub_total)
-                self.add_latex_to_bin(h_sub, m_center, pt_center, val_sub, err_sub_total)
+            y_target = h_target_stat.GetBinContent(bin_x)
+            e_target_stat = h_target_stat.GetBinError(bin_x)
+            e_target_sys = h_target_sys.GetBinError(bin_x)
+            
+            y_flask = h_flask_stat.GetBinContent(bin_x)
+            e_flask_stat = h_flask_stat.GetBinError(bin_x)
+            e_flask_sys = h_flask_sys.GetBinError(bin_x)
+            
+            val_sub = y_target - (flask_norm * y_flask)
+            
+            err_sub_stat = np.sqrt(e_target_stat**2 + (flask_norm * e_flask_stat)**2)
+            err_sub_sys = np.sqrt(e_target_sys**2 + (flask_norm * e_flask_sys)**2)
+            err_sub_total = np.sqrt(err_sub_stat**2 + err_sub_sys**2)
+            
+            h_sub.SetBinContent(bin_x, val_sub)
+            h_sub.SetBinError(bin_x, err_sub_total)
 
-                h_sub_stat.SetBinContent(bin_x, bin_y, val_sub)
-                h_sub_stat.SetBinError(bin_x, bin_y, err_sub_stat)
+            h_sub_stat.SetBinContent(bin_x, val_sub)
+            h_sub_stat.SetBinError(bin_x, err_sub_stat)
 
-                h_sub_sys.SetBinContent(bin_x, bin_y, val_sub)
-                h_sub_sys.SetBinError(bin_x, bin_y, err_sub_sys)
+            h_sub_sys.SetBinContent(bin_x, val_sub)
+            h_sub_sys.SetBinError(bin_x, err_sub_sys)
 
         c = ROOT.TCanvas(f"c_{name}", f"c_{name}", 1200, 900)
-        c.SetRightMargin(0.15); c.SetLeftMargin(0.16); c.SetBottomMargin(0.14)
+        c.SetRightMargin(0.05); c.SetLeftMargin(0.16); c.SetBottomMargin(0.14)
         c.SetTickx(1); c.SetTicky(1)
         
-        local_min = sys.float_info.max
-        local_max = -sys.float_info.max
-        has_data = False
+        max_y = -1e9
+        min_y = 1e9
         for ix in range(1, h_sub.GetNbinsX() + 1):
-            for iy in range(1, h_sub.GetNbinsY() + 1):
-                val = h_sub.GetBinContent(ix, iy)
-                if val != 0.0:
-                    has_data = True
-                    if val < local_min: local_min = val
-                    if val > local_max: local_max = val
-        if has_data:
-            h_sub.SetMinimum(0.0 if local_min < 0 else local_min)
-            h_sub.SetMaximum(local_max)
+            val = h_sub.GetBinContent(ix)
+            err = h_sub.GetBinError(ix)
+            if val == 0 and err == 0: continue
+            if val + err > max_y: max_y = val + err
+            if val - err < min_y: min_y = val - err
+        
+        if max_y > -1e8:
+            h_sub.SetMaximum(max_y * 1.5)
+            h_sub.SetMinimum(0.0 if min_y >= 0 else min_y * 1.2)
         else:
             h_sub.SetMinimum(0.0)
             h_sub.SetMaximum(1.0)
             
-        h_sub.Draw("COLZ")
+        h_sub.SetLineColor(ROOT.kBlack)
+        h_sub.SetMarkerStyle(20)
+        h_sub.Draw("P E1")
+        
+        latex_draws = []
+        offset = (max_y if max_y > -1e8 else 1.0) * 0.08
+        for ix in range(1, h_sub.GetNbinsX() + 1):
+            val = h_sub.GetBinContent(ix)
+            err = h_sub.GetBinError(ix)
+            if val == 0 and err == 0: continue
+            pt_center = h_sub.GetBinCenter(ix)
+            y_pos = val + err + offset
+            txt = ROOT.TLatex(pt_center, y_pos, f"#splitline{{{val:.4f}}}{{#pm {err:.4f}}}")
+            txt.SetTextSize(0.022)
+            txt.SetTextAlign(21)
+            txt.SetTextColor(ROOT.kBlack)
+            txt.Draw()
+            latex_draws.append(txt)
+
         c.SaveAs(f"{name}.pdf")
         c.Close()
         
         return {"stat": h_sub_stat, "sys": h_sub_sys, "centroid": h_sub_centroid}
 
     def generate_pd_subtracted_plot(self, hists_ld2, hists_lh2, hists_flask):
-        """Generates and saves 2D subtracted yield plot PDFs for LD2 (pd equation)."""
+        """Generates and saves 1D subtracted yield plot PDFs for LD2 (pd equation)."""
         dir_sub = self.get_or_create_dir(self.out_file, "Subtracted_Plots_LD2_pd")
         dir_sub.cd()
 
@@ -735,8 +679,7 @@ class DYCrossSectionAnalyzer:
 
         name = "Y_corrected_Subtracted_LD2"
         title = "Corrected Yield (LD2 - LH2 - Flask)"
-        h_pd = ROOT.TH2D(name, f"{title};Mass [GeV];p_{{T}} [GeV]", 
-                          len(config.MASS_BINS)-1, config.MASS_BINS, 
+        h_pd = ROOT.TH1D(name, f"{title};p_{{T}} [GeV];Yield", 
                           len(config.PT_BINS)-1, config.PT_BINS)
         h_pd.Sumw2()
         h_pd.SetStats(0)
@@ -749,64 +692,76 @@ class DYCrossSectionAnalyzer:
         h_pd_sys = h_pd.Clone(f"{name}_sys")
         h_pd_centroid = hists_ld2["Mass_Centroid"].Clone(f"{name}_Mass_Centroid")
 
-        for i_m in range(len(config.MASS_BINS) - 1):
-            m_center = (config.MASS_BINS[i_m] + config.MASS_BINS[i_m+1]) / 2.0
-            bin_x = i_m + 1
+        for i_pt in range(len(config.PT_BINS) - 1):
+            bin_x = i_pt + 1
+            pt_center = (config.PT_BINS[i_pt] + config.PT_BINS[i_pt+1]) / 2.0
             
-            for i_pt in range(len(config.PT_BINS) - 1):
-                pt_center = (config.PT_BINS[i_pt] + config.PT_BINS[i_pt+1]) / 2.0
-                bin_y = i_pt + 1
-                
-                y_ld2 = h_ld2_stat.GetBinContent(bin_x, bin_y)
-                y_lh2 = h_lh2_stat.GetBinContent(bin_x, bin_y)
-                y_flask = h_flask_stat.GetBinContent(bin_x, bin_y)
+            y_ld2 = h_ld2_stat.GetBinContent(bin_x)
+            y_lh2 = h_lh2_stat.GetBinContent(bin_x)
+            y_flask = h_flask_stat.GetBinContent(bin_x)
 
-                e_ld2_stat = h_ld2_stat.GetBinError(bin_x, bin_y)
-                e_lh2_stat = h_lh2_stat.GetBinError(bin_x, bin_y)
-                e_flask_stat = h_flask_stat.GetBinError(bin_x, bin_y)
-                
-                e_ld2_sys = h_ld2_sys.GetBinError(bin_x, bin_y)
-                e_lh2_sys = h_lh2_sys.GetBinError(bin_x, bin_y)
-                e_flask_sys = h_flask_sys.GetBinError(bin_x, bin_y)
-                
-                val_pd = y_ld2 - (c_lh2 * y_lh2) - (c_flask_sub * y_flask)
-                
-                err_pd_stat = np.sqrt(e_ld2_stat**2 + (c_lh2 * e_lh2_stat)**2 + (c_flask_sub * e_flask_stat)**2)
-                err_pd_sys = np.sqrt(e_ld2_sys**2 + (c_lh2 * e_lh2_sys)**2 + (c_flask_sub * e_flask_sys)**2)
-                err_pd_total = np.sqrt(err_pd_stat**2 + err_pd_sys**2)
-                
-                h_pd.SetBinContent(bin_x, bin_y, val_pd)
-                h_pd.SetBinError(bin_x, bin_y, err_pd_total)
-                self.add_latex_to_bin(h_pd, m_center, pt_center, val_pd, err_pd_total)
+            e_ld2_stat = h_ld2_stat.GetBinError(bin_x)
+            e_lh2_stat = h_lh2_stat.GetBinError(bin_x)
+            e_flask_stat = h_flask_stat.GetBinError(bin_x)
+            
+            e_ld2_sys = h_ld2_sys.GetBinError(bin_x)
+            e_lh2_sys = h_lh2_sys.GetBinError(bin_x)
+            e_flask_sys = h_flask_sys.GetBinError(bin_x)
+            
+            val_pd = y_ld2 - (c_lh2 * y_lh2) - (c_flask_sub * y_flask)
+            
+            err_pd_stat = np.sqrt(e_ld2_stat**2 + (c_lh2 * e_lh2_stat)**2 + (c_flask_sub * e_flask_stat)**2)
+            err_pd_sys = np.sqrt(e_ld2_sys**2 + (c_lh2 * e_lh2_sys)**2 + (c_flask_sub * e_flask_sys)**2)
+            err_pd_total = np.sqrt(err_pd_stat**2 + err_pd_sys**2)
+            
+            h_pd.SetBinContent(bin_x, val_pd)
+            h_pd.SetBinError(bin_x, err_pd_total)
 
-                h_pd_stat.SetBinContent(bin_x, bin_y, val_pd)
-                h_pd_stat.SetBinError(bin_x, bin_y, err_pd_stat)
+            h_pd_stat.SetBinContent(bin_x, val_pd)
+            h_pd_stat.SetBinError(bin_x, err_pd_stat)
 
-                h_pd_sys.SetBinContent(bin_x, bin_y, val_pd)
-                h_pd_sys.SetBinError(bin_x, bin_y, err_pd_sys)
+            h_pd_sys.SetBinContent(bin_x, val_pd)
+            h_pd_sys.SetBinError(bin_x, err_pd_sys)
 
         c = ROOT.TCanvas(f"c_{name}", f"c_{name}", 1200, 900)
-        c.SetRightMargin(0.15); c.SetLeftMargin(0.16); c.SetBottomMargin(0.14)
+        c.SetRightMargin(0.05); c.SetLeftMargin(0.16); c.SetBottomMargin(0.14)
         c.SetTickx(1); c.SetTicky(1)
         
-        local_min = sys.float_info.max
-        local_max = -sys.float_info.max
-        has_data = False
+        max_y = -1e9
+        min_y = 1e9
         for ix in range(1, h_pd.GetNbinsX() + 1):
-            for iy in range(1, h_pd.GetNbinsY() + 1):
-                val = h_pd.GetBinContent(ix, iy)
-                if val != 0.0:
-                    has_data = True
-                    if val < local_min: local_min = val
-                    if val > local_max: local_max = val
-        if has_data:
-            h_pd.SetMinimum(0.0 if local_min < 0 else local_min)
-            h_pd.SetMaximum(local_max)
+            val = h_pd.GetBinContent(ix)
+            err = h_pd.GetBinError(ix)
+            if val == 0 and err == 0: continue
+            if val + err > max_y: max_y = val + err
+            if val - err < min_y: min_y = val - err
+        
+        if max_y > -1e8:
+            h_pd.SetMaximum(max_y * 1.5)
+            h_pd.SetMinimum(0.0 if min_y >= 0 else min_y * 1.2)
         else:
             h_pd.SetMinimum(0.0)
             h_pd.SetMaximum(1.0)
             
-        h_pd.Draw("COLZ")
+        h_pd.SetLineColor(ROOT.kBlack)
+        h_pd.SetMarkerStyle(20)
+        h_pd.Draw("P E1")
+        
+        latex_draws = []
+        offset = (max_y if max_y > -1e8 else 1.0) * 0.08
+        for ix in range(1, h_pd.GetNbinsX() + 1):
+            val = h_pd.GetBinContent(ix)
+            err = h_pd.GetBinError(ix)
+            if val == 0 and err == 0: continue
+            pt_center = h_pd.GetBinCenter(ix)
+            y_pos = val + err + offset
+            txt = ROOT.TLatex(pt_center, y_pos, f"#splitline{{{val:.4f}}}{{#pm {err:.4f}}}")
+            txt.SetTextSize(0.022)
+            txt.SetTextAlign(21)
+            txt.SetTextColor(ROOT.kBlack)
+            txt.Draw()
+            latex_draws.append(txt)
+
         c.SaveAs(f"{name}.pdf")
         c.Close()
 
@@ -846,9 +801,9 @@ class DYCrossSectionAnalyzer:
         
         h_sub_stat = h_sub_dict["stat"]
         h_sub_sys = h_sub_dict["sys"]
+        h_sub_centroid = h_sub_dict["centroid"]
 
         n_pt_bins = len(config.PT_BINS) - 1
-        n_mass_bins = len(config.MASS_BINS) - 1
         
         latex_psip_table_content = r"""\begin{longtable}{|c|c|c|c|c|}
 \caption{$\psi'$ Contamination Table for %s} \label{tab:psip_contamination_%s} \\
@@ -884,70 +839,59 @@ class DYCrossSectionAnalyzer:
         y_max_data = -sys.float_info.max
 
         for i_pt in range(n_pt_bins):
-            root_bin_y = i_pt + 1
+            root_bin_x = i_pt + 1
             pt_min, pt_max = config.PT_BINS[i_pt], config.PT_BINS[i_pt+1]
             pt_width = pt_max - pt_min
             pt_center = (pt_min + pt_max) / 2.0
             
             # Extract 1D acceptance
-            acceptance = h_acc_1d.GetBinContent(root_bin_y)
-            acceptance_err = h_acc_1d.GetBinError(root_bin_y)
+            acceptance = h_acc_1d.GetBinContent(root_bin_x)
+            acceptance_err = h_acc_1d.GetBinError(root_bin_x)
             
             if acceptance <= 0: continue
             
-            h_ratio_psip = f_psip.Get(f"hRatio_PsiP_DY_pT_{i_pt}") if f_psip else None
-
-            sum_xsec = 0.0
-            sum_stat_var = 0.0
-            sum_yield_sys_var = 0.0
-            sum_psip_var = 0.0
+            Y_sub = h_sub_stat.GetBinContent(root_bin_x)
+            if Y_sub <= 0: continue
             
-            for i_m in range(n_mass_bins):
-                root_bin_x = i_m + 1
-                mass_min, mass_max = config.MASS_BINS[i_m], config.MASS_BINS[i_m+1]
-                actual_mass_center = (mass_min + mass_max) / 2.0 
-                
-                Y_sub = h_sub_stat.GetBinContent(root_bin_x, root_bin_y)
-                if Y_sub <= 0: continue
-                
-                Y_sub_stat_err = h_sub_stat.GetBinError(root_bin_x, root_bin_y)
-                Y_sub_sys_err = h_sub_sys.GetBinError(root_bin_x, root_bin_y)
-                
-                psip_ratio = 0.0
-                if h_ratio_psip:
-                    ratio_bin = h_ratio_psip.FindBin(actual_mass_center)
-                    psip_ratio = h_ratio_psip.GetBinContent(ratio_bin)
-                    if psip_ratio > 1.0: psip_ratio = 0.0
+            Y_sub_stat_err = h_sub_stat.GetBinError(root_bin_x)
+            Y_sub_sys_err = h_sub_sys.GetBinError(root_bin_x)
+            
+            actual_mass_center = h_sub_centroid.GetBinContent(root_bin_x)
+            if actual_mass_center <= 0:
+                actual_mass_center = (config.MASS_BINS[0] + config.MASS_BINS[-1]) / 2.0
 
-                numerator = global_constant * Y_sub
-                denominator = pt_width * acceptance
-                bin_dsigma_dpt = numerator / denominator
-                
-                sum_xsec += bin_dsigma_dpt
-                
-                stat_unc = (Y_sub_stat_err / Y_sub) * bin_dsigma_dpt
-                sys_tot_yield = (Y_sub_sys_err / Y_sub) * bin_dsigma_dpt
-                sys_psip_cont = psip_ratio * bin_dsigma_dpt
-                
-                sum_stat_var += stat_unc**2
-                sum_yield_sys_var += sys_tot_yield**2
-                sum_psip_var += sys_psip_cont**2
-                
-                if psip_ratio > 0.0:
-                    s_pt = f"[{pt_min:.2f}, {pt_max:.2f})"
-                    s_mass = f"[{mass_min:.2f}, {mass_max:.2f})"
-                    s_ratio = f"{psip_ratio:.4f}"
-                    sys_unc_bin = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2)
-                    s_sigma_psip_col = f"{bin_dsigma_dpt:.4f} $\\pm$ {stat_unc:.4f} $\\pm$ {sys_unc_bin:.4f}"
-                    latex_psip_table_content += f"{s_pt} & {s_mass} & {s_ratio} & {s_sigma_psip_col} & {sys_psip_cont:.4f} \\\\ \n\\hline\n"
+            # Evaluate PsiP Ratio at the exact mass centroid for this pT bin
+            h_ratio_psip = f_psip.Get(f"hRatio_PsiP_DY_pT_{i_pt}") if f_psip else None
+            psip_ratio = 0.0
+            if h_ratio_psip:
+                ratio_bin = h_ratio_psip.FindBin(actual_mass_center)
+                psip_ratio = h_ratio_psip.GetBinContent(ratio_bin)
+                if psip_ratio > 1.0: psip_ratio = 0.0
+
+            numerator = global_constant * Y_sub
+            denominator = pt_width * acceptance
+            bin_dsigma_dpt = numerator / denominator
+            
+            sum_xsec = bin_dsigma_dpt
+            
+            stat_unc = (Y_sub_stat_err / Y_sub) * bin_dsigma_dpt
+            sys_tot_yield = (Y_sub_sys_err / Y_sub) * bin_dsigma_dpt
+            sys_psip_cont = psip_ratio * bin_dsigma_dpt
+            
+            if psip_ratio > 0.0:
+                s_pt = f"[{pt_min:.2f}, {pt_max:.2f})"
+                s_mass = f"Integrated [{config.MASS_BINS[0]:.2f}, {config.MASS_BINS[-1]:.2f})"
+                s_ratio = f"{psip_ratio:.4f}"
+                sys_unc_bin = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2)
+                s_sigma_psip_col = f"{bin_dsigma_dpt:.4f} $\\pm$ {stat_unc:.4f} $\\pm$ {sys_unc_bin:.4f}"
+                latex_psip_table_content += f"{s_pt} & {s_mass} & {s_ratio} & {s_sigma_psip_col} & {sys_psip_cont:.4f} \\\\ \n\\hline\n"
             
             if sum_xsec > 0:
-                # The 1D Acceptance error is fully correlated within this pT bin, so it's applied 
-                # against the entire combined cross section
+                # The 1D Acceptance error is fully correlated within this pT bin
                 sys_acc_total = (acceptance_err / acceptance) * sum_xsec
                 
-                total_stat_err = math.sqrt(sum_stat_var)
-                total_sys_err = math.sqrt(sum_yield_sys_var + sum_psip_var + sys_acc_total**2)
+                total_stat_err = stat_unc
+                total_sys_err = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_acc_total**2)
                 
                 max_err_for_range = max(total_stat_err, total_sys_err)
                 
@@ -959,10 +903,10 @@ class DYCrossSectionAnalyzer:
                 g_xsec.SetPoint(point_idx, pt_center, sum_xsec)
                 g_xsec.SetPointError(point_idx, 0.0, total_stat_err)
                 
-                h1_xsec.SetBinContent(root_bin_y, sum_xsec)
-                h1_xsec.SetBinError(root_bin_y, total_stat_err)
-                h1_sys.SetBinContent(root_bin_y, sum_xsec)
-                h1_sys.SetBinError(root_bin_y, total_sys_err)
+                h1_xsec.SetBinContent(root_bin_x, sum_xsec)
+                h1_xsec.SetBinError(root_bin_x, total_stat_err)
+                h1_sys.SetBinContent(root_bin_x, sum_xsec)
+                h1_sys.SetBinError(root_bin_x, total_sys_err)
                 
                 y_high = sum_xsec + max_err_for_range
                 y_low  = sum_xsec - max_err_for_range
@@ -984,7 +928,7 @@ class DYCrossSectionAnalyzer:
             
             if y_min_data < y_max_data:
                 mg.SetMinimum(0.0)
-                mg.SetMaximum(y_max_data * 1.25)
+                mg.SetMaximum(y_max_data * 1.4)
             else:
                 mg.SetMinimum(0.0)
                 mg.SetMaximum(3.0)
@@ -1003,7 +947,7 @@ class DYCrossSectionAnalyzer:
             mg.GetXaxis().SetTitleOffset(1.3)
             mg.GetYaxis().SetTitleOffset(1.7)
             leg.Draw()
-
+            
             target_prefix = "pp" if target_label == "LH2" else "pd" if target_label == "LD2" else target_label
             internal_title = ROOT.TLatex()
             internal_title.SetNDC(True); internal_title.SetTextFont(42); internal_title.SetTextSize(0.04); internal_title.SetTextAlign(13)
@@ -1014,7 +958,7 @@ class DYCrossSectionAnalyzer:
             prelim.DrawLatex(0.82, 0.6, "Preliminary")
 
             plot_y_min = 0.0
-            plot_y_max = y_max_data * 1.25 if y_min_data < y_max_data else 3.0
+            plot_y_max = y_max_data * 1.4 if y_min_data < y_max_data else 3.0
             dynamic_y = plot_y_min + 0.05 * (plot_y_max - plot_y_min)
 
             lumi_note = ROOT.TLatex()
@@ -1090,7 +1034,7 @@ class DYCrossSectionAnalyzer:
 
         if y_min < y_max:
             h_frame.SetMinimum(0.0)
-            h_frame.SetMaximum(y_max * 1.25)
+            h_frame.SetMaximum(y_max * 1.4)
 
         legend.Draw()
         
