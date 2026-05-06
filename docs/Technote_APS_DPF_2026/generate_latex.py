@@ -2,57 +2,109 @@ import os
 
 def generate_latex():
     # Configuration
-    #base_dir = "/root/github/e906-development/src/xsec_pT_mass/RS57-70"
     base_dir = "/root/github/e906-development/src/xsec_pT/RS57-70"
     title = r"Measurement of Absolute Double Differential Cross-Section in Invariant Mass and $p_T$ Bins"
     author = "Chatura Kuruppu"
     
-    # 1. Define the targets and plotting prefixes
-    targets = ["LH2", "LD2", "Flask"]
-    kinematic_prefixes = [
-        "Y_total",
-        "Y_mix",
-        "E_total_reco",
-        "E_mix_reco",
-        "E_total_hodo",
-        "E_mix_hodo",
-        "E_total_final",
-        "E_mix_final",
-        "E_final_signal",
-        "Y_corrected"
+    # Define exact plot order incorporating all 38 requested files logically grouped
+    plot_names = [
+        # Raw & Mixed Yields
+        "Y_total_LH2",
+        "Y_total_LD2",
+        "Y_total_Flask",
+        "Y_mix_LH2",
+        "Y_mix_LD2",
+        "Y_mix_Flask",
+        
+        # Reconstruction Efficiencies
+        "E_total_reco_LH2",
+        "E_total_reco_LD2",
+        "E_total_reco_Flask",
+        "E_mix_reco_LH2",
+        "E_mix_reco_LD2",
+        "E_mix_reco_Flask",
+        
+        # Hodoscope Efficiencies
+        "E_total_hodo_LH2",
+        "E_total_hodo_LD2",
+        "E_total_hodo_Flask",
+        "E_mix_hodo_LH2",
+        "E_mix_hodo_LD2",
+        "E_mix_hodo_Flask",
+        
+        # Final Efficiencies
+        "E_total_final_LH2",
+        "E_total_final_LD2",
+        "E_total_final_Flask",
+        "E_mix_final_LH2",
+        "E_mix_final_LD2",
+        "E_mix_final_Flask",
+        
+        # Signal Efficiencies
+        "E_final_signal_LH2",
+        "E_final_signal_LD2",
+        "E_final_signal_Flask",
+        
+        # Corrected & Subtracted Yields
+        "Y_corrected_LH2",
+        "Y_corrected_LD2",
+        "Y_corrected_Flask",
+        "Y_corrected_Subtracted_LH2",
+        "Y_corrected_Subtracted_LD2",
+        
+        # Cross-Sections (Geometric vs True pT)
+        "CrossSection_LH2_geom_vs_pT_with_logo",
+        "CrossSection_LH2_true_pt_vs_pT_with_logo",
+        "CrossSection_LD2_geom_vs_pT_with_logo",
+        "CrossSection_LD2_true_pt_vs_pT_with_logo",
+        
+        # Ratios (Geometric vs True pT)
+        "CrossSection_Ratio_pd_2pp_vs_pT_geom_with_logo",
+        "CrossSection_Ratio_pd_2pp_vs_pT_true_pt_with_logo"
     ]
 
-    # Build the ordered list of files based on user rules
-    ordered_files = []
-
-    # Rules 2-11: Kinematic and efficiency plots for all targets
-    for target in targets:
-        for prefix in kinematic_prefixes:
-            ordered_files.append(f"{prefix}_{target}.pdf")
-
-    # Rule 12: Subtracted Yields (Only for LH2 and LD2)
-    ordered_files.append("Y_corrected_Subtracted_LH2.pdf")
-    ordered_files.append("Y_corrected_Subtracted_LD2.pdf")
-
-    # Rule 13: LH2 Cross-sections (New 1D pT plot)
-    ordered_files.append("CrossSection_LH2_vs_pT_with_logo.pdf")
-
-    # Rule 14: LD2 Cross-sections (New 1D pT plot)
-    ordered_files.append("CrossSection_LD2_vs_pT_with_logo.pdf")
+    # Append .pdf to each plot name
+    ordered_files = [f"{name}.pdf" for name in plot_names]
 
     # Function to escape underscores for LaTeX text (captions/titles)
     def tex_escape(text):
         return text.replace('_', r'\_')
 
     # Content Strings
-    inputs_and_bins_latex = r"""
-\textbf{Input Data Files:}
+    inputs_latex = r"""
+\textbf{Note:} We do not use RS5a and RS5b files for this study.
+
+\vspace{0.2cm}
+\textbf{ROOT files used:}
+\begin{multicols}{2}
 \begin{itemize}
-    \item Merged ROOT files containing reconstruction and hodoscope efficiencies.
-    \item \textbf{Roadsets:} RS57, RS59, RS62, RS67 (run 3089), and RS70.
-    \item \textbf{Targets:} Liquid Hydrogen (LH2), Liquid Deuterium (LD2), and Empty Flask.
+    \tiny
+    \item \texttt{merged\_RS57\_Empty\_2\_1138\_FinalData.root}
+    \item \texttt{merged\_RS57\_LD2\_3\_1138\_FinalData.root}
+    \item \texttt{merged\_RS57\_LH2\_1\_1138\_FinalData.root}
+    \item \texttt{merged\_RS59\_Empty\_2\_466\_FinalData.root}
+    \item \texttt{merged\_RS59\_LD2\_3\_466\_FinalData.root}
+    \item \texttt{merged\_RS59\_LH2\_1\_465\_FinalData.root}
+    \item \texttt{merged\_RS5a\_Empty\_2\_1680\_FinalData.root}
+    \item \texttt{merged\_RS5a\_LD2\_3\_1689\_FinalData.root}
+    \item \texttt{merged\_RS5a\_LH2\_1\_1476\_FinalData.root}
+    \item \texttt{merged\_RS5b\_Empty\_2\_917\_FinalData.root}
+    \item \texttt{merged\_RS5b\_LD2\_3\_918\_FinalData.root}
+    \item \texttt{merged\_RS5b\_LH2\_1\_770\_FinalData.root}
+    \item \texttt{merged\_RS62\_Empty\_2\_1234\_FinalData.root}
+    \item \texttt{merged\_RS62\_LD2\_3\_1237\_FinalData.root}
+    \item \texttt{merged\_RS62\_LH2\_1\_1234\_FinalData.root}
+    \item \texttt{merged\_RS67\_Empty\_2\_14\_FinalData.root}
+    \item \texttt{merged\_RS67\_LD2\_3\_15\_FinalData.root}
+    \item \texttt{merged\_RS67\_LH2\_1\_5\_FinalData.root}
+    \item \texttt{merged\_RS70\_Empty\_2\_267\_FinalData.root}
+    \item \texttt{merged\_RS70\_LD2\_3\_266\_FinalData.root}
+    \item \texttt{merged\_RS70\_LH2\_1\_264\_FinalData.root}
 \end{itemize}
-\vspace{0.3cm}
+\end{multicols}
+"""
+
+    kinematic_bins_latex = r"""
 \textbf{Kinematic Binning Definition:}
 \begin{itemize}
     \item \textbf{Mass Bins (GeV):} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.7]
@@ -88,12 +140,12 @@ def generate_latex():
     # ==========================================
     beamer_file = "slides.tex"
     with open(beamer_file, "w") as f:
-        # Added aspectratio=169 for widescreen, and the Madrid theme for professional formatting
         f.write(r"""\documentclass[aspectratio=169]{beamer}
 \usetheme{Madrid}
 \usecolortheme{default}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{multicol}
 \setbeamertemplate{navigation symbols}{}
 \graphicspath{{%s/}}
 
@@ -108,7 +160,11 @@ def generate_latex():
     \titlepage
 \end{frame}
 
-\begin{frame}{Input Files and Bin Ranges}
+\begin{frame}{Input Files Used}
+    %s
+\end{frame}
+
+\begin{frame}{Kinematic Phase Space}
     %s
 \end{frame}
 
@@ -116,7 +172,7 @@ def generate_latex():
     \footnotesize
     %s
 \end{frame}
-""" % (base_dir, title, author, inputs_and_bins_latex, event_selection_latex))
+""" % (base_dir, title, author, inputs_latex, kinematic_bins_latex, event_selection_latex))
 
         for file in ordered_files:
             # Skip missing files to prevent compilation crashes
@@ -145,6 +201,7 @@ def generate_latex():
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{multicol}
 \graphicspath{{%s/}}
 
 \title{%s}
@@ -155,7 +212,10 @@ def generate_latex():
 
 \maketitle
 
-\section{Input Files and Bin Ranges}
+\section{Input Files Used}
+%s
+
+\section{Kinematic Phase Space}
 %s
 
 \section{Event Selection Criteria}
@@ -163,7 +223,7 @@ def generate_latex():
 
 \clearpage
 \section{Plots and Distributions}
-""" % (base_dir, title, author, inputs_and_bins_latex, event_selection_latex))
+""" % (base_dir, title, author, inputs_latex, kinematic_bins_latex, event_selection_latex))
 
         for idx, file in enumerate(ordered_files):
             # Skip missing files to prevent compilation crashes
