@@ -69,7 +69,7 @@ def main():
         # Stage 3: Subtractions (Implicitly handled inside calculate_cross_sections in updated analyzer)
         progress.update(task_sub, completed=100)
 
-        # Stage 4: Cross Sections
+        # Stage 4: Cross Sections & Ratios (Calculates for both geometric & true pT centroids)
         analyzer.calculate_cross_sections()
         progress.update(task_xsec, completed=100)
 
@@ -79,7 +79,7 @@ def main():
 
     # 3. Finalize
     analyzer.finalize()
-    console.print("\n[bold green]✔ All histograms, tables, single differential cross-section plots, and overlays generated successfully.[/bold green]")
+    console.print("\n[bold green]✔ All histograms, tables, 6 single differential cross-section plots (geom & true pT), ratio plots, and overlays generated successfully.[/bold green]")
 
 if __name__ == "__main__":
     main()
