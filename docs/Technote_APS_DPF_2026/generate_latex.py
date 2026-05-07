@@ -6,7 +6,7 @@ def generate_latex():
     title = r"Measurement of Absolute Double Differential Cross-Section in Invariant Mass and $p_T$ Bins"
     author = "Chatura Kuruppu"
     
-    # Define exact plot order incorporating all 38 requested files logically grouped
+    # Define exact plot order incorporating all requested files logically grouped
     plot_names = [
         # Raw & Mixed Yields
         "Y_total_LH2",
@@ -60,7 +60,11 @@ def generate_latex():
         
         # Ratios (Geometric vs True pT)
         "CrossSection_Ratio_pd_2pp_vs_pT_geom_with_logo",
-        "CrossSection_Ratio_pd_2pp_vs_pT_true_pt_with_logo"
+        "CrossSection_Ratio_pd_2pp_vs_pT_true_pt_with_logo",
+        
+        # Combined Overlay & Ratio
+        "Combined_XSec_Ratio_vs_pT_geom",
+        "Combined_XSec_Ratio_vs_pT_true_pt"
     ]
 
     # Append .pdf to each plot name

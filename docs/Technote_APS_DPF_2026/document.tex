@@ -1,0 +1,347 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{multicol}
+\graphicspath{{/root/github/e906-development/src/xsec_pT/RS57-70/}}
+
+\title{Measurement of Absolute Double Differential Cross-Section in Invariant Mass and $p_T$ Bins}
+\author{Chatura Kuruppu}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Input Files Used}
+
+\textbf{Note:} We do not use RS5a and RS5b files for this study.
+
+\vspace{0.2cm}
+\textbf{ROOT files used:}
+\begin{multicols}{2}
+\begin{itemize}
+    \tiny
+    \item \texttt{merged\_RS57\_Empty\_2\_1138\_FinalData.root}
+    \item \texttt{merged\_RS57\_LD2\_3\_1138\_FinalData.root}
+    \item \texttt{merged\_RS57\_LH2\_1\_1138\_FinalData.root}
+    \item \texttt{merged\_RS59\_Empty\_2\_466\_FinalData.root}
+    \item \texttt{merged\_RS59\_LD2\_3\_466\_FinalData.root}
+    \item \texttt{merged\_RS59\_LH2\_1\_465\_FinalData.root}
+    \item \texttt{merged\_RS5a\_Empty\_2\_1680\_FinalData.root}
+    \item \texttt{merged\_RS5a\_LD2\_3\_1689\_FinalData.root}
+    \item \texttt{merged\_RS5a\_LH2\_1\_1476\_FinalData.root}
+    \item \texttt{merged\_RS5b\_Empty\_2\_917\_FinalData.root}
+    \item \texttt{merged\_RS5b\_LD2\_3\_918\_FinalData.root}
+    \item \texttt{merged\_RS5b\_LH2\_1\_770\_FinalData.root}
+    \item \texttt{merged\_RS62\_Empty\_2\_1234\_FinalData.root}
+    \item \texttt{merged\_RS62\_LD2\_3\_1237\_FinalData.root}
+    \item \texttt{merged\_RS62\_LH2\_1\_1234\_FinalData.root}
+    \item \texttt{merged\_RS67\_Empty\_2\_14\_FinalData.root}
+    \item \texttt{merged\_RS67\_LD2\_3\_15\_FinalData.root}
+    \item \texttt{merged\_RS67\_LH2\_1\_5\_FinalData.root}
+    \item \texttt{merged\_RS70\_Empty\_2\_267\_FinalData.root}
+    \item \texttt{merged\_RS70\_LD2\_3\_266\_FinalData.root}
+    \item \texttt{merged\_RS70\_LH2\_1\_264\_FinalData.root}
+\end{itemize}
+\end{multicols}
+
+
+\section{Kinematic Phase Space}
+
+\textbf{Kinematic Binning Definition:}
+\begin{itemize}
+    \item \textbf{Mass Bins (GeV):} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.7]
+    \item \textbf{$p_T$ Bins (GeV):} [0.0, 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8]
+    \item \textbf{$x_F$ Bins:} [0.0, 0.85] with a fixed step width of 0.05.
+\end{itemize}
+
+
+\section{Event Selection Criteria}
+
+\textbf{Dimuon Kinematics:}
+\begin{itemize}
+    \item $4.2 < \text{Mass} < 8.8$ GeV, $-0.1 < x_F < 0.95$, $0.05 < x_T \le 0.58$, and $|\cos\theta| < 0.5$.
+    \item Vertex cuts: $-280 < dz < -5$, target/dump tracking separation criteria met.
+    \item Transverse momentum bounds: $|dp_x| < 1.8$, $|dp_y| < 2.0$, and $dp_x^2 + dp_y^2 < 5$.
+\end{itemize}
+\vspace{0.2cm}
+\textbf{Track Quality \& Acceptance:}
+\begin{itemize}
+    \item $\chi^2_{\text{target}} < 15$, $\chi^2_{\text{dimuon}} < 18$, and $\chi^2/(\text{nHits}-5) < 12$.
+    \item Hit requirements: nHits $> 13$ per track, $\text{nHits}_1+\text{nHits}_2 > 29$, St1 total $> 8$.
+    \item Track vertex longitudinal limits: $-320 < z_v < -5$.
+    \item A dynamic beam offset correction is applied to y-coordinates: offset is $1.6$ for runID $\ge 11000$ and $0.4$ otherwise.
+\end{itemize}
+\vspace{0.2cm}
+\textbf{Detector Occupancy Limits:}
+\begin{itemize}
+    \item Drift chamber hits: $D1 < 400$, $D2 < 400$, $D3 < 400$, and total $D1+D2+D3 < 1000$.
+\end{itemize}
+
+
+\clearpage
+\section{Plots and Distributions}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_total_LH2.pdf}
+    \caption{Y\_total\_LH2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_total_LD2.pdf}
+    \caption{Y\_total\_LD2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_total_Flask.pdf}
+    \caption{Y\_total\_Flask}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_mix_LH2.pdf}
+    \caption{Y\_mix\_LH2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_mix_LD2.pdf}
+    \caption{Y\_mix\_LD2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_mix_Flask.pdf}
+    \caption{Y\_mix\_Flask}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_reco_LH2.pdf}
+    \caption{E\_total\_reco\_LH2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_reco_LD2.pdf}
+    \caption{E\_total\_reco\_LD2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_reco_Flask.pdf}
+    \caption{E\_total\_reco\_Flask}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_reco_LH2.pdf}
+    \caption{E\_mix\_reco\_LH2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_reco_LD2.pdf}
+    \caption{E\_mix\_reco\_LD2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_reco_Flask.pdf}
+    \caption{E\_mix\_reco\_Flask}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_hodo_LH2.pdf}
+    \caption{E\_total\_hodo\_LH2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_hodo_LD2.pdf}
+    \caption{E\_total\_hodo\_LD2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_hodo_Flask.pdf}
+    \caption{E\_total\_hodo\_Flask}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_hodo_LH2.pdf}
+    \caption{E\_mix\_hodo\_LH2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_hodo_LD2.pdf}
+    \caption{E\_mix\_hodo\_LD2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_hodo_Flask.pdf}
+    \caption{E\_mix\_hodo\_Flask}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_final_LH2.pdf}
+    \caption{E\_total\_final\_LH2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_final_LD2.pdf}
+    \caption{E\_total\_final\_LD2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_total_final_Flask.pdf}
+    \caption{E\_total\_final\_Flask}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_final_LH2.pdf}
+    \caption{E\_mix\_final\_LH2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_final_LD2.pdf}
+    \caption{E\_mix\_final\_LD2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_mix_final_Flask.pdf}
+    \caption{E\_mix\_final\_Flask}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_final_signal_LH2.pdf}
+    \caption{E\_final\_signal\_LH2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_final_signal_LD2.pdf}
+    \caption{E\_final\_signal\_LD2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{E_final_signal_Flask.pdf}
+    \caption{E\_final\_signal\_Flask}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_corrected_LH2.pdf}
+    \caption{Y\_corrected\_LH2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_corrected_LD2.pdf}
+    \caption{Y\_corrected\_LD2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_corrected_Flask.pdf}
+    \caption{Y\_corrected\_Flask}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_corrected_Subtracted_LH2.pdf}
+    \caption{Y\_corrected\_Subtracted\_LH2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Y_corrected_Subtracted_LD2.pdf}
+    \caption{Y\_corrected\_Subtracted\_LD2}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{CrossSection_LH2_geom_vs_pT_with_logo.pdf}
+    \caption{CrossSection\_LH2\_geom\_vs\_pT\_with\_logo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{CrossSection_LH2_true_pt_vs_pT_with_logo.pdf}
+    \caption{CrossSection\_LH2\_true\_pt\_vs\_pT\_with\_logo}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{CrossSection_LD2_geom_vs_pT_with_logo.pdf}
+    \caption{CrossSection\_LD2\_geom\_vs\_pT\_with\_logo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{CrossSection_LD2_true_pt_vs_pT_with_logo.pdf}
+    \caption{CrossSection\_LD2\_true\_pt\_vs\_pT\_with\_logo}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{CrossSection_Ratio_pd_2pp_vs_pT_geom_with_logo.pdf}
+    \caption{CrossSection\_Ratio\_pd\_2pp\_vs\_pT\_geom\_with\_logo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{CrossSection_Ratio_pd_2pp_vs_pT_true_pt_with_logo.pdf}
+    \caption{CrossSection\_Ratio\_pd\_2pp\_vs\_pT\_true\_pt\_with\_logo}
+\end{figure}
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Combined_XSec_Ratio_vs_pT_geom.pdf}
+    \caption{Combined\_XSec\_Ratio\_vs\_pT\_geom}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Combined_XSec_Ratio_vs_pT_true_pt.pdf}
+    \caption{Combined\_XSec\_Ratio\_vs\_pT\_true\_pt}
+\end{figure}
+\clearpage
+
+\end{document}
