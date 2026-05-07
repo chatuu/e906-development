@@ -211,6 +211,7 @@ class DYCrossSectionAnalyzer:
     def extract_target_stats(self, data_tot, data_mix, loc_tot, loc_mix, m_low, m_high, pt_low, pt_high):
         mask_tot = (data_tot["mass"] >= m_low) & (data_tot["mass"] < m_high) & \
                    (data_tot["pT"] >= pt_low) & (data_tot["pT"] < pt_high)
+        
         mask_mix = (data_mix["mass"] >= m_low) & (data_mix["mass"] < m_high) & \
                    (data_mix["pT"] >= pt_low) & (data_mix["pT"] < pt_high)
 
@@ -1010,9 +1011,9 @@ class DYCrossSectionAnalyzer:
             mg = ROOT.TMultiGraph()
             mg.SetTitle(";p_{T} [GeV];#sigma_{pd} / 2#sigma_{pp}")
 
-            # Fit horizontal best fit line
+            # Fit using SYSTEMATIC errors
             fit_func = ROOT.TF1("fit_ratio", "pol0", 0.0, 2.0)
-            g_ratio_stat.Fit(fit_func, "Q0")
+            g_ratio_sys.Fit(fit_func, "Q0")
             fit_val = fit_func.GetParameter(0)
             fit_err = fit_func.GetParError(0)
 
@@ -1088,13 +1089,193 @@ class DYCrossSectionAnalyzer:
             prelim = ROOT.TLatex()
             prelim.SetNDC(True); prelim.SetTextColor(ROOT.kBlue)
             prelim.SetTextAlign(33); prelim.SetTextSize(0.05)
-            # Dropped the Y-coordinate from 0.65 to 0.55 here
             prelim.DrawLatex(0.85, 0.55, "Preliminary")
 
             c_ratio.SaveAs(f"CrossSection_Ratio_pd_2pp_vs_pT{suffix}.pdf")
 
             dir_ratio.cd()
             g_ratio_stat.Write(); g_ratio_sys.Write(); c_ratio.Write(); c_ratio.Close()
+
+    def generate_combined_ratio_overlay_plot(self, use_true_pt=False):
+        """Creates a split canvas with cross-section overlays on top and the ratio plot on bottom."""
+        suffix = "_true_pt" if use_true_pt else "_geom"
+
+        dir_lh2 = self.out_file.Get("CrossSections_LH2")
+        dir_ld2 = self.out_file.Get("CrossSections_LD2")
+        dir_ratio = self.out_file.Get("Ratio_pd_2pp")
+
+        if not dir_lh2 or not dir_ld2 or not dir_ratio:
+            print(f"Warning: Missing directories for combined plot for suffix {suffix}.")
+            return
+
+        g_xsec_lh2 = dir_lh2.Get(f"g_xsec_LH2{suffix}")
+        g_sys_lh2  = dir_lh2.Get(f"g_sys_LH2{suffix}")
+        g_xsec_ld2 = dir_ld2.Get(f"g_xsec_LD2{suffix}")
+        g_sys_ld2  = dir_ld2.Get(f"g_sys_LD2{suffix}")
+
+        g_ratio_stat = dir_ratio.Get(f"g_ratio_stat{suffix}")
+        g_ratio_sys  = dir_ratio.Get(f"g_ratio_sys{suffix}")
+
+        if not all([g_xsec_lh2, g_sys_lh2, g_xsec_ld2, g_sys_ld2, g_ratio_stat, g_ratio_sys]):
+            print(f"Warning: Missing graphs for combined plot for suffix {suffix}.")
+            return
+
+        canvas = ROOT.TCanvas(f"c_combined_{suffix}", "Combined Overlay and Ratio", 800, 800)
+
+        # --- Pad 1: Cross Sections Overlay (Top 65%) ---
+        pad1 = ROOT.TPad("pad1", "pad1", 0, 0.35, 1, 1.0)
+        pad1.SetBottomMargin(0.15) # Increased gap to display top x-axis properly
+        pad1.SetLeftMargin(0.16)
+        pad1.SetRightMargin(0.05)
+        pad1.SetTopMargin(0.08)
+        pad1.SetTickx(1); pad1.SetTicky(1)
+        pad1.Draw()
+        pad1.cd()
+
+        mg_top = ROOT.TMultiGraph()
+
+        # LH2 Styling (Red)
+        g_sys_lh2_clone = g_sys_lh2.Clone()
+        g_sys_lh2_clone.SetLineColor(ROOT.kRed)
+        g_sys_lh2_clone.SetFillColorAlpha(ROOT.kPink - 9, 0.5)
+        g_xsec_lh2_clone = g_xsec_lh2.Clone()
+        g_xsec_lh2_clone.SetLineColor(ROOT.kRed)
+        g_xsec_lh2_clone.SetMarkerColor(ROOT.kRed)
+
+        # LD2 Styling (Blue with light transparent blue band)
+        g_sys_ld2_clone = g_sys_ld2.Clone()
+        g_sys_ld2_clone.SetLineColor(ROOT.kBlue)
+        g_sys_ld2_clone.SetFillColorAlpha(ROOT.kAzure + 1, 0.5) 
+        g_xsec_ld2_clone = g_xsec_ld2.Clone()
+        g_xsec_ld2_clone.SetLineColor(ROOT.kBlue)
+        g_xsec_ld2_clone.SetMarkerColor(ROOT.kBlue)
+
+        mg_top.Add(g_sys_lh2_clone, "2")
+        mg_top.Add(g_sys_ld2_clone, "2")
+        mg_top.Add(g_xsec_lh2_clone, "P")
+        mg_top.Add(g_xsec_ld2_clone, "P")
+
+        mg_top.Draw("A")
+        mg_top.SetTitle("")
+        mg_top.GetXaxis().SetLimits(0.0, 2.0)
+
+        # Ensure titles are centered and fonts size matches nicely
+        mg_top.GetYaxis().SetTitle("d#sigma/dp_{T} [nb/GeV]")
+        mg_top.GetYaxis().CenterTitle()
+        mg_top.GetYaxis().SetTitleFont(43); mg_top.GetYaxis().SetTitleSize(22)
+        mg_top.GetYaxis().SetTitleOffset(2.0)
+        mg_top.GetYaxis().SetLabelFont(43); mg_top.GetYaxis().SetLabelSize(20)
+
+        mg_top.GetXaxis().SetTitle("p_{T} [GeV]")
+        mg_top.GetXaxis().CenterTitle()
+        mg_top.GetXaxis().SetTitleFont(43); mg_top.GetXaxis().SetTitleSize(22)
+        mg_top.GetXaxis().SetTitleOffset(1.2) # Reduced multiplier so it doesn't push off canvas
+        mg_top.GetXaxis().SetLabelFont(43); mg_top.GetXaxis().SetLabelSize(20)
+
+        # Dynamic Range
+        y_max = 0
+        for i in range(g_xsec_lh2.GetN()):
+            if g_xsec_lh2.GetY()[i] + g_sys_lh2.GetErrorY(i) > y_max: y_max = g_xsec_lh2.GetY()[i] + g_sys_lh2.GetErrorY(i)
+            if g_xsec_ld2.GetY()[i] + g_sys_ld2.GetErrorY(i) > y_max: y_max = g_xsec_ld2.GetY()[i] + g_sys_ld2.GetErrorY(i)
+        mg_top.SetMinimum(0.0)
+        mg_top.SetMaximum(y_max * 1.4)
+
+        leg_top = ROOT.TLegend(0.65, 0.65, 0.88, 0.88)
+        leg_top.SetBorderSize(0); leg_top.SetFillStyle(0); leg_top.SetTextFont(43); leg_top.SetTextSize(18)
+        leg_top.AddEntry(g_xsec_lh2_clone, "LH2 Data", "pl")
+        leg_top.AddEntry(g_sys_lh2_clone, "LH2 Sys. Unc.", "f")
+        leg_top.AddEntry(g_xsec_ld2_clone, "LD2 Data", "pl")
+        leg_top.AddEntry(g_sys_ld2_clone, "LD2 Sys. Unc.", "f")
+        leg_top.Draw()
+
+        prelim = ROOT.TLatex(); prelim.SetNDC(True); prelim.SetTextFont(43); prelim.SetTextSize(24)
+        prelim.SetTextColor(ROOT.kBlue); prelim.SetTextAlign(33)
+        prelim.DrawLatex(0.85, 0.55, "Preliminary")
+
+        # --- Pad 2: Ratio (Bottom 35%) ---
+        canvas.cd()
+        pad2 = ROOT.TPad("pad2", "pad2", 0, 0.0, 1, 0.35)
+        pad2.SetTopMargin(0.05)    # Small gap from top pad
+        pad2.SetBottomMargin(0.35) # Increased gap to display bottom x-axis properly
+        pad2.SetLeftMargin(0.16)
+        pad2.SetRightMargin(0.05)
+        pad2.SetTickx(1); pad2.SetTicky(1)
+        pad2.Draw()
+        pad2.cd()
+
+        mg_bottom = ROOT.TMultiGraph()
+
+        # Refit using systematic errors
+        fit_func = ROOT.TF1("fit_ratio_comb", "pol0", 0.0, 2.0)
+        g_ratio_sys.Fit(fit_func, "Q0")
+        fit_val = fit_func.GetParameter(0)
+        fit_err = fit_func.GetParError(0)
+
+        # Create fit band
+        g_fit_band = ROOT.TGraphErrors()
+        g_fit_band.SetPoint(0, 0.0, fit_val); g_fit_band.SetPointError(0, 0.0, fit_err)
+        g_fit_band.SetPoint(1, 2.0, fit_val); g_fit_band.SetPointError(1, 0.0, fit_err)
+        g_fit_band.SetFillColorAlpha(ROOT.kPink, 0.4); g_fit_band.SetFillStyle(1001)
+
+        g_ratio_sys_clone = g_ratio_sys.Clone()
+        g_ratio_sys_clone.SetLineColor(ROOT.kGreen+2); g_ratio_sys_clone.SetFillColorAlpha(ROOT.kGreen-9, 0.5)
+        g_ratio_stat_clone = g_ratio_stat.Clone()
+
+        mg_bottom.Add(g_fit_band, "3")
+        mg_bottom.Add(g_ratio_sys_clone, "2")
+        mg_bottom.Add(g_ratio_stat_clone, "P")
+
+        mg_bottom.Draw("A")
+        mg_bottom.SetTitle("")
+        mg_bottom.GetXaxis().SetLimits(0.0, 2.0)
+
+        mg_bottom.GetYaxis().SetTitle("#sigma_{pd}/2#sigma_{pp}")
+        mg_bottom.GetYaxis().CenterTitle()
+        mg_bottom.GetYaxis().SetTitleFont(43); mg_bottom.GetYaxis().SetTitleSize(22)
+        mg_bottom.GetYaxis().SetTitleOffset(2.0)
+        mg_bottom.GetYaxis().SetLabelFont(43); mg_bottom.GetYaxis().SetLabelSize(20)
+        mg_bottom.GetYaxis().SetNdivisions(505) # Fewer tick marks on smaller axis
+
+        mg_bottom.GetXaxis().SetTitle("p_{T} [GeV]")
+        mg_bottom.GetXaxis().CenterTitle()
+        mg_bottom.GetXaxis().SetTitleFont(43); mg_bottom.GetXaxis().SetTitleSize(22)
+        mg_bottom.GetXaxis().SetTitleOffset(1.2) # Reduced multiplier so it doesn't push off canvas
+        mg_bottom.GetXaxis().SetLabelFont(43); mg_bottom.GetXaxis().SetLabelSize(20)
+
+        # Ratio Dynamic Range
+        y_max_r, y_min_r = -1e9, 1e9
+        y_high_fit = fit_val + fit_err; y_low_fit = fit_val - fit_err
+        if y_high_fit > y_max_r: y_max_r = y_high_fit
+        if y_low_fit < y_min_r: y_min_r = y_low_fit
+        for i in range(g_ratio_stat.GetN()):
+            y = g_ratio_stat.GetY()[i]
+            err = max(g_ratio_stat.GetErrorY(i), g_ratio_sys.GetErrorY(i))
+            if y + err > y_max_r: y_max_r = y + err
+            if y - err < y_min_r: y_min_r = y - err
+
+        if y_min_r < y_max_r:
+            y_range = y_max_r - y_min_r
+            mg_bottom.SetMinimum(max(0.0, y_min_r - 0.5 * y_range))
+            mg_bottom.SetMaximum(y_max_r + 0.6 * y_range)
+        else:
+            mg_bottom.SetMinimum(0.0); mg_bottom.SetMaximum(2.0)
+
+        line = ROOT.TLine(0.0, 1.0, 2.0, 1.0)
+        line.SetLineStyle(2); line.SetLineColor(ROOT.kGray+2); line.SetLineWidth(2); line.Draw("SAME")
+        fit_func.SetLineColor(ROOT.kRed); fit_func.SetLineWidth(2); fit_func.Draw("SAME")
+
+        # Draw TLatex best fit value
+        latex_fit = ROOT.TLatex()
+        latex_fit.SetTextFont(43); latex_fit.SetTextSize(20); latex_fit.SetTextColor(ROOT.kRed)
+        y_text = fit_val + fit_err + ((mg_bottom.GetYaxis().GetXmax() - mg_bottom.GetYaxis().GetXmin()) * 0.05)
+        latex_fit.DrawLatex(0.2, y_text, f"Best Fit: {fit_val:.4f} #pm {fit_err:.4f}")
+
+        canvas.SaveAs(f"Combined_XSec_Ratio_vs_pT{suffix}.pdf")
+
+        dir_comb = self.get_or_create_dir(self.out_file, "Combined_Plots")
+        dir_comb.cd()
+        canvas.Write(f"c_combined_ratio_overlay{suffix}")
+        canvas.Close()
 
     def calculate_cross_sections(self):
         """Runs the subtraction, cross-section logic, and ratio plots for all targets."""
@@ -1112,6 +1293,7 @@ class DYCrossSectionAnalyzer:
                 
             self.generate_overlay_plot(use_true_pt)
             self.generate_ratio_plot(use_true_pt)
+            self.generate_combined_ratio_overlay_plot(use_true_pt) 
 
     def generate_latex_appendix(self):
         """Generates LaTeX source code for the Mass Centroid derivations."""
