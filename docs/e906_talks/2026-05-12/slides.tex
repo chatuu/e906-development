@@ -5,11 +5,28 @@
 \usepackage{hyperref}
 \usepackage{multicol}
 \setbeamertemplate{navigation symbols}{}
-\graphicspath{{/root/github/e906-development/src/xsec_pT/RS57-70/}{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57-70/}}
 
-\title{Measurement of Absolute Double Differential Cross-Section in Invariant Mass and $p_T$ Bins}
+% Custom Footer configuration
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}Chatura Kuruppu (SeaQuest Experiment)
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}Single Differential Cross-Section in $p_{T}$ bins
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\hspace*{\fill}2026-05-13\hspace*{\fill}\rlap{\insertframenumber{}/\inserttotalframenumber}\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\graphicspath{{/root/github/e906-development/src/xsec_pT/RS57-70/}{/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57-70/}{/root/github/e906-development/src/AcceptanceCorrection/}}
+
+\title{Measurement of Absolute Single Differential Cross-Section in $p_T$ Bins using Runs 2 and 3 Data}
 \author{Chatura Kuruppu}
-\institute{SeaQuest Experiment (E906) \\ Fermi National Accelerator Laboratory}
+\institute{New Mexico State University\\ \vspace{0.1cm} SeaQuest Experiment (E906)}
 \date{\today}
 
 \begin{document}
@@ -35,13 +52,12 @@
 
 \end{frame}
 
-\begin{frame}{Input Files Used}
+\begin{frame}{Events from runs 2 and 3 (Input Files Used)}
     
 \textbf{Note:} Currently using all the runs saved in runs 2 and 3.
-
-\vspace{0.2cm}
-\tiny
-\textbf{Currently using Harsha's ROOT files saved in:} \\
+\vspace{0.3cm}
+\tiny\\
+\textbf{Harsha's ROOT files:} \\
 \texttt{/seaquest/users/harshaka/e906\_project/e906-root-ana/work\_gpvm/scripts/results\_runFinalTree/merged\_results\_e906\_mixing/:}
 \begin{multicols}{2}
 \begin{itemize}
@@ -59,15 +75,16 @@
     \item \texttt{merged\_RS70\_Empty\_2\_267.root}
 \end{itemize}
 \end{multicols}
-
-\vspace{0.2cm}
-\textbf{For RS67 using Abi's files saved in:} \\
+\textbf{Abi's ROOT files:} \\
 \texttt{/seaquest/users/apun/e906\_projects/rs67\_merged\_files/:}
+\begin{multicols}{1}
 \begin{itemize}
     \item \texttt{merged\_RS67\_3089LH2.root}
     \item \texttt{merged\_RS67\_3089LD2.root}
     \item \texttt{merged\_RS67\_3089flask.root}
 \end{itemize}
+\end{multicols}
+
 \normalsize
 
 \end{frame}
@@ -83,7 +100,7 @@
 
 \end{frame}
 
-\begin{frame}{Event Selection Criteria}
+\begin{frame}{Event Selection Criteria (Chuck Cuts)}
     \footnotesize
     
 \textbf{Dimuon Kinematics:}
@@ -104,7 +121,9 @@
 \textbf{Detector Occupancy Limits:}
 \begin{itemize}
     \item Drift chamber hits: $D1 < 400$, $D2 < 400$, $D3 < 400$, and total $D1+D2+D3 < 1000$.
-\end{itemize}
+\end{itemize}\\
+\vspace{0.3cm}
+\textbf{Note:} Currently using the same set of Chuck Cuts defined in \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=2111}{DocDB 2111-V42}
 
 \end{frame}
 
@@ -123,10 +142,9 @@
         70 & $1.785745 \times 10^{16}$ & $8.752588 \times 10^{15}$ & $3.841280 \times 10^{15}$ \\ \hline
     \end{tabular}
 \end{table}
-
 \vspace{0.3cm}
 \footnotesize
-\textbf{Note:} These POT Values are based on the runs successfully mixed by Harsha in \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11524}{DocDB 11524}.
+\textbf{Note:} POT Values from runs mixed by Harsha in \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11524}{DocDB 11524}.
 \normalsize
 
 \end{frame}
@@ -143,63 +161,83 @@
     \end{center}
 \end{frame}
 
+\begin{frame}{Acceptance Corrections for $p_{T}$ bins}
+    \begin{center}
+        \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{Acceptance_pT_All_Mass_xF.pdf}
+    \end{center}
+\end{frame}
+
 \begin{frame}{Determination of $\epsilon_{\text{signal}}$}
     
 \small
 For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) bin, there will be $Y_{\text{total}}$ dimuons in the normal event stream and $Y_{\text{mix}}$ dimuons from the mixed event stream.
-
 \vspace{0.2cm}
 \begin{columns}[T]
-    \begin{column}{0.65\textwidth}
-        \begin{equation*}
-            \langle \epsilon \rangle_{\text{total}}^{\text{hodo}} = \frac{1}{Y_{\text{total}}} \sum_{i=1}^{Y_{\text{total}}} \epsilon_i^{\text{hodo}}
-        \end{equation*}
-        \begin{equation*}
-            \langle \epsilon \rangle_{\text{mix}}^{\text{hodo}} = \frac{1}{Y_{\text{mix}}} \sum_{j=1}^{Y_{\text{mix}}} \epsilon_j^{\text{hodo}}
-        \end{equation*}
-        \begin{equation*}
-            \langle \epsilon \rangle_{\text{total}}^{\text{reco}} = \frac{1}{Y_{\text{total}}} \sum_{i=1}^{Y_{\text{total}}} \epsilon_i^{\text{reco}}
-        \end{equation*}
-        \begin{equation*}
-            \langle \epsilon \rangle_{\text{mix}}^{\text{reco}} = \frac{1}{Y_{\text{mix}}} \sum_{j=1}^{Y_{\text{mix}}} \epsilon_j^{\text{reco}}
-        \end{equation*}
-    \end{column}
-    \begin{column}{0.35\textwidth}
-        \vspace{0.4cm}
-        \scriptsize
-        $\epsilon_{\text{hodo}} = [\epsilon_{st1}^x \epsilon_{st2}^x \epsilon_{st3}^x \epsilon_{st4}^x \epsilon_{st1}^y \epsilon_{st2}^y \epsilon_{st3}^y \epsilon_{st4}^y]_i$
-        \vspace{0.4cm}
-        
-        $\delta\langle\epsilon\rangle_{\text{total}}^{\text{hodo}}$ and $\delta\langle\epsilon\rangle_{\text{mix}}^{\text{hodo}}$ are propagated from hodoscope paddle efficiencies.
-        \vspace{0.6cm}
-        
-        $\epsilon^{\text{reco}}$ interpolated from $\epsilon(D1)$ function.
-        \vspace{0.4cm}
-        $\langle \epsilon \rangle_{\text{total}} = \langle \epsilon \rangle_{\text{total}}^{\text{hodo}} \langle \epsilon \rangle_{\text{total}}^{\text{reco}}$ \qquad $\langle \epsilon \rangle_{\text{mix}} = \langle \epsilon \rangle_{\text{mix}}^{\text{hodo}} \langle \epsilon \rangle_{\text{mix}}^{\text{reco}}$
-        \vspace{0.4cm}\\
-        $\delta\langle\epsilon\rangle_{\text{total}}^{\text{reco}}$ and $\delta\langle\epsilon\rangle_{\text{mix}}^{\text{reco}}$ include correlations\\
-        \vspace{0.4cm}\\
-        (See \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11431}{DocDB 11431})
-    \end{column}
+\begin{column}{0.65\textwidth}
+\begin{equation*}
+\langle \epsilon \rangle_{\text{total}}^{\text{hodo}} = \frac{1}{Y_{\text{total}}} \sum_{i=1}^{Y_{\text{total}}} \epsilon_i^{\text{hodo}}
+\end{equation*}
+\begin{equation*}
+\langle \epsilon \rangle_{\text{mix}}^{\text{hodo}} = \frac{1}{Y_{\text{mix}}} \sum_{j=1}^{Y_{\text{mix}}} \epsilon_j^{\text{hodo}}
+\end{equation*}
+\begin{equation*}
+\langle \epsilon \rangle_{\text{total}}^{\text{reco}} = \frac{1}{Y_{\text{total}}} \sum_{i=1}^{Y_{\text{total}}} \epsilon_i^{\text{reco}}
+\end{equation*}
+\begin{equation*}
+\langle \epsilon \rangle_{\text{mix}}^{\text{reco}} = \frac{1}{Y_{\text{mix}}} \sum_{j=1}^{Y_{\text{mix}}} \epsilon_j^{\text{reco}}
+\end{equation*}
+\end{column}
+\begin{column}{0.35\textwidth}
+\vspace{0.4cm}
+\scriptsize
+$\epsilon_{\text{hodo}} = [\epsilon_{st1}^x \epsilon_{st2}^x \epsilon_{st3}^x \epsilon_{st4}^x \epsilon_{st1}^y \epsilon_{st2}^y \epsilon_{st3}^y \epsilon_{st4}^y]_i$
+\vspace{0.4cm}\\
+$\delta\langle\epsilon\rangle_{\text{total}}^{\text{hodo}}$ and $\delta\langle\epsilon\rangle_{\text{mix}}^{\text{hodo}}$ are propagated from hodoscope paddle efficiencies.
+\vspace{0.6cm}\\
+$\epsilon^{\text{reco}}$ interpolated from $\epsilon(D1)$ function.
+\vspace{0.4cm}\\
+$\langle \epsilon \rangle_{\text{total}} = \langle \epsilon \rangle_{\text{total}}^{\text{hodo}} \langle \epsilon \rangle_{\text{total}}^{\text{reco}}$ \qquad $\langle \epsilon \rangle_{\text{mix}} = \langle \epsilon \rangle_{\text{mix}}^{\text{hodo}} \langle \epsilon \rangle_{\text{mix}}^{\text{reco}}$
+\vspace{0.4cm}\\
+$\delta\langle\epsilon\rangle_{\text{total}}^{\text{reco}}$ and $\delta\langle\epsilon\rangle_{\text{mix}}^{\text{reco}}$ include correlations\\
+\vspace{0.4cm}\\
+(See \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11431}{DocDB 11431})
+\end{column}
 \end{columns}
-
-%\vspace{0.3cm}
+%%\vspace{0.3cm}
 \centering
-
-
-%\vspace{0.2cm}
+%%\vspace{0.2cm}
 \begin{columns}[c]
-    \begin{column}{0.65\textwidth}
-        \begin{equation*}
-            \epsilon_{\text{signal}} = \frac{\langle \epsilon \rangle_{\text{total}} Y_{\text{total}} - \langle \epsilon \rangle_{\text{mix}} Y_{\text{mix}}}{Y_{\text{total}} - Y_{\text{mix}}} \qquad \text{\href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11448}{DocDB 11448}}
-        \end{equation*}
-    \end{column}
-    \begin{column}{0.35\textwidth}
-        \scriptsize
-        $\delta\epsilon_{\text{signal}}$ propagated from uncertainties in the six inputs.
-    \end{column}
+\begin{column}{0.65\textwidth}
+\begin{equation*}
+\epsilon_{\text{signal}} = \frac{\langle \epsilon \rangle_{\text{total}} Y_{\text{total}} - \langle \epsilon \rangle_{\text{mix}} Y_{\text{mix}}}{Y_{\text{total}} - Y_{\text{mix}}} \qquad \text{\href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11448}{DocDB 11448}}
+\end{equation*}
+\end{column}
+\begin{column}{0.35\textwidth}
+\scriptsize
+$\delta\epsilon_{\text{signal}}$ propagated from uncertainties in the six inputs.
+\end{column}
 \end{columns}
 \normalsize
+
+
+\end{frame}
+
+\begin{frame}{Yield Distributions}
+    
+Following Yields were calculated for targets: [LH2, LD2 and Flask]:\\
+\vspace{0.3cm}
+\textbf{LH2 Target:}
+\begin{itemize}
+    \item \texttt{Y\_total\_LH2}, \texttt{Y\_mix\_LH2}
+\end{itemize}
+\textbf{LD2 Target:}
+\begin{itemize}
+    \item \texttt{Y\_total\_LD2}, \texttt{Y\_mix\_LD2}
+\end{itemize}
+\textbf{Flask:}
+\begin{itemize}
+    \item \texttt{Y\_total\_Flask}, \texttt{Y\_mix\_Flask}
+\end{itemize}
 
 \end{frame}
 
@@ -239,6 +277,23 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     \end{center}
 \end{frame}
 
+\begin{frame}{Determination of reconstruction efficiency}
+    
+Following reconstruction efficiencies with the propagated uncertainties were calculated for targets: [LH2, LD2 and Flask] by using D1 occupancy and the global efficiency curve:\\
+\vspace{0.3cm}
+\textbf{LH2 Target:}\\
+E total reco LH2, E mix reco LH2\\
+\vspace{0.2cm}
+\textbf{LD2 Target:}\\
+Y total reco LD2, Y mix reco LD2\\
+\vspace{0.2cm}
+\textbf{Flask:}\\
+Y total reco Flask, Y mix reco Flask\\
+\vspace{0.3cm}
+\textbf{Note:} The step-by-step procedure was explained in docDB: \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11494}{11494-v5}
+
+\end{frame}
+
 \begin{frame}{E\_total\_reco\_LH2}
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{E_total_reco_LH2.pdf}
@@ -273,6 +328,23 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{E_mix_reco_Flask.pdf}
     \end{center}
+\end{frame}
+
+\begin{frame}{Determination of Hodoscope Efficiencies}
+    
+Following hodoscope efficiencies with the propagated uncertainties were calculated for targets: [LH2, LD2 and Flask] by using the latest hodoscope paddle efficiency table:\\
+\vspace{0.3cm}
+\textbf{LH2 Target:}\\
+E total hodo LH2, E mix hodo LH2\\
+\vspace{0.2cm}
+\textbf{LD2 Target:}\\
+E total hodo LD2, E mix hodo LD2\\
+\vspace{0.2cm}
+\textbf{Flask:}\\
+E total hodo Flask, E mix hodo Flask\\
+\vspace{0.3cm}
+\textbf{Note:} The latest hodoscope paddle efficiency calculations can be found in docDB: \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11467}{11467-v10}
+
 \end{frame}
 
 \begin{frame}{E\_total\_hodo\_LH2}
@@ -311,6 +383,21 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     \end{center}
 \end{frame}
 
+\begin{frame}{Determination of final efficiencies}
+    
+Now that we have calculated both average reco. and average hodo. efficiencies, by taking the product, final efficiencies can be calculated with the correct propagated uncertainties for the targets: [LH2, LD2, Flask]\\
+\vspace{0.4cm}
+\textbf{LH2 Target:}\\
+E total final LH2, E mix final LH2\\
+\vspace{0.2cm}
+\textbf{LD2 Target:}\\
+E total final LD2, E mix final LD2\\
+\vspace{0.2cm}
+\textbf{Flask:}\\
+E total final Flask, E mix final Flask
+
+\end{frame}
+
 \begin{frame}{E\_total\_final\_LH2}
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{E_total_final_LH2.pdf}
@@ -345,6 +432,15 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{E_mix_final_Flask.pdf}
     \end{center}
+\end{frame}
+
+\begin{frame}{Determination of $\epsilon_{\text{signal}}$}
+    
+Now that we have calculated $Y_{total}$, $Y_{mix}$, $\langle\epsilon\rangle_{total}$ and $\langle\epsilon\rangle_{mix}$, it is possible to calculate $\epsilon_{\text{signal}}$ using following formula:
+\begin{equation*}
+\epsilon_{\text{signal}} = \frac{\langle \epsilon \rangle_{\text{total}} Y_{\text{total}} - \langle \epsilon \rangle_{\text{mix}} Y_{\text{mix}}}{Y_{\text{total}} - Y_{\text{mix}}}
+\end{equation*}
+
 \end{frame}
 
 \begin{frame}{E\_final\_signal\_LH2}
@@ -383,6 +479,30 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     \end{center}
 \end{frame}
 
+\begin{frame}{Determination of Signal candidates}
+    
+Now that we have calculated $Y_{total}$, $Y_{mix}$ and $\epsilon_{signal}$ it is possible to calculate signal candidates for both LH2 and LD2 targets using following equations:
+\begin{equation}
+\label{eq:corrected_yield}
+    Y_{\rm corrected}^{\rm LH2}= \frac{Y^{\text{LH2}}_{\text{total}} - Y^{\text{LH2}}_{\text{mixed}}}{\langle\epsilon^{\text{LH2}}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LH2}}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right)
+\end{equation}
+\begin{eqnarray}
+    Y_{\rm corrected}^{\rm LD2}&=& 
+        \frac{Y^{\text{LD2}}_{\text{total}} - Y^{\text{LD2}}_{\text{mixed}}}{\langle\epsilon^{\text{LD2}}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LD2}}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right) \nonumber \\
+    & & - \frac{T_{HD}}{T_{HH}} \frac{I_{\rm LD2}}{I_{\rm LH2}}\left[ 
+        \frac{Y^{\text{LH2}}_{\text{total}} - Y^{\text{LH2}}_{\text{mixed}}}{\langle\epsilon^{\text{LH2}}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LH2}}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right)
+    \right]
+    \label{eq:y_corrected_ld2}
+\end{eqnarray}
+
+\end{frame}
+
 \begin{frame}{Y\_corrected\_Subtracted\_LH2}
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{Y_corrected_Subtracted_LH2.pdf}
@@ -401,33 +521,15 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     \end{center}
 \end{frame}
 
-\begin{frame}{CrossSection\_LH2\_true\_pt\_vs\_pT\_with\_logo}
-    \begin{center}
-        \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{CrossSection_LH2_true_pt_vs_pT_with_logo.pdf}
-    \end{center}
-\end{frame}
-
 \begin{frame}{CrossSection\_LD2\_geom\_vs\_pT\_with\_logo}
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{CrossSection_LD2_geom_vs_pT_with_logo.pdf}
     \end{center}
 \end{frame}
 
-\begin{frame}{CrossSection\_LD2\_true\_pt\_vs\_pT\_with\_logo}
-    \begin{center}
-        \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{CrossSection_LD2_true_pt_vs_pT_with_logo.pdf}
-    \end{center}
-\end{frame}
-
 \begin{frame}{CrossSection\_Ratio\_pd\_2pp\_vs\_pT\_geom\_with\_logo}
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{CrossSection_Ratio_pd_2pp_vs_pT_geom_with_logo.pdf}
-    \end{center}
-\end{frame}
-
-\begin{frame}{CrossSection\_Ratio\_pd\_2pp\_vs\_pT\_true\_pt\_with\_logo}
-    \begin{center}
-        \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{CrossSection_Ratio_pd_2pp_vs_pT_true_pt_with_logo.pdf}
     \end{center}
 \end{frame}
 
@@ -448,8 +550,8 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
 \begin{itemize}
     \setlength{\itemsep}{1em}
     \item Need to work on unfolding (work on progress).
-    \item We are planning to present these preliminary plots during the upcoming APS DPF meeting.
-    \item Another set of cross-section plots will be generated after integrating run 5 data.
+    \item Planning to present preliminary plots during upcoming APS DPF meeting.
+    \item Analysis note will be written for this Run 2-3 release, as a preliminary result.
 \end{itemize}
 
 \end{frame}

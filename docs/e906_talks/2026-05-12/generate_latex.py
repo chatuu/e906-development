@@ -1,57 +1,66 @@
 import os
 import re
+from datetime import date
+
 
 def generate_latex():
     # Configuration
     base_dir = "/root/github/e906-development/src/xsec_pT/RS57-70"
     backup_dir = "/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57-70"
-    title = r"Measurement of Absolute Double Differential Cross-Section in Invariant Mass and $p_T$ Bins"
+    acceptance_dir = "/root/github/e906-development/src/AcceptanceCorrection"
+
+    # Updated footer requirements
+    footer_center_text = r"Single Differential Cross-Section in $p_{T}$ bins"
     author = "Chatura Kuruppu"
-    
-    # Define exact plot order incorporating all requested files logically grouped
+    title = r"Measurement of Absolute Single Differential Cross-Section in $p_T$ Bins using Runs 2 and 3 Data"
+
+    # Get today's date in YYYY-MM-DD format
+    today_str = date.today().strftime("%Y-%m-%d")
+
+    # Define plot names (main sequence)
     plot_names = [
-        # Raw & Mixed Yields
-        "Y_total_LH2", "Y_total_LD2", "Y_total_Flask",
-        "Y_mix_LH2", "Y_mix_LD2", "Y_mix_Flask",
-        
-        # Reconstruction Efficiencies
-        "E_total_reco_LH2", "E_total_reco_LD2", "E_total_reco_Flask",
-        "E_mix_reco_LH2", "E_mix_reco_LD2", "E_mix_reco_Flask",
-        
-        # Hodoscope Efficiencies
-        "E_total_hodo_LH2", "E_total_hodo_LD2", "E_total_hodo_Flask",
-        "E_mix_hodo_LH2", "E_mix_hodo_LD2", "E_mix_hodo_Flask",
-        
-        # Final Efficiencies
-        "E_total_final_LH2", "E_total_final_LD2", "E_total_final_Flask",
-        "E_mix_final_LH2", "E_mix_final_LD2", "E_mix_final_Flask",
-        
-        # Signal Efficiencies
-        "E_final_signal_LH2", "E_final_signal_LD2", "E_final_signal_Flask",
-        
-        # Corrected & Subtracted Yields
-        "Y_corrected_LH2", "Y_corrected_LD2", "Y_corrected_Flask",
-        "Y_corrected_Subtracted_LH2", "Y_corrected_Subtracted_LD2",
-        
-        # Cross-Sections (Geometric vs True pT)
+        "Y_total_LH2",
+        "Y_total_LD2",
+        "Y_total_Flask",
+        "Y_mix_LH2",
+        "Y_mix_LD2",
+        "Y_mix_Flask",
+        "E_total_reco_LH2",
+        "E_total_reco_LD2",
+        "E_total_reco_Flask",
+        "E_mix_reco_LH2",
+        "E_mix_reco_LD2",
+        "E_mix_reco_Flask",
+        "E_total_hodo_LH2",
+        "E_total_hodo_LD2",
+        "E_total_hodo_Flask",
+        "E_mix_hodo_LH2",
+        "E_mix_hodo_LD2",
+        "E_mix_hodo_Flask",
+        "E_total_final_LH2",
+        "E_total_final_LD2",
+        "E_total_final_Flask",
+        "E_mix_final_LH2",
+        "E_mix_final_LD2",
+        "E_mix_final_Flask",
+        "E_final_signal_LH2",
+        "E_final_signal_LD2",
+        "E_final_signal_Flask",
+        "Y_corrected_LH2",
+        "Y_corrected_LD2",
+        "Y_corrected_Flask",
+        "Y_corrected_Subtracted_LH2",
+        "Y_corrected_Subtracted_LD2",
         "CrossSection_LH2_geom_vs_pT_with_logo",
-        "CrossSection_LH2_true_pt_vs_pT_with_logo",
         "CrossSection_LD2_geom_vs_pT_with_logo",
-        "CrossSection_LD2_true_pt_vs_pT_with_logo",
-        
-        # Ratios (Geometric vs True pT)
         "CrossSection_Ratio_pd_2pp_vs_pT_geom_with_logo",
-        "CrossSection_Ratio_pd_2pp_vs_pT_true_pt_with_logo",
-        
-        # Combined Overlay & Ratio
         "Combined_XSec_Ratio_vs_pT_geom",
         "Combined_XSec_Ratio_vs_pT_true_pt"
     ]
 
-    # Append .pdf to each plot name
     ordered_files = [f"{name}.pdf" for name in plot_names]
 
-    # Backup plots to be included at the end
+    # Backup plots
     backup_plots = [
         "CrossSection_LD2_xF_0.00_0.05_GeoCenter_with_logo.pdf",
         "CrossSection_LD2_xF_0.05_0.10_GeoCenter_with_logo.pdf",
@@ -87,18 +96,15 @@ def generate_latex():
         "CrossSection_LH2_xF_0.75_0.80_GeoCenter_with_logo.pdf"
     ]
 
-    # Function to escape underscores for LaTeX text (captions/titles)
     def tex_escape(text):
-        return text.replace('_', r'\_')
+        return text.replace("_", r"\_")
 
-    # Helper function to generate clean titles for the backup plots
     def get_backup_title(filename):
-        # Extracts target, xF_low, and xF_high using regex
         match = re.search(r"CrossSection_(LH2|LD2)_xF_([0-9\.]+)_([0-9\.]+)", filename)
         if match:
             target, xf_low, xf_high = match.groups()
             return f"Cross-Section {target} ${xf_low} \\le x_{{F}} < {xf_high}$"
-        return tex_escape(filename.replace('.pdf', ''))
+        return tex_escape(filename.replace(".pdf", ""))
 
     # Content Strings
     overview_latex = r"""
@@ -118,10 +124,9 @@ def generate_latex():
 
     inputs_latex = r"""
 \textbf{Note:} Currently using all the runs saved in runs 2 and 3.
-
-\vspace{0.2cm}
-\tiny
-\textbf{Currently using Harsha's ROOT files saved in:} \\
+\vspace{0.3cm}
+\tiny\\
+\textbf{Harsha's ROOT files:} \\
 \texttt{/seaquest/users/harshaka/e906\_project/e906-root-ana/work\_gpvm/scripts/results\_runFinalTree/merged\_results\_e906\_mixing/:}
 \begin{multicols}{2}
 \begin{itemize}
@@ -139,15 +144,16 @@ def generate_latex():
     \item \texttt{merged\_RS70\_Empty\_2\_267.root}
 \end{itemize}
 \end{multicols}
-
-\vspace{0.2cm}
-\textbf{For RS67 using Abi's files saved in:} \\
+\textbf{Abi's ROOT files:} \\
 \texttt{/seaquest/users/apun/e906\_projects/rs67\_merged\_files/:}
+\begin{multicols}{1}
 \begin{itemize}
     \item \texttt{merged\_RS67\_3089LH2.root}
     \item \texttt{merged\_RS67\_3089LD2.root}
     \item \texttt{merged\_RS67\_3089flask.root}
 \end{itemize}
+\end{multicols}
+
 \normalsize
 """
 
@@ -179,7 +185,9 @@ def generate_latex():
 \textbf{Detector Occupancy Limits:}
 \begin{itemize}
     \item Drift chamber hits: $D1 < 400$, $D2 < 400$, $D3 < 400$, and total $D1+D2+D3 < 1000$.
-\end{itemize}
+\end{itemize}\\
+\vspace{0.3cm}
+\textbf{Note:} Currently using the same set of Chuck Cuts defined in \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=2111}{DocDB 2111-V42}
 """
 
     pot_latex = r"""
@@ -196,98 +204,204 @@ def generate_latex():
         70 & $1.785745 \times 10^{16}$ & $8.752588 \times 10^{15}$ & $3.841280 \times 10^{15}$ \\ \hline
     \end{tabular}
 \end{table}
-
 \vspace{0.3cm}
 \footnotesize
-\textbf{Note:} These POT Values are based on the runs successfully mixed by Harsha in \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11524}{DocDB 11524}.
+\textbf{Note:} POT Values from runs mixed by Harsha in \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11524}{DocDB 11524}.
 \normalsize
+"""
+
+    yield_distributions_latex = r"""
+Following Yields were calculated for targets: [LH2, LD2 and Flask]:\\
+\vspace{0.3cm}
+\textbf{LH2 Target:}
+\begin{itemize}
+    \item \texttt{Y\_total\_LH2}, \texttt{Y\_mix\_LH2}
+\end{itemize}
+\textbf{LD2 Target:}
+\begin{itemize}
+    \item \texttt{Y\_total\_LD2}, \texttt{Y\_mix\_LD2}
+\end{itemize}
+\textbf{Flask:}
+\begin{itemize}
+    \item \texttt{Y\_total\_Flask}, \texttt{Y\_mix\_Flask}
+\end{itemize}
 """
 
     next_steps_latex = r"""
 \begin{itemize}
     \setlength{\itemsep}{1em}
     \item Need to work on unfolding (work on progress).
-    \item We are planning to present these preliminary plots during the upcoming APS DPF meeting.
-    \item Another set of cross-section plots will be generated after integrating run 5 data.
+    \item Planning to present preliminary plots during upcoming APS DPF meeting.
+    \item Analysis note will be written for this Run 2-3 release, as a preliminary result.
 \end{itemize}
 """
 
+    reco_efficiency_explanation_latex = r"""
+Following reconstruction efficiencies with the propagated uncertainties were calculated for targets: [LH2, LD2 and Flask] by using D1 occupancy and the global efficiency curve:\\
+\vspace{0.3cm}
+\textbf{LH2 Target:}\\
+E total reco LH2, E mix reco LH2\\
+\vspace{0.2cm}
+\textbf{LD2 Target:}\\
+Y total reco LD2, Y mix reco LD2\\
+\vspace{0.2cm}
+\textbf{Flask:}\\
+Y total reco Flask, Y mix reco Flask\\
+\vspace{0.3cm}
+\textbf{Note:} The step-by-step procedure was explained in docDB: \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11494}{11494-v5}
+"""
+
+    hodo_efficiency_explanation_latex = r"""
+Following hodoscope efficiencies with the propagated uncertainties were calculated for targets: [LH2, LD2 and Flask] by using the latest hodoscope paddle efficiency table:\\
+\vspace{0.3cm}
+\textbf{LH2 Target:}\\
+E total hodo LH2, E mix hodo LH2\\
+\vspace{0.2cm}
+\textbf{LD2 Target:}\\
+E total hodo LD2, E mix hodo LD2\\
+\vspace{0.2cm}
+\textbf{Flask:}\\
+E total hodo Flask, E mix hodo Flask\\
+\vspace{0.3cm}
+\textbf{Note:} The latest hodoscope paddle efficiency calculations can be found in docDB: \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11467}{11467-v10}
+"""
+
+    final_efficiency_explanation_latex = r"""
+Now that we have calculated both average reco. and average hodo. efficiencies, by taking the product, final efficiencies can be calculated with the correct propagated uncertainties for the targets: [LH2, LD2, Flask]\\
+\vspace{0.4cm}
+\textbf{LH2 Target:}\\
+E total final LH2, E mix final LH2\\
+\vspace{0.2cm}
+\textbf{LD2 Target:}\\
+E total final LD2, E mix final LD2\\
+\vspace{0.2cm}
+\textbf{Flask:}\\
+E total final Flask, E mix final Flask
+"""
+
+    # Formula for epsilon signal insertion after slide 37
+    epsilon_signal_formula_latex = r"""
+Now that we have calculated $Y_{total}$, $Y_{mix}$, $\langle\epsilon\rangle_{total}$ and $\langle\epsilon\rangle_{mix}$, it is possible to calculate $\epsilon_{\text{signal}}$ using following formula:
+\begin{equation*}
+\epsilon_{\text{signal}} = \frac{\langle \epsilon \rangle_{\text{total}} Y_{\text{total}} - \langle \epsilon \rangle_{\text{mix}} Y_{\text{mix}}}{Y_{\text{total}} - Y_{\text{mix}}}
+\end{equation*}
+"""
+
+    # Signal candidates insertion before slide 45 (idx 29)
+    signal_candidates_latex = r"""
+Now that we have calculated $Y_{total}$, $Y_{mix}$ and $\epsilon_{signal}$ it is possible to calculate signal candidates for both LH2 and LD2 targets using following equations:
+\begin{equation}
+\label{eq:corrected_yield}
+    Y_{\rm corrected}^{\rm LH2}= \frac{Y^{\text{LH2}}_{\text{total}} - Y^{\text{LH2}}_{\text{mixed}}}{\langle\epsilon^{\text{LH2}}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LH2}}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right)
+\end{equation}
+\begin{eqnarray}
+    Y_{\rm corrected}^{\rm LD2}&=& 
+        \frac{Y^{\text{LD2}}_{\text{total}} - Y^{\text{LD2}}_{\text{mixed}}}{\langle\epsilon^{\text{LD2}}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LD2}}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right) \nonumber \\
+    & & - \frac{T_{HD}}{T_{HH}} \frac{I_{\rm LD2}}{I_{\rm LH2}}\left[ 
+        \frac{Y^{\text{LH2}}_{\text{total}} - Y^{\text{LH2}}_{\text{mixed}}}{\langle\epsilon^{\text{LH2}}_{\text{signal}}\rangle} 
+        - \frac{I_{\text{LH2}}}{I_{\text{flask}}} 
+        \left( \frac{Y^{\text{flask}}_{\text{total}} - Y^{\text{flask}}_{\text{mixed}}}{\langle\epsilon^{\text{flask}}_{\text{signal}}\rangle} \right)
+    \right]
+    \label{eq:y_corrected_ld2}
+\end{eqnarray}
+"""
+
+    # Fully escaped raw percent comments to maintain strict string generation formatting
     epsilon_signal_latex = r"""
 \small
 For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) bin, there will be $Y_{\text{total}}$ dimuons in the normal event stream and $Y_{\text{mix}}$ dimuons from the mixed event stream.
-
 \vspace{0.2cm}
 \begin{columns}[T]
-    \begin{column}{0.65\textwidth}
-        \begin{equation*}
-            \langle \epsilon \rangle_{\text{total}}^{\text{hodo}} = \frac{1}{Y_{\text{total}}} \sum_{i=1}^{Y_{\text{total}}} \epsilon_i^{\text{hodo}}
-        \end{equation*}
-        \begin{equation*}
-            \langle \epsilon \rangle_{\text{mix}}^{\text{hodo}} = \frac{1}{Y_{\text{mix}}} \sum_{j=1}^{Y_{\text{mix}}} \epsilon_j^{\text{hodo}}
-        \end{equation*}
-        \begin{equation*}
-            \langle \epsilon \rangle_{\text{total}}^{\text{reco}} = \frac{1}{Y_{\text{total}}} \sum_{i=1}^{Y_{\text{total}}} \epsilon_i^{\text{reco}}
-        \end{equation*}
-        \begin{equation*}
-            \langle \epsilon \rangle_{\text{mix}}^{\text{reco}} = \frac{1}{Y_{\text{mix}}} \sum_{j=1}^{Y_{\text{mix}}} \epsilon_j^{\text{reco}}
-        \end{equation*}
-    \end{column}
-    \begin{column}{0.35\textwidth}
-        \vspace{0.4cm}
-        \scriptsize
-        $\epsilon_{\text{hodo}} = [\epsilon_{st1}^x \epsilon_{st2}^x \epsilon_{st3}^x \epsilon_{st4}^x \epsilon_{st1}^y \epsilon_{st2}^y \epsilon_{st3}^y \epsilon_{st4}^y]_i$
-        \vspace{0.4cm}
-        
-        $\delta\langle\epsilon\rangle_{\text{total}}^{\text{hodo}}$ and $\delta\langle\epsilon\rangle_{\text{mix}}^{\text{hodo}}$ are propagated from hodoscope paddle efficiencies.
-        \vspace{0.6cm}
-        
-        $\epsilon^{\text{reco}}$ interpolated from $\epsilon(D1)$ function.
-        \vspace{0.4cm}
-        $\langle \epsilon \rangle_{\text{total}} = \langle \epsilon \rangle_{\text{total}}^{\text{hodo}} \langle \epsilon \rangle_{\text{total}}^{\text{reco}}$ \qquad $\langle \epsilon \rangle_{\text{mix}} = \langle \epsilon \rangle_{\text{mix}}^{\text{hodo}} \langle \epsilon \rangle_{\text{mix}}^{\text{reco}}$
-        \vspace{0.4cm}\\
-        $\delta\langle\epsilon\rangle_{\text{total}}^{\text{reco}}$ and $\delta\langle\epsilon\rangle_{\text{mix}}^{\text{reco}}$ include correlations\\
-        \vspace{0.4cm}\\
-        (See \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11431}{DocDB 11431})
-    \end{column}
+\begin{column}{0.65\textwidth}
+\begin{equation*}
+\langle \epsilon \rangle_{\text{total}}^{\text{hodo}} = \frac{1}{Y_{\text{total}}} \sum_{i=1}^{Y_{\text{total}}} \epsilon_i^{\text{hodo}}
+\end{equation*}
+\begin{equation*}
+\langle \epsilon \rangle_{\text{mix}}^{\text{hodo}} = \frac{1}{Y_{\text{mix}}} \sum_{j=1}^{Y_{\text{mix}}} \epsilon_j^{\text{hodo}}
+\end{equation*}
+\begin{equation*}
+\langle \epsilon \rangle_{\text{total}}^{\text{reco}} = \frac{1}{Y_{\text{total}}} \sum_{i=1}^{Y_{\text{total}}} \epsilon_i^{\text{reco}}
+\end{equation*}
+\begin{equation*}
+\langle \epsilon \rangle_{\text{mix}}^{\text{reco}} = \frac{1}{Y_{\text{mix}}} \sum_{j=1}^{Y_{\text{mix}}} \epsilon_j^{\text{reco}}
+\end{equation*}
+\end{column}
+\begin{column}{0.35\textwidth}
+\vspace{0.4cm}
+\scriptsize
+$\epsilon_{\text{hodo}} = [\epsilon_{st1}^x \epsilon_{st2}^x \epsilon_{st3}^x \epsilon_{st4}^x \epsilon_{st1}^y \epsilon_{st2}^y \epsilon_{st3}^y \epsilon_{st4}^y]_i$
+\vspace{0.4cm}\\
+$\delta\langle\epsilon\rangle_{\text{total}}^{\text{hodo}}$ and $\delta\langle\epsilon\rangle_{\text{mix}}^{\text{hodo}}$ are propagated from hodoscope paddle efficiencies.
+\vspace{0.6cm}\\
+$\epsilon^{\text{reco}}$ interpolated from $\epsilon(D1)$ function.
+\vspace{0.4cm}\\
+$\langle \epsilon \rangle_{\text{total}} = \langle \epsilon \rangle_{\text{total}}^{\text{hodo}} \langle \epsilon \rangle_{\text{total}}^{\text{reco}}$ \qquad $\langle \epsilon \rangle_{\text{mix}} = \langle \epsilon \rangle_{\text{mix}}^{\text{hodo}} \langle \epsilon \rangle_{\text{mix}}^{\text{reco}}$
+\vspace{0.4cm}\\
+$\delta\langle\epsilon\rangle_{\text{total}}^{\text{reco}}$ and $\delta\langle\epsilon\rangle_{\text{mix}}^{\text{reco}}$ include correlations\\
+\vspace{0.4cm}\\
+(See \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11431}{DocDB 11431})
+\end{column}
 \end{columns}
-
-%\vspace{0.3cm}
+%%\vspace{0.3cm}
 \centering
-
-
-%\vspace{0.2cm}
+%%\vspace{0.2cm}
 \begin{columns}[c]
-    \begin{column}{0.65\textwidth}
-        \begin{equation*}
-            \epsilon_{\text{signal}} = \frac{\langle \epsilon \rangle_{\text{total}} Y_{\text{total}} - \langle \epsilon \rangle_{\text{mix}} Y_{\text{mix}}}{Y_{\text{total}} - Y_{\text{mix}}} \qquad \text{\href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11448}{DocDB 11448}}
-        \end{equation*}
-    \end{column}
-    \begin{column}{0.35\textwidth}
-        \scriptsize
-        $\delta\epsilon_{\text{signal}}$ propagated from uncertainties in the six inputs.
-    \end{column}
+\begin{column}{0.65\textwidth}
+\begin{equation*}
+\epsilon_{\text{signal}} = \frac{\langle \epsilon \rangle_{\text{total}} Y_{\text{total}} - \langle \epsilon \rangle_{\text{mix}} Y_{\text{mix}}}{Y_{\text{total}} - Y_{\text{mix}}} \qquad \text{\href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=11448}{DocDB 11448}}
+\end{equation*}
+\end{column}
+\begin{column}{0.35\textwidth}
+\scriptsize
+$\delta\epsilon_{\text{signal}}$ propagated from uncertainties in the six inputs.
+\end{column}
 \end{columns}
 \normalsize
+
 """
 
-    # ==========================================
-    # Generate Beamer Slides
-    # ==========================================
+    # Beamer script writing
     beamer_file = "slides.tex"
     with open(beamer_file, "w") as f:
-        # Added backup_dir to graphicspath so LaTeX can find backup plots natively
-        f.write(r"""\documentclass[aspectratio=169]{beamer}
+        # Footline template successfully updated:
+        # 1. Sets right-side block alignment to [left] to provide raw anchor spacing.
+        # 2. Uses \hspace*{\fill} to perfectly center the date string inside the rightmost block.
+        # 3. Uses a zero-width box \rlap layout to float the page numbers strictly on the far right boundary.
+        # 4. Safely preserves double-percent formatting directly inside string writes.
+        f.write(
+            r"""\documentclass[aspectratio=169]{beamer}
 \usetheme{Madrid}
 \usecolortheme{default}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{multicol}
 \setbeamertemplate{navigation symbols}{}
-\graphicspath{{%s/}{%s/}}
+
+%% Custom Footer configuration
+\setbeamertemplate{footline}{
+  \leavevmode%%
+  \hbox{%%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%%
+    \usebeamerfont{author in head/foot}%s (SeaQuest Experiment)
+  \end{beamercolorbox}%%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%%
+    \usebeamerfont{title in head/foot}%s
+  \end{beamercolorbox}%%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{date in head/foot}%%
+    \usebeamerfont{date in head/foot}\hspace*{\fill}%s\hspace*{\fill}\rlap{\insertframenumber{}/\inserttotalframenumber}\hspace*{2ex}
+  \end{beamercolorbox}}%%
+  \vskip0pt%%
+}
+
+\graphicspath{{%s/}{%s/}{%s/}}
 
 \title{%s}
 \author{%s}
-\institute{SeaQuest Experiment (E906) \\ Fermi National Accelerator Laboratory}
+\institute{New Mexico State University\\ \vspace{0.1cm} SeaQuest Experiment (E906)}
 \date{\today}
 
 \begin{document}
@@ -300,7 +414,7 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     %s
 \end{frame}
 
-\begin{frame}{Input Files Used}
+\begin{frame}{Events from runs 2 and 3 (Input Files Used)}
     %s
 \end{frame}
 
@@ -308,7 +422,7 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     %s
 \end{frame}
 
-\begin{frame}{Event Selection Criteria}
+\begin{frame}{Event Selection Criteria (Chuck Cuts)}
     \footnotesize
     %s
 \end{frame}
@@ -329,36 +443,121 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     \end{center}
 \end{frame}
 
+\begin{frame}{Acceptance Corrections for $p_{T}$ bins}
+    \begin{center}
+        \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{Acceptance_pT_All_Mass_xF.pdf}
+    \end{center}
+\end{frame}
+
 \begin{frame}{Determination of $\epsilon_{\text{signal}}$}
     %s
 \end{frame}
-""" % (base_dir, backup_dir, title, author, overview_latex, inputs_latex, kinematic_bins_latex, event_selection_latex, pot_latex, epsilon_signal_latex))
 
-        # Main slide loop
-        for file in ordered_files:
+\begin{frame}{Yield Distributions}
+    %s
+\end{frame}
+"""
+            % (
+                author,
+                footer_center_text,
+                today_str,
+                base_dir,
+                backup_dir,
+                acceptance_dir,
+                title,
+                author,
+                overview_latex,
+                inputs_latex,
+                kinematic_bins_latex,
+                event_selection_latex,
+                pot_latex,
+                epsilon_signal_latex,
+                yield_distributions_latex,
+            )
+        )
+
+        for idx, file in enumerate(ordered_files):
             if not os.path.exists(os.path.join(base_dir, file)):
-                print(f"Warning: {file} not found in {base_dir}. Skipping in main presentation.")
                 continue
-
-            frame_title = tex_escape(file.replace('.pdf', ''))
-            f.write(r"""
+            frame_title = tex_escape(file.replace(".pdf", ""))
+            f.write(
+                r"""
 \begin{frame}{%s}
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{%s}
     \end{center}
 \end{frame}
-""" % (frame_title, file))
+"""
+                % (frame_title, file)
+            )
 
-        # Next Steps Slide
-        f.write(r"""
+            # Insert explanation slide after Slide 16 (plot idx 5)
+            if idx == 5:
+                f.write(
+                    r"""
+\begin{frame}{Determination of reconstruction efficiency}
+    %s
+\end{frame}
+"""
+                    % reco_efficiency_explanation_latex
+                )
+
+            # Insert explanation slide after Slide 23 (plot idx 11)
+            if idx == 11:
+                f.write(
+                    r"""
+\begin{frame}{Determination of Hodoscope Efficiencies}
+    %s
+\end{frame}
+"""
+                    % hodo_efficiency_explanation_latex
+                )
+
+            # Insert explanation slide after Slide 30 (plot idx 17)
+            if idx == 17:
+                f.write(
+                    r"""
+\begin{frame}{Determination of final efficiencies}
+    %s
+\end{frame}
+"""
+                    % final_efficiency_explanation_latex
+                )
+
+            # Insert formula slide after Slide 37 (plot idx 23)
+            if idx == 23:
+                f.write(
+                    r"""
+\begin{frame}{Determination of $\epsilon_{\text{signal}}$}
+    %s
+\end{frame}
+"""
+                    % epsilon_signal_formula_latex
+                )
+
+            # Insert candidates slide after Slide 44 (plot idx 29)
+            if idx == 29:
+                f.write(
+                    r"""
+\begin{frame}{Determination of Signal candidates}
+    %s
+\end{frame}
+"""
+                    % signal_candidates_latex
+                )
+
+        f.write(
+            r"""
 \begin{frame}{Next Steps}
     %s
 \end{frame}
-""" % next_steps_latex)
+"""
+            % next_steps_latex
+        )
 
-        # Backup slides loop
         f.write("\n\\appendix\n")
-        f.write(r"""
+        f.write(
+            r"""
 \begin{frame}
     \vfill
     \centering
@@ -367,128 +566,30 @@ For a given target (LH2 or LD2 or Flask) and a given kinematic ($M, x_F, p_T$) b
     \end{beamercolorbox}
     \vfill
 \end{frame}
-""")
+"""
+        )
         for file in backup_plots:
-            if not os.path.exists(os.path.join(backup_dir, file)):
-                print(f"Warning: Backup plot {file} not found in {backup_dir}. Skipping.")
+            # Look inside BOTH the specified backup path and base directory targets natively
+            if not os.path.exists(os.path.join(backup_dir, file)) and not os.path.exists(
+                os.path.join(base_dir, file)
+            ):
                 continue
-
             frame_title = get_backup_title(file)
-            f.write(r"""
+            f.write(
+                r"""
 \begin{frame}{%s}
     \begin{center}
         \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{%s}
     \end{center}
 \end{frame}
-""" % (frame_title, file))
+"""
+                % (frame_title, file)
+            )
 
         f.write("\n\\end{document}\n")
 
-    # ==========================================
-    # Generate Article Document
-    # ==========================================
-    article_file = "document.tex"
-    with open(article_file, "w") as f:
-        f.write(r"""\documentclass[12pt]{article}
-\usepackage[margin=1in]{geometry}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage{multicol}
-\graphicspath{{%s/}{%s/}}
+    print(f"Successfully generated '{beamer_file}'.")
 
-\title{%s}
-\author{%s}
-\date{\today}
-
-\begin{document}
-
-\maketitle
-
-\section{Overview}
-%s
-
-\section{Input Files Used}
-%s
-
-\section{Kinematic Phase Space}
-%s
-
-\section{Event Selection Criteria}
-%s
-
-\section{POT Values Used}
-%s
-
-\section{Analysis Procedure}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{xsec_flowchart.png}
-    \caption{Analysis Procedure Flowchart}
-\end{figure}
-
-\section{Uncertainties}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{xsec_uncertainties.png}
-    \caption{Uncertainties Evaluation}
-\end{figure}
-
-\section{Determination of Signal Efficiency}
-%s
-
-\clearpage
-\section{Plots and Distributions}
-""" % (base_dir, backup_dir, title, author, overview_latex, inputs_latex, kinematic_bins_latex, event_selection_latex, pot_latex, epsilon_signal_latex))
-
-        # Main plots loop
-        for idx, file in enumerate(ordered_files):
-            if not os.path.exists(os.path.join(base_dir, file)):
-                continue
-
-            caption = tex_escape(file.replace('.pdf', ''))
-            f.write(r"""
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{%s}
-    \caption{%s}
-\end{figure}
-""" % (file, caption))
-            
-            if (idx + 1) % 2 == 0:
-                f.write("\\clearpage\n")
-
-        # Next Steps Section in Article Document
-        f.write(r"""
-\section{Next Steps}
-%s
-""" % next_steps_latex)
-
-        # Appendix / Backup plots loop for the article
-        f.write("\n\\clearpage\n\\appendix\n\\section{Backup Distributions}\n")
-        
-        for idx, file in enumerate(backup_plots):
-            if not os.path.exists(os.path.join(backup_dir, file)):
-                continue
-
-            # Strip math formatting for standard figure caption to avoid float errors
-            caption_raw = get_backup_title(file).replace('$', '').replace('\\le', '<=').replace('_{F}', '_F')
-            caption = tex_escape(caption_raw)
-            
-            f.write(r"""
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{%s}
-    \caption{%s}
-\end{figure}
-""" % (file, caption))
-            
-            if (idx + 1) % 2 == 0:
-                f.write("\\clearpage\n")
-
-        f.write("\n\\end{document}\n")
-
-    print(f"Successfully generated '{beamer_file}' and '{article_file}'.")
 
 if __name__ == "__main__":
     generate_latex()

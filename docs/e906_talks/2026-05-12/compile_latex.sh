@@ -6,35 +6,26 @@ set -e
 echo "Cleaning up old LaTeX artifacts..."
 # Safely delete ONLY the generated LaTeX source, PDFs, and build clutter. 
 # This preserves your actual plot PDFs!
-rm -f slides.tex document.tex slides.pdf document.pdf \
-      slides.aux document.aux slides.log document.log \
-      slides.out document.out slides.nav slides.snm \
-      slides.toc document.toc
+#rm -f slides.tex slides.pdf slides.aux slides.log slides.out slides.nav slides.snm slides.toc
 
 echo "Running Python script to generate new .tex files..."
 python3 generate_latex.py
 
-# Check if the .tex files were generated successfully
-if [[ ! -f slides.tex || ! -f document.tex ]]; then
-    echo "Error: .tex files were not generated."
+# Check if the slides.tex file was generated successfully
+if [[ ! -f slides.tex ]]; then
+    echo "Error: slides.tex was not generated."
     exit 1
 fi
 
 echo "Compiling slides.tex (Pass 1)..."
-pdflatex -interaction=nonstopmode slides.tex > /dev/null
+pdflatex -interaction=nonstopmode slides.tex
 
-echo "Compiling slides.tex (Pass 2 for formatting/references)..."
-pdflatex -interaction=nonstopmode slides.tex > /dev/null
-
-echo "Compiling document.tex (Pass 1)..."
-pdflatex -interaction=nonstopmode document.tex > /dev/null
-
-echo "Compiling document.tex (Pass 2 for formatting/references)..."
-pdflatex -interaction=nonstopmode document.tex > /dev/null
+echo "Compiling slides.tex (Pass 2 for total slide counts/references)..."
+pdflatex -interaction=nonstopmode slides.tex
 
 echo "Cleaning up LaTeX build clutter..."
 rm -f *.aux *.log *.out *.nav *.snm *.toc
 
 echo "========================================"
-echo "✔ Success! slides.pdf and document.pdf are ready."
+echo "✔ Success! slides.pdf is ready."
 echo "========================================"
