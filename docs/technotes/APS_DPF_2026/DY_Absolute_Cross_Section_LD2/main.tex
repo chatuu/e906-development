@@ -737,8 +737,58 @@ The total analytical efficiency scalar $\epsilon^{i}_{\text{total}}$ per spatial
     \caption{Average total Efficiencies calculated each kinematic bin with the propagated uncertainties.}
     \label{fig:total_eff_2d}
 \end{figure}
+\clearpage
+\begin{figure}[h!]
+    \centering
+    % Row 1: LH2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/FinalEffDists/E_total_final_LH2.pdf} 
+        \caption{LH2 average total efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/FinalEffDists/E_mix_final_LH2.pdf}
+        \caption{LH2 average total efficiency for mix}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 2: LD2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/FinalEffDists/E_total_final_LD2.pdf} 
+        \caption{LD2 average total efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/FinalEffDists/E_mix_final_LD2.pdf}
+        \caption{LD2 average total efficiency for mix}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 3: Flask
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/FinalEffDists/E_total_final_Flask.pdf} 
+        \caption{Flask average total efficiency for total}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/FinalEffDists/E_mix_final_Flask.pdf}
+        \caption{Flask average total efficiency for mix}
+    \end{subfigure}
+
+    \caption{Average total Efficiencies calculated each kinematic bin with the propagated uncertainties.}
+    \label{fig:total_eff_2d}
+\end{figure}
+
 
 \FloatBarrier
+
+\clearpage
 \section{Determination of Corrected Yields}
 \label{sec:corrected_yields}
 
@@ -802,6 +852,53 @@ The spatially resolved maps of the final corrected yields are detailed in \cref{
     \label{fig:signal_yields}
 \end{figure}
 \clearpage
+
+\begin{figure}[h!]
+    \centering
+    % Row 1: LH2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/SigEffDists/E_final_signal_LH2.pdf} 
+        \caption{LH2 average signal efficiency correction}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/CorrectedYieldsDists/Y_corrected_LH2.pdf}
+        \caption{Corrected signal yield for LH2}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 2: LD2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/SigEffDists/E_final_signal_LD2.pdf} 
+        \caption{LD2 average signal efficiency correction}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/CorrectedYieldsDists/Y_corrected_LD2.pdf}
+        \caption{Corrected signal yield for LD2}
+    \end{subfigure}
+
+    \vspace{0.3cm}
+    % Row 3: Flask
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/SigEffDists/E_final_signal_Flask.pdf} 
+        \caption{Flask average signal efficiency correction}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./xsec_pT/CorrectedYieldsDists/Y_corrected_Flask.pdf}
+        \caption{Corrected signal yield for Flask}
+    \end{subfigure}
+
+    \caption{Average signal efficiency $\langle\epsilon_{\text{signal}}\rangle$ (left panels) and final corrected signal yields (right panels).}
+    \label{fig:signal_yields}
+\end{figure}
 
 The definitive LH$_2$ corrected yield arises mathematically following the dual subtraction of uncorrelated mixed pairs and integrated upstream flask background interactions:
 \begin{equation}
