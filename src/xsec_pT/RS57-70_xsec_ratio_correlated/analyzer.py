@@ -13,15 +13,6 @@ import numpy as np
 import ROOT
 import config
 
-# =============================================================================
-# SYSTEMATIC UNCERTAINTIES (Strategy 1: Deviation of Merged Data)
-# Calculated from RS(57-70) / RS67 ratio best fits.
-# =============================================================================
-#SYS_FRAC_ROADSET_LH2 = 0.044  # |1 - 0.956| -> 4.4%
-SYS_FRAC_ROADSET_LH2 = 0.0  # |1 - 0.956| -> 4.4%
-#SYS_FRAC_ROADSET_LD2 = 0.054  # |1 - 0.946| -> 5.4%
-SYS_FRAC_ROADSET_LD2 = 0.0  # |1 - 0.946| -> 5.4%
-
 class DYCrossSectionAnalyzer:
     """
     Main Object-Oriented Analyzer for extracting kinematics, performing background 
@@ -47,6 +38,13 @@ class DYCrossSectionAnalyzer:
             print(f"Error loading NPZ file for Covariance generation at '{config.INPUT_NPZ_FILE}': {e}")
             sys.exit(1)
 
+        # Load dynamic bin-by-bin roadset systematics AND weighted means
+        lh2_sys_csv = "/root/github/e906-development/src/xsec_pT/RS57-70_weighted_average/Roadset_Sys_StdDev_LH2_geom.csv"
+        ld2_sys_csv = "/root/github/e906-development/src/xsec_pT/RS57-70_weighted_average/Roadset_Sys_StdDev_LD2_geom.csv"
+        
+        self.roadset_data_lh2 = self._load_systematic_csv(lh2_sys_csv)
+        self.roadset_data_ld2 = self._load_systematic_csv(ld2_sys_csv)
+
         # Output dictionaries to store histograms between stages
         self.hists_lh2 = None
         self.hists_ld2 = None
@@ -62,9 +60,36 @@ class DYCrossSectionAnalyzer:
         ROOT.gStyle.SetEndErrorSize(5) 
         ROOT.gErrorIgnoreLevel = ROOT.kFatal
 
+    def _load_systematic_csv(self, filepath):
+        """Reads the Weighted Mean Cross Section and Standard Deviation from the CSVs."""
+        sys_dict = {}
+        if not os.path.exists(filepath):
+            print(f"Warning: Roadset systematic file not found at {filepath}.")
+            return sys_dict
+        
+        with open(filepath, "r") as f:
+            reader = csv.reader(f)
+            next(reader, None) # Skip metadata header
+            next(reader, None) # Skip column headers
+            for row in reader:
+                if len(row) < 4: continue
+                try:
+                    bin_idx = int(row[0])
+                    mean_val = float(row[1])
+                    std_dev = float(row[2])
+                    rel_err = float(row[3].replace('%', '').strip()) / 100.0
+                    
+                    sys_dict[bin_idx] = {
+                        "mean_xsec": mean_val,
+                        "sys_abs": std_dev,
+                        "sys_rel": rel_err
+                    }
+                except ValueError:
+                    continue
+        return sys_dict
+
     @staticmethod
     def get_or_create_dir(base_dir, name):
-        """Retrieves an existing TDirectory or creates a new one."""
         d = base_dir.GetDirectory(name)
         if not d:
             d = base_dir.mkdir(name)
@@ -72,7 +97,6 @@ class DYCrossSectionAnalyzer:
 
     @staticmethod
     def apply_cuts(tree, cut=4.2):
-        """Applies standard physics cuts to the given TTree arrays in numpy."""
         events = tree.arrays(library="np")
         class EventNamespace:
             def __init__(self, data):
@@ -149,7 +173,6 @@ class DYCrossSectionAnalyzer:
         return filtered_events
 
     def get_concatenated_events(self, file_paths, tree_name):
-        """Iterates through file paths, applies cuts, and merges the numpy arrays in memory."""
         all_events = None
         for fp in file_paths:
             if not os.path.exists(fp):
@@ -355,7 +378,6 @@ class DYCrossSectionAnalyzer:
             c.Close()
 
     def generate_efficiency_csv(self, data_tot, loc_tot, m_low, m_high, pt_low, pt_high, pt_idx, target_label):
-        """Filters data for the bin and generates a detailed CSV of event efficiencies."""
         mask = (data_tot["mass"] >= m_low) & (data_tot["mass"] < m_high) & \
                (data_tot["pT"] >= pt_low) & (data_tot["pT"] < pt_high)
         
@@ -396,7 +418,6 @@ class DYCrossSectionAnalyzer:
             writer.writerow(["total_eff_error = propagated error of total_eff", total_eff_err])
 
     def process_kinematics(self):
-        """Processes uproot data, creates 1D histograms vs pT, and saves PDFs."""
         def get_loc_data(data_dict, is_mix=False):
             if is_mix and 'ptrk_D1' in data_dict and 'ntrk_D1' in data_dict:
                 d1_vals = 0.5 * (data_dict['ptrk_D1'] + data_dict['ntrk_D1'])
@@ -404,7 +425,6 @@ class DYCrossSectionAnalyzer:
                 d1_vals = data_dict['D1']
             return np.digitize(d1_vals, self.x_curve) - 1
         
-        # Iteratively load, cut, and concatenate all files
         data_lh2_tot = self.get_concatenated_events(self.lh2_paths, "result")
         data_lh2_mix = self.get_concatenated_events(self.lh2_paths, "result_mix")
         
@@ -535,7 +555,6 @@ class DYCrossSectionAnalyzer:
         self.save_1d_pdfs(self.hists_fl, "Flask")
 
     def generate_subtracted_plot(self, hists_target, hists_flask, flask_norm, target_label):
-        """Generates and saves 1D subtracted yield plot PDFs for LH2."""
         if "Y_corrected_stat" not in hists_target or "Y_corrected_stat" not in hists_flask: return None
 
         dir_sub = self.get_or_create_dir(self.out_file, f"Subtracted_Plots_{target_label}")
@@ -613,7 +632,6 @@ class DYCrossSectionAnalyzer:
         return {"stat": h_sub_stat, "sys": h_sub_sys, "centroid": h_sub_centroid, "pt_centroid": h_sub_pt_centroid}
 
     def generate_pd_subtracted_plot(self, hists_ld2, hists_lh2, hists_flask):
-        """Generates and saves 1D subtracted yield plot PDFs for LD2 (pd equation)."""
         dir_sub = self.get_or_create_dir(self.out_file, "Subtracted_Plots_LD2_pd")
         dir_sub.cd()
 
@@ -686,7 +704,7 @@ class DYCrossSectionAnalyzer:
         return {"stat": h_pd_stat, "sys": h_pd_sys, "centroid": h_pd_centroid, "pt_centroid": h_pd_pt_centroid}
 
     def calculate_and_plot_cross_section(self, h_sub_dict, target_label, global_constant, use_true_pt=False):
-        """Builds single differential cross-sections vs pT."""
+        """Builds single differential cross-sections vs pT, incorporating weighted CSV data."""
         acc_path = "/root/github/e906-development/src/AcceptanceCorrection/acceptance_mass_xF.root"
         psip_path = "All_PsiP_Contaminations_pT.root" 
         
@@ -721,8 +739,8 @@ class DYCrossSectionAnalyzer:
         n_pt_bins = len(config.PT_BINS) - 1
         suffix = "_true_pt" if use_true_pt else "_geom"
         
-        # --- Determine the correct Roadset Systematic Uncertainty fraction for the target ---
-        sys_frac_roadset = SYS_FRAC_ROADSET_LH2 if target_label == "LH2" else (SYS_FRAC_ROADSET_LD2 if target_label == "LD2" else 0.0)
+        # --- Dynamically pull the correct Roadset Systematic Dictionary for the target ---
+        sys_dict = self.roadset_data_lh2 if target_label == "LH2" else (self.roadset_data_ld2 if target_label == "LD2" else {})
         
         latex_psip_table_content = r"""\begin{longtable}{|c|c|c|c|c|}
 \caption{$\psi'$ Contamination Table for %s} \label{tab:psip_contamination_%s} \\
@@ -780,31 +798,49 @@ class DYCrossSectionAnalyzer:
                 psip_ratio = h_ratio_psip.GetBinContent(ratio_bin)
                 if psip_ratio > 1.0: psip_ratio = 0.0
 
+            # Raw unweighted calculation from current ROOT files
             numerator = global_constant * Y_sub
             denominator = pt_width * acceptance
-            bin_dsigma_dpt = numerator / denominator
-            sum_xsec = bin_dsigma_dpt
+            raw_dsigma_dpt = numerator / denominator
             
-            stat_unc = (Y_sub_stat_err / Y_sub) * bin_dsigma_dpt
-            sys_tot_yield = (Y_sub_sys_err / Y_sub) * bin_dsigma_dpt
-            sys_psip_cont = psip_ratio * bin_dsigma_dpt
+            stat_unc_raw = (Y_sub_stat_err / Y_sub) * raw_dsigma_dpt
+            sys_tot_yield_raw = (Y_sub_sys_err / Y_sub) * raw_dsigma_dpt
+            sys_psip_cont_raw = psip_ratio * raw_dsigma_dpt
             
-            # --- NEW: Calculate Roadset Systematic on the final cross section ---
-            sys_roadset = sys_frac_roadset * bin_dsigma_dpt
+            # --- OVERRIDE WITH DYNAMIC CSV DATA ---
+            csv_data = sys_dict.get(i_pt, None)
+            
+            if csv_data is not None and csv_data["mean_xsec"] > 0:
+                # Use the inverse-variance weighted mean from CSV
+                sum_xsec = csv_data["mean_xsec"]
+                # The roadset systematic is the absolute standard deviation from the CSV
+                sys_roadset = csv_data["sys_abs"]
+                
+                # Scale the raw uncertainties to match the new central value
+                scale = sum_xsec / raw_dsigma_dpt if raw_dsigma_dpt > 0 else 1.0
+                stat_unc = stat_unc_raw * scale
+                sys_tot_yield = sys_tot_yield_raw * scale
+                sys_psip_cont = sys_psip_cont_raw * scale
+            else:
+                # Fallback to the raw calculated data
+                sum_xsec = raw_dsigma_dpt
+                sys_roadset = 0.0
+                stat_unc = stat_unc_raw
+                sys_tot_yield = sys_tot_yield_raw
+                sys_psip_cont = sys_psip_cont_raw
             
             if psip_ratio > 0.0 and not use_true_pt:
                 s_pt = f"[{pt_min:.2f}, {pt_max:.2f})"
                 s_mass = f"Integrated [{config.MASS_BINS[0]:.2f}, {config.MASS_BINS[-1]:.2f})"
                 s_ratio = f"{psip_ratio:.4f}"
-                # Added roadset systematic in quadrature
                 sys_unc_bin = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_roadset**2)
-                s_sigma_psip_col = f"{bin_dsigma_dpt:.4f} $\\pm$ {stat_unc:.4f} $\\pm$ {sys_unc_bin:.4f}"
+                s_sigma_psip_col = f"{sum_xsec:.4f} $\\pm$ {stat_unc:.4f} $\\pm$ {sys_unc_bin:.4f}"
                 latex_psip_table_content += f"{s_pt} & {s_mass} & {s_ratio} & {s_sigma_psip_col} & {sys_psip_cont:.4f} \\\\ \n\\hline\n"
             
             if sum_xsec > 0:
                 sys_acc_total = (acceptance_err / acceptance) * sum_xsec
                 total_stat_err = stat_unc
-                # Added roadset systematic in quadrature for the final total systematic error
+                # Add roadset systematic in quadrature
                 total_sys_err = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_acc_total**2 + sys_roadset**2)
                 max_err_for_range = max(total_stat_err, total_sys_err)
                 
@@ -812,11 +848,9 @@ class DYCrossSectionAnalyzer:
                 
                 plot_x = actual_pt_center if use_true_pt else pt_center
                 
-                # Systematics remain fixed at the geometric bin center to prevent overlapping bands
                 g_sys.SetPoint(point_idx, pt_center, sum_xsec)
                 g_sys.SetPointError(point_idx, pt_width/2.0, total_sys_err)
                 
-                # Data markers shift to the true pT centroid if requested
                 g_xsec.SetPoint(point_idx, plot_x, sum_xsec)
                 g_xsec.SetPointError(point_idx, 0.0, total_stat_err)
                 
@@ -865,33 +899,23 @@ class DYCrossSectionAnalyzer:
             internal_title.SetTextSize(0.04)
             internal_title.SetTextAlign(13)
 
-            # Draw the 3 lines, shifting the Y-coordinate down by 0.05 for each new line
             internal_title.DrawLatex(0.19, 0.85, f"Drell-Yan process in {target_prefix}")
             internal_title.DrawLatex(0.19, 0.80, "0.0 < x_{F} < 0.8")
             internal_title.DrawLatex(0.19, 0.75, "4.2 GeV < M < 8.8 GeV")
             prelim = ROOT.TLatex()
             prelim.SetNDC(True)
             prelim.SetTextColor(ROOT.kBlue)
-            prelim.SetTextAlign(33) # 33 = Right-Top alignment
+            prelim.SetTextAlign(33) 
 
-            # --- Line 1: Preliminary ---
             prelim.SetTextSize(0.05)
             prelim.DrawLatex(0.82, 0.60, "Preliminary")
 
-            # --- Line 2: Run Period (2014-2015) ---
-            # We reduce the font size slightly (e.g., to 0.035) so it matches 
-            # the width of the "Preliminary" line above it.
             prelim.SetTextSize(0.0252) 
             prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
 
             plot_y_min = 0.0
             plot_y_max = y_max_data * 1.4 if y_min_data < y_max_data else 3.0
             dynamic_y = plot_y_min + 0.05 * (plot_y_max - plot_y_min)
-
-            if target_label == "LH2":
-                road_sys = "4.4%"
-            elif target_label == "LD2":
-                road_sys = "5.4%"
 
             lumi_note = ROOT.TLatex()
             lumi_note.SetNDC(False)
@@ -900,9 +924,7 @@ class DYCrossSectionAnalyzer:
             lumi_note.SetTextAlign(11)
             lumi_note.SetTextSize(0.025)
 
-            # Wrap the two halves of your sentence in #splitline{}{}
-            note_text = f"#splitline{{10% global uncertainty due to the integrated luminosity and {road_sys} global uncertainty}}{{due to road dependency are not included in the error bands}}"
-
+            note_text = f"#splitline{{10% global uncertainty due to the integrated luminosity is not included in the error bands,}}{{but bin-by-bin roadset systematic uncertainties are included.}}"
             lumi_note.DrawLatex(0.1, dynamic_y, note_text)
             
             c_xsec.SaveAs(f"CrossSection_{target_label}{suffix}_vs_pT.pdf")
@@ -918,7 +940,6 @@ class DYCrossSectionAnalyzer:
         if f_psip: f_psip.Close()
 
     def generate_overlay_plot(self, use_true_pt=False):
-        """Combines and saves LH2 and LD2 single differential cross-sections onto a single plot canvas."""
         suffix = "_true_pt" if use_true_pt else "_geom"
         ROOT.gStyle.SetTitleAlign(23); ROOT.gStyle.SetTitleX(0.5); ROOT.gStyle.SetTitleY(0.99)
         ROOT.gStyle.SetTitleH(0.04); ROOT.gStyle.SetTitleBorderSize(0)
@@ -974,15 +995,11 @@ class DYCrossSectionAnalyzer:
         prelim = ROOT.TLatex()
         prelim.SetNDC(True)
         prelim.SetTextColor(ROOT.kBlue)
-        prelim.SetTextAlign(33) # 33 = Right-Top alignment
+        prelim.SetTextAlign(33) 
 
-        # --- Line 1: Preliminary ---
         prelim.SetTextSize(0.05)
         prelim.DrawLatex(0.82, 0.60, "Preliminary")
 
-        # --- Line 2: Run Period (2014-2015) ---
-        # We reduce the font size slightly (e.g., to 0.035) so it matches 
-        # the width of the "Preliminary" line above it.
         prelim.SetTextSize(0.0272) 
         prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
         
@@ -997,7 +1014,6 @@ class DYCrossSectionAnalyzer:
         dir_overlay.cd(); canvas.Write(f"canvas_overlay_Targets_pT{suffix}")
 
     def generate_ratio_plot(self, use_true_pt=False):
-        """Calculates and plots the cross-section ratio sigma_pd / (2 * sigma_pp)."""
         suffix = "_true_pt" if use_true_pt else "_geom"
         dir_lh2 = self.out_file.Get("CrossSections_LH2")
         dir_ld2 = self.out_file.Get("CrossSections_LD2")
@@ -1037,7 +1053,6 @@ class DYCrossSectionAnalyzer:
         print(f"{'pT Bin [GeV]':<15} | {'Ratio':<10} | {'Stat Err':<10} | {'Sys Err':<10} | {'Total Err':<10}")
         print("-" * 65)
 
-        # --- DYNAMIC CSV EXPORT SETUP ---
         csv_rows = []
 
         for i_pt in range(len(config.PT_BINS) - 1):
@@ -1052,27 +1067,22 @@ class DYCrossSectionAnalyzer:
             err_stat_ld2 = h1_xsec_ld2.GetBinError(bin_x)
             err_sys_ld2 = h1_sys_ld2.GetBinError(bin_x)
 
-            # Ratio Calculation: sigma_pd / (2 * sigma_pp)
             ratio = y_ld2 / (2.0 * y_lh2)
             
-            # 1. Statistical Error: Uncorrelated
             rel_stat_ld2 = err_stat_ld2 / y_ld2
             rel_stat_lh2 = err_stat_lh2 / y_lh2
             err_ratio_stat = ratio * math.sqrt(rel_stat_ld2**2 + rel_stat_lh2**2)
 
-            # 2. Systematic Error: 100% Correlated 
             rel_sys_ld2 = err_sys_ld2 / y_ld2
             rel_sys_lh2 = err_sys_lh2 / y_lh2
             err_ratio_sys = ratio * abs(rel_sys_ld2 - rel_sys_lh2)
 
-            # 3. Total Error: Stat and Sys added in quadrature
             err_ratio_total = math.sqrt(err_ratio_stat**2 + err_ratio_sys**2)
 
             pt_min = config.PT_BINS[i_pt]
             pt_max = config.PT_BINS[i_pt+1]
             print(f"[{pt_min:.2f}, {pt_max:.2f})   | {ratio:.4f}     | {err_ratio_stat:.4f}     | {err_ratio_sys:.4f}     | {err_ratio_total:.4f}")
 
-            # Collect dynamically calculated data row for CSV export
             pt_str = f"[{pt_min:.2f}, {pt_max:.2f})"
             csv_rows.append([pt_str, f"{ratio:.4f}", f"{err_ratio_stat:.4f}", f"{err_ratio_sys:.4f}", f"{err_ratio_total:.4f}"])
 
@@ -1100,7 +1110,6 @@ class DYCrossSectionAnalyzer:
 
         print("\n")
 
-        # --- Trigger CSV save only for the True pT iteration ---
         if use_true_pt:
             csv_filename = "pd_2pp_errors.csv"
             with open(csv_filename, "w", newline="") as f:
@@ -1204,7 +1213,6 @@ class DYCrossSectionAnalyzer:
             c_ratio.Close()
 
     def generate_combined_ratio_overlay_plot(self, use_true_pt=False):
-        """Creates a split canvas with cross-section overlays on top and the ratio plot on bottom."""
         suffix = "_true_pt" if use_true_pt else "_geom"
 
         dir_lh2 = self.out_file.Get("CrossSections_LH2")
@@ -1240,7 +1248,6 @@ class DYCrossSectionAnalyzer:
 
         mg_top = ROOT.TMultiGraph()
 
-        # LH2 Styling (Red)
         g_sys_lh2_clone = g_sys_lh2.Clone()
         g_sys_lh2_clone.SetLineColor(ROOT.kRed)
         g_sys_lh2_clone.SetFillColorAlpha(ROOT.kPink - 9, 0.5)
@@ -1248,7 +1255,6 @@ class DYCrossSectionAnalyzer:
         g_xsec_lh2_clone.SetLineColor(ROOT.kRed)
         g_xsec_lh2_clone.SetMarkerColor(ROOT.kRed)
 
-        # LD2 Styling (Blue with light transparent blue band)
         g_sys_ld2_clone = g_sys_ld2.Clone()
         g_sys_ld2_clone.SetLineColor(ROOT.kBlue)
         g_sys_ld2_clone.SetFillColorAlpha(ROOT.kAzure + 1, 0.5) 
@@ -1387,7 +1393,6 @@ class DYCrossSectionAnalyzer:
         canvas.Close()
 
     def calculate_cross_sections(self):
-        """Runs the subtraction, cross-section logic, and ratio plots for all targets."""
         if self.hists_lh2 and self.hists_fl:
             self.sub_dict_lh2 = self.generate_subtracted_plot(self.hists_lh2, self.hists_fl, config.FLASK_NORM_LH2, "LH2")
             
@@ -1405,14 +1410,11 @@ class DYCrossSectionAnalyzer:
             self.generate_combined_ratio_overlay_plot(use_true_pt) 
 
     def generate_latex_appendix(self):
-        """Generates LaTeX source code for the Mass Centroid derivations."""
         latex_filename = "Appendix_MassCentroids.tex"
-        
         with open(latex_filename, "w") as tex_file:
             intro_text = r"""\section{Appendix: Determination of Mass Bin Centroids (pT Binned)}...""" 
             tex_file.write(intro_text)
 
     def finalize(self):
-        """Writes remaining buffers and closes the TFile safely."""
         self.out_file.Write()
         self.out_file.Close()
