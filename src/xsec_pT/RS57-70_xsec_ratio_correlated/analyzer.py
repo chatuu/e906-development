@@ -768,6 +768,7 @@ class DYCrossSectionAnalyzer:
 
         point_idx = 0
         y_min_data, y_max_data = sys.float_info.max, -sys.float_info.max
+        max_sys_err = 0.0
 
         for i_pt in range(n_pt_bins):
             root_bin_x = i_pt + 1
@@ -842,9 +843,12 @@ class DYCrossSectionAnalyzer:
                 total_stat_err = stat_unc
                 # Add roadset systematic in quadrature
                 total_sys_err = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_acc_total**2 + sys_roadset**2)
-                max_err_for_range = max(total_stat_err, total_sys_err)
                 
-                if (max_err_for_range / sum_xsec) > 0.99: continue
+                # Keep tracking max sys for baseline visualization
+                if total_sys_err > max_sys_err: max_sys_err = total_sys_err
+                
+                # Used for generic filtering only
+                if (max(total_stat_err, total_sys_err) / sum_xsec) > 0.99: continue
                 
                 plot_x = actual_pt_center if use_true_pt else pt_center
                 
@@ -857,8 +861,9 @@ class DYCrossSectionAnalyzer:
                 h1_xsec.SetBinContent(root_bin_x, sum_xsec); h1_xsec.SetBinError(root_bin_x, total_stat_err)
                 h1_sys.SetBinContent(root_bin_x, sum_xsec); h1_sys.SetBinError(root_bin_x, total_sys_err)
                 
-                y_high = sum_xsec + max_err_for_range
-                y_low  = sum_xsec - max_err_for_range
+                # Dynamic range scaling based exclusively on data points + stat error 
+                y_high = sum_xsec + total_stat_err
+                y_low  = sum_xsec - total_stat_err
                 
                 if y_low <= 0: y_low = sum_xsec * 0.5 
                 if y_high > y_max_data: y_max_data = y_high
@@ -871,25 +876,43 @@ class DYCrossSectionAnalyzer:
             c_xsec.SetLeftMargin(0.16); c_xsec.SetBottomMargin(0.14)
             c_xsec.SetTickx(1); c_xsec.SetTicky(1)
             
+            plot_y_min = 0.0
+            plot_y_max = y_max_data * 1.4 if y_min_data < y_max_data else 3.0
+            
+            # --- Dynamic Bottom TFrame Baseline for Systematics ---
+            baseline = plot_y_max * 0.12
+            if baseline - max_sys_err < plot_y_max * 0.02:
+                baseline = max_sys_err + plot_y_max * 0.02
+
             mg = ROOT.TMultiGraph()
             mg.SetTitle(f";p_{{T}} [GeV];d#sigma / dp_{{T}} [nb / GeV / Nucleus]")
-            
-            if y_min_data < y_max_data:
-                mg.SetMinimum(0.0); mg.SetMaximum(y_max_data * 1.4)
-            else:
-                mg.SetMinimum(0.0); mg.SetMaximum(3.0)
+            mg.SetMinimum(plot_y_min); mg.SetMaximum(plot_y_max)
             
             leg = ROOT.TLegend(0.65, 0.75, 0.88, 0.88)
             leg.SetBorderSize(0)
             
-            g_sys.SetMarkerSize(0); g_sys.SetLineColor(ROOT.kRed); g_sys.SetFillColorAlpha(ROOT.kPink - 9, 0.5); g_sys.SetFillStyle(1001)
-            mg.Add(g_sys, "2"); leg.AddEntry(g_sys, "Systematic Unc.", "f")
+            # Repurpose cloned g_sys to bottom band level
+            g_sys_bottom = g_sys.Clone(f"g_sys_bottom_{target_label}{suffix}")
+            for i in range(g_sys_bottom.GetN()):
+                g_sys_bottom.SetPoint(i, g_sys_bottom.GetX()[i], baseline)
+
+            g_sys_bottom.SetMarkerSize(0); g_sys_bottom.SetLineColor(ROOT.kRed)
+            g_sys_bottom.SetFillColorAlpha(ROOT.kPink - 9, 0.5); g_sys_bottom.SetFillStyle(1001)
+            
+            mg.Add(g_sys_bottom, "2"); leg.AddEntry(g_sys_bottom, "Syst. Unc. Band", "f")
 
             g_xsec.SetMarkerStyle(20); g_xsec.SetMarkerColor(ROOT.kRed); g_xsec.SetLineColor(ROOT.kRed)
             mg.Add(g_xsec, "P"); leg.AddEntry(g_xsec, f"Data ({target_label})", "lep")
             
             mg.Draw("A"); mg.GetXaxis().CenterTitle(); mg.GetYaxis().CenterTitle() 
             mg.GetXaxis().SetLimits(0.0, 2.0); mg.GetXaxis().SetTitleOffset(1.3); mg.GetYaxis().SetTitleOffset(1.7)
+            
+            # Ensure line stays within scope during SaveAs() execution
+            line_base = ROOT.TLine(0.0, baseline, 2.0, baseline)
+            line_base.SetLineStyle(2)
+            line_base.SetLineColor(ROOT.kGray+2)
+            line_base.Draw("SAME")
+            
             leg.Draw()
             
             target_prefix = "pp" if target_label == "LH2" else "pd" if target_label == "LD2" else target_label
@@ -913,8 +936,6 @@ class DYCrossSectionAnalyzer:
             prelim.SetTextSize(0.0252) 
             prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
 
-            plot_y_min = 0.0
-            plot_y_max = y_max_data * 1.4 if y_min_data < y_max_data else 3.0
             dynamic_y = plot_y_min + 0.05 * (plot_y_max - plot_y_min)
 
             lumi_note = ROOT.TLatex()
@@ -960,6 +981,7 @@ class DYCrossSectionAnalyzer:
 
         targets = [("LH2", ROOT.kBlue), ("LD2", ROOT.kRed)]
         y_min, y_max = 1e9, -1e9
+        max_sys_all = 0.0
 
         for target, color in targets:
             dir_xsec = self.out_file.Get(f"CrossSections_{target}")
@@ -968,8 +990,41 @@ class DYCrossSectionAnalyzer:
             g_xsec = dir_xsec.Get(f"g_xsec_{target}{suffix}")
             g_sys = dir_xsec.Get(f"g_sys_{target}{suffix}")
             if not g_xsec or not g_sys: continue
+            
+            for i in range(g_xsec.GetN()):
+                y = g_xsec.GetY()[i]
+                if y > 0:
+                    ey = g_xsec.GetErrorY(i)
+                    if (y - ey) < y_min and (y - ey) > 0: y_min = y - ey
+                    if (y + ey) > y_max: y_max = y + ey
+                    
+                    sys_ey = g_sys.GetErrorY(i)
+                    if sys_ey > max_sys_all: max_sys_all = sys_ey
+
+        plot_y_max = y_max * 1.4 if y_min < y_max else 3.0
+        if y_min < y_max: h_frame.SetMinimum(0.0); h_frame.SetMaximum(plot_y_max)
+
+        # Baseline offset for systematic bands
+        baseline = plot_y_max * 0.12
+        if baseline - max_sys_all < plot_y_max * 0.02:
+            baseline = max_sys_all + plot_y_max * 0.02
+            
+        line_base = ROOT.TLine(0.0, baseline, 2.0, baseline)
+        line_base.SetLineStyle(2); line_base.SetLineColor(ROOT.kGray+2)
+        line_base.Draw("SAME")
+
+        keepalive = []
+        for target, color in targets:
+            dir_xsec = self.out_file.Get(f"CrossSections_{target}")
+            if not dir_xsec: continue
+            g_xsec = dir_xsec.Get(f"g_xsec_{target}{suffix}")
+            g_sys = dir_xsec.Get(f"g_sys_{target}{suffix}")
+            if not g_xsec or not g_sys: continue
 
             g_sys_clone = g_sys.Clone(f"g_sys_clone_{target}{suffix}")
+            for i in range(g_sys_clone.GetN()):
+                g_sys_clone.SetPoint(i, g_sys_clone.GetX()[i], baseline)
+
             g_sys_clone.SetLineColor(color); g_sys_clone.SetFillColorAlpha(color, 0.35)
             g_sys_clone.SetFillStyle(1001); g_sys_clone.SetMarkerSize(0)
 
@@ -980,15 +1035,7 @@ class DYCrossSectionAnalyzer:
             g_sys_clone.Draw("2 SAME"); g_xsec_clone.Draw("P SAME")
             legend.AddEntry(g_xsec_clone, f"{target} Data", "pl")
             
-            for i in range(g_xsec.GetN()):
-                y = g_xsec.GetY()[i]
-                if y > 0:
-                    ey = g_sys.GetErrorY(i)
-                    if (y - ey) < y_min and (y - ey) > 0: y_min = y - ey
-                    if (y + ey) > y_max: y_max = y + ey
-
-        if y_min < y_max:
-            h_frame.SetMinimum(0.0); h_frame.SetMaximum(y_max * 1.4)
+            keepalive.extend([g_sys_clone, g_xsec_clone])
 
         legend.Draw()
         
@@ -1247,17 +1294,37 @@ class DYCrossSectionAnalyzer:
         pad1.cd()
 
         mg_top = ROOT.TMultiGraph()
+        
+        y_max = 0
+        max_sys_both = 0
+        for i in range(g_xsec_lh2.GetN()):
+            if g_xsec_lh2.GetY()[i] + g_xsec_lh2.GetErrorY(i) > y_max: y_max = g_xsec_lh2.GetY()[i] + g_xsec_lh2.GetErrorY(i)
+            if g_xsec_ld2.GetY()[i] + g_xsec_ld2.GetErrorY(i) > y_max: y_max = g_xsec_ld2.GetY()[i] + g_xsec_ld2.GetErrorY(i)
+            if g_sys_lh2.GetErrorY(i) > max_sys_both: max_sys_both = g_sys_lh2.GetErrorY(i)
+            if g_sys_ld2.GetErrorY(i) > max_sys_both: max_sys_both = g_sys_ld2.GetErrorY(i)
+
+        plot_y_max = y_max * 1.4
+        mg_top.SetMinimum(0.0)
+        mg_top.SetMaximum(plot_y_max)
+        
+        baseline = plot_y_max * 0.12
+        if baseline - max_sys_both < plot_y_max * 0.02:
+            baseline = max_sys_both + plot_y_max * 0.02
 
         g_sys_lh2_clone = g_sys_lh2.Clone()
+        for i in range(g_sys_lh2_clone.GetN()): g_sys_lh2_clone.SetPoint(i, g_sys_lh2_clone.GetX()[i], baseline)
         g_sys_lh2_clone.SetLineColor(ROOT.kRed)
         g_sys_lh2_clone.SetFillColorAlpha(ROOT.kPink - 9, 0.5)
+        
         g_xsec_lh2_clone = g_xsec_lh2.Clone()
         g_xsec_lh2_clone.SetLineColor(ROOT.kRed)
         g_xsec_lh2_clone.SetMarkerColor(ROOT.kRed)
 
         g_sys_ld2_clone = g_sys_ld2.Clone()
+        for i in range(g_sys_ld2_clone.GetN()): g_sys_ld2_clone.SetPoint(i, g_sys_ld2_clone.GetX()[i], baseline)
         g_sys_ld2_clone.SetLineColor(ROOT.kBlue)
         g_sys_ld2_clone.SetFillColorAlpha(ROOT.kAzure + 1, 0.5) 
+        
         g_xsec_ld2_clone = g_xsec_ld2.Clone()
         g_xsec_ld2_clone.SetLineColor(ROOT.kBlue)
         g_xsec_ld2_clone.SetMarkerColor(ROOT.kBlue)
@@ -1283,12 +1350,9 @@ class DYCrossSectionAnalyzer:
         mg_top.GetXaxis().SetTitleOffset(1.2) 
         mg_top.GetXaxis().SetLabelFont(43); mg_top.GetXaxis().SetLabelSize(20)
 
-        y_max = 0
-        for i in range(g_xsec_lh2.GetN()):
-            if g_xsec_lh2.GetY()[i] + g_sys_lh2.GetErrorY(i) > y_max: y_max = g_xsec_lh2.GetY()[i] + g_sys_lh2.GetErrorY(i)
-            if g_xsec_ld2.GetY()[i] + g_sys_ld2.GetErrorY(i) > y_max: y_max = g_xsec_ld2.GetY()[i] + g_sys_ld2.GetErrorY(i)
-        mg_top.SetMinimum(0.0)
-        mg_top.SetMaximum(y_max * 1.4)
+        line_base = ROOT.TLine(0.0, baseline, 2.0, baseline)
+        line_base.SetLineStyle(2); line_base.SetLineColor(ROOT.kGray+2)
+        line_base.Draw("SAME")
 
         leg_top = ROOT.TLegend(0.65, 0.65, 0.88, 0.88)
         leg_top.SetBorderSize(0); leg_top.SetFillStyle(0); leg_top.SetTextFont(43); leg_top.SetTextSize(18)
