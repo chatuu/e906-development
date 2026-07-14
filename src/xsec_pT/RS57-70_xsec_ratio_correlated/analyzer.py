@@ -938,15 +938,18 @@ class DYCrossSectionAnalyzer:
 
             dynamic_y = plot_y_min + 0.05 * (plot_y_max - plot_y_min)
 
-            lumi_note = ROOT.TLatex()
-            lumi_note.SetNDC(False)
-            lumi_note.SetTextFont(42)
-            lumi_note.SetTextColor(ROOT.kBlack)
-            lumi_note.SetTextAlign(11)
-            lumi_note.SetTextSize(0.025)
+            # -------------------------------------------------------------
+            # [COMMENTED OUT] Luminosity Note
+            # lumi_note = ROOT.TLatex()
+            # lumi_note.SetNDC(False)
+            # lumi_note.SetTextFont(42)
+            # lumi_note.SetTextColor(ROOT.kBlack)
+            # lumi_note.SetTextAlign(11)
+            # lumi_note.SetTextSize(0.025)
 
-            note_text = f"#splitline{{10% global uncertainty due to the integrated luminosity is not included in the error bands,}}{{but bin-by-bin roadset systematic uncertainties are included.}}"
-            lumi_note.DrawLatex(0.1, dynamic_y, note_text)
+            # note_text = f"#splitline{{10% global uncertainty due to the integrated luminosity is not included in the error bands,}}{{but bin-by-bin roadset systematic uncertainties are included.}}"
+            # lumi_note.DrawLatex(0.1, dynamic_y, note_text)
+            # -------------------------------------------------------------
             
             c_xsec.SaveAs(f"CrossSection_{target_label}{suffix}_vs_pT.pdf")
             
@@ -1050,10 +1053,13 @@ class DYCrossSectionAnalyzer:
         prelim.SetTextSize(0.0272) 
         prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
         
-        lumi_note = ROOT.TLatex()
-        lumi_note.SetNDC(True); lumi_note.SetTextFont(43); lumi_note.SetTextSize(0.025)
-        lumi_note.SetTextColor(ROOT.kBlack); lumi_note.SetTextAlign(11)
-        lumi_note.DrawLatex(0.18, 0.16, "10% global uncertainty due to the integrated luminosity is not included in the error bands")
+        # -------------------------------------------------------------
+        # [COMMENTED OUT] Luminosity Note
+        # lumi_note = ROOT.TLatex()
+        # lumi_note.SetNDC(True); lumi_note.SetTextFont(43); lumi_note.SetTextSize(0.025)
+        # lumi_note.SetTextColor(ROOT.kBlack); lumi_note.SetTextAlign(11)
+        # lumi_note.DrawLatex(0.18, 0.16, "10% global uncertainty due to the integrated luminosity is not included in the error bands")
+        # -------------------------------------------------------------
 
         canvas.Update(); canvas.SaveAs(f"cross_section_overlay_Targets_vs_pT{suffix}.pdf")
         
