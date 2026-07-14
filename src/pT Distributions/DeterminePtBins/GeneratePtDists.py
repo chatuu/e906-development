@@ -139,6 +139,11 @@ def extract_kinematics(filepaths, is_mc=False, treename="Tree"):
         return np.concatenate(all_pts), np.concatenate(all_xfs), np.concatenate(all_masses), np.concatenate(all_weights)
     return np.array([]), np.array([]), np.array([]), np.array([])
 
+def get_in_pt_bin(pt_arr, var_arr, w_arr, pt_min, pt_max):
+    """Filters variables and weights for events falling in a specific pT bin."""
+    mask = (pt_arr >= pt_min) & (pt_arr < pt_max)
+    return var_arr[mask], w_arr[mask]
+
 def make_normalized_th1(name, title, xtitle, data_array, weight_array, color, bins, xmin, xmax):
     """Creates a TH1F from numpy arrays (value, weight) using ROOT.FillN and area normalizes it."""
     h = ROOT.TH1F(name, title, bins, xmin, xmax)
@@ -193,9 +198,9 @@ def plot_variable_canvas(target_name, var_name, xtitle,
                          data_arr, w_data, 
                          mix_arr, w_mix, 
                          dy_arr, w_dy, 
-                         bins, xmin, xmax, ymax=None):
+                         bins, xmin, xmax, ymax=None, suffix="", extra_label=None):
     """Generates and saves a split canvas: Upper pad (Distributions) & Lower pad (Ratio)."""
-    c_name = f"c_{target_name}_{var_name}"
+    c_name = f"c_{target_name}_{var_name}{suffix}"
     c = ROOT.TCanvas(c_name, f"{target_name} {var_name} Distribution", 800, 800)
     
     # --- Pad 1: Main Distributions ---
@@ -231,9 +236,11 @@ def plot_variable_canvas(target_name, var_name, xtitle,
     h_dy.Draw("HIST SAME")
     h_dy.Draw("E1 SAME")
 
-    leg = ROOT.TLegend(0.65, 0.70, 0.88, 0.88)
+    leg = ROOT.TLegend(0.60, 0.65, 0.88, 0.88)
     leg.SetBorderSize(0)
     leg.SetFillStyle(0)
+    if extra_label:
+        leg.AddEntry("", extra_label, "")
     leg.AddEntry(h_data, f"Data - Mix ({target_name})", "lep")
     leg.AddEntry(h_dy, "Messy DY MC", "le")
     leg.Draw()
@@ -283,13 +290,16 @@ def plot_variable_canvas(target_name, var_name, xtitle,
     line.SetLineWidth(2)
     line.Draw()
 
-    pdf_filename = f"{var_name}_Distribution_{target_name}.pdf"
+    pdf_filename = f"{var_name}_Distribution_{target_name}{suffix}.pdf"
     c.SaveAs(pdf_filename)
     print(f"Successfully saved: {pdf_filename} (Y-range: [0, {ymax:.3f}])")
     
     return c, pad1, pad2, h_data, h_dy, h_ratio, line, leg
 
+
+# ==============================================================================
 # --- Configuration ---
+# ==============================================================================
 base_dir = "/root/github/e906-development/ROOTFiles/Hugo"
 
 lh2_files = [
@@ -311,8 +321,18 @@ ld2_files = [
 mc_dy_lh2 = os.path.join(base_dir, "mc_drellyan_LH2_M027_S001_messy_occ_pTxFweight_v2.root")
 mc_dy_ld2 = os.path.join(base_dir, "mc_drellyan_LD2_M027_S001_messy_occ_pTxFweight_v2.root")
 
+# Define the pT bins you want to process for xF and mass
+pt_bins = [
+    (0.0, 0.5),
+    (0.5, 1.0),
+    (1.0, 1.5),
+    (1.5, 1.8)
+]
+
+
+# ==============================================================================
 # --- Extract Data Arrays ---
-# Notice we now unpack 4 items per function call: pT, xF, Mass, Weights
+# ==============================================================================
 print("--- Extracting LH2 Data & Mixed Background ---")
 pt_data_lh2, xf_data_lh2, mass_data_lh2, w_data_lh2 = extract_kinematics(lh2_files, is_mc=False, treename="result")
 pt_mix_lh2,  xf_mix_lh2,  mass_mix_lh2,  w_mix_lh2  = extract_kinematics(lh2_files, is_mc=False, treename="result_mix")
@@ -328,47 +348,103 @@ print("\n--- Extracting LD2 Messy MC ---")
 pt_dy_ld2,   xf_dy_ld2,   mass_dy_ld2,   w_dy_ld2   = extract_kinematics(mc_dy_ld2, is_mc=True, treename="Tree")
 
 
+# ==============================================================================
 # --- Generate Plots ---
-print("\n--- Generating Canvases (Data - Mixed) and saving to PDFs ---")
+# ==============================================================================
+print("\n--- Generating Inclusive Canvases (Data - Mixed) ---")
 
 plot_refs = []
 
-# --- 1. pT Plots ---
+# --- 1. Inclusive pT Plots ---
 plot_refs.append(plot_variable_canvas(
     "LH2", "pT", "p_{T} [GeV/c]", 
     pt_data_lh2, w_data_lh2, pt_mix_lh2, w_mix_lh2, pt_dy_lh2, w_dy_lh2, 
-    bins=50, xmin=0.0, xmax=2.5, ymax=0.07
+    bins=50, xmin=0.0, xmax=2.5, ymax=0.07, extra_label="Inclusive"
 ))
 plot_refs.append(plot_variable_canvas(
     "LD2", "pT", "p_{T} [GeV/c]", 
     pt_data_ld2, w_data_ld2, pt_mix_ld2, w_mix_ld2, pt_dy_ld2, w_dy_ld2, 
-    bins=50, xmin=0.0, xmax=2.5, ymax=0.07
+    bins=50, xmin=0.0, xmax=2.5, ymax=0.07, extra_label="Inclusive"
 ))
 
-# --- 2. xF Plots ---
-# ymax is left out so the function dynamically sets a limit that won't clip the distribution
+# --- 2. Inclusive xF Plots ---
 plot_refs.append(plot_variable_canvas(
     "LH2", "xF", "x_{F}", 
     xf_data_lh2, w_data_lh2, xf_mix_lh2, w_mix_lh2, xf_dy_lh2, w_dy_lh2, 
-    bins=40, xmin=0.0, xmax=0.8
+    bins=40, xmin=0.0, xmax=0.8, extra_label="Inclusive"
 ))
 plot_refs.append(plot_variable_canvas(
     "LD2", "xF", "x_{F}", 
     xf_data_ld2, w_data_ld2, xf_mix_ld2, w_mix_ld2, xf_dy_ld2, w_dy_ld2, 
-    bins=40, xmin=0.0, xmax=0.8
+    bins=40, xmin=0.0, xmax=0.8, extra_label="Inclusive"
 ))
 
-# --- 3. Mass Plots ---
-# ymax is left out here as well for dynamic scaling
+# --- 3. Inclusive Mass Plots ---
 plot_refs.append(plot_variable_canvas(
     "LH2", "Mass", "Mass [GeV/c^{2}]", 
     mass_data_lh2, w_data_lh2, mass_mix_lh2, w_mix_lh2, mass_dy_lh2, w_dy_lh2, 
-    bins=46, xmin=4.2, xmax=8.8
+    bins=46, xmin=4.2, xmax=8.8, extra_label="Inclusive"
 ))
 plot_refs.append(plot_variable_canvas(
     "LD2", "Mass", "Mass [GeV/c^{2}]", 
     mass_data_ld2, w_data_ld2, mass_mix_ld2, w_mix_ld2, mass_dy_ld2, w_dy_ld2, 
-    bins=46, xmin=4.2, xmax=8.8
+    bins=46, xmin=4.2, xmax=8.8, extra_label="Inclusive"
 ))
 
-print("\nDone! Exactly 6 PDFs (LH2 & LD2 distributions for pT, xF, and Mass) with Data-Mixed backgrounds and Ratio plots have been created.")
+
+print("\n--- Generating pT-Binned Canvases for xF and Mass ---")
+
+# Loop over defined pT bins
+for pt_min, pt_max in pt_bins:
+    
+    # Format a string for file names (replace decimal dots with 'p' to keep filenames safe)
+    sfx = f"_pT_{pt_min}_to_{pt_max}".replace(".", "p")
+    lbl = f"{pt_min} #leq p_{{T}} < {pt_max} GeV/c"
+    
+    print(f"\nProcessing Bin: {lbl}")
+    
+    # Filter xF and weights for LH2
+    xf_d_lh2_bin, w_xf_d_lh2_bin = get_in_pt_bin(pt_data_lh2, xf_data_lh2, w_data_lh2, pt_min, pt_max)
+    xf_m_lh2_bin, w_xf_m_lh2_bin = get_in_pt_bin(pt_mix_lh2,  xf_mix_lh2,  w_mix_lh2,  pt_min, pt_max)
+    xf_dy_lh2_bin, w_xf_dy_lh2_bin = get_in_pt_bin(pt_dy_lh2, xf_dy_lh2, w_dy_lh2, pt_min, pt_max)
+    
+    # Filter Mass and weights for LH2
+    mass_d_lh2_bin, w_mass_d_lh2_bin = get_in_pt_bin(pt_data_lh2, mass_data_lh2, w_data_lh2, pt_min, pt_max)
+    mass_m_lh2_bin, w_mass_m_lh2_bin = get_in_pt_bin(pt_mix_lh2,  mass_mix_lh2,  w_mix_lh2,  pt_min, pt_max)
+    mass_dy_lh2_bin, w_mass_dy_lh2_bin = get_in_pt_bin(pt_dy_lh2, mass_dy_lh2, w_dy_lh2, pt_min, pt_max)
+
+    # Filter xF and weights for LD2
+    xf_d_ld2_bin, w_xf_d_ld2_bin = get_in_pt_bin(pt_data_ld2, xf_data_ld2, w_data_ld2, pt_min, pt_max)
+    xf_m_ld2_bin, w_xf_m_ld2_bin = get_in_pt_bin(pt_mix_ld2,  xf_mix_ld2,  w_mix_ld2,  pt_min, pt_max)
+    xf_dy_ld2_bin, w_xf_dy_ld2_bin = get_in_pt_bin(pt_dy_ld2, xf_dy_ld2, w_dy_ld2, pt_min, pt_max)
+    
+    # Filter Mass and weights for LD2
+    mass_d_ld2_bin, w_mass_d_ld2_bin = get_in_pt_bin(pt_data_ld2, mass_data_ld2, w_data_ld2, pt_min, pt_max)
+    mass_m_ld2_bin, w_mass_m_ld2_bin = get_in_pt_bin(pt_mix_ld2,  mass_mix_ld2,  w_mix_ld2,  pt_min, pt_max)
+    mass_dy_ld2_bin, w_mass_dy_ld2_bin = get_in_pt_bin(pt_dy_ld2, mass_dy_ld2, w_dy_ld2, pt_min, pt_max)
+
+    # Generate xF Plots for this bin
+    plot_refs.append(plot_variable_canvas(
+        "LH2", "xF", "x_{F}", 
+        xf_d_lh2_bin, w_xf_d_lh2_bin, xf_m_lh2_bin, w_xf_m_lh2_bin, xf_dy_lh2_bin, w_xf_dy_lh2_bin, 
+        bins=40, xmin=0.0, xmax=0.8, suffix=sfx, extra_label=lbl
+    ))
+    plot_refs.append(plot_variable_canvas(
+        "LD2", "xF", "x_{F}", 
+        xf_d_ld2_bin, w_xf_d_ld2_bin, xf_m_ld2_bin, w_xf_m_ld2_bin, xf_dy_ld2_bin, w_xf_dy_ld2_bin, 
+        bins=40, xmin=0.0, xmax=0.8, suffix=sfx, extra_label=lbl
+    ))
+
+    # Generate Mass Plots for this bin
+    plot_refs.append(plot_variable_canvas(
+        "LH2", "Mass", "Mass [GeV/c^{2}]", 
+        mass_d_lh2_bin, w_mass_d_lh2_bin, mass_m_lh2_bin, w_mass_m_lh2_bin, mass_dy_lh2_bin, w_mass_dy_lh2_bin, 
+        bins=46, xmin=4.2, xmax=8.8, suffix=sfx, extra_label=lbl
+    ))
+    plot_refs.append(plot_variable_canvas(
+        "LD2", "Mass", "Mass [GeV/c^{2}]", 
+        mass_d_ld2_bin, w_mass_d_ld2_bin, mass_m_ld2_bin, w_mass_m_ld2_bin, mass_dy_ld2_bin, w_mass_dy_ld2_bin, 
+        bins=46, xmin=4.2, xmax=8.8, suffix=sfx, extra_label=lbl
+    ))
+
+print("\nDone! PDF generation complete for inclusive and pT-binned plots.")
