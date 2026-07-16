@@ -822,8 +822,6 @@ class DYCrossSectionAnalyzer:
                 stat_unc = stat_unc_raw * scale
                 sys_tot_yield = sys_tot_yield_raw * scale
                 sys_psip_cont = sys_psip_cont_raw * scale
-                # Added 10% global systematic due to integrated luminosity
-                sys_lumi = 0.10 * sum_xsec 
             else:
                 # Fallback to the raw calculated data
                 sum_xsec = raw_dsigma_dpt
@@ -831,22 +829,20 @@ class DYCrossSectionAnalyzer:
                 stat_unc = stat_unc_raw
                 sys_tot_yield = sys_tot_yield_raw
                 sys_psip_cont = sys_psip_cont_raw
-                # Added 10% global systematic due to integrated luminosity
-                sys_lumi = 0.10 * sum_xsec
             
             if psip_ratio > 0.0 and not use_true_pt:
                 s_pt = f"[{pt_min:.2f}, {pt_max:.2f})"
                 s_mass = f"Integrated [{config.MASS_BINS[0]:.2f}, {config.MASS_BINS[-1]:.2f})"
                 s_ratio = f"{psip_ratio:.4f}"
-                sys_unc_bin = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_roadset**2 + sys_lumi**2)
+                sys_unc_bin = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_roadset**2)
                 s_sigma_psip_col = f"{sum_xsec:.4f} $\\pm$ {stat_unc:.4f} $\\pm$ {sys_unc_bin:.4f}"
                 latex_psip_table_content += f"{s_pt} & {s_mass} & {s_ratio} & {s_sigma_psip_col} & {sys_psip_cont:.4f} \\\\ \n\\hline\n"
             
             if sum_xsec > 0:
                 sys_acc_total = (acceptance_err / acceptance) * sum_xsec
                 total_stat_err = stat_unc
-                # Add roadset and lumi systematic in quadrature
-                total_sys_err = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_acc_total**2 + sys_roadset**2 + sys_lumi**2)
+                # Add roadset systematic in quadrature
+                total_sys_err = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_acc_total**2 + sys_roadset**2)
                 
                 # Keep tracking max sys for baseline visualization
                 if total_sys_err > max_sys_err: max_sys_err = total_sys_err
@@ -884,34 +880,40 @@ class DYCrossSectionAnalyzer:
             plot_y_min = 0.0
             plot_y_max = y_max_data * 1.4 if y_min_data < y_max_data else 3.0
             
-            # --- MAIN TFRAME Y-AXIS RANGE ---
-            # Set fixed y-axis limits here for absolute cross sections vs pT plots
+            # --- Dynamic Bottom TFrame Baseline for Systematics ---
+            # Ensure the systematic error band does not touch the x-axis (y=0)
+            baseline = plot_y_max * 0.12
+            if (baseline - max_sys_err) < (plot_y_max * 0.05):
+                baseline = max_sys_err + (plot_y_max * 0.05)
+
             mg = ROOT.TMultiGraph()
             mg.SetTitle(f";p_{{T}} [GeV];d#sigma / dp_{{T}} [nb / GeV / Nucleus]")
-            mg.SetMinimum(plot_y_min)
-            mg.SetMaximum(plot_y_max)
+            mg.SetMinimum(plot_y_min); mg.SetMaximum(plot_y_max)
             
             leg = ROOT.TLegend(0.65, 0.75, 0.88, 0.88)
             leg.SetBorderSize(0)
             
-            g_sys.SetFillColorAlpha(ROOT.kPink + 1, 0.6)
-            g_sys.SetFillStyle(1001)
-            leg.AddEntry(g_sys, "Syst. Error (See Inset)", "f")
+            # Repurpose cloned g_sys to bottom band level
+            g_sys_bottom = g_sys.Clone(f"g_sys_bottom_{target_label}{suffix}")
+            for i in range(g_sys_bottom.GetN()):
+                g_sys_bottom.SetPoint(i, g_sys_bottom.GetX()[i], baseline)
 
-            g_xsec.SetMarkerStyle(20)
-            g_xsec.SetMarkerColor(ROOT.kRed)
-            g_xsec.SetLineColor(ROOT.kRed)
-            mg.Add(g_xsec, "PE")
-            leg.AddEntry(g_xsec, f"Data ({target_label})", "lep")
+            g_sys_bottom.SetMarkerSize(0); g_sys_bottom.SetLineColor(ROOT.kRed)
+            g_sys_bottom.SetFillColorAlpha(ROOT.kPink - 9, 0.5); g_sys_bottom.SetFillStyle(1001)
             
-            mg.Draw("A")
-            mg.GetXaxis().CenterTitle(); mg.GetYaxis().CenterTitle() 
+            mg.Add(g_sys_bottom, "2"); leg.AddEntry(g_sys_bottom, "Syst. Unc. Band", "f")
+
+            g_xsec.SetMarkerStyle(20); g_xsec.SetMarkerColor(ROOT.kRed); g_xsec.SetLineColor(ROOT.kRed)
+            mg.Add(g_xsec, "P"); leg.AddEntry(g_xsec, f"Data ({target_label})", "lep")
             
-            # --- MAIN TFRAME X-AXIS RANGE ---
-            mg.GetXaxis().SetLimits(0.0, 1.8)
-            mg.GetXaxis().SetTitleOffset(1.3); mg.GetYaxis().SetTitleOffset(1.7)
+            mg.Draw("A"); mg.GetXaxis().CenterTitle(); mg.GetYaxis().CenterTitle() 
+            mg.GetXaxis().SetLimits(0.0, 1.8); mg.GetXaxis().SetTitleOffset(1.3); mg.GetYaxis().SetTitleOffset(1.7)
             
-            c_xsec.Update()
+            line_base = ROOT.TLine(0.0, baseline, 1.8, baseline)
+            line_base.SetLineStyle(2)
+            line_base.SetLineColor(ROOT.kGray+2)
+            line_base.Draw("SAME")
+            
             leg.Draw()
             
             target_prefix = "pp" if target_label == "LH2" else "pd" if target_label == "LD2" else target_label
@@ -934,76 +936,8 @@ class DYCrossSectionAnalyzer:
 
             prelim.SetTextSize(0.0252) 
             prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
-            
-            # --- INSET PAD FOR SYSTEMATICS ---
-            c_xsec.cd()
-            inset_w = 0.4
-            inset_h = 0.28
-            inset_x = 0.24
-            inset_y = 0.14
-            
-            pad_inset = ROOT.TPad(f"pad_inset_pT_{target_label}", "pad_inset", inset_x, inset_y, inset_x + inset_w, inset_y + inset_h)
-            pad_inset.SetFillStyle(4000)
-            pad_inset.SetFrameFillStyle(1001)
-            pad_inset.SetFrameFillColor(ROOT.kWhite)
-            pad_inset.SetMargin(0.24, 0.05, 0.35, 0.15) 
-            pad_inset.SetLogy(0)
-            pad_inset.SetTickx(1)
-            pad_inset.SetTicky(1)
-            pad_inset.Draw()
-            pad_inset.cd()
-            
-            g_sys_abs = ROOT.TGraphAsymmErrors()
-            max_abs_err = 0.0
-            
-            for idx in range(g_sys.GetN()):
-                x = g_sys.GetPointX(idx)
-                y = g_sys.GetPointY(idx)
-                ey_h = g_sys.GetErrorYhigh(idx)
-                ex_h = g_sys.GetErrorXhigh(idx)
-                ex_l = g_sys.GetErrorXlow(idx)
-                
-                abs_err = ey_h
-                if abs_err > max_abs_err: max_abs_err = abs_err
-                
-                g_sys_abs.SetPoint(idx, x, 0.0)
-                g_sys_abs.SetPointError(idx, ex_l, ex_h, abs_err, abs_err)
 
-            g_sys_abs.SetFillColorAlpha(ROOT.kPink + 1, 0.6)
-            g_sys_abs.SetLineColor(ROOT.kPink + 1)
-            g_sys_abs.SetFillStyle(1001)
-            
-            mg_inset = ROOT.TMultiGraph()
-            mg_inset.Add(g_sys_abs, "2")
-            mg_inset.Draw("A")
-            
-            mg_inset.SetTitle(";p_{T} [GeV];#pm d#sigma/dp_{T} [nb/GeV/Nucleus]")
-            mg_inset.GetXaxis().SetLimits(0.0, 1.8)
-            mg_inset.GetXaxis().SetLabelSize(0.08)
-            mg_inset.GetXaxis().SetTitleSize(0.09)
-            mg_inset.GetXaxis().SetTitleOffset(1.6)
-            mg_inset.GetXaxis().CenterTitle()
-            
-            mg_inset.GetYaxis().SetLabelSize(0.07)
-            mg_inset.GetYaxis().SetTitleSize(0.07)
-            mg_inset.GetYaxis().SetTitleOffset(0.6)
-            mg_inset.GetYaxis().CenterTitle()
-            mg_inset.GetYaxis().SetNdivisions(504)
-            try:
-                mg_inset.GetYaxis().SetMaxDigits(3)
-            except AttributeError:
-                pass
-            
-            y_max_inset = max_abs_err * 1.2 if max_abs_err > 0 else 1e-3
-            mg_inset.SetMinimum(-y_max_inset)
-            mg_inset.SetMaximum(y_max_inset)
-            
-            line_zero = ROOT.TLine(0.0, 0, 1.8, 0)
-            line_zero.SetLineStyle(2)
-            line_zero.SetLineColor(ROOT.kBlack)
-            line_zero.Draw()
-            
-            c_xsec.cd()
+            dynamic_y = plot_y_min + 0.05 * (plot_y_max - plot_y_min)
             
             c_xsec.SaveAs(f"CrossSection_{target_label}{suffix}_vs_pT.pdf")
             
@@ -1030,9 +964,7 @@ class DYCrossSectionAnalyzer:
         legend.SetBorderSize(0); legend.SetFillStyle(0)
         legend.SetTextFont(43); legend.SetTextSize(18)
 
-        # --- OVERLAY Y-AXIS RANGES ---
-        overlay_y_max = 3.0
-        h_frame = canvas.DrawFrame(0.0, 0.0, 1.8, overlay_y_max)
+        h_frame = canvas.DrawFrame(0.0, 0.0, 1.8, 1.0)
         h_frame.SetTitle("DY Absolute Cross-Section Vs p_{T}")
         h_frame.GetXaxis().SetTitle("p_{T} (GeV)"); h_frame.GetXaxis().CenterTitle()
         h_frame.GetXaxis().SetTitleOffset(1.3); h_frame.GetYaxis().SetTitle("d#sigma/dp_{T} (nb/GeV)")
@@ -1060,8 +992,17 @@ class DYCrossSectionAnalyzer:
                     sys_ey = g_sys.GetErrorY(i)
                     if sys_ey > max_sys_all: max_sys_all = sys_ey
 
-        plot_y_max = y_max * 1.4 if y_min < y_max else overlay_y_max
+        plot_y_max = y_max * 1.4 if y_min < y_max else 3.0
         if y_min < y_max: h_frame.SetMinimum(0.0); h_frame.SetMaximum(plot_y_max)
+
+        # Baseline offset for systematic bands
+        baseline = plot_y_max * 0.12
+        if (baseline - max_sys_all) < (plot_y_max * 0.05):
+            baseline = max_sys_all + (plot_y_max * 0.05)
+            
+        line_base = ROOT.TLine(0.0, baseline, 1.8, baseline)
+        line_base.SetLineStyle(2); line_base.SetLineColor(ROOT.kGray+2)
+        line_base.Draw("SAME")
 
         keepalive = []
         for target, color in targets:
@@ -1071,8 +1012,10 @@ class DYCrossSectionAnalyzer:
             g_sys = dir_xsec.Get(f"g_sys_{target}{suffix}")
             if not g_xsec or not g_sys: continue
 
-            # For the overlay plot, we draw the systemic bands properly around the points
             g_sys_clone = g_sys.Clone(f"g_sys_clone_{target}{suffix}")
+            for i in range(g_sys_clone.GetN()):
+                g_sys_clone.SetPoint(i, g_sys_clone.GetX()[i], baseline)
+
             g_sys_clone.SetLineColor(color); g_sys_clone.SetFillColorAlpha(color, 0.35)
             g_sys_clone.SetFillStyle(1001); g_sys_clone.SetMarkerSize(0)
 
@@ -1080,7 +1023,7 @@ class DYCrossSectionAnalyzer:
             g_xsec_clone.SetLineColor(color); g_xsec_clone.SetMarkerColor(color)
             g_xsec_clone.SetMarkerStyle(ROOT.kFullCircle); g_xsec_clone.SetMarkerSize(1.0)
 
-            g_sys_clone.Draw("2 SAME"); g_xsec_clone.Draw("PE SAME")
+            g_sys_clone.Draw("2 SAME"); g_xsec_clone.Draw("P SAME")
             legend.AddEntry(g_xsec_clone, f"{target} Data", "pl")
             
             keepalive.extend([g_sys_clone, g_xsec_clone])
@@ -1281,7 +1224,7 @@ class DYCrossSectionAnalyzer:
             
             # This is the standard ratio plot generation block. Assuming standard behavior here
             # since modification requested was for the *combined* overlay pad 2.
-            y_text = 0.11 + fit_val + fit_err + ((mg.GetYaxis().GetXmax() - mg.GetYaxis().GetXmin()) * 0.02)
+            y_text = fit_val + fit_err + ((mg.GetYaxis().GetXmax() - mg.GetYaxis().GetXmin()) * 0.02)
             latex_fit.DrawLatex(0.2, y_text, f"Best Fit: {fit_val:.4f} #pm {fit_err:.4f}")
 
             prelim = ROOT.TLatex()
@@ -1350,17 +1293,38 @@ class DYCrossSectionAnalyzer:
 
         plot_y_max = y_max * 1.4
         mg_top.SetMaximum(plot_y_max)
-        mg_top.SetMinimum(0.0)
+        
+        # --- NEW LOGIC: Dynamic Top TFrame Baseline & Frame Limits for geom pT ---
+        if not use_true_pt:
+            baseline = 0.0
+            # Expand frame minimum deeply into the negatives to clear the lowest bound of the sys error
+            mg_top.SetMinimum(-max_sys_both * 1.25)
+        else:
+            mg_top.SetMinimum(0.0)
+            baseline = plot_y_max * 0.12
+            if (baseline - max_sys_both) < (plot_y_max * 0.05):
+                baseline = max_sys_both + (plot_y_max * 0.05)
 
+        g_sys_lh2_clone = g_sys_lh2.Clone()
+        for i in range(g_sys_lh2_clone.GetN()): g_sys_lh2_clone.SetPoint(i, g_sys_lh2_clone.GetX()[i], baseline)
+        g_sys_lh2_clone.SetLineColor(ROOT.kRed)
+        g_sys_lh2_clone.SetFillColorAlpha(ROOT.kPink - 9, 0.5)
+        
         g_xsec_lh2_clone = g_xsec_lh2.Clone()
         g_xsec_lh2_clone.SetLineColor(ROOT.kRed)
         g_xsec_lh2_clone.SetMarkerColor(ROOT.kRed)
+
+        g_sys_ld2_clone = g_sys_ld2.Clone()
+        for i in range(g_sys_ld2_clone.GetN()): g_sys_ld2_clone.SetPoint(i, g_sys_ld2_clone.GetX()[i], baseline)
+        g_sys_ld2_clone.SetLineColor(ROOT.kBlue)
+        g_sys_ld2_clone.SetFillColorAlpha(ROOT.kAzure + 1, 0.5) 
         
         g_xsec_ld2_clone = g_xsec_ld2.Clone()
         g_xsec_ld2_clone.SetLineColor(ROOT.kBlue)
         g_xsec_ld2_clone.SetMarkerColor(ROOT.kBlue)
 
-        # Removed the systemic bands from drawing on mg_top here
+        mg_top.Add(g_sys_lh2_clone, "2")
+        mg_top.Add(g_sys_ld2_clone, "2")
         mg_top.Add(g_xsec_lh2_clone, "P")
         mg_top.Add(g_xsec_ld2_clone, "P")
 
@@ -1368,8 +1332,6 @@ class DYCrossSectionAnalyzer:
         mg_top.SetTitle("")
         mg_top.GetXaxis().SetLimits(0.0, 1.8)
 
-        mg_top.GetYaxis().SetRangeUser(-0.006, plot_y_max)
-        mg_top.GetYaxis().SetTitle("d#sigma/dp_{T} [nb/GeV]")
         mg_top.GetYaxis().SetTitle("d#sigma/dp_{T} [nb/GeV]")
         mg_top.GetYaxis().CenterTitle()
         mg_top.GetYaxis().SetTitleFont(43); mg_top.GetYaxis().SetTitleSize(22)
@@ -1382,23 +1344,16 @@ class DYCrossSectionAnalyzer:
         mg_top.GetXaxis().SetTitleOffset(1.2) 
         mg_top.GetXaxis().SetLabelFont(43); mg_top.GetXaxis().SetLabelSize(20)
 
-        leg_top = ROOT.TLegend(0.7, 0.65, 0.93, 0.88)
+        line_base = ROOT.TLine(0.0, baseline, 1.8, baseline)
+        line_base.SetLineStyle(2); line_base.SetLineColor(ROOT.kGray+2)
+        line_base.Draw("SAME")
+
+        leg_top = ROOT.TLegend(0.65, 0.65, 0.88, 0.88)
         leg_top.SetBorderSize(0); leg_top.SetFillStyle(0); leg_top.SetTextFont(43); leg_top.SetTextSize(18)
         leg_top.AddEntry(g_xsec_lh2_clone, "LH2 Data", "pl")
-        
-        # Keep legend entries for the bands, but change wording since they are below
-        dummy_lh2_box = ROOT.TH1F("dummy_lh2", "", 1, 0, 1)
-        dummy_lh2_box.SetFillColorAlpha(ROOT.kPink - 9, 0.5)
-        dummy_lh2_box.SetLineColor(ROOT.kRed)
-        leg_top.AddEntry(dummy_lh2_box, "LH2 Sys. Unc.", "f")
-        
+        leg_top.AddEntry(g_sys_lh2_clone, "LH2 Sys. Unc.", "f")
         leg_top.AddEntry(g_xsec_ld2_clone, "LD2 Data", "pl")
-        
-        dummy_ld2_box = ROOT.TH1F("dummy_ld2", "", 1, 0, 1)
-        dummy_ld2_box.SetFillColorAlpha(ROOT.kAzure + 1, 0.5)
-        dummy_ld2_box.SetLineColor(ROOT.kBlue)
-        leg_top.AddEntry(dummy_ld2_box, "LD2 Sys. Unc.", "f")
-        
+        leg_top.AddEntry(g_sys_ld2_clone, "LD2 Sys. Unc.", "f")
         leg_top.Draw()
 
         prelim = ROOT.TLatex()
@@ -1407,89 +1362,10 @@ class DYCrossSectionAnalyzer:
         prelim.SetTextAlign(33) 
 
         prelim.SetTextSize(0.05)
-        prelim.DrawLatex(0.88, 0.32, "Preliminary")
+        prelim.DrawLatex(0.82, 0.60, "Preliminary")
         
         prelim.SetTextSize(0.0252) 
-        prelim.DrawLatex(0.88, 0.26, "Run Period 2014-2015")
-        
-        # --- NEW FLOATING INSET PAD FOR COMBINED OVERLAY SYSTEMATICS ---
-        pad1.cd()
-        inset_w = 0.5
-        inset_h = 0.3
-        inset_x = 0.21
-        inset_y = 0.16
-        
-        pad_inset = ROOT.TPad(f"pad_inset_combined_{suffix}", "pad_inset", inset_x, inset_y, inset_x + inset_w, inset_y + inset_h)
-        pad_inset.SetFillStyle(4000)
-        pad_inset.SetFrameFillStyle(1001)
-        pad_inset.SetFrameFillColor(ROOT.kWhite)
-        pad_inset.SetMargin(0.24, 0.05, 0.25, 0.15) 
-        pad_inset.SetLogy(0)
-        pad_inset.SetTickx(1)
-        pad_inset.SetTicky(1)
-        pad_inset.Draw()
-        pad_inset.cd()
-        
-        g_sys_abs_lh2 = ROOT.TGraphAsymmErrors()
-        g_sys_abs_ld2 = ROOT.TGraphAsymmErrors()
-        max_abs_err_both = 0.0
-        
-        for idx in range(g_sys_lh2.GetN()):
-            x = g_sys_lh2.GetPointX(idx)
-            ey_h = g_sys_lh2.GetErrorYhigh(idx)
-            ex_h = g_sys_lh2.GetErrorXhigh(idx)
-            ex_l = g_sys_lh2.GetErrorXlow(idx)
-            if ey_h > max_abs_err_both: max_abs_err_both = ey_h
-            g_sys_abs_lh2.SetPoint(idx, x, 0.0)
-            g_sys_abs_lh2.SetPointError(idx, ex_l, ex_h, ey_h, ey_h)
-
-        for idx in range(g_sys_ld2.GetN()):
-            x = g_sys_ld2.GetPointX(idx)
-            ey_h = g_sys_ld2.GetErrorYhigh(idx)
-            ex_h = g_sys_ld2.GetErrorXhigh(idx)
-            ex_l = g_sys_ld2.GetErrorXlow(idx)
-            if ey_h > max_abs_err_both: max_abs_err_both = ey_h
-            g_sys_abs_ld2.SetPoint(idx, x, 0.0)
-            g_sys_abs_ld2.SetPointError(idx, ex_l, ex_h, ey_h, ey_h)
-
-        g_sys_abs_lh2.SetFillColorAlpha(ROOT.kPink - 9, 0.5)
-        g_sys_abs_lh2.SetLineColor(ROOT.kRed)
-        g_sys_abs_lh2.SetFillStyle(1001)
-
-        g_sys_abs_ld2.SetFillColorAlpha(ROOT.kAzure + 1, 0.5)
-        g_sys_abs_ld2.SetLineColor(ROOT.kBlue)
-        g_sys_abs_ld2.SetFillStyle(1001)
-        
-        mg_inset = ROOT.TMultiGraph()
-        mg_inset.Add(g_sys_abs_lh2, "2")
-        mg_inset.Add(g_sys_abs_ld2, "2")
-        mg_inset.Draw("A")
-        
-        mg_inset.SetTitle(";p_{T} [GeV];#pm d#sigma/dp_{T} [nb/GeV]")
-        mg_inset.GetXaxis().SetLimits(0.0, 1.8)
-        mg_inset.GetXaxis().SetLabelSize(0.08)
-        mg_inset.GetXaxis().SetTitleSize(0.09)
-        mg_inset.GetXaxis().SetTitleOffset(1.1)
-        mg_inset.GetXaxis().CenterTitle()
-        
-        mg_inset.GetYaxis().SetLabelSize(0.07)
-        mg_inset.GetYaxis().SetTitleSize(0.07)
-        mg_inset.GetYaxis().SetTitleOffset(0.6)
-        mg_inset.GetYaxis().CenterTitle()
-        mg_inset.GetYaxis().SetNdivisions(504)
-        try:
-            mg_inset.GetYaxis().SetMaxDigits(3)
-        except AttributeError:
-            pass
-        
-        y_max_inset = max_abs_err_both * 1.2 if max_abs_err_both > 0 else 1e-3
-        mg_inset.SetMinimum(-y_max_inset)
-        mg_inset.SetMaximum(y_max_inset)
-        
-        line_zero = ROOT.TLine(0.0, 0, 1.8, 0)
-        line_zero.SetLineStyle(2)
-        line_zero.SetLineColor(ROOT.kBlack)
-        line_zero.Draw()
+        prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
 
         # --- Pad 2: Ratio (Bottom 35%) ---
         canvas.cd()
@@ -1565,6 +1441,7 @@ class DYCrossSectionAnalyzer:
         latex_fit = ROOT.TLatex()
         latex_fit.SetTextFont(43); latex_fit.SetTextSize(20); latex_fit.SetTextColor(ROOT.kRed)
         
+        # --- NEW LOGIC: Dynamic Bottom TLatex Placement for geom pT ---
         if not use_true_pt:
             y_text = 1.25
         else:
