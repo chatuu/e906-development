@@ -110,9 +110,19 @@ def generate_comparison_slides(plot_list):
     """Generates specific side-by-side comparison slides mapping Previous vs Latest folders."""
     slides = []
     for plot in plot_list:
+        # Dynamically generate the slide title based on the filename
+        if plot.startswith("CrossSection_"):
+            parts = plot.split('_')
+            target = parts[1]
+            xf_min = parts[3]
+            xf_max = parts[4]
+            slide_title = f"{target} Cross-Section Previous Vs Latest: ${xf_min} \\leq x_F < {xf_max}$"
+        else:
+            slide_title = "Summary Plots Previous Vs Latest with updated systematics"
+
         # Added height=0.7\textheight to fix footer masking
         slide = f"""
-\\begin{{frame}}{{Summary Plots Previous Vs Latest with updated systematics}}
+\\begin{{frame}}{{{slide_title}}}
     \\begin{{columns}}[T] 
         \\begin{{column}}{{0.5\\textwidth}}
             \\centering
@@ -624,7 +634,7 @@ __LD2_TABLE_BODY__
         \begin{column}{0.5\textwidth}
             \centering
             \textbf{Latest (with weighted average)}\\[0.2cm]
-            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/cross_section_overlay_Targets_vs_pT_geom_logo.pdf}
+            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/Combined_XSec_Ratio_vs_pT_geom_logo.pdf}
         \end{column}
     \end{columns}
 \end{frame}
