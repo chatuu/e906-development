@@ -958,8 +958,13 @@ class DYCrossSectionAnalyzer:
             
             # --- MAIN TFRAME Y-AXIS RANGE ---
             # You can fine-tune the fixed y-axis limits for the cross-section markers below:
-            fixed_y_min = 1e-5
-            fixed_y_max = 4.0
+            if target_label == "LD2":
+                fixed_y_min = 1e-5
+                fixed_y_max = 5.0
+            else:
+                fixed_y_min = 1e-5
+                fixed_y_max = 4.0
+
             mg.SetMinimum(fixed_y_min)
             mg.SetMaximum(fixed_y_max)
             
@@ -1026,7 +1031,7 @@ class DYCrossSectionAnalyzer:
             c_xsec.cd()
             
             # --- Inset Size Variables ---
-            inset_w = 0.68  # Width of the inset pad (0.0 to 1.0)
+            inset_w = 0.58  # Width of the inset pad (0.0 to 1.0)
             inset_h = 0.34  # Height of the inset pad (0.0 to 1.0)
             inset_x = 0.06  # X-coordinate of the bottom-left corner
             inset_y = 0.15  # Y-coordinate of the bottom-left corner
@@ -1171,8 +1176,9 @@ class DYCrossSectionAnalyzer:
                     scaled_sys_tot_yield = frac_yield * scaled_xsec
                     scaled_sys_acc = frac_acc * scaled_xsec
                     scaled_sys_psip = psip_ratio * scaled_xsec if psip_ratio > 0 else 0.0
+                    scaled_sys_lumi = 0.10 * scaled_xsec # Added 10% Lumi
                     
-                    scaled_sys_err = np.sqrt(scaled_sys_acc**2 + scaled_sys_tot_yield**2 + scaled_sys_psip**2 + scaled_sys_road**2)
+                    scaled_sys_err = np.sqrt(scaled_sys_acc**2 + scaled_sys_tot_yield**2 + scaled_sys_psip**2 + scaled_sys_road**2 + scaled_sys_lumi**2)
                     
                 else:
                     if Y_sub <= 0 or acceptance <= 0: continue
@@ -1185,8 +1191,9 @@ class DYCrossSectionAnalyzer:
                     raw_sys_acc = (acceptance_err / acceptance) * raw_xsec
                     raw_sys_tot_yield = (Y_sub_sys_err / Y_sub) * raw_xsec
                     raw_sys_psip = psip_ratio * raw_xsec if psip_ratio > 0 else 0.0
+                    raw_sys_lumi = 0.10 * raw_xsec # Added 10% Lumi
                     
-                    raw_sys_err = np.sqrt(raw_sys_acc**2 + raw_sys_tot_yield**2 + raw_sys_psip**2)
+                    raw_sys_err = np.sqrt(raw_sys_acc**2 + raw_sys_tot_yield**2 + raw_sys_psip**2 + raw_sys_lumi**2)
                     
                     scaling_factor = actual_mass_center**3
                     scaled_xsec = raw_xsec * scaling_factor
@@ -1223,7 +1230,7 @@ class DYCrossSectionAnalyzer:
             
             if plot_y_min == sys.float_info.max:
                 pad_y_min = 1e-3
-                pad_y_max = 5.0
+                pad_y_max = 3.0
             else:
                 pad_y_min = plot_y_min * 0.2
                 pad_y_max = plot_y_max * 5.0
@@ -1358,7 +1365,7 @@ class DYCrossSectionAnalyzer:
 
         # --- OVERLAY PLOT X & Y AXIS RANGES ---
         # Fine-tune the x and y axis boundaries for the overlay plots here:
-        overlay_x_min = 4.2
+        overlay_x_min = 2.2
         overlay_x_max = 8.8
         overlay_y_min = 1e-5
         overlay_y_max = 1e35
@@ -1400,7 +1407,7 @@ class DYCrossSectionAnalyzer:
             low_edge, high_edge = config.XF_BIN_RANGES[i-2] if i -2 >= 0 else (config.XF_BINS[i], config.XF_BINS[i+1])
             y_pos = 1.0 * scale_factor
             
-            latex = ROOT.TLatex(3.1, y_pos, f"{low_edge:.2f} #leq x_{{F}} < {high_edge:.2f} ({sf_txt})")
+            latex = ROOT.TLatex(2.4, y_pos, f"{low_edge:.2f} #leq x_{{F}} < {high_edge:.2f} ({sf_txt})")
             latex.SetTextFont(43); latex.SetTextSize(20); latex.SetTextColor(color)
             latex.Draw()
             latex_labels.append(latex) 
@@ -1422,8 +1429,9 @@ class DYCrossSectionAnalyzer:
             lumi_note.SetTextAlign(11)
             lumi_note.SetTextSize(24)
 
-            note_text = f"#splitline{{10% global uncertainty due to the integrated luminosity and {road_sys_txt} global uncertainty}}{{due to road dependency are not included in the error bands}}"
-            lumi_note.DrawLatex(0.165, 0.15, note_text)
+            # Updated text string since both lumi and road are now added in quadrature into the band!
+            note_text = f"#splitline{{10% global lumi and {road_sys_txt} road dependency}}{{uncertainties are INCLUDED in the systematic error bands.}}"
+            #lumi_note.DrawLatex(0.165, 0.15, note_text)
 
         canvas.Update()
         out_pdf = f"cross_section_overlay_{target_label}_{plot_type}.pdf"
