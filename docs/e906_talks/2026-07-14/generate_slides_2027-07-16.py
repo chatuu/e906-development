@@ -29,48 +29,6 @@ LD2_2D_CSV_PATH = "/root/github/e906-development/src/CalculateDoubleDifferential
 ERROR_CSV_OLD = "~/github/e906-development/src/xsec_pT/RS57-70/pd_2pp_errors.csv"
 ERROR_CSV_NEW = "~/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/pd_2pp_errors.csv"
 
-# New Cross-Section Comparison Directories
-PREV_XSEC_DIR = "/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57-70"
-LATEST_XSEC_DIR = "/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57-70_road_dependancy_added"
-
-# Ordered Plots for Comparison (Centroid plots removed)
-COMPARISON_PLOTS = [
-    "CrossSection_LH2_xF_0.00_0.05_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.05_0.10_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.10_0.15_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.15_0.20_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.20_0.25_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.25_0.30_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.30_0.35_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.35_0.40_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.40_0.45_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.45_0.50_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.50_0.55_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.55_0.60_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.60_0.65_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.65_0.70_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.70_0.75_GeoCenter_with_logo.pdf",
-    "CrossSection_LH2_xF_0.75_0.80_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.00_0.05_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.05_0.10_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.10_0.15_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.15_0.20_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.20_0.25_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.25_0.30_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.30_0.35_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.35_0.40_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.40_0.45_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.45_0.50_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.50_0.55_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.55_0.60_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.60_0.65_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.65_0.70_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.70_0.75_GeoCenter_with_logo.pdf",
-    "CrossSection_LD2_xF_0.75_0.80_GeoCenter_with_logo.pdf",
-    "cross_section_overlay_LH2_GeoCenter_logo.pdf",
-    "cross_section_overlay_LD2_GeoCenter_logo.pdf"
-]
-
 # Kinematic Bins
 PT_BINS = [0.0, 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8, 2.5]
 XF_BINS = np.round(np.arange(0.0, 0.85, 0.05), 2)
@@ -88,47 +46,22 @@ def format_bin_title(bin_str):
 
 def make_slide(title, lh2_file, ld2_file):
     """Generates a standard two-column Beamer slide with protected paths."""
-    # Added height=0.7\textheight to fix footer masking
     return f"""
 \\begin{{frame}}{{{title}}}
     \\begin{{columns}}[T] 
         \\begin{{column}}{{0.5\\textwidth}}
             \\centering
             \\textbf{{LH2 Target}}\\\\[0.2cm]
-            \\includegraphics[width=0.95\\linewidth, height=0.7\\textheight, keepaspectratio]{{"{lh2_file}"}}
+            \\includegraphics[width=\\linewidth, keepaspectratio]{{"{lh2_file}"}}
         \\end{{column}}
         \\begin{{column}}{{0.5\\textwidth}}
             \\centering
             \\textbf{{LD2 Target}}\\\\[0.2cm]
-            \\includegraphics[width=0.95\\linewidth, height=0.7\\textheight, keepaspectratio]{{"{ld2_file}"}}
+            \\includegraphics[width=\\linewidth, keepaspectratio]{{"{ld2_file}"}}
         \\end{{column}}
     \\end{{columns}}
 \\end{{frame}}
 """
-
-def generate_comparison_slides(plot_list):
-    """Generates specific side-by-side comparison slides mapping Previous vs Latest folders."""
-    slides = []
-    for plot in plot_list:
-        # Added height=0.7\textheight to fix footer masking
-        slide = f"""
-\\begin{{frame}}{{Summary Plots Previous Vs Latest with updated systematics}}
-    \\begin{{columns}}[T] 
-        \\begin{{column}}{{0.5\\textwidth}}
-            \\centering
-            \\textbf{{Previous}}\\\\[0.2cm]
-            \\includegraphics[width=0.95\\linewidth, height=0.7\\textheight, keepaspectratio]{{{PREV_XSEC_DIR}/{plot}}}
-        \\end{{column}}
-        \\begin{{column}}{{0.5\\textwidth}}
-            \\centering
-            \\textbf{{Latest (with weighted average)}}\\\\[0.2cm]
-            \\includegraphics[width=0.95\\linewidth, height=0.7\\textheight, keepaspectratio]{{{LATEST_XSEC_DIR}/{plot}}}
-        \\end{{column}}
-    \\end{{columns}}
-\\end{{frame}}
-"""
-        slides.append(slide)
-    return "".join(slides)
 
 def get_latex_table_rows(csv_filename):
     """Reads the ratio error CSV file and returns formatted LaTeX table rows."""
@@ -291,9 +224,6 @@ def generate_presentation(filename="presentation.tex"):
             bin_label = format_bin_title(pt_bin.replace('pT_', ''))
             title = f"{v_title} ({bin_label}): LH2 vs LD2"
             binned_pT_slides += make_slide(title, lh2_file, ld2_file)
-            
-    # Generating Comparison Extension Slides
-    comparison_slides = generate_comparison_slides(COMPARISON_PLOTS)
 
     # 3. LaTeX Master Template
     latex_template = r'''\documentclass[aspectratio=169]{beamer}
@@ -589,12 +519,12 @@ __LD2_TABLE_BODY__
         \begin{column}{0.5\textwidth}
             \centering
             \textbf{Previous}\\[0.2cm]
-            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/CrossSection_LH2_geom_vs_pT_with_logo_old.pdf}
+            \includegraphics[width=\linewidth, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/CrossSection_LH2_geom_vs_pT_with_logo_old.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
             \textbf{Latest (with weighted average)}\\[0.2cm]
-            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/CrossSection_LH2_geom_vs_pT_with_logo.pdf}
+            \includegraphics[width=\linewidth, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/CrossSection_LH2_geom_vs_pT_with_logo.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -604,12 +534,12 @@ __LD2_TABLE_BODY__
         \begin{column}{0.5\textwidth}
             \centering
             \textbf{Previous}\\[0.2cm]
-            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/CrossSection_LD2_geom_vs_pT_with_logo_old.pdf}
+            \includegraphics[width=\linewidth, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/CrossSection_LD2_geom_vs_pT_with_logo_old.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
             \textbf{Latest (with weighted average)}\\[0.2cm]
-            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/CrossSection_LD2_geom_vs_pT_with_logo.pdf}
+            \includegraphics[width=\linewidth, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/CrossSection_LD2_geom_vs_pT_with_logo.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -619,17 +549,15 @@ __LD2_TABLE_BODY__
         \begin{column}{0.5\textwidth}
             \centering
             \textbf{Previous}\\[0.2cm]
-            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/Combined_XSec_Ratio_vs_pT_geom_old.pdf}
+            \includegraphics[width=\linewidth, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/Combined_XSec_Ratio_vs_pT_geom_old.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
             \textbf{Latest (with weighted average)}\\[0.2cm]
-            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/cross_section_overlay_Targets_vs_pT_geom_logo.pdf}
+            \includegraphics[width=\linewidth, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/Combined_XSec_Ratio_vs_pT_geom.pdf}
         \end{column}
     \end{columns}
 \end{frame}
-
-__COMPARISON_SLIDES__
 
 % --- BACKUP SLITES TITLE FRAME ---
 \begin{frame}
@@ -674,7 +602,6 @@ __LD2_2D_FRAMES__
     final_latex = final_latex.replace("__LD2_2D_FRAMES__", ld2_2d_frames)
     final_latex = final_latex.replace("__TABLE_ROWS_OLD__", ratio_rows_old)
     final_latex = final_latex.replace("__TABLE_ROWS_NEW__", ratio_rows_new)
-    final_latex = final_latex.replace("__COMPARISON_SLIDES__", comparison_slides)
 
     # 5. Write to disk
     with open(filename, "w") as f:
