@@ -947,17 +947,64 @@ class DYCrossSectionAnalyzer:
 """ % (target_label, target_label)
 
         def draw_and_save_canvas(plot_type, g_xsec, g_sys, h1_xsec, h1_sys, xf_min, xf_max, xf_bin_index, pad_y_min, pad_y_max):
-            c_xsec = ROOT.TCanvas(f"c_xsec_{target_label}_{xf_bin_index}_{plot_type}", "", 800, 600)
-            c_xsec.SetLogy(); c_xsec.SetTickx(1); c_xsec.SetTicky(1)
-            c_xsec.SetLeftMargin(0.12)
-            c_xsec.SetRightMargin(0.05)
-            c_xsec.SetBottomMargin(0.12)
+            c_xsec = ROOT.TCanvas(f"c_xsec_{target_label}_{xf_bin_index}_{plot_type}", "", 800, 700)
             
+            # Use Split Pad design to perfectly share the X-axis across the same width
+            pad1 = ROOT.TPad(f"pad1_{xf_bin_index}_{plot_type}", "pad1", 0.0, 0.3, 1.0, 1.0)
+            pad1.SetBottomMargin(0.0) # Share axis seamlessly
+            pad1.SetLeftMargin(0.12)
+            pad1.SetRightMargin(0.05)
+            pad1.SetLogy()
+            pad1.SetTickx(1)
+            pad1.SetTicky(1)
+            pad1.Draw()
+
+            pad2 = ROOT.TPad(f"pad2_{xf_bin_index}_{plot_type}", "pad2", 0.0, 0.0, 1.0, 0.3)
+            pad2.SetTopMargin(0.0)
+            pad2.SetBottomMargin(0.3) # Give room for shared labels
+            pad2.SetLeftMargin(0.12)
+            pad2.SetRightMargin(0.05)
+            pad2.SetTickx(1)
+            pad2.SetTicky(1)
+            pad2.Draw()
+
+            # --- SYSTEMATIC PERCENTAGE CALCULATION & DATA FILTERING ---
+            g_sys_perc = ROOT.TGraphAsymmErrors()
+            max_perc_err = 0.0
+            pts_to_remove = []
+
+            for idx in range(g_sys.GetN()):
+                x = g_sys.GetPointX(idx)
+                y = g_sys.GetPointY(idx)
+                ey_h = g_sys.GetErrorYhigh(idx)
+                ex_h = g_sys.GetErrorXhigh(idx)
+                ex_l = g_sys.GetErrorXlow(idx)
+                
+                sys_perc = (ey_h / y) * 100.0 if y > 0 else 0.0
+                
+                # Only factor into the Y-axis maximum if it's within the valid 50% limit
+                if sys_perc <= 50.0 and sys_perc > max_perc_err: 
+                    max_perc_err = sys_perc
+                
+                g_sys_perc.SetPoint(idx, x, 0.0)
+                g_sys_perc.SetPointError(idx, ex_l, ex_h, sys_perc, sys_perc)
+                
+                # Tag points for removal if systematic uncertainty > 50%
+                if sys_perc > 50.0:
+                    pts_to_remove.append(idx)
+
+            # Iterating backwards guarantees we don't shuffle indices while deleting
+            for idx in sorted(pts_to_remove, reverse=True):
+                g_xsec.RemovePoint(idx)
+                g_sys.RemovePoint(idx)
+                g_sys_perc.RemovePoint(idx)
+
+            # --- MAIN TFRAME (TOP PAD) ---
+            pad1.cd()
             mg = ROOT.TMultiGraph()
-            mg.SetTitle(f";Invariant Mass [GeV];M^{{3}} d^{{2}}\\sigma / dM dx_{{F}} [nb GeV^{{2}}/Nucleus]")
+            mg.SetTitle(f";;M^{{3}} d^{{2}}\\sigma / dM dx_{{F}} [nb GeV^{{2}}/Nucleus]")
             
-            # --- MAIN TFRAME Y-AXIS RANGE ---
-            # You can fine-tune the fixed y-axis limits for the cross-section markers below:
+            # Main Frame Y-Axis Range
             if target_label == "LD2":
                 fixed_y_min = 1e-5
                 fixed_y_max = 5.0
@@ -987,7 +1034,6 @@ class DYCrossSectionAnalyzer:
                     g_nnpdf_clone.SetLineColor(ROOT.kBlue + 2); g_nnpdf_clone.SetFillColorAlpha(ROOT.kAzure + 1, 0.5); g_nnpdf_clone.SetFillStyle(3002)
                     mg.Add(g_nnpdf_clone, "L3"); leg.AddEntry(g_nnpdf_clone, "NNPDF4.0 NLO", "lf") 
             
-            # Record systematic band info in legend only (plotted in inset below)
             g_sys.SetFillColorAlpha(ROOT.kPink + 1, 0.6)
             g_sys.SetFillStyle(1001)
             leg.AddEntry(g_sys, "Syst. Error", "f")
@@ -1000,113 +1046,73 @@ class DYCrossSectionAnalyzer:
             
             mg.Draw("A")
             
-            # --- MAIN TFRAME X-AXIS RANGE ---
-            # You can fine-tune the fixed x-axis limits for all plots here:
+            # Shared Fixed X-Axis Limits
             fixed_x_min = 4.2
             fixed_x_max = 8.8
             
-            mg.GetXaxis().CenterTitle()
-            mg.GetYaxis().CenterTitle()
             mg.GetXaxis().SetLimits(fixed_x_min, fixed_x_max)
             mg.GetXaxis().SetRangeUser(fixed_x_min, fixed_x_max)
+            mg.GetXaxis().SetLabelSize(0) # Hide X labels to merge with pad2 seamlessly
+            mg.GetXaxis().SetTitleSize(0)
+            mg.GetYaxis().CenterTitle()
+            mg.GetYaxis().SetTitleOffset(1.2)
             
-            c_xsec.Update()
+            pad1.Update()
             leg.Draw()
 
             target_prefix = "pp" if target_label == "LH2" else "pd" if target_label == "LD2" else target_label
             internal_title = ROOT.TLatex()
-            internal_title.SetNDC(True); internal_title.SetTextFont(42); internal_title.SetTextSize(0.04); internal_title.SetTextAlign(13)
+            internal_title.SetNDC(True); internal_title.SetTextFont(42); internal_title.SetTextSize(0.045); internal_title.SetTextAlign(13)
             internal_title.DrawLatex(0.14, 0.86, f"Drell-Yan process in {target_prefix} at {xf_min:.2f} #leq x_{{F}} < {xf_max:.2f}")
 
             prelim = ROOT.TLatex()
             prelim.SetNDC(True)
             prelim.SetTextColor(ROOT.kBlue)
             prelim.SetTextAlign(33)
-            prelim.SetTextSize(0.05)
-            prelim.DrawLatex(0.92, 0.35, "Preliminary")
-            prelim.SetTextSize(0.0252) 
-            prelim.DrawLatex(0.92, 0.29, "Run Period 2014-2015")
+            prelim.SetTextSize(0.06)
+            prelim.DrawLatex(0.92, 0.25, "Preliminary")
+            prelim.SetTextSize(0.035) 
+            prelim.DrawLatex(0.92, 0.19, "Run Period 2014-2015")
 
-            # --- FLOATING INSET PAD CREATION ---
-            c_xsec.cd()
+            # --- SECONDARY TFRAME (BOTTOM PAD) ---
+            pad2.cd()
             
-            # --- Inset Size Variables ---
-            inset_w = 0.58  # Width of the inset pad (0.0 to 1.0)
-            inset_h = 0.34  # Height of the inset pad (0.0 to 1.0)
-            inset_x = 0.06  # X-coordinate of the bottom-left corner
-            inset_y = 0.15  # Y-coordinate of the bottom-left corner
+            g_sys_perc.SetFillColorAlpha(ROOT.kPink + 1, 0.6)
+            g_sys_perc.SetLineColor(ROOT.kPink + 1)
+            g_sys_perc.SetFillStyle(1001)
             
-            # Draws the inset pad in the bottom-left corner so it avoids the falling cross-section data
-            pad_inset = ROOT.TPad(f"pad_inset_{xf_bin_index}_{plot_type}", "pad_inset", inset_x, inset_y, inset_x + inset_w, inset_y + inset_h)
-            pad_inset.SetFillStyle(4000) # Transparent background
-            pad_inset.SetFrameFillStyle(1001)
-            pad_inset.SetFrameFillColor(ROOT.kWhite)
-            pad_inset.SetMargin(0.24, 0.05, 0.25, 0.15) # Increased Left margin to accommodate scientific notation
-            pad_inset.SetLogy(0) # Linear scale
-            pad_inset.SetTickx(1) # Add X ticks
-            pad_inset.SetTicky(1) # Add Y ticks
-            pad_inset.Draw()
-            pad_inset.cd()
+            mg_bottom = ROOT.TMultiGraph()
+            mg_bottom.Add(g_sys_perc, "2")
+            mg_bottom.Draw("A")
             
-            g_sys_abs = ROOT.TGraphAsymmErrors()
-            max_abs_err = 0.0
+            mg_bottom.SetTitle(";Invariant Mass [GeV];sys. unc. (%)")
+            mg_bottom.GetXaxis().SetLimits(fixed_x_min, fixed_x_max)
+            mg_bottom.GetXaxis().SetRangeUser(fixed_x_min, fixed_x_max)
             
-            # Set up the systematic error band centered at zero using absolute error values
-            for idx in range(g_sys.GetN()):
-                x = g_sys.GetPointX(idx)
-                y = g_sys.GetPointY(idx)
-                ey_h = g_sys.GetErrorYhigh(idx)
-                ex_h = g_sys.GetErrorXhigh(idx)
-                ex_l = g_sys.GetErrorXlow(idx)
-                
-                abs_err = ey_h
-                if abs_err > max_abs_err: max_abs_err = abs_err
-                
-                g_sys_abs.SetPoint(idx, x, 0.0)
-                g_sys_abs.SetPointError(idx, ex_l, ex_h, abs_err, abs_err)
-
-            g_sys_abs.SetFillColorAlpha(ROOT.kPink + 1, 0.6)
-            g_sys_abs.SetLineColor(ROOT.kPink + 1)
-            g_sys_abs.SetFillStyle(1001)
+            # Upscale Text Size for the smaller bottom pad
+            mg_bottom.GetXaxis().SetLabelSize(0.1)
+            mg_bottom.GetXaxis().SetTitleSize(0.12)
+            mg_bottom.GetXaxis().SetTitleOffset(1.0)
+            mg_bottom.GetXaxis().CenterTitle()
             
-            mg_inset = ROOT.TMultiGraph()
-            mg_inset.Add(g_sys_abs, "2")
-            mg_inset.Draw("A")
+            mg_bottom.GetYaxis().SetLabelSize(0.09)
+            mg_bottom.GetYaxis().SetTitleSize(0.1)
+            mg_bottom.GetYaxis().SetTitleOffset(0.5)
+            mg_bottom.GetYaxis().CenterTitle()
+            mg_bottom.GetYaxis().SetNdivisions(505)
             
-            mg_inset.SetTitle(";Mass [GeV];#pm M^{3} d^{2}#sigma/dx_{F}dM")
+            y_max_inset = max_perc_err * 1.2 if max_perc_err > 0 else 10.0
+            mg_bottom.SetMinimum(-y_max_inset)
+            mg_bottom.SetMaximum(y_max_inset)
             
-            # Ensure the inset shares the exact same X-axis range as the main frame
-            mg_inset.GetXaxis().SetLimits(fixed_x_min, fixed_x_max)
-            
-            mg_inset.GetXaxis().SetLabelSize(0.08)
-            mg_inset.GetXaxis().SetTitleSize(0.09)
-            mg_inset.GetXaxis().SetTitleOffset(1.1)
-            mg_inset.GetXaxis().CenterTitle()
-            
-            mg_inset.GetYaxis().SetLabelSize(0.07)
-            mg_inset.GetYaxis().SetTitleSize(0.07)
-            mg_inset.GetYaxis().SetTitleOffset(0.6)
-            mg_inset.GetYaxis().CenterTitle()
-            mg_inset.GetYaxis().SetNdivisions(504)
-            try:
-                mg_inset.GetYaxis().SetMaxDigits(3)
-            except AttributeError:
-                pass
-            
-            # DO NOT set a hard minimum limit (like 5.0) since cross sections are tiny
-            y_max_inset = max_abs_err * 1.2 if max_abs_err > 0 else 1e-3
-            mg_inset.SetMinimum(-y_max_inset)
-            mg_inset.SetMaximum(y_max_inset)
-            
-            # Guide line at 0 absolute error
+            # Guide line at 0 error
             line_zero = ROOT.TLine(fixed_x_min, 0, fixed_x_max, 0)
             line_zero.SetLineStyle(2)
             line_zero.SetLineColor(ROOT.kBlack)
             line_zero.Draw()
-            
-            c_xsec.cd()
-            # --- END INSET PAD CREATION ---
 
+            c_xsec.cd()
+            
             plot_name = f"CrossSection_{target_label}_xF_{xf_min:.2f}_{xf_max:.2f}_{plot_type}.pdf"
             c_xsec.SaveAs(plot_name)
             
