@@ -624,7 +624,7 @@ __LD2_TABLE_BODY__
     \end{columns}
 \end{frame}
 
-\begin{frame}{Summary Plots Previous Vs Latest with updated systematics}
+\begin{frame}{Summary Plots for $p_{T}$ Previous Vs Latest with updated systematics}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \centering
@@ -635,6 +635,21 @@ __LD2_TABLE_BODY__
             \centering
             \textbf{Latest (with weighted average)}\\[0.2cm]
             \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/Combined_XSec_Ratio_vs_pT_geom_logo.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Summary Plots for $p^{2}_{T}$ Previous Vs Latest with updated systematics}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Previous}\\[0.2cm]
+            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT/RS57-70_xsec_ratio_correlated/Combined_XSec_Ratio_vs_pT_geom_old.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Latest (with weighted average)}\\[0.2cm]
+            \includegraphics[width=0.95\linewidth, height=0.7\textheight, keepaspectratio]{/root/github/e906-development/src/xsec_pT_squard/RS57-70_road_dependancy_added/Combined_XSec_Ratio_geom_pT2_logo.pdf}
         \end{column}
     \end{columns}
 \end{frame}
