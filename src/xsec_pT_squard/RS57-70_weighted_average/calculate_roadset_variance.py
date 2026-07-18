@@ -5,7 +5,8 @@ import csv
 def calculate_roadset_variance(target="LH2", suffix="_geom_pT2", use_equal_weights=False):
     """
     Computes the bin-by-bin standard deviation of cross sections across multiple roadsets.
-    Assumes ROOT files were generated dynamically with exact, roadset-specific POTs via config.py.
+    Calculates the weighted average single differential cross-section as a function of pT^2 bins
+    using the Bin Width (bw) TGraphs.
     """
     
     rs_files = {
@@ -16,8 +17,8 @@ def calculate_roadset_variance(target="LH2", suffix="_geom_pT2", use_equal_weigh
         "RS70": "XSec_RS70_Objects.root"
     }
     
-    # Target the specific histogram inside the cross-section directory
-    hist_path = f"CrossSections_{target}/h1_xsec_{target}{suffix}"
+    # Target the specific TGraphs inside the cross-section directory
+    stat_graph_path = f"CrossSections_{target}/g_xsec_bw_{target}{suffix}"
     
     cross_sections = {}
     stat_errors = {}
@@ -25,9 +26,13 @@ def calculate_roadset_variance(target="LH2", suffix="_geom_pT2", use_equal_weigh
     for rs, filepath in rs_files.items():
         try:
             with uproot.open(filepath) as f:
-                hist = f[hist_path]
-                vals = np.array(hist.values())
-                errs = np.array(hist.errors())
+                # We pull from the stat graph since we are performing *statistical* inverse variance weighting
+                stat_graph = f[stat_graph_path]
+                
+                # TGraphErrors in uproot 4+ do not have .values()/.errors() methods like TH1s.
+                # Instead, we access the underlying array members directly.
+                vals = np.array(stat_graph.member("fY"))
+                errs = np.array(stat_graph.member("fEY"))
                 
                 for i in range(len(vals)):
                     if i not in cross_sections:
