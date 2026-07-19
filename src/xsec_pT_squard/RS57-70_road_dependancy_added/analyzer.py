@@ -1151,8 +1151,8 @@ class DYCrossSectionAnalyzer:
             g_fit_band.SetFillStyle(1001)
 
             # Enforcing exact dynamic Y-axis limits requested
-            mg.SetMinimum(-0.5)
-            mg.SetMaximum(1.5)
+            mg.SetMinimum(1.0)
+            mg.SetMaximum(1.4)
 
             leg = ROOT.TLegend(0.45, 0.75, 0.88, 0.88)
             leg.SetBorderSize(0)
