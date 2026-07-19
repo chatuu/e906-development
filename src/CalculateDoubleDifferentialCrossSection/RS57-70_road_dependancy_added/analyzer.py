@@ -1046,12 +1046,20 @@ class DYCrossSectionAnalyzer:
             
             mg.Draw("A")
             
-            # Shared Fixed X-Axis Limits
+            # Shared Dynamic X-Axis Limits
             fixed_x_min = 4.2
-            fixed_x_max = 8.8
+            dynamic_x_max = 8.8
             
-            mg.GetXaxis().SetLimits(fixed_x_min, fixed_x_max)
-            mg.GetXaxis().SetRangeUser(fixed_x_min, fixed_x_max)
+            n_points = g_xsec.GetN()
+            if n_points > 0:
+                last_x = g_xsec.GetPointX(n_points - 1)
+                last_ex_h = g_xsec.GetErrorXhigh(n_points - 1)
+                dynamic_x_max = last_x + last_ex_h + 0.15 # Add 0.15 GeV padding to minimize white space
+                if dynamic_x_max > 8.8:
+                    dynamic_x_max = 8.8
+            
+            mg.GetXaxis().SetLimits(fixed_x_min, dynamic_x_max)
+            mg.GetXaxis().SetRangeUser(fixed_x_min, dynamic_x_max)
             mg.GetXaxis().SetLabelSize(0) # Hide X labels to merge with pad2 seamlessly
             mg.GetXaxis().SetTitleSize(0)
             mg.GetYaxis().CenterTitle()
@@ -1064,6 +1072,15 @@ class DYCrossSectionAnalyzer:
             internal_title = ROOT.TLatex()
             internal_title.SetNDC(True); internal_title.SetTextFont(42); internal_title.SetTextSize(0.045); internal_title.SetTextAlign(13)
             internal_title.DrawLatex(0.14, 0.86, f"Drell-Yan process in {target_prefix} at {xf_min:.2f} #leq x_{{F}} < {xf_max:.2f}")
+
+            # Added textual disclaimer regarding uncertainty inclusion status
+            unc_note = ROOT.TLatex()
+            unc_note.SetNDC(True)
+            unc_note.SetTextFont(42)
+            unc_note.SetTextSize(0.03)
+            unc_note.SetTextAlign(13)
+            #unc_note.DrawLatex(0.14, 0.81, "10% global uncertainty due to the integrated luminosity is not included in the error bands,")
+            #unc_note.DrawLatex(0.14, 0.77, "but bin-by-bin roadset systematic uncertainties are included.")
 
             prelim = ROOT.TLatex()
             prelim.SetNDC(True)
@@ -1086,8 +1103,8 @@ class DYCrossSectionAnalyzer:
             mg_bottom.Draw("A")
             
             mg_bottom.SetTitle(";Invariant Mass [GeV];sys. unc. (%)")
-            mg_bottom.GetXaxis().SetLimits(fixed_x_min, fixed_x_max)
-            mg_bottom.GetXaxis().SetRangeUser(fixed_x_min, fixed_x_max)
+            mg_bottom.GetXaxis().SetLimits(fixed_x_min, dynamic_x_max)
+            mg_bottom.GetXaxis().SetRangeUser(fixed_x_min, dynamic_x_max)
             
             # Upscale Text Size for the smaller bottom pad
             mg_bottom.GetXaxis().SetLabelSize(0.1)
@@ -1106,7 +1123,7 @@ class DYCrossSectionAnalyzer:
             mg_bottom.SetMaximum(y_max_inset)
             
             # Guide line at 0 error
-            line_zero = ROOT.TLine(fixed_x_min, 0, fixed_x_max, 0)
+            line_zero = ROOT.TLine(fixed_x_min, 0, dynamic_x_max, 0)
             line_zero.SetLineStyle(2)
             line_zero.SetLineColor(ROOT.kBlack)
             line_zero.Draw()
@@ -1435,9 +1452,9 @@ class DYCrossSectionAnalyzer:
             lumi_note.SetTextAlign(11)
             lumi_note.SetTextSize(24)
 
-            # Updated text string since both lumi and road are now added in quadrature into the band!
-            note_text = f"#splitline{{10% global lumi and {road_sys_txt} road dependency}}{{uncertainties are INCLUDED in the systematic error bands.}}"
-            #lumi_note.DrawLatex(0.165, 0.15, note_text)
+            # Draw explicit uncertainties statement
+            note_text = "#splitline{10% global uncertainty due to the integrated luminosity is not included in the error bands,}{but bin-by-bin roadset systematic uncertainties are included.}"
+            # lumi_note.DrawLatex(0.165, 0.15, note_text)
 
         canvas.Update()
         out_pdf = f"cross_section_overlay_{target_label}_{plot_type}.pdf"
