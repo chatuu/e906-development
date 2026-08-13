@@ -7,7 +7,7 @@ def generate_latex():
     base_dir = "/root/github/e906-development/src/xsec_pT/RS57-70"
     backup_dir = "/root/github/e906-development/src/CalculateDoubleDifferentialCrossSection/RS57-70"
     acceptance_dir = "/root/github/e906-development/src/AcceptanceCorrection"
-    pt2_dir = "/root/github/e906-development/src/xsec_pT_squard/RS57-70_clone"
+    pt2_dir = "/root/github/e906-development/src/xsec_pT_squard/RS57-70"
     xf_dir = "/root/github/e906-development/src/xsec_pT_xF/"
     ratio_comp_dir = "/root/github/e906-development/src/xsec_pT_xsec_comparison_to_RS67/ratio_plots/"
 
@@ -74,7 +74,7 @@ def generate_latex():
 \begin{itemize}
     \item \textbf{Mass Bins (GeV):} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.8]
     \item \textbf{$p_T$ Bins (GeV):} [0.0, 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8]
-    \item \textbf{$x_F$ Bins:} [0.0, 0.80] with a fixed step width of 0.05.
+    \item \textbf{$x_F$ Bins:} [0.0, 0.85] with a fixed step width of 0.05.
 \end{itemize}
 """
 
@@ -206,10 +206,6 @@ def generate_latex():
         ("Ratio_RS57-70_vs_RS67_LH2.pdf", "Ratio_RS57-70_vs_RS67_LD2.pdf")
     ]
 
-    # Assigning exact absolute paths you provided to these variables
-    fig_d1_1 = "/root/github/e906-development/src/xsec_pT/xsec_comparison_applying_D1_cut/Compare_XSec_LH2.pdf"
-    fig_d1_2 = "/root/github/e906-development/src/xsec_pT/xsec_comparison_applying_D1_cut/Compare_XSec_LD2.pdf"
-
     def tex_escape(text):
         return text.replace("_", r"\_")
     
@@ -282,28 +278,6 @@ def generate_latex():
 
         file_36 = ordered_files[36]
         f.write(r"\begin{frame}{%s}\begin{center}\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{%s}\end{center}\end{frame}" % (tex_escape(clean_title(file_36)), file_36))
-
-        # Re-adding the %s placeholders to match up with our tuple formatting!
-        f.write(r"""
-\begin{frame}{Implications of introducing cut: $20 < D1 < 385$}
-    \begin{columns}
-        \begin{column}{0.5\textwidth}
-            \centering
-            \textbf{Figure 1 Title}\\
-            \includegraphics[width=\textwidth,keepaspectratio]{%s}
-        \end{column}
-        \begin{column}{0.5\textwidth}
-            \centering
-            \textbf{Figure 2 Title}\\
-            \includegraphics[width=\textwidth,keepaspectratio]{%s}
-        \end{column}
-    \end{columns}
-    \vspace{0.3cm}
-    \footnotesize
-    \textit{Note: The impact of the D1 cut on the final cross-section result is negligible.}
-\end{frame}
-""" % (fig_d1_1, fig_d1_2))
-
         f.write(r"\end{document}")
 
     print("Successfully generated slides.tex")
