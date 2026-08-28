@@ -7,6 +7,8 @@
 #include <TF1.h>
 #include <TStyle.h>
 #include <iostream>
+#include <fstream>  // Required for writing to files
+#include <iomanip>  // Required for formatting numbers (setprecision)
 #include "chuckcuts.h"
 
 using namespace std;
@@ -62,34 +64,112 @@ void Efficiency_D1() {
     TFile* messyFile = new TFile(messyFileName, "READ");
     messyTree = (TTree*)messyFile->Get("Tree");
 
+    // Combined cuts (xF cut removed)
+    TCut CcutsTemp = baseCcut;
+    TCut McutsTemp = baseMcut;
 
+    // Histograms
+    TString hCname = Form("hClean_mass_D1");
+    TString hMname = Form("hMessy_mass_D1");
+    hClean = new TH1D(hCname, hCname, binCount, binLow, binHigh);
+    hMessy = new TH1D(hMname, hMname, binCount, binLow, binHigh);
 
-    // Loop over mass bins
-//     for (int imass=0; imass<NBINS; imass++) {
-//         TCut masscut = get_mass_cut(imass);
-//         TString masslabel = get_mass_label(imass);
+    // Output tag
+    TString outTag = "D1";
 
-//         // Combined cuts (xF cut removed)
-         TCut CcutsTemp = baseCcut;
-         TCut McutsTemp = baseMcut;
-
-//         // Histograms (naming updated)
-         TString hCname = Form("hClean_mass_D1");
-         TString hMname = Form("hMessy_mass_D1");
-         hClean = new TH1D(hCname, hCname, binCount, binLow, binHigh);
-         hMessy = new TH1D(hMname, hMname, binCount, binLow, binHigh);
-
-//         // Output tag (naming updated)
-         TString outTag = "D1";
-
-         plotAbsolute(CcutsTemp, McutsTemp, outTag);
-//     }
- }
+    plotAbsolute(CcutsTemp, McutsTemp, outTag);
+}
 
 // ---------------- Efficiency plotting ----------------
 void plotAbsolute(TCut CcutsTemp, TCut McutsTemp, TString outTag) {
+    // Fill histograms
     cleanTree->Draw(binVar + ">>" + hClean->GetName(), "ReWeight*" + TString(CcutsTemp));
     messyTree->Draw(binVar + ">>" + hMessy->GetName(), "ReWeight*" + TString(McutsTemp));
+
+    // ---------------------------------------------------------
+    // 1. Save Table to CSV
+    // ---------------------------------------------------------
+    TString csvName = "D1_occ/D1_Table_Combined_" + outTag + ".csv";
+    std::ofstream csvFile(csvName.Data());
+
+    if (csvFile.is_open()) {
+        csvFile << "Bin Index,D1 Bin Center,hMessy Bin Content,hClean Bin Content,Ratio (Messy/Clean)\n";
+        for (int i = 1; i <= binCount; i++) {
+            double binCenter = hMessy->GetBinCenter(i);
+            double contentMessy = hMessy->GetBinContent(i);
+            double contentClean = hClean->GetBinContent(i);
+            double ratio = (contentClean != 0) ? contentMessy / contentClean : 0.0;
+
+            csvFile << i << "," << binCenter << "," << contentMessy << "," << contentClean << "," << ratio << "\n";
+        }
+        csvFile.close();
+        std::cout << "CSV Table saved to: " << csvName << std::endl;
+    } else {
+        std::cerr << "Error writing CSV: " << csvName << std::endl;
+    }
+
+    // ---------------------------------------------------------
+    // 2. Save Table to LaTeX
+    // ---------------------------------------------------------
+    TString texName = "D1_occ/D1_Table_Combined_" + outTag + ".tex";
+    std::ofstream texFile(texName.Data());
+
+    if (texFile.is_open()) {
+        // Write LaTeX Preamble
+        texFile << "\\documentclass{article}\n";
+        texFile << "\\usepackage[utf8]{inputenc}\n";
+        texFile << "\\usepackage{geometry}\n";
+        texFile << "\\geometry{margin=1in}\n";
+        texFile << "\\usepackage{booktabs}\n"; // For prettier tables
+        texFile << "\\usepackage{longtable}\n"; // To handle tables splitting across pages
+        texFile << "\\begin{document}\n";
+        texFile << "\\begin{center}\n";
+        
+        // Begin Table
+        texFile << "\\begin{longtable}{c c c c c}\n";
+        texFile << "\\caption{Efficiency Data for " << outTag << "} \\\\\n";
+        
+        // Header
+        texFile << "\\toprule\n";
+        texFile << "Bin Index & Bin Center & Messy Content & Clean Content & Ratio (M/C) \\\\\n";
+        texFile << "\\midrule\n";
+        texFile << "\\endfirsthead\n";
+        
+        // Header for subsequent pages (if needed)
+        texFile << "\\toprule\n";
+        texFile << "Bin Index & Bin Center & Messy Content & Clean Content & Ratio (M/C) \\\\\n";
+        texFile << "\\midrule\n";
+        texFile << "\\endhead\n";
+        
+        // Footer for table end
+        texFile << "\\bottomrule\n";
+        texFile << "\\endfoot\n";
+
+        // Loop over bins and write rows
+        for (int i = 1; i <= binCount; i++) {
+            double binCenter = hMessy->GetBinCenter(i);
+            double contentMessy = hMessy->GetBinContent(i);
+            double contentClean = hClean->GetBinContent(i);
+            double ratio = (contentClean != 0) ? contentMessy / contentClean : 0.0;
+
+            texFile << i << " & " 
+                    << fixed << setprecision(1) << binCenter << " & " 
+                    << setprecision(2) << contentMessy << " & " 
+                    << setprecision(2) << contentClean << " & " 
+                    << setprecision(4) << ratio << " \\\\\n";
+        }
+
+        texFile << "\\end{longtable}\n";
+        texFile << "\\end{center}\n";
+        texFile << "\\end{document}\n";
+
+        texFile.close();
+        std::cout << "LaTeX Table saved to: " << texName << std::endl;
+    } else {
+        std::cerr << "Error writing LaTeX: " << texName << std::endl;
+    }
+    // ---------------------------------------------------------
+
     getErrors(CcutsTemp, outTag);
 }
 

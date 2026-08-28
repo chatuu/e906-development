@@ -20,7 +20,8 @@ def main():
     parser.add_argument('--xf_max', type=float, help="Maximum xF to keep (optional)")
     parser.add_argument('--input', type=str, required=True, help="Path to input ROOT file")
     parser.add_argument('--output', type=str, required=True, help="Name of output ROOT file")
-    parser.add_argument('--target', type=str, required=True, choices=["LH2", "LD2", "Flask"], help="Target type (LH2, LD2, Flask)")
+    #parser.add_argument('--target', type=str, required=True, choices=["LH2", "LD2", "Flask"], help="Target type (LH2, LD2, Flask)")
+    parser.add_argument('--target', type=str, required=True, choices=["LH2", "LD2", "Empty"], help="Target type (LH2, LD2, Empty)")
     args = parser.parse_args()
 
     xsec_file_path = args.input

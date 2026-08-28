@@ -13,9 +13,9 @@ from rich.table import Table
 # ==========================================
 INPUT_NPZ_FILE = "/root/github/e906-development/src/kTrackerEfficiency/RS67/GlobalEfficiencyCurve/interpolation_data_d1.npz"
 
-PROTONS_ON_TARGET_LH2 = 5.654075e+16
-PROTONS_ON_TARGET_LD2 = 2.517904e+16
-PROTONS_ON_TARGET_FLASK = 1.176106e+16
+PROTONS_ON_TARGET_LH2 = 5.281659e+16
+PROTONS_ON_TARGET_LD2 = 2.382899e+16
+PROTONS_ON_TARGET_FLASK = 1.097456e+16
 
 LH2_TARGET_DENSITY_MOL_CM2 = 3.5966
 LD2_TARGET_DENSITY_MOL_CM2 = 8.0431

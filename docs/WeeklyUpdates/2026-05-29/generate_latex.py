@@ -187,7 +187,7 @@ def generate_latex():
     \item Drift chamber hits: $D1 < 400$, $D2 < 400$, $D3 < 400$, and total $D1+D2+D3 < 1000$.
     \item $20 < D1 < 385$ (global reconstruction efficiency curve defined in this range)
 \end{itemize}
-\textbf{For RS62,  $runID > 11500$ was applied to select dimuons with the correct target position}
+\textbf{For RS62,  $runID > 11500$ applied to ensure correct target positions of dimuons}
 \vspace{0.3cm}
 \textbf{Note:} Currently using the same set of Chuck Cuts defined in \href{https://seaquest-docdb.fnal.gov/cgi-bin/sso/ShowDocument?docid=2111}{DocDB 2111-V42}
 """

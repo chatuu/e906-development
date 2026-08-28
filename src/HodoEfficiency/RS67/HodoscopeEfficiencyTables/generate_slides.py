@@ -42,7 +42,7 @@ def main():
     \titlepage
 \end{frame}
 
-% Slide 01: Input Files
+% Slide: Input Data
 \begin{frame}
     \frametitle{Input Data}
     \textbf{Input files used:}
@@ -54,13 +54,20 @@ def main():
         \item \texttt{effies\_rs70.xlsx}
     \end{itemize}
     
-    \vspace{0.5cm}
+    \vspace{0.2cm}
+    \textbf{Hodoscope efficiency tables used:}
+    \begin{itemize}
+        \item \texttt{hodoscope\_eff\_RS67\_final\_2026-01-31.tsv} (previous paddle efficiency table)
+        \item \texttt{hodoscope\_eff\_RS57-70\_final.tsv} (latest paddle efficiency table)
+    \end{itemize}
+
+    \vspace{0.2cm}
     \begin{block}{Note}
     The current study is only focused on runs 2 and 3 only. We will do the same study for runs 5 and 6 later as a separate study.
     \end{block}
 \end{frame}
 
-% Slide 02: Procedure
+% Slide: Procedure
 \begin{frame}
     \frametitle{Analysis Procedure}
     \begin{itemize}
@@ -76,7 +83,7 @@ def main():
     \end{itemize}
 \end{frame}
 
-% Slide 03: Capped Error Table
+% Slide: Capped Error Table
 \begin{frame}
     \frametitle{Paddles with Upper Error Bar Capped at 1.0 Bound}
     \begin{table}
@@ -97,7 +104,7 @@ def main():
 \end{frame}
 """
 
-    # Slides 04+: Generate a slide for each plane's hodoscope efficiency plot
+    # Generate a slide for each plane's hodoscope efficiency plot
     for plane in planes:
         plot_file = f"eff_plot_{plane}_root.pdf"
         latex_code += f"""
@@ -114,7 +121,97 @@ def main():
 \\end{{frame}}
 """
 
-    # Appendix: Efficiency Distributions
+    # ---------------------------------------------------------
+    # HODOSCOPE EFFICIENCY COMPARISON SECTION
+    # ---------------------------------------------------------
+    comparison_plots = [
+        "E_mix_hodo_Flask.pdf",
+        "E_mix_hodo_LD2.pdf",
+        "E_mix_hodo_LH2.pdf",
+        "E_total_hodo_Flask.pdf",
+        "E_total_hodo_LD2.pdf",
+        "E_total_hodo_LH2.pdf"
+    ]
+    
+    prev_dir = "/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/"
+    latest_dir = "/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/"
+
+    latex_code += r"""
+% ---------------------------------------------------------
+% COMPARISON SECTION
+% ---------------------------------------------------------
+\begin{frame}
+    \centering
+    \Huge \textbf{Hodoscope Efficiency Comparison} \\
+    \vspace{0.5cm}
+    \Large (Previous Vs Latest)
+\end{frame}
+"""
+
+    for plot in comparison_plots:
+        plot_title_clean = plot.replace("_", "\\_").replace(".pdf", "")
+        latex_code += f"""
+\\begin{{frame}}
+    \\frametitle{{Comparison: {plot_title_clean}}}
+    \\begin{{columns}}[c]
+        \\begin{{column}}{{0.5\\textwidth}}
+            \\centering
+            \\textbf{{Previous (RS67)}}\\\\
+            \\vspace{{0.2cm}}
+            \\IfFileExists{{{prev_dir}{plot}}}{{
+                \\includegraphics[width=\\textwidth,height=0.7\\textheight,keepaspectratio]{{{prev_dir}{plot}}}
+            }}{{
+                \\textbf{{Missing Plot:}}\\\\
+                \\texttt{{{plot}}}
+            }}
+        \\end{{column}}
+        \\begin{{column}}{{0.5\\textwidth}}
+            \\centering
+            \\textbf{{Latest (RS57-70)}}\\\\
+            \\vspace{{0.2cm}}
+            \\IfFileExists{{{latest_dir}{plot}}}{{
+                \\includegraphics[width=\\textwidth,height=0.7\\textheight,keepaspectratio]{{{latest_dir}{plot}}}
+            }}{{
+                \\textbf{{Missing Plot:}}\\\\
+                \\texttt{{{plot}}}
+            }}
+        \\end{{column}}
+    \\end{{columns}}
+\\end{{frame}}
+"""
+
+    # ---------------------------------------------------------
+    # QUESTIONS SECTION
+    # ---------------------------------------------------------
+    latex_code += r"""
+% ---------------------------------------------------------
+% QUESTIONS SECTION
+% ---------------------------------------------------------
+\begin{frame}
+    \centering
+    \Huge \textbf{Questions}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Questions \& Discussion}
+    \small
+    \begin{enumerate}
+        \item \textbf{Can you confirm that your blue points are from one of Harsha's TSV files from (say) version 6 of his DocDB?} \\
+        They correspond to DocDB 11467-v2. Harsha should be able to verify this. As noted previously, Harsha sent me the zip file directly on January 31st, which was helpful in addressing the feedback from my January 20th talk (DocDB 11460).
+        
+        \vspace{0.4cm}
+        \item \textbf{Are you using RS67 data to produce the latest hodoscope paddle efficiency table?} \\
+        Yes, I do. Please check the console output.
+        
+        \vspace{0.4cm}
+        \item \textbf{Are there ROOT files that contain: [\texttt{result}, \texttt{result\_mix}] TTrees made for roadsets: 57-70 like Abinash's files for RS67 (not the gridjob output that requires to reprocess)?}
+    \end{enumerate}
+\end{frame}
+"""
+
+    # ---------------------------------------------------------
+    # APPENDIX
+    # ---------------------------------------------------------
     latex_code += r"""
 % ---------------------------------------------------------
 % APPENDIX

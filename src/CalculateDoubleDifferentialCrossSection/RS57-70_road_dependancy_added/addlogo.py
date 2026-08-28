@@ -13,7 +13,7 @@ def add_logo_to_pdf(pdf_input_path, logo_path, pdf_output_path):
     #ypos = -169
 
     xpos = -415
-    ypos = -69
+    ypos = -80
 
     image_rectangle = fitz.Rect(300 + ypos, 200 + xpos, 360 + ypos, 315 + xpos)  # Adjusted position for the logo
 

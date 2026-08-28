@@ -33,92 +33,60 @@ xf_bins_np = np.round(np.arange(0.0, 0.85, 0.05), 2)
 # ==========================================
 # EVENT SELECTION (CHUCK CUTS)
 # ==========================================
-def e906_chuck_cuts(tree: uproot.models.TTree.Model_TTree_v19, cut=4.2, beam_offset: float = 1.6):
-    branch = tree.keys()
-    events = tree.arrays(branch)
 
-    dimuon_cut_2111_v42 = (
-        (np.abs(events.dx) < 0.25) &
-        (np.abs(events.dy - beam_offset) < 0.22) &
-        (events.dz < -5.) &
-        (events.dz > -280.) &
-        (np.abs(events.dpx) < 1.8) &
-        (np.abs(events.dpy) < 2.0) &
-        (events.dpx * events.dpx + events.dpy * events.dpy < 5.) &
-        (events.dpz < 116.) &
-        (events.dpz > 38.) &
-        (events.mass > cut) &
-        (events.mass < 8.8) &
-        (events.dx * events.dx + (events.dy - beam_offset) * (events.dy - beam_offset) < 0.06) &
-        (events.xF < 0.95) &
-        (events.xF > -0.1) &
-        (events.xT > 0.05) &
-        (events.xT <= 0.58) &
-        (np.abs(events.costh) < 0.5) &
-        (np.abs(events.trackSeparation) < 270.) &
-        (events.chisq_dimuon < 18)
+def get_e906_chuck_cuts_string(cut_val=4.2):
+    """
+    Translates the cut logic into a C++ string.
+    Dynamically applies beam offset based on runID.
+    """
+    bo = "(runID >= 11000 ? 1.6 : 0.4)"
+
+    dimuon_cut = (
+        f"(abs(dx) < 0.25) && (abs(dy - {bo}) < 0.22) && "
+        f"(dz < -5.) && (dz > -280.) && (abs(dpx) < 1.8) && (abs(dpy) < 2.0) && "
+        f"(dpx * dpx + dpy * dpy < 5.) && (dpz < 116.) && (dpz > 38.) && "
+        f"(mass > {cut_val}) && (mass < 8.8) && "
+        f"(dx * dx + (dy - {bo}) * (dy - {bo}) < 0.06) && "
+        f"(xF < 0.95) && (xF > -0.1) && (xT > 0.05) && (xT <= 0.58) && "
+        f"(abs(costh) < 0.5) && (abs(trackSeparation) < 270.) && "
+        f"(chisq_dimuon < 18)"
     )
 
-    track1_cut_2111_v42 = (
-        (events.chisq1_target < 15.) &
-        (events.pz1_st1 > 9.) &
-        (events.pz1_st1 < 75.) &
-        (events.nHits1 > 13) &
-        (events.x1_t * events.x1_t + (events.y1_t - beam_offset) * (events.y1_t - beam_offset) < 320.) &
-        (events.x1_d * events.x1_d + (events.y1_d - beam_offset) * (events.y1_d -beam_offset) < 1100.) &
-        (events.x1_d * events.x1_d + (events.y1_d - beam_offset) * (events.y1_d -beam_offset) > 16.) &
-        (events.chisq1_target < 1.5 * events.chisq1_upstream) &
-        (events.chisq1_target < 1.5 * events.chisq1_dump) &
-        (events.z1_v < -5.) &
-        (events.z1_v > -320.) &
-        (events.chisq1/(events.nHits1 - 5) < 12) &
-        ((events.y1_st1)/(events.y1_st3 ) < 1.) & 
-        (np.abs(np.abs(events.px1_st1 - events.px1_st3) - 0.416) < 0.008) &
-        (np.abs(events.py1_st1 - events.py1_st3) < 0.008) &
-        (np.abs(events.pz1_st1 - events.pz1_st3) < 0.08) &
-        ((events.y1_st1) * (events.y1_st3) > 0.) & 
-        (np.abs(events.py1_st1) > 0.02)
+    track1_cut = (
+        f"(chisq1_target < 15.) && (pz1_st1 > 9.) && (pz1_st1 < 75.) && (nHits1 > 13) && "
+        f"(x1_t * x1_t + (y1_t - {bo}) * (y1_t - {bo}) < 320.) && "
+        f"(x1_d * x1_d + (y1_d - {bo}) * (y1_d - {bo}) < 1100.) && "
+        f"(x1_d * x1_d + (y1_d - {bo}) * (y1_d - {bo}) > 16.) && "
+        f"(chisq1_target < 1.5 * chisq1_upstream) && (chisq1_target < 1.5 * chisq1_dump) && "
+        f"(z1_v < -5.) && (z1_v > -320.) && (chisq1 / (nHits1 - 5) < 12) && "
+        f"((y1_st1) / (y1_st3) < 1.) && (abs(abs(px1_st1 - px1_st3) - 0.416) < 0.008) && "
+        f"(abs(py1_st1 - py1_st3) < 0.008) && (abs(pz1_st1 - pz1_st3) < 0.08) && "
+        f"((y1_st1) * (y1_st3) > 0.) && (abs(py1_st1) > 0.02)"
     )
 
-    track2_cut_2111_v42 = (
-        (events.chisq2_target < 15.) &
-        (events.pz2_st1 > 9.) &
-        (events.pz2_st1 < 75.) &
-        (events.nHits2 > 13) &
-        (events.x2_t * events.x2_t + (events.y2_t - beam_offset) * (events.y2_t - beam_offset) < 320.) &
-        (events.x2_d * events.x2_d + (events.y2_d - beam_offset) * (events.y2_d -beam_offset) < 1100.) &
-        (events.x2_d * events.x2_d + (events.y2_d - beam_offset) * (events.y2_d -beam_offset) > 16.) &
-        (events.chisq2_target < 1.5 * events.chisq2_upstream) &
-        (events.chisq2_target < 1.5 * events.chisq2_dump) &
-        (events.z2_v < -5.) &
-        (events.z2_v > -320.) &
-        (events.chisq2/(events.nHits2 - 5) < 12) &
-        ((events.y2_st1 )/(events.y2_st3) < 1.) & 
-        (np.abs(np.abs(events.px2_st1 - events.px2_st3) - 0.416) < 0.008) &
-        (np.abs(events.py2_st1 - events.py2_st3) < 0.008) &
-        (np.abs(events.pz2_st1 - events.pz2_st3) < 0.08) &
-        ((events.y2_st1) * (events.y2_st3) > 0.) & 
-        (np.abs(events.py2_st1) > 0.02)
+    track2_cut = (
+        f"(chisq2_target < 15.) && (pz2_st1 > 9.) && (pz2_st1 < 75.) && (nHits2 > 13) && "
+        f"(x2_t * x2_t + (y2_t - {bo}) * (y2_t - {bo}) < 320.) && "
+        f"(x2_d * x2_d + (y2_d - {bo}) * (y2_d - {bo}) < 1100.) && "
+        f"(x2_d * x2_d + (y2_d - {bo}) * (y2_d - {bo}) > 16.) && "
+        f"(chisq2_target < 1.5 * chisq2_upstream) && (chisq2_target < 1.5 * chisq2_dump) && "
+        f"(z2_v < -5.) && (z2_v > -320.) && (chisq2 / (nHits2 - 5) < 12) && "
+        f"((y2_st1) / (y2_st3) < 1.) && (abs(abs(px2_st1 - px2_st3) - 0.416) < 0.008) && "
+        f"(abs(py2_st1 - py2_st3) < 0.008) && (abs(pz2_st1 - pz2_st3) < 0.08) && "
+        f"((y2_st1) * (y2_st3) > 0.) && (abs(py2_st1) > 0.02)"
     )
 
-    tracks_cut_2111_v42 = (
-        (np.abs(events.chisq1_target + events.chisq2_target - events.chisq_dimuon) < 2.) &
-        ((events.y1_st3) * (events.y2_st3) < 0.) & 
-        (events.nHits1 + events.nHits2 > 29) &
-        (events.nHits1St1 + events.nHits2St1 > 8) &
-        (np.abs(events.x1_st1 + events.x2_st1) < 42)
+    tracks_cut = (
+        f"(abs(chisq1_target + chisq2_target - chisq_dimuon) < 2.) && "
+        f"((y1_st3) * (y2_st3) < 0.) && (nHits1 + nHits2 > 29) && "
+        f"(nHits1St1 + nHits2St1 > 8) && (abs(x1_st1 + x2_st1) < 42)"
     )
 
-    occ_cut_2111_v42 = (
-        (events.D1 < 400) &
-        (events.D2 < 400) &
-        (events.D3 < 400) &
-        (events.D1 + events.D2 + events.D3 < 1000)
+    occ_cut = (
+        f"(D1 < 400) && (D2 < 400) && (D3 < 400) && (D1 + D2 + D3 < 1000)"
     )
 
-    events_cut = events[track1_cut_2111_v42 & track2_cut_2111_v42 & tracks_cut_2111_v42 & dimuon_cut_2111_v42 & occ_cut_2111_v42]
-    
-    return events_cut
+    return f"({dimuon_cut}) && ({track1_cut}) && ({track2_cut}) && ({tracks_cut}) && ({occ_cut})"
 
 # ==========================================
 # ERROR PROPAGATION & CORRELATION LOGIC
@@ -147,38 +115,38 @@ def get_bounds_vectorized(vals, ref_array):
     return val_lower, idx_lower, val_upper, idx_upper
 
 def calculate_recoeff_and_error(d1_vals, x_curve, y_curve, y_err_low, y_err_high):
+    """
+    Calculates the reconstructed efficiency and its propagated error via 
+    linear interpolation.
+    """
     d1_vals = np.array(d1_vals)
     f_linear = interp1d(x_curve, y_curve, kind='linear', fill_value="extrapolate")
     track_effi = f_linear(d1_vals)
     
     d_minus, idx_d_minus, d_plus, idx_d_plus = get_bounds_vectorized(d1_vals, x_curve)
-    effi_minus_val, idx_effi_minus, effi_plus_val, idx_effi_plus = get_bounds_vectorized(track_effi, y_curve)
     
-    e_effi_minus = y_err_low[idx_effi_minus]
-    e_effi_plus  = y_err_high[idx_effi_plus]
+    # Extract the corresponding errors for the bounding points
+    e_effi_minus = y_err_low[idx_d_minus]  
+    e_effi_plus  = y_err_high[idx_d_plus]  
     
     d2 = d1_vals 
     delta_d = d_plus - d_minus
     mask_exact = (delta_d == 0)
     recoeff_error = np.zeros_like(track_effi)
+    
+    # Prevent division by zero where D precisely matches a bin edge
     safe_delta_d = np.where(mask_exact, 1.0, delta_d) 
     
-    de_minus = 1 + d2 * (1 / safe_delta_d)
-    de_plus  = -d2 * (1 / safe_delta_d)
-    dd2      = -(effi_plus_val - effi_minus_val) / safe_delta_d
-    dd_plus  = d2 * (effi_plus_val - effi_minus_val) / (safe_delta_d**2)
-    dd_minus = -d2 * (effi_plus_val - effi_minus_val) / (safe_delta_d**2)
-    
+    # Correct Linear Interpolation Error Propagation
     variance = (
-        (de_minus**2) * (e_effi_minus**2) +
-        (de_plus**2)  * (e_effi_plus**2) +
-        (dd2**2)      * d2 +
-        (dd_plus**2)  * d_plus +
-        (dd_minus**2) * d_minus
-    )
+        ((d_plus - d2)**2) * (e_effi_minus**2) + 
+        ((d2 - d_minus)**2) * (e_effi_plus**2)
+    ) / (safe_delta_d**2)
     
     recoeff_error[~mask_exact] = np.sqrt(variance[~mask_exact])
-    recoeff_error[mask_exact] = e_effi_minus[mask_exact]
+    
+    # If the D value exactly matches a bin, the error is just the error of that bin
+    recoeff_error[mask_exact] = e_effi_minus[mask_exact] 
     
     return track_effi, recoeff_error, idx_d_minus
 
@@ -294,15 +262,33 @@ def process_file(input_root_file, output_root_file, target_name):
                 print(f"\nProcessing tree: {t_name}...")
                 tree = file[t_name]
                 
-                # 1. Apply cuts first
-                events_cut = e906_chuck_cuts(tree)
+                # 1. Load native awkward array to preserve correct data structures
+                events = tree.arrays()
+                
+                # 2. Get the C++ cut string
+                cut_string = get_e906_chuck_cuts_string()
+                
+                # 3. Use RDataFrame purely to evaluate the C++ string and generate a boolean mask
+                print("  - Evaluating C++ cut string via RDataFrame...")
+                df = ROOT.RDataFrame(t_name, input_root_file)
+                
+                # Define a new column that evaluates to true/false based on the cut string
+                df_with_mask = df.Define("passed_cut", f"(bool)({cut_string})")
+                
+                # Extract ONLY the boolean mask (extremely fast, avoids object dtype errors)
+                mask_dict = df_with_mask.AsNumpy(["passed_cut"])
+                passed_mask = mask_dict["passed_cut"].astype(bool)
+                
+                # 4. Apply the mask to our native uproot events array
+                events_cut = events[passed_mask]
+                
                 print(f"  - Events after cuts: {len(events_cut)}")
                 
                 if len(events_cut) == 0:
                     print("  - No events passed cuts. Skipping efficiency calculations.")
                     continue
                 
-                # 2. Extract D1 values
+                # 5. Extract D1 values
                 if t_name == 'result_mix':
                     if 'ptrk_D1' in events_cut.fields and 'ntrk_D1' in events_cut.fields:
                         d1_values = 0.5 * (events_cut.ptrk_D1 + events_cut.ntrk_D1)
@@ -311,7 +297,7 @@ def process_file(input_root_file, output_root_file, target_name):
                 else:
                     d1_values = events_cut.D1
 
-                # 3. Calculate efficiencies
+                # 6. Calculate efficiencies
                 print(f"  - Calculating efficiencies...")
                 recoeff, recoeff_error, loc_data = calculate_recoeff_and_error(
                     np.asarray(d1_values), 
@@ -323,7 +309,7 @@ def process_file(input_root_file, output_root_file, target_name):
                 
                 output_trees[t_name] = {field: events_cut[field] for field in events_cut.fields}
 
-                # 4. Generate the covariance matrices per bin
+                # 7. Generate the covariance matrices per bin
                 if GENERATE_COVAR_MATRIX:
                     generate_covariance_matrix_per_bin(events_cut, loc_data, recoeff_error, target_name, t_name)
                 else:

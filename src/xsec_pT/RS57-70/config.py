@@ -13,9 +13,9 @@ from rich.table import Table
 # ==========================================
 INPUT_NPZ_FILE = "/root/github/e906-development/src/kTrackerEfficiency/RS67/GlobalEfficiencyCurve/interpolation_data_d1.npz"
 
-PROTONS_ON_TARGET_LH2 = (3.533324e+16 + 9.365986e+15 + 5.654075e+16 + 1.611435e+17 + 1.785745e+16)
-PROTONS_ON_TARGET_LD2 = (1.768358e+16 + 4.319952e+15 + 2.517904e+16 + 7.694541e+16 + 8.752588e+15)
-PROTONS_ON_TARGET_FLASK = (3.918550e+15 + 1.010350e+15 + 1.176106e+16 + 3.662417e+16 + 3.84128e+15)
+PROTONS_ON_TARGET_LH2 = (3.533324e+16 + 9.365986e+15 + 5.281659e+16 + 1.611435e+17 + 1.785745e+16)
+PROTONS_ON_TARGET_LD2 = (1.768358e+16 + 4.319952e+15 + 2.382899e+16 + 7.694541e+16 + 8.752588e+15)
+PROTONS_ON_TARGET_FLASK = (3.918550e+15 + 1.010350e+15 + 1.097456e+16 + 3.662417e+16 + 3.84128e+15)
 
 LH2_TARGET_DENSITY_MOL_CM2 = 3.5966
 LD2_TARGET_DENSITY_MOL_CM2 = 8.0431
@@ -61,8 +61,8 @@ LH2_TO_LD2_NORM = THD_THH_RATIO * (PROTONS_ON_TARGET_LD2 / PROTONS_ON_TARGET_LH2
 # ==========================================
 # Kinematic Bins
 # ==========================================
-MASS_BINS = np.array([4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.7], dtype=float)
-PT_BINS = np.array([0., 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8], dtype=float)
+MASS_BINS = np.array([4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.8], dtype=float)
+PT_BINS = np.array([0., 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8, 2.5], dtype=float)
 
 def print_physics_constants():
     """

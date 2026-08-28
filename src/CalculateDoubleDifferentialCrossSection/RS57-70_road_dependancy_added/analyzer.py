@@ -1004,35 +1004,60 @@ class DYCrossSectionAnalyzer:
             mg = ROOT.TMultiGraph()
             mg.SetTitle(f";;M^{{3}} d^{{2}}\\sigma / dM dx_{{F}} [nb GeV^{{2}}/Nucleus]")
             
-            # Main Frame Y-Axis Range
-            if target_label == "LD2":
-                fixed_y_min = 1e-5
-                fixed_y_max = 5.0
-            else:
-                fixed_y_min = 1e-5
-                fixed_y_max = 4.0
+            # Fetch theory curves early to include them in the dynamic range calculation
+            gr_name = f"gr_xFbin{xf_bin_index}"
+            g_ct18 = f_ct18.Get(gr_name) if f_ct18 else None
+            g_nnpdf = f_nnpdf.Get(gr_name) if f_nnpdf else None
 
-            mg.SetMinimum(fixed_y_min)
-            mg.SetMaximum(fixed_y_max)
+            # Dynamically calculate Y-axis minimum and maximum across all plotted elements
+            local_y_max = -1.0
+            local_y_min = sys.float_info.max
+
+            for graph in [g_xsec, g_sys, g_ct18, g_nnpdf]:
+                if not graph: continue
+                for i in range(graph.GetN()):
+                    y = graph.GetPointY(i)
+                    if graph.InheritsFrom("TGraphAsymmErrors"):
+                        ey_h = graph.GetErrorYhigh(i)
+                        ey_l = graph.GetErrorYlow(i)
+                    elif graph.InheritsFrom("TGraphErrors"):
+                        ey_h = graph.GetErrorY(i)
+                        ey_l = graph.GetErrorY(i)
+                    else:
+                        ey_h = 0.0
+                        ey_l = 0.0
+                    
+                    if y + ey_h > local_y_max:
+                        local_y_max = y + ey_h
+                    if (y - ey_l) > 0 and (y - ey_l) < local_y_min:
+                        local_y_min = y - ey_l
+
+            if local_y_max <= 0: local_y_max = 5.0
+            if local_y_min == sys.float_info.max: local_y_min = 1e-5
+
+            # Multiply max by 500 to ensure elements don't hit the left upper corner TLatex and TLegend
+            dynamic_y_max = local_y_max * 500.0
+            
+            # Divide min by 50 to drop the floor further down, naturally shifting the lowest decade label 
+            # above the boundary so it avoids overlapping the "50" from the sys. unc. bottom pad.
+            dynamic_y_min = local_y_min / 50.0
+
+            mg.SetMinimum(dynamic_y_min)
+            mg.SetMaximum(dynamic_y_max)
             
             leg = ROOT.TLegend(0.65, 0.68, 0.99, 0.86)
             leg.SetBorderSize(0)
             leg.SetFillStyle(0)
-            gr_name = f"gr_xFbin{xf_bin_index}"
             
-            if f_ct18:
-                g_ct18 = f_ct18.Get(gr_name)
-                if g_ct18:
-                    g_ct18_clone = g_ct18.Clone()
-                    g_ct18_clone.SetLineColor(ROOT.kGreen + 2); g_ct18_clone.SetFillColorAlpha(ROOT.kGreen - 5, 0.5); g_ct18_clone.SetFillStyle(3002)
-                    mg.Add(g_ct18_clone, "L3"); leg.AddEntry(g_ct18_clone, "CT18 NLO", "lf") 
+            if g_ct18:
+                g_ct18_clone = g_ct18.Clone()
+                g_ct18_clone.SetLineColor(ROOT.kGreen + 2); g_ct18_clone.SetFillColorAlpha(ROOT.kGreen - 5, 0.5); g_ct18_clone.SetFillStyle(3002)
+                mg.Add(g_ct18_clone, "L3"); leg.AddEntry(g_ct18_clone, "CT18 NLO", "lf") 
             
-            if f_nnpdf:
-                g_nnpdf = f_nnpdf.Get(gr_name)
-                if g_nnpdf:
-                    g_nnpdf_clone = g_nnpdf.Clone()
-                    g_nnpdf_clone.SetLineColor(ROOT.kBlue + 2); g_nnpdf_clone.SetFillColorAlpha(ROOT.kAzure + 1, 0.5); g_nnpdf_clone.SetFillStyle(3002)
-                    mg.Add(g_nnpdf_clone, "L3"); leg.AddEntry(g_nnpdf_clone, "NNPDF4.0 NLO", "lf") 
+            if g_nnpdf:
+                g_nnpdf_clone = g_nnpdf.Clone()
+                g_nnpdf_clone.SetLineColor(ROOT.kBlue + 2); g_nnpdf_clone.SetFillColorAlpha(ROOT.kAzure + 1, 0.5); g_nnpdf_clone.SetFillStyle(3002)
+                mg.Add(g_nnpdf_clone, "L3"); leg.AddEntry(g_nnpdf_clone, "NNPDF4.0 NLO", "lf") 
             
             g_sys.SetFillColorAlpha(ROOT.kPink + 1, 0.6)
             g_sys.SetFillStyle(1001)
@@ -1073,14 +1098,11 @@ class DYCrossSectionAnalyzer:
             internal_title.SetNDC(True); internal_title.SetTextFont(42); internal_title.SetTextSize(0.045); internal_title.SetTextAlign(13)
             internal_title.DrawLatex(0.14, 0.86, f"Drell-Yan process in {target_prefix} at {xf_min:.2f} #leq x_{{F}} < {xf_max:.2f}")
 
-            # Added textual disclaimer regarding uncertainty inclusion status
             unc_note = ROOT.TLatex()
             unc_note.SetNDC(True)
             unc_note.SetTextFont(42)
             unc_note.SetTextSize(0.03)
             unc_note.SetTextAlign(13)
-            #unc_note.DrawLatex(0.14, 0.81, "10% global uncertainty due to the integrated luminosity is not included in the error bands,")
-            #unc_note.DrawLatex(0.14, 0.77, "but bin-by-bin roadset systematic uncertainties are included.")
 
             prelim = ROOT.TLatex()
             prelim.SetNDC(True)

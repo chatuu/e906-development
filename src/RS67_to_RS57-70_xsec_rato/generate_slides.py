@@ -1,15 +1,64 @@
 import os
+import csv
+
+def format_tex_sci(val, bold=False):
+    """Formats a float into a LaTeX scientific notation string."""
+    if val == 0:
+        return r"$\mathbf{0}$" if bold else "$0$"
+    s = f"{val:.2e}"
+    base, exp = s.split('e')
+    exp = int(exp) # Convert to int to remove leading zeros (e.g., +016 -> 16)
+    
+    if bold:
+        return f"$\\mathbf{{{base} \\times 10^{{{exp}}}}}$"
+    return f"${base} \\times 10^{{{exp}}}$"
+
+def parse_val(v):
+    """Parses scientific notation, fixing missing 'e' (e.g., 5.65+16 -> 5.65e+16)."""
+    v = v.strip()
+    if '+' in v and 'e' not in v.lower():
+        v = v.replace('+', 'e+')
+    return float(v)
 
 def main():
     # Configuration
     plot_dir = "comparison_plots"
     tex_filename = "CrossSection_Comparison.tex"
+    csv_filename = "POT_list.csv"
     
     # Define your xF bin edges again to match the slide titles with the plot titles
     xf_edges = [
         0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 
         0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80
     ]
+
+    # Process the CSV Data
+    pot_data = []
+    totals = {'LH2': 0.0, 'Flask': 0.0, 'LD2': 0.0, 'Total': 0.0}
+    
+    with open(csv_filename, 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            rs = row['Roadset']
+            
+            lh2 = parse_val(row['LH2'])
+            ld2 = parse_val(row['LD2'])
+            flask = parse_val(row['Flask'])
+            row_total = lh2 + ld2 + flask
+            
+            # Add to combined totals
+            totals['LH2'] += lh2
+            totals['LD2'] += ld2
+            totals['Flask'] += flask
+            totals['Total'] += row_total
+            
+            pot_data.append({
+                'RS': rs,
+                'LH2': lh2,
+                'Flask': flask,
+                'LD2': ld2,
+                'Total': row_total
+            })
 
     # Start writing the LaTeX content
     tex_content = []
@@ -39,13 +88,25 @@ def main():
     tex_content.append(r"    \toprule")
     tex_content.append(r"    \textbf{Roadset} & \textbf{LH2 POT} & \textbf{Flask POT} & \textbf{LD2 POT} & \textbf{Total (H2+D2+F)} \\")
     tex_content.append(r"    \midrule")
-    tex_content.append(r"    57 & $3.79 \times 10^{16}$ & $4.23 \times 10^{15}$ & $1.90 \times 10^{16}$ & $6.11 \times 10^{16}$ \\")
-    tex_content.append(r"    59 & $8.44 \times 10^{15}$ & $9.18 \times 10^{14}$ & $3.84 \times 10^{15}$ & $1.32 \times 10^{16}$ \\")
-    tex_content.append(r"    62 & $5.51 \times 10^{16}$ & $1.13 \times 10^{16}$ & $2.55 \times 10^{16}$ & $9.19 \times 10^{16}$ \\")
-    tex_content.append(r"    67 & $1.57 \times 10^{17}$ & $3.58 \times 10^{16}$ & $7.51 \times 10^{16}$ & $2.68 \times 10^{17}$ \\")
-    tex_content.append(r"    70 & $1.76 \times 10^{16}$ & $3.71 \times 10^{15}$ & $8.54 \times 10^{15}$ & $2.99 \times 10^{16}$ \\")
+    
+    # Loop through CSV data for rows
+    for d in pot_data:
+        lh2_str = format_tex_sci(d['LH2'])
+        flask_str = format_tex_sci(d['Flask'])
+        ld2_str = format_tex_sci(d['LD2'])
+        total_str = format_tex_sci(d['Total'])
+        
+        tex_content.append(f"    {d['RS']} & {lh2_str} & {flask_str} & {ld2_str} & {total_str} \\\\")
+
     tex_content.append(r"    \midrule")
-    tex_content.append(r"    \textbf{57--70 Combined} & $\mathbf{2.76 \times 10^{17}}$ & $\mathbf{5.59 \times 10^{16}}$ & $\mathbf{1.32 \times 10^{17}}$ & $\mathbf{4.64 \times 10^{17}}$ \\")
+    
+    # Combined Totals Row
+    lh2_tot = format_tex_sci(totals['LH2'], bold=True)
+    flask_tot = format_tex_sci(totals['Flask'], bold=True)
+    ld2_tot = format_tex_sci(totals['LD2'], bold=True)
+    comb_tot = format_tex_sci(totals['Total'], bold=True)
+    
+    tex_content.append(f"    \\textbf{{57--70 Combined}} & {lh2_tot} & {flask_tot} & {ld2_tot} & {comb_tot} \\\\")
     tex_content.append(r"    \bottomrule")
     tex_content.append(r"  \end{tabular}")
     tex_content.append(r"  \vspace{0.5cm}")

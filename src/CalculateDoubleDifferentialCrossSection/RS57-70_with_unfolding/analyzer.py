@@ -474,14 +474,14 @@ class DYCrossSectionAnalyzer:
                     max_label_y_ld2 = max(max_label_y_ld2, actual_y)
 
                 csv_rows_lh2.append({
-                    "Mass Bin": f"[{m_low:.2f}, {m_high:.2f})", "Mass Center": m_center, "LH2 Mass Bin Average": cent_LH2,
+                    "Mass Bin": f"[{m_low:.2f}, {m_high})", "Mass Center": m_center, "LH2 Mass Bin Average": cent_LH2,
                     "N_LH2_total": N_lh_t, "N_LH2_mixed": N_lh_m, "N_flask_total": N_fl_t, "N_flask_mixed": N_fl_m,
                     "eps_LH2": eps_lh2, "eps_LD2": eps_ld2, "eps_flask": eps_fl,
                     "Corrected Total Mass LH2 (num)": num_LH2, "Corrected Yield LH2 (denom)": den_LH2
                 })
 
                 csv_rows_ld2.append({
-                    "Mass Bin": f"[{m_low:.2f}, {m_high:.2f})", "Mass Center": m_center, "LD2 Mass Bin Average": cent_LD2,
+                    "Mass Bin": f"[{m_low:.2f}, {m_high})", "Mass Center": m_center, "LD2 Mass Bin Average": cent_LD2,
                     "N_LD2_total": N_l2_t, "N_LD2_mixed": N_l2_m, "N_LH2_total": N_lh_t, "N_LH2_mixed": N_lh_m,
                     "N_flask_total": N_fl_t, "N_flask_mixed": N_fl_m,
                     "eps_LH2": eps_lh2, "eps_LD2": eps_ld2, "eps_flask": eps_fl,
@@ -834,56 +834,104 @@ class DYCrossSectionAnalyzer:
             pad2.cd()
             mg_ratio = ROOT.TMultiGraph()
             
+            # Statistical ratio graphs
             g_rat_m = ROOT.TGraphErrors()
             g_rat_c = ROOT.TGraphErrors()
+            
+            # Systematic ratio band graphs
+            g_rat_m_sys = ROOT.TGraphErrors()
+            g_rat_c_sys = ROOT.TGraphErrors()
             
             pt_m, pt_c = 0, 0
             rat_max, rat_min = -1e9, 1e9
             valid_ratio_points = 0
             
             def get_y_err_by_x(g, x_target, tol=0.01):
+                if not g: return None, None
                 for k in range(g.GetN()):
                     if abs(g.GetX()[k] - x_target) < tol:
                         return g.GetY()[k], g.GetErrorY(k)
                 return None, None
 
             for k in range(g_raw_xsec.GetN()):
-                vx = g_raw_xsec.GetX()[k]
+                # For statistical graphs (X is actual mass center)
+                vx_stat = g_raw_xsec.GetX()[k]
                 vy_raw = g_raw_xsec.GetY()[k]
-                verr_raw = g_raw_xsec.GetErrorY(k)
-                ex = g_raw_xsec.GetErrorX(k)
+                ex_stat = g_raw_xsec.GetErrorX(k)
+                
+                # For systematic graphs (X is geometric center for the band width)
+                vx_sys = g_raw_sys.GetX()[k]
+                ex_sys = g_raw_sys.GetErrorX(k)
                 
                 if vy_raw <= 0: continue
                 
-                vy_m, verr_m = get_y_err_by_x(g_unf_m_xsec, vx)
-                if vy_m is not None and vy_m > 0:
+                vy_m, verr_m = get_y_err_by_x(g_unf_m_xsec, vx_stat)
+                _, sys_m = get_y_err_by_x(g_unf_m_sys, vx_sys)
+                
+                if vy_m is not None and vy_m > 0 and sys_m is not None:
                     r = vy_m / vy_raw
-                    # Fully correlated ratio error propagation
-                    e = r * abs((verr_m / vy_m) - (verr_raw / vy_raw))
-                    g_rat_m.SetPoint(pt_m, vx, r)
-                    g_rat_m.SetPointError(pt_m, ex, e)
-                    if not math.isinf(r) and not math.isnan(r) and not math.isinf(e) and not math.isnan(e):
-                        rat_max = max(rat_max, r + e)
-                        rat_min = min(rat_min, r - e)
+                    
+                    # Treat denominator (raw cross-section) as having 0 error
+                    e_stat = verr_m / vy_raw
+                    e_sys = sys_m / vy_raw
+                    
+                    # Statistical point
+                    g_rat_m.SetPoint(pt_m, vx_stat, r)
+                    g_rat_m.SetPointError(pt_m, ex_stat, e_stat)
+                    
+                    # Systematic band
+                    g_rat_m_sys.SetPoint(pt_m, vx_sys, r)
+                    g_rat_m_sys.SetPointError(pt_m, ex_sys, e_sys)
+                    
+                    if not math.isinf(r) and not math.isnan(r) and not math.isinf(e_stat) and not math.isnan(e_stat):
+                        rat_max = max(rat_max, r + e_stat + e_sys)
+                        rat_min = min(rat_min, r - e_stat - e_sys)
                         valid_ratio_points += 1
                     pt_m += 1
 
-                vy_c, verr_c = get_y_err_by_x(g_unf_c_xsec, vx)
-                if vy_c is not None and vy_c > 0:
+                vy_c, verr_c = get_y_err_by_x(g_unf_c_xsec, vx_stat)
+                _, sys_c = get_y_err_by_x(g_unf_c_sys, vx_sys)
+                
+                if vy_c is not None and vy_c > 0 and sys_c is not None:
                     r = vy_c / vy_raw
-                    # Fully correlated ratio error propagation
-                    e = r * abs((verr_c / vy_c) - (verr_raw / vy_raw))
-                    g_rat_c.SetPoint(pt_c, vx, r)
-                    g_rat_c.SetPointError(pt_c, ex, e)
-                    if not math.isinf(r) and not math.isnan(r) and not math.isinf(e) and not math.isnan(e):
-                        rat_max = max(rat_max, r + e)
-                        rat_min = min(rat_min, r - e)
+                    
+                    # Treat denominator (raw cross-section) as having 0 error
+                    e_stat = verr_c / vy_raw
+                    e_sys = sys_c / vy_raw
+                    
+                    # Statistical point
+                    g_rat_c.SetPoint(pt_c, vx_stat, r)
+                    g_rat_c.SetPointError(pt_c, ex_stat, e_stat)
+                    
+                    # Systematic band
+                    g_rat_c_sys.SetPoint(pt_c, vx_sys, r)
+                    g_rat_c_sys.SetPointError(pt_c, ex_sys, e_sys)
+                    
+                    if not math.isinf(r) and not math.isnan(r) and not math.isinf(e_stat) and not math.isnan(e_stat):
+                        rat_max = max(rat_max, r + e_stat + e_sys)
+                        rat_min = min(rat_min, r - e_stat - e_sys)
                         valid_ratio_points += 1
                     pt_c += 1
+
+            # IMPORTANT: Add bands (sys) FIRST so points render on top
+            if g_rat_m_sys.GetN() > 0:
+                g_rat_m_sys.SetMarkerSize(0)
+                g_rat_m_sys.SetLineColor(ROOT.kRed)
+                g_rat_m_sys.SetFillColorAlpha(ROOT.kPink - 9, 0.5)
+                g_rat_m_sys.SetFillStyle(1001)
+                mg_ratio.Add(g_rat_m_sys, "2")
+                
+            if g_rat_c_sys.GetN() > 0:
+                g_rat_c_sys.SetMarkerSize(0)
+                g_rat_c_sys.SetLineColor(ROOT.kBlack)
+                g_rat_c_sys.SetFillColorAlpha(ROOT.kGray, 0.5)
+                g_rat_c_sys.SetFillStyle(1001)
+                mg_ratio.Add(g_rat_c_sys, "2")
 
             if g_rat_m.GetN() > 0:
                 g_rat_m.SetMarkerStyle(20); g_rat_m.SetMarkerColor(ROOT.kRed); g_rat_m.SetLineColor(ROOT.kRed)
                 mg_ratio.Add(g_rat_m, "P")
+                
             if g_rat_c.GetN() > 0:
                 g_rat_c.SetMarkerStyle(21); g_rat_c.SetMarkerColor(ROOT.kBlack); g_rat_c.SetLineColor(ROOT.kBlack)
                 mg_ratio.Add(g_rat_c, "P")

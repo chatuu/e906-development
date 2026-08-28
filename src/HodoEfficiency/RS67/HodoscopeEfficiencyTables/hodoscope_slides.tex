@@ -20,7 +20,7 @@
     \titlepage
 \end{frame}
 
-% Slide 01: Input Files
+% Slide: Input Data
 \begin{frame}
     \frametitle{Input Data}
     \textbf{Input files used:}
@@ -32,13 +32,20 @@
         \item \texttt{effies\_rs70.xlsx}
     \end{itemize}
     
-    \vspace{0.5cm}
+    \vspace{0.2cm}
+    \textbf{Hodoscope efficiency tables used:}
+    \begin{itemize}
+        \item \texttt{hodoscope\_eff\_RS67\_final\_2026-01-31.tsv} (previous paddle efficiency table)
+        \item \texttt{hodoscope\_eff\_RS57-70\_final.tsv} (latest paddle efficiency table)
+    \end{itemize}
+
+    \vspace{0.2cm}
     \begin{block}{Note}
     The current study is only focused on runs 2 and 3 only. We will do the same study for runs 5 and 6 later as a separate study.
     \end{block}
 \end{frame}
 
-% Slide 02: Procedure
+% Slide: Procedure
 \begin{frame}
     \frametitle{Analysis Procedure}
     \begin{itemize}
@@ -54,7 +61,7 @@
     \end{itemize}
 \end{frame}
 
-% Slide 03: Capped Error Table
+% Slide: Capped Error Table
 \begin{frame}
     \frametitle{Paddles with Upper Error Bar Capped at 1.0 Bound}
     \begin{table}
@@ -173,6 +180,208 @@
             \textbf{Plot missing: eff_plot_H4T_root.pdf}
         }
     \end{center}
+\end{frame}
+
+% ---------------------------------------------------------
+% COMPARISON SECTION
+% ---------------------------------------------------------
+\begin{frame}
+    \centering
+    \Huge \textbf{Hodoscope Efficiency Comparison} \\
+    \vspace{0.5cm}
+    \Large (Previous Vs Latest)
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comparison: E\_mix\_hodo\_Flask}
+    \begin{columns}[c]
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Previous (RS67)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_Flask.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_Flask.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_mix_hodo_Flask.pdf}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Latest (RS57-70)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_mix_hodo_Flask.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_mix_hodo_Flask.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_mix_hodo_Flask.pdf}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comparison: E\_mix\_hodo\_LD2}
+    \begin{columns}[c]
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Previous (RS67)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_LD2.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_LD2.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_mix_hodo_LD2.pdf}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Latest (RS57-70)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_mix_hodo_LD2.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_mix_hodo_LD2.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_mix_hodo_LD2.pdf}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comparison: E\_mix\_hodo\_LH2}
+    \begin{columns}[c]
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Previous (RS67)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_LH2.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_mix_hodo_LH2.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_mix_hodo_LH2.pdf}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Latest (RS57-70)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_mix_hodo_LH2.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_mix_hodo_LH2.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_mix_hodo_LH2.pdf}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comparison: E\_total\_hodo\_Flask}
+    \begin{columns}[c]
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Previous (RS67)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_Flask.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_Flask.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_total_hodo_Flask.pdf}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Latest (RS57-70)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_total_hodo_Flask.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_total_hodo_Flask.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_total_hodo_Flask.pdf}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comparison: E\_total\_hodo\_LD2}
+    \begin{columns}[c]
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Previous (RS67)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_LD2.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_LD2.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_total_hodo_LD2.pdf}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Latest (RS57-70)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_total_hodo_LD2.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_total_hodo_LD2.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_total_hodo_LD2.pdf}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comparison: E\_total\_hodo\_LH2}
+    \begin{columns}[c]
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Previous (RS67)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_LH2.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS67/Final/E_total_hodo_LH2.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_total_hodo_LH2.pdf}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Latest (RS57-70)}\\
+            \vspace{0.2cm}
+            \IfFileExists{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_total_hodo_LH2.pdf}{
+                \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{/root/github/e906-development/CalculateDoubleDifferentialCrossSection/RS57-70/E_total_hodo_LH2.pdf}
+            }{
+                \textbf{Missing Plot:}\\
+                \texttt{E_total_hodo_LH2.pdf}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% QUESTIONS SECTION
+% ---------------------------------------------------------
+\begin{frame}
+    \centering
+    \Huge \textbf{Questions}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Questions \& Discussion}
+    \small
+    \begin{enumerate}
+        \item \textbf{Can you confirm that your blue points are from one of Harsha's TSV files from (say) version 6 of his DocDB?} \\
+        They correspond to DocDB 11467-v2. Harsha should be able to verify this. As noted previously, Harsha sent me the zip file directly on January 31st, which was helpful in addressing the feedback from my January 20th talk (DocDB 11460).
+        
+        \vspace{0.4cm}
+        \item \textbf{Are you using RS67 data to produce the latest hodoscope paddle efficiency table?} \\
+        Yes, I do. Please check the console output.
+        
+        \vspace{0.4cm}
+        \item \textbf{Are there ROOT files that contain: [\texttt{result}, \texttt{result\_mix}] TTrees made for roadsets: 57-70 like Abinash's files for RS67 (not the gridjob output that requires to reprocess)?}
+    \end{enumerate}
 \end{frame}
 
 % ---------------------------------------------------------

@@ -12,6 +12,15 @@ import numpy as np
 import ROOT
 import config
 
+# =============================================================================
+# SYSTEMATIC UNCERTAINTIES (Strategy 1: Deviation of Merged Data)
+# Calculated from RS(57-70) / RS67 ratio best fits.
+# =============================================================================
+#SYS_FRAC_ROADSET_LH2 = 0.044  # |1 - 0.956| -> 4.4%
+SYS_FRAC_ROADSET_LH2 = 0.0  # |1 - 0.956| -> 4.4%
+#SYS_FRAC_ROADSET_LD2 = 0.054  # |1 - 0.946| -> 5.4%
+SYS_FRAC_ROADSET_LD2 = 0.0  # |1 - 0.946| -> 5.4%
+
 class DYCrossSectionAnalyzer:
     """
     Main Object-Oriented Analyzer for extracting kinematics, performing background 
@@ -116,7 +125,22 @@ class DYCrossSectionAnalyzer:
             (e.D1 < 400) & (e.D2 < 400) & (e.D3 < 400) & (e.D1 + e.D2 + e.D3 < 1000)
         )
 
-        total_cut_mask = (track1_cut & track2_cut & tracks_cut & dimuon_cut & occ_cut)
+        D1_occ_cut = (
+            (e.D1 > 20) & (e.D1 < 385)
+        )
+
+        xF_cut = (
+            (e.xF < 0.80) & (e.xF > 0.0) # Integrating over xF bins
+        )
+
+        mass_cut = (
+            (e.mass > 4.2) & (e.mass < 8.8)
+        )
+
+        total_cut_mask = (track1_cut & track2_cut & tracks_cut & dimuon_cut & occ_cut & D1_occ_cut & xF_cut & mass_cut)
+
+
+        #total_cut_mask = (track1_cut & track2_cut & tracks_cut & dimuon_cut & occ_cut)
 
         filtered_events = {}
         for key, val in events.items():
@@ -699,6 +723,9 @@ class DYCrossSectionAnalyzer:
         n_pt_bins = len(config.PT_BINS) - 1
         suffix = "_true_pt" if use_true_pt else "_geom"
         
+        # --- Determine the correct Roadset Systematic Uncertainty fraction for the target ---
+        sys_frac_roadset = SYS_FRAC_ROADSET_LH2 if target_label == "LH2" else (SYS_FRAC_ROADSET_LD2 if target_label == "LD2" else 0.0)
+        
         latex_psip_table_content = r"""\begin{longtable}{|c|c|c|c|c|}
 \caption{$\psi'$ Contamination Table for %s} \label{tab:psip_contamination_%s} \\
 \hline
@@ -764,18 +791,23 @@ class DYCrossSectionAnalyzer:
             sys_tot_yield = (Y_sub_sys_err / Y_sub) * bin_dsigma_dpt
             sys_psip_cont = psip_ratio * bin_dsigma_dpt
             
+            # --- NEW: Calculate Roadset Systematic on the final cross section ---
+            sys_roadset = sys_frac_roadset * bin_dsigma_dpt
+            
             if psip_ratio > 0.0 and not use_true_pt:
                 s_pt = f"[{pt_min:.2f}, {pt_max:.2f})"
                 s_mass = f"Integrated [{config.MASS_BINS[0]:.2f}, {config.MASS_BINS[-1]:.2f})"
                 s_ratio = f"{psip_ratio:.4f}"
-                sys_unc_bin = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2)
+                # Added roadset systematic in quadrature
+                sys_unc_bin = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_roadset**2)
                 s_sigma_psip_col = f"{bin_dsigma_dpt:.4f} $\\pm$ {stat_unc:.4f} $\\pm$ {sys_unc_bin:.4f}"
                 latex_psip_table_content += f"{s_pt} & {s_mass} & {s_ratio} & {s_sigma_psip_col} & {sys_psip_cont:.4f} \\\\ \n\\hline\n"
             
             if sum_xsec > 0:
                 sys_acc_total = (acceptance_err / acceptance) * sum_xsec
                 total_stat_err = stat_unc
-                total_sys_err = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_acc_total**2)
+                # Added roadset systematic in quadrature for the final total systematic error
+                total_sys_err = math.sqrt(sys_tot_yield**2 + sys_psip_cont**2 + sys_acc_total**2 + sys_roadset**2)
                 max_err_for_range = max(total_stat_err, total_sys_err)
                 
                 if (max_err_for_range / sum_xsec) > 0.99: continue
@@ -830,21 +862,50 @@ class DYCrossSectionAnalyzer:
             
             target_prefix = "pp" if target_label == "LH2" else "pd" if target_label == "LD2" else target_label
             internal_title = ROOT.TLatex()
-            internal_title.SetNDC(True); internal_title.SetTextFont(42); internal_title.SetTextSize(0.04); internal_title.SetTextAlign(13)
-            internal_title.DrawLatex(0.19, 0.85, f"Drell-Yan process in {target_prefix}")
+            internal_title.SetNDC(True)
+            internal_title.SetTextFont(42)
+            internal_title.SetTextSize(0.04)
+            internal_title.SetTextAlign(13)
 
+            # Draw the 3 lines, shifting the Y-coordinate down by 0.05 for each new line
+            internal_title.DrawLatex(0.19, 0.85, f"Drell-Yan process in {target_prefix}")
+            internal_title.DrawLatex(0.19, 0.80, "0.0 < x_{F} < 0.8")
+            internal_title.DrawLatex(0.19, 0.75, "4.2 GeV < M < 8.8 GeV")
             prelim = ROOT.TLatex()
-            prelim.SetNDC(True); prelim.SetTextColor(ROOT.kBlue); prelim.SetTextAlign(33); prelim.SetTextSize(0.05)
-            prelim.DrawLatex(0.82, 0.6, "Preliminary")
+            prelim.SetNDC(True)
+            prelim.SetTextColor(ROOT.kBlue)
+            prelim.SetTextAlign(33) # 33 = Right-Top alignment
+
+            # --- Line 1: Preliminary ---
+            prelim.SetTextSize(0.05)
+            prelim.DrawLatex(0.82, 0.60, "Preliminary")
+
+            # --- Line 2: Run Period (2014-2015) ---
+            # We reduce the font size slightly (e.g., to 0.035) so it matches 
+            # the width of the "Preliminary" line above it.
+            prelim.SetTextSize(0.0252) 
+            prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
 
             plot_y_min = 0.0
             plot_y_max = y_max_data * 1.4 if y_min_data < y_max_data else 3.0
             dynamic_y = plot_y_min + 0.05 * (plot_y_max - plot_y_min)
 
+            if target_label == "LH2":
+                road_sys = "4.4%"
+            elif target_label == "LD2":
+                road_sys = "5.4%"
+
             lumi_note = ROOT.TLatex()
-            lumi_note.SetNDC(False); lumi_note.SetTextFont(42); lumi_note.SetTextColor(ROOT.kBlack)
-            lumi_note.SetTextAlign(11); lumi_note.SetTextSize(0.025)
-            lumi_note.DrawLatex(0.1, dynamic_y, "10% global uncertainty due to the integrated luminosity is not included in the error bands")
+            lumi_note.SetNDC(False)
+            lumi_note.SetTextFont(42)
+            lumi_note.SetTextColor(ROOT.kBlack)
+            lumi_note.SetTextAlign(11)
+            lumi_note.SetTextSize(0.025)
+
+            # Wrap the two halves of your sentence in #splitline{}{}
+            note_text = f"#splitline{{10% global uncertainty due to the integrated luminosity and {road_sys} global uncertainty}}{{due to road dependency are not included in the error bands}}"
+
+            lumi_note.DrawLatex(0.1, dynamic_y, note_text)
             
             c_xsec.SaveAs(f"CrossSection_{target_label}{suffix}_vs_pT.pdf")
             
@@ -913,12 +974,22 @@ class DYCrossSectionAnalyzer:
         legend.Draw()
         
         prelim = ROOT.TLatex()
-        prelim.SetNDC(True); prelim.SetTextFont(43); prelim.SetTextSize(24)
-        prelim.SetTextColor(ROOT.kBlue); prelim.SetTextAlign(33)
-        prelim.DrawLatex(0.85, 0.6, "Preliminary")
+        prelim.SetNDC(True)
+        prelim.SetTextColor(ROOT.kBlue)
+        prelim.SetTextAlign(33) # 33 = Right-Top alignment
 
+        # --- Line 1: Preliminary ---
+        prelim.SetTextSize(0.05)
+        prelim.DrawLatex(0.82, 0.60, "Preliminary")
+
+        # --- Line 2: Run Period (2014-2015) ---
+        # We reduce the font size slightly (e.g., to 0.035) so it matches 
+        # the width of the "Preliminary" line above it.
+        prelim.SetTextSize(0.0272) 
+        prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
+        
         lumi_note = ROOT.TLatex()
-        lumi_note.SetNDC(True); lumi_note.SetTextFont(43); lumi_note.SetTextSize(18)
+        lumi_note.SetNDC(True); lumi_note.SetTextFont(43); lumi_note.SetTextSize(0.025)
         lumi_note.SetTextColor(ROOT.kBlack); lumi_note.SetTextAlign(11)
         lumi_note.DrawLatex(0.18, 0.16, "10% global uncertainty due to the integrated luminosity is not included in the error bands")
 
@@ -959,6 +1030,12 @@ class DYCrossSectionAnalyzer:
 
         pt_idx = 0
         y_max_ratio, y_min_ratio = -1e9, 1e9
+        
+        print(f"\n--- Cross-Section Ratio pd/2pp ({'True pT' if use_true_pt else 'Geom pT'}) ---")
+        print(f"{'pT Bin [GeV]':<15} | {'Ratio':<10} | {'Stat Err':<10} | {'Sys Err':<10} | {'Total Err':<10}")
+        print("-" * 65)
+
+        csv_rows = []
 
         for i_pt in range(len(config.PT_BINS) - 1):
             bin_x = i_pt + 1
@@ -981,6 +1058,15 @@ class DYCrossSectionAnalyzer:
             rel_sys_ld2 = err_sys_ld2 / y_ld2
             rel_sys_lh2 = err_sys_lh2 / y_lh2
             err_ratio_sys = ratio * math.sqrt(rel_sys_ld2**2 + rel_sys_lh2**2)
+            
+            err_ratio_total = math.sqrt(err_ratio_stat**2 + err_ratio_sys**2)
+            
+            pt_min = config.PT_BINS[i_pt]
+            pt_max = config.PT_BINS[i_pt+1]
+            print(f"[{pt_min:.2f}, {pt_max:.2f})   | {ratio:.4f}     | {err_ratio_stat:.4f}     | {err_ratio_sys:.4f}     | {err_ratio_total:.4f}")
+
+            pt_str = f"[{pt_min:.2f}, {pt_max:.2f})"
+            csv_rows.append([pt_str, f"{ratio:.4f}", f"{err_ratio_stat:.4f}", f"{err_ratio_sys:.4f}", f"{err_ratio_total:.4f}"])
 
             bin_center = (config.PT_BINS[i_pt] + config.PT_BINS[i_pt+1]) / 2.0
 
@@ -1002,6 +1088,17 @@ class DYCrossSectionAnalyzer:
             g_ratio_sys.SetPointError(pt_idx, pt_width/2.0, err_ratio_sys)
 
             pt_idx += 1
+
+        print("\n")
+
+        # --- Trigger CSV save only for the True pT iteration ---
+        if use_true_pt:
+            csv_filename = "pd_2pp_errors.csv"
+            with open(csv_filename, "w", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(["pT Bin [GeV]", "Ratio", "Stat Err", "Sys Err", "Total Err"])
+                writer.writerows(csv_rows)
+            print(f"[*] Dynamically saved error table to {csv_filename}")
 
         if g_ratio_stat.GetN() > 0:
             c_ratio = ROOT.TCanvas(f"c_ratio_pd_2pp{suffix}", "Ratio pd / 2pp", 800, 600)
@@ -1087,9 +1184,19 @@ class DYCrossSectionAnalyzer:
             latex_fit.DrawLatex(0.2, y_text, f"Best Fit: {fit_val:.4f} #pm {fit_err:.4f}")
 
             prelim = ROOT.TLatex()
-            prelim.SetNDC(True); prelim.SetTextColor(ROOT.kBlue)
-            prelim.SetTextAlign(33); prelim.SetTextSize(0.05)
-            prelim.DrawLatex(0.85, 0.55, "Preliminary")
+            prelim.SetNDC(True)
+            prelim.SetTextColor(ROOT.kBlue)
+            prelim.SetTextAlign(33) # 33 = Right-Top alignment
+
+            # --- Line 1: Preliminary ---
+            prelim.SetTextSize(0.05)
+            prelim.DrawLatex(0.82, 0.60, "Preliminary")
+
+            # --- Line 2: Run Period (2014-2015) ---
+            # We reduce the font size slightly (e.g., to 0.035) so it matches 
+            # the width of the "Preliminary" line above it.
+            prelim.SetTextSize(0.0252) 
+            prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
 
             c_ratio.SaveAs(f"CrossSection_Ratio_pd_2pp_vs_pT{suffix}.pdf")
 
@@ -1188,9 +1295,20 @@ class DYCrossSectionAnalyzer:
         leg_top.AddEntry(g_sys_ld2_clone, "LD2 Sys. Unc.", "f")
         leg_top.Draw()
 
-        prelim = ROOT.TLatex(); prelim.SetNDC(True); prelim.SetTextFont(43); prelim.SetTextSize(24)
-        prelim.SetTextColor(ROOT.kBlue); prelim.SetTextAlign(33)
-        prelim.DrawLatex(0.85, 0.55, "Preliminary")
+        prelim = ROOT.TLatex()
+        prelim.SetNDC(True)
+        prelim.SetTextColor(ROOT.kBlue)
+        prelim.SetTextAlign(33) # 33 = Right-Top alignment
+
+        # --- Line 1: Preliminary ---
+        prelim.SetTextSize(0.05)
+        prelim.DrawLatex(0.82, 0.60, "Preliminary")
+
+        # --- Line 2: Run Period (2014-2015) ---
+        # We reduce the font size slightly (e.g., to 0.035) so it matches 
+        # the width of the "Preliminary" line above it.
+        prelim.SetTextSize(0.0252) 
+        prelim.DrawLatex(0.82, 0.54, "Run Period 2014-2015")
 
         # --- Pad 2: Ratio (Bottom 35%) ---
         canvas.cd()

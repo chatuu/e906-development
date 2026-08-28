@@ -172,7 +172,11 @@ class DYCrossSectionAnalyzer:
             (e.D1 < 400) & (e.D2 < 400) & (e.D3 < 400) & (e.D1 + e.D2 + e.D3 < 1000)
         )
 
-        total_cut_mask = (track1_cut & track2_cut & tracks_cut & dimuon_cut & occ_cut)
+        D1_occ_cut = (
+            (e.D1 > 20) & (e.D1 < 385)
+        )
+
+        total_cut_mask = (track1_cut & track2_cut & tracks_cut & dimuon_cut & occ_cut & D1_occ_cut)
 
         filtered_events = {}
         for key, val in events.items():
@@ -859,6 +863,7 @@ class DYCrossSectionAnalyzer:
     def calculate_and_plot_cross_section(self, h_sub_dict, target_label, global_constant):
         """Builds cross-sections, overlays with theory, and saves TMultiGraph PDFs."""
         acc_path = "acceptance_mass_xF.root"
+        #acc_path = "/root/github/e906-development/src/AcceptanceCorrection/acceptance_mass_xF.root"
         psip_path = "All_PsiP_Contaminations.root" 
         
         if target_label == "LD2":
@@ -958,8 +963,20 @@ class DYCrossSectionAnalyzer:
             internal_title.DrawLatex(0.14, 0.86, f"Drell-Yan process in {target_prefix} at {xf_min:.2f} #leq x_{{F}} < {xf_max:.2f}")
 
             prelim = ROOT.TLatex()
-            prelim.SetNDC(True); prelim.SetTextColor(ROOT.kBlue); prelim.SetTextAlign(33); prelim.SetTextSize(0.05)
-            prelim.DrawLatex(0.82, 0.6, "Preliminary")
+            prelim.SetNDC(True)
+            prelim.SetTextColor(ROOT.kBlue)
+            prelim.SetTextAlign(33) # 33 = Right-Top alignment
+
+            # --- Line 1: Preliminary ---
+            prelim.SetTextSize(0.05)
+            prelim.DrawLatex(0.82, 0.60, "Preliminary")
+
+            # --- Line 2: Run Period (2014-2015) ---
+            # We reduce the font size slightly (e.g., to 0.035) so it matches 
+            # the width of the "Preliminary" line above it.
+            prelim.SetTextSize(0.0252) 
+            prelim.DrawLatex(0.82, 0.54, "Run Period (2014-2015)")
+
 
             plot_y_min = y_min_data * 0.2 if y_min_data < y_max_data else 1e-3
             plot_y_max = y_max_data * 5.0 if y_min_data < y_max_data else 3.0
@@ -967,10 +984,27 @@ class DYCrossSectionAnalyzer:
             log_max = math.log10(plot_y_max)
             dynamic_y = 10**(log_min + 0.05 * (log_max - log_min))
 
+            # lumi_note = ROOT.TLatex()
+            # lumi_note.SetNDC(False); lumi_note.SetTextFont(42); lumi_note.SetTextColor(ROOT.kBlack)
+            # lumi_note.SetTextAlign(11); lumi_note.SetTextSize(0.025)
+            # lumi_note.DrawLatex(4.3, dynamic_y, "10% global uncertainty due to the integrated luminosity is not included in the error bands")
+
+            if target_label == "LH2":
+                road_sys = "4.4%"
+            elif target_label == "LD2":
+                road_sys = "5.4%"
+
             lumi_note = ROOT.TLatex()
-            lumi_note.SetNDC(False); lumi_note.SetTextFont(42); lumi_note.SetTextColor(ROOT.kBlack)
-            lumi_note.SetTextAlign(11); lumi_note.SetTextSize(0.025)
-            lumi_note.DrawLatex(4.3, dynamic_y, "10% global uncertainty due to the integrated luminosity is not included in the error bands")
+            lumi_note.SetNDC(False)
+            lumi_note.SetTextFont(42)
+            lumi_note.SetTextColor(ROOT.kBlack)
+            lumi_note.SetTextAlign(11)
+            lumi_note.SetTextSize(0.025)
+
+            # Wrap the two halves of your sentence in #splitline{}{}
+            note_text = f"#splitline{{10% global uncertainty due to the integrated luminosity and {road_sys} global uncertainty}}{{due to road dependency are not included in the error bands}}"
+
+            lumi_note.DrawLatex(4.3, dynamic_y, note_text)
             
             plot_name = f"CrossSection_{target_label}_xF_{xf_min:.2f}_{xf_max:.2f}_{plot_type}.pdf"
             c_xsec.SaveAs(plot_name)
@@ -1128,7 +1162,7 @@ class DYCrossSectionAnalyzer:
 
         canvas = ROOT.TCanvas(f"canvas_overlay_{target_label}_{plot_type}", "Cross-Section Comparison", 1200, 1800)
         canvas.SetLogy(); canvas.SetLeftMargin(0.15); canvas.SetBottomMargin(0.12)
-        if target_label == "LD2":
+        if target_label == "LD2" or target_label == "LH2":
             canvas.SetTickx(1); canvas.SetTicky(1)
 
         legend = ROOT.TLegend(0.75, 0.45, 0.9, 0.9)
@@ -1162,6 +1196,7 @@ class DYCrossSectionAnalyzer:
             g_sys_clone = g_sys.Clone(f"g_sys_clone_{i}")
             
             scale_factor = 5 * (10**(2*i))
+            sf_txt = f"5 #times 10^{{{2*i}}}"
             scale_tgrapherrors(g_xsec_clone, scale_factor)
             scale_tgrapherrors(g_sys_clone, scale_factor)
 
@@ -1177,23 +1212,40 @@ class DYCrossSectionAnalyzer:
             low_edge, high_edge = config.XF_BIN_RANGES[i-2] if i -2 >= 0 else (config.XF_BINS[i], config.XF_BINS[i+1])
             y_pos = 1.0 * scale_factor
             
-            latex = ROOT.TLatex(3.1, y_pos, f"{low_edge:.2f} #leq x_{{F}} < {high_edge:.2f}")
+            latex = ROOT.TLatex(3.1, y_pos, f"{low_edge:.2f} #leq x_{{F}} < {high_edge:.2f} ({sf_txt})")
             latex.SetTextFont(43); latex.SetTextSize(20); latex.SetTextColor(color)
             latex.Draw()
             latex_labels.append(latex) 
             legend.AddEntry(g_xsec_clone, f"x_{{F}} bin {i}", "pl")
 
-        if target_label != "LD2": legend.Draw()
-        if target_label == "LD2":
+        #if target_label != "LD2": legend.Draw()
+        if target_label == "LD2" or target_label == "LH2":
             prelim = ROOT.TLatex()
             prelim.SetNDC(True); prelim.SetTextFont(43); prelim.SetTextSize(32)
             prelim.SetTextColor(ROOT.kBlue); prelim.SetTextAlign(33)
             
+            # lumi_note = ROOT.TLatex()
+            # lumi_note.SetNDC(True); lumi_note.SetTextFont(43); lumi_note.SetTextSize(24)
+            # lumi_note.SetTextColor(ROOT.kBlack); lumi_note.SetTextAlign(11)
+            # lumi_drawn = lumi_note.DrawLatex(0.165, 0.15, "10% global uncertainty due to the integrated luminosity is not included in the error bands")
+            # latex_labels.append(lumi_drawn)
+
+            if target_label == "LH2":
+                road_sys = "4.4%"
+            elif target_label == "LD2":
+                road_sys = "5.4%"
+
             lumi_note = ROOT.TLatex()
-            lumi_note.SetNDC(True); lumi_note.SetTextFont(43); lumi_note.SetTextSize(24)
-            lumi_note.SetTextColor(ROOT.kBlack); lumi_note.SetTextAlign(11)
-            lumi_drawn = lumi_note.DrawLatex(0.165, 0.15, "10% global uncertainty due to the integrated luminosity is not included in the error bands")
-            latex_labels.append(lumi_drawn)
+            lumi_note.SetNDC(True)
+            lumi_note.SetTextFont(43)
+            lumi_note.SetTextColor(ROOT.kBlack)
+            lumi_note.SetTextAlign(11)
+            lumi_note.SetTextSize(24)
+
+            # Wrap the two halves of your sentence in #splitline{}{}
+            note_text = f"#splitline{{10% global uncertainty due to the integrated luminosity and {road_sys} global uncertainty}}{{due to road dependency are not included in the error bands}}"
+
+            lumi_note.DrawLatex(0.165, 0.15, note_text)
 
         canvas.Update()
         out_pdf = f"cross_section_overlay_{target_label}_{plot_type}.pdf"
@@ -1216,6 +1268,8 @@ class DYCrossSectionAnalyzer:
                 self.calculate_and_plot_cross_section(self.sub_dict_pd, "LD2", config.GLOBAL_CONSTANT_LD2)
 
         self.generate_overlay_plot("LD2", "GeoCenter")
+        self.generate_overlay_plot("LH2", "GeoCenter")
+
 
     def generate_latex_appendix(self):
         """Generates LaTeX source code for the Mass Centroid derivations."""

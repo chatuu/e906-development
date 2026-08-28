@@ -784,6 +784,7 @@ class DYCrossSectionAnalyzer:
     def calculate_and_plot_cross_section(self, h_sub_dict, target_label, global_constant):
         """Builds cross-sections, overlays with theory, and saves TMultiGraph PDFs."""
         acc_path = "acceptance_mass_xF.root"
+        #acc_path = "/root/github/e906-development/src/AcceptanceCorrection/acceptance_mass_xF.root"
         psip_path = "All_PsiP_Contaminations.root" 
         
         if target_label == "LD2":

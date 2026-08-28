@@ -22,8 +22,12 @@ def skim_trees(input_filepath, output_filepath):
     print(f"Saved filtered 'result_mix' tree to {output_filepath}")
 
 if __name__ == "__main__":
-    input_file = "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/merged_RS62_LH2_recoeff_hodoeff.root"
-    output_file = "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/trimmed_RS62_LH2_recoeff_hodoeff.root" # Replace with your desired output file name
+    #input_file = "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/merged_RS62_LH2_recoeff_hodoeff.root"
+    #input_file = "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/merged_RS62_LD2_recoeff_hodoeff.root"
+    input_file = "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/merged_RS62_Flask_recoeff_hodoeff.root"
+    #output_file = "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/trimmed_RS62_LH2_recoeff_hodoeff.root" # Replace with your desired output file name
+    #output_file = "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/trimmed_RS62_LD2_recoeff_hodoeff.root" # Replace with your desired output file name
+    output_file = "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/trimmed_RS62_Flask_recoeff_hodoeff.root" # Replace with your desired output file name
     
     skim_trees(input_file, output_file)
     print("Done!")

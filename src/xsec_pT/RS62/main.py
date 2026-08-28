@@ -15,23 +15,23 @@ def main():
     lh2_files = [
         #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS57/merged_RS57_LH2_recoeff_hodoeff.root",
         #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS59/merged_RS59_LH2_recoeff_hodoeff.root",
-        "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/merged_RS62_LH2_recoeff_hodoeff.root",
+        "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/trimmed_RS62_LH2_recoeff_hodoeff.root",
         #"/root/github/e906-development/src/HodoEfficiency/RS67/AllTargets/merged_RS67_3089_LH2_recoeff_hodoeff.root",
         #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS70/merged_RS70_LH2_recoeff_hodoeff.root"
     ]
 
     ld2_files = [
-        #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS57/merged_RS57_LD2_recoeff_hodoeff.root",
-        #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS59/merged_RS59_LD2_recoeff_hodoeff.root",
-        "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/merged_RS62_LD2_recoeff_hodoeff.root",
-        #"/root/github/e906-development/src/HodoEfficiency/RS67/AllTargets/merged_RS67_3089_LD2_recoeff_hodoeff.root",
-        #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS70/merged_RS70_LD2_recoeff_hodoeff.root"
+        #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS57/trimmed_RS57_LD2_recoeff_hodoeff.root",
+        #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS59/trimmed_RS59_LD2_recoeff_hodoeff.root",
+        "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/trimmed_RS62_LD2_recoeff_hodoeff.root",
+        #"/root/github/e906-development/src/HodoEfficiency/RS67/AllTargets/trimmed_RS67_3089_LD2_recoeff_hodoeff.root",
+        #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS70/trimmed_RS70_LD2_recoeff_hodoeff.root"
     ]
 
     flask_files = [
         #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS57/merged_RS57_Flask_recoeff_hodoeff.root",
         #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS59/merged_RS59_Flask_recoeff_hodoeff.root",
-        "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/merged_RS62_Flask_recoeff_hodoeff.root",
+        "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS62/trimmed_RS62_Flask_recoeff_hodoeff.root",
         #"/root/github/e906-development/src/HodoEfficiency/RS67/AllTargets/merged_RS67_3089_Flask_recoeff_hodoeff.root",
         #"/root/github/e906-development/src/HodoEfficiency/RS57-70/RS70/merged_RS70_Flask_recoeff_hodoeff.root"
     ]

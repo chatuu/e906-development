@@ -10,9 +10,9 @@ INPUTS=(
 )
 
 OUTPUTS=(
-    "merged_RS67_3089_LH2_recoeff.root"
-    "merged_RS67_3089_LD2_recoeff.root"
-    "merged_RS67_3089_Flask_recoeff.root"
+    "merged_RS67_3089_LH2_recoeff_unfolding.root"
+    "merged_RS67_3089_LD2_recoeff_unfolding.root"
+    "merged_RS67_3089_Flask_recoeff_unfolding.root"
 )
 
 # Loop over the arrays and execute the python script
@@ -29,7 +29,7 @@ for i in "${!TARGETS[@]}"; do
     fi
 
     echo "Executing python script for $TARGET..."
-    python3 GenerateROOTFiles.py \
+    python3 GenerateROOTFiles_unfolding.py \
         --input "$INPUT_FILE" \
         --output "$OUTPUT_FILE" \
         --target "$TARGET"

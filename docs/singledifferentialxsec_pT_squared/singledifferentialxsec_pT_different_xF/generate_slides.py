@@ -5,7 +5,7 @@ BASE_DIR = "/root/github/e906-development/src/xsec_pT_squard/RS57-70"
 OUTPUT_TEX = "slides.tex"
 
 plot_files = [
-    "Combined_XSec_Ratio_geom_pT.pdf",
+    "x_XSec_Ratio_geom_pT.pdf",
     "Combined_XSec_Ratio_geom_pT2.pdf",
     "Combined_XSec_Ratio_true_pt_pT.pdf",
     "Combined_XSec_Ratio_true_pt_pT2.pdf",

@@ -4,14 +4,17 @@
 INPUT_DIR="/root/github/e906-development/src/kTrackerEfficiency/RS57-70/RS59"
 
 ROADSETS=("RS59")
-TARGETS=("LH2" "LD2" "Flask")
+#TARGETS=("LH2" "LD2" "Flask")
+TARGETS=("LH2" "LD2" "Empty")
 
 # Loop over the arrays and execute the python script
 for RS in "${ROADSETS[@]}"; do
     for TARGET in "${TARGETS[@]}"; do
         
-        INPUT_FILE="${INPUT_DIR}/merged_${RS}_${TARGET}_recoeff.root"
-        OUTPUT_FILE="merged_${RS}_${TARGET}_recoeff_hodoeff.root"
+        #INPUT_FILE="${INPUT_DIR}/merged_${RS}_${TARGET}_recoeff.root"
+        INPUT_FILE="${INPUT_DIR}/merged_${RS}_${TARGET}_recoeff_unfolding.root"
+        #OUTPUT_FILE="merged_${RS}_${TARGET}_recoeff_hodoeff.root"
+        OUTPUT_FILE="merged_${RS}_${TARGET}_recoeff_hodoeff_unfolding.root"
         
         # Check if the input file actually exists before running
         if [ ! -f "$INPUT_FILE" ]; then
