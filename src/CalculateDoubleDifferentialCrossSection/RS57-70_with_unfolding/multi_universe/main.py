@@ -36,7 +36,6 @@ def main():
         "/root/github/e906-development/src/HodoEfficiency/RS57-70/RS70/merged_RS70_Empty_recoeff_hodoeff_unfolding.root"
     ]
 
-    # --- Monte Carlo Files for RooUnfold Response ---
     mc_messy_files = {
         "LH2": "/root/github/e906-development/ROOTFiles/Hugo/mc_drellyan_LH2_M027_S001_messy_occ_pTxFweight_v2.root",
         "LD2": "/root/github/e906-development/ROOTFiles/Hugo/mc_drellyan_LD2_M027_S001_messy_occ_pTxFweight_v2.root"
@@ -48,63 +47,50 @@ def main():
     }
 
     config.print_physics_constants()
-    console.print("\n[bold blue]Initializing DY Cross-Section Analyzer for RS57-70 (with RooUnfold)...[/bold blue]")
 
     try:
-        # Move instantiation OUTSIDE the progress bar to guarantee init errors print cleanly
         analyzer = DYCrossSectionAnalyzer(
             lh2_files=lh2_files,
             ld2_files=ld2_files,
             flask_files=flask_files,
             mc_messy_files=mc_messy_files,
             mc_clean_files=mc_clean_files,
-            out_filename="All_XSec_Objects.root",
-            console=console
+            out_filename="All_XSec_Objects.root"
         )
+
+        console.print("\n[bold blue]Initializing DY Cross-Section Analyzer for RS57-70...[/bold blue]")
 
         with Progress(
             SpinnerColumn(),
-            TextColumn("[progress.description]{task.description}"),
+            TextColumn("{task.description}"),
             BarColumn(),
             TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
             console=console
         ) as progress:
             
-            task_kin = progress.add_task("[cyan]Extracting Kinematics & Plotting Mass...", total=100)
-            task_rm  = progress.add_task("[magenta]Building 1D Target-Specific Response Matrices (Messy & Clean)...", total=100)
-            task_xsec = progress.add_task("[green]Unfolding & Calculating Cross-Sections...", total=100)
-            task_latex = progress.add_task("[yellow]Generating LaTeX Appendix...", total=100)
-            task_boot = progress.add_task("[blue]Running 100 Unfolding Toys (Systematics)...", total=100)
+            task_kin = progress.add_task("[cyan]Extracting kinematics...", total=100)
+            task_mat = progress.add_task("[magenta]building matrices...", total=100)
+            task_unf = progress.add_task("[green]unfolding and bootstrapping...", total=100)
 
-            # Stage 2: Kinematics 
+            # 1. Extracting kinematics
             analyzer.process_kinematics()
             progress.update(task_kin, completed=100)
 
-            # Stage 3: Build Separate Response Matrices from MC
+            # 2. Building matrices
             analyzer.build_response_matrix()
-            progress.update(task_rm, completed=100)
+            progress.update(task_mat, completed=100)
 
-            # Stage 4: Subtractions, Unfolding, & Cross Sections
+            # 3. Unfolding and Bootstrapping
             analyzer.calculate_cross_sections()
-            progress.update(task_xsec, completed=100)
-
-            # Stage 5: LaTeX Generation
             analyzer.generate_latex_appendix()
-            progress.update(task_latex, completed=100)
-            
-            # Stage 6: Bootstrapped Unfolding Systematics
-            analyzer.run_unfolding_bootstrap(n_toys=100, fraction=0.7, progress=progress, task_id=task_boot)
-            progress.update(task_boot, completed=100)
+            analyzer.run_unfolding_bootstrap(n_toys=100, fraction=0.7, progress=progress, task_id=task_unf)
 
-        # 3. Finalize
         analyzer.finalize()
-        console.print("\n[bold green]✔ All histograms, tables, unfolded cross-section plots, and overlays generated successfully.[/bold green]")
-        console.print("[bold cyan]✔ Response Matrices (Messy & Clean) separately saved to 'DY_ResponseMatrices.root'[/bold cyan]")
-        console.print("[bold magenta]✔ Toy outputs for systematics saved to 'Unfolding_Toys' inside main output ROOT file.[/bold magenta]")
+        console.print("\n[bold green]✔ All histograms, tables, cross-section plots, and overlays[/bold green]")
+        console.print("[bold green]generated successfully.[/bold green]")
 
     except BaseException as e:
-        console.print(f"\n[bold red]FATAL CRASH:[/bold red] {type(e).__name__} - {e}")
-        traceback.print_exc()
+        console.print(f"\n[bold red]FATAL CRASH: {type(e).__name__} - {e}[/bold red]")
         sys.exit(1)
 
 if __name__ == "__main__":

@@ -21,7 +21,8 @@ def format_cell(val, stat, sys):
 def main():
     # Setup ROOT to run in batch mode and format stats box
     ROOT.gROOT.SetBatch(True)
-    ROOT.gStyle.SetOptStat(1110) # Shows Entries, Mean, RMS
+    ROOT.gErrorIgnoreLevel = ROOT.kWarning  # Silences Info messages like TCanvas::Print
+    ROOT.gStyle.SetOptStat(1110)
     ROOT.gStyle.SetStatX(0.88); ROOT.gStyle.SetStatY(0.88)
     
     FILE_ROOT = "All_XSec_Objects.root"
@@ -29,14 +30,12 @@ def main():
     PLOT_TYPE = "GeoCenter"
     HIST_DIR = "Systematics_Histograms"
 
-    # Create directory for PDF exports
     os.makedirs(HIST_DIR, exist_ok=True)
 
     XF_BINS = np.round(np.arange(-0.05, 0.90, 0.05), 2)
     MASS_BINS = np.array([3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.8, 10.0], dtype=float)
 
     if not os.path.exists(FILE_ROOT):
-        print(f"ERROR: Cannot find {FILE_ROOT}")
         return
 
     f = ROOT.TFile.Open(FILE_ROOT, "READ")
@@ -52,8 +51,6 @@ def main():
         r"Unfolding syst (clean) [%]", r"Unfolding syst (messy) [%]"
     ]
 
-    print("Extracting cross-sections and computing bootstrapped unfolding systematics...")
-    
     f_out = ROOT.TFile("Unfolding_Sys_Hists.root", "RECREATE")
     canvas = ROOT.TCanvas("c_sys", "Systematics", 800, 600)
     canvas.SetLeftMargin(0.12); canvas.SetBottomMargin(0.12)
@@ -112,7 +109,6 @@ def main():
                         sys_clean = f"{h_sys_c.GetMean():.2f}"
                         f_out.cd(); h_sys_c.Write()
                         
-                        # Draw and save PDF
                         h_sys_c.SetFillColor(ROOT.kAzure+1)
                         h_sys_c.GetXaxis().SetTitle("Relative Difference [%]")
                         h_sys_c.GetYaxis().SetTitle("Pseudo-experiments (Toys)")
@@ -132,7 +128,6 @@ def main():
                         sys_messy = f"{h_sys_m.GetMean():.2f}"
                         f_out.cd(); h_sys_m.Write()
                         
-                        # Draw and save PDF
                         h_sys_m.SetFillColor(ROOT.kRed-4)
                         h_sys_m.GetXaxis().SetTitle("Relative Difference [%]")
                         h_sys_m.GetYaxis().SetTitle("Pseudo-experiments (Toys)")
@@ -158,9 +153,6 @@ def main():
         writer = csv.DictWriter(f_csv, fieldnames=headers)
         writer.writeheader()
         writer.writerows(csv_data)
-
-    print(f"✔ Successfully saved exact cross-sections and bootstrapped systematics to '{CSV_OUTPUT}'")
-    print(f"✔ Systematics PDFs exported to '{HIST_DIR}/'")
 
 if __name__ == "__main__":
     main()

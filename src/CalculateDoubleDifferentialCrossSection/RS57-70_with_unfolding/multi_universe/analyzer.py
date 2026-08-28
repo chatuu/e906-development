@@ -12,11 +12,29 @@ import numpy as np
 import ROOT
 import config
 from array import array
-from rich.console import Console
+from contextlib import contextmanager
+
+@contextmanager
+def suppress_c_stdout():
+    """Redirects C/C++ level std::cout (file descriptor 1) to os.devnull."""
+    try:
+        null_fd = os.open(os.devnull, os.O_RDWR)
+        stdout_fd = 1
+        saved_stdout = os.dup(stdout_fd)
+        sys.stdout.flush()
+        os.dup2(null_fd, stdout_fd)
+        try:
+            yield
+        finally:
+            sys.stdout.flush()
+            os.dup2(saved_stdout, stdout_fd)
+            os.close(saved_stdout)
+            os.close(null_fd)
+    except Exception:
+        yield
 
 class DYCrossSectionAnalyzer:
-    def __init__(self, lh2_files, ld2_files, flask_files, mc_messy_files=None, mc_clean_files=None, out_filename="All_XSec_Objects.root", console=None):
-        self.console = console if console else Console()
+    def __init__(self, lh2_files, ld2_files, flask_files, mc_messy_files=None, mc_clean_files=None, out_filename="All_XSec_Objects.root"):
         self._setup_root()
         
         self.lh2_paths = lh2_files if isinstance(lh2_files, list) else [lh2_files]
@@ -68,8 +86,6 @@ class DYCrossSectionAnalyzer:
             
         if os.path.exists(roounfold_lib):
             ROOT.gSystem.Load(roounfold_lib)
-        else:
-            self.console.print(f"[bold red]WARNING: RooUnfold library not found at {roounfold_lib}. Unfolding will fail![/bold red]")
 
     @staticmethod
     def get_or_create_dir(base_dir, name):
@@ -144,8 +160,7 @@ class DYCrossSectionAnalyzer:
             D1_occ_cut = ((e.D1 > 20) & (e.D1 < 385))
 
             return (track1_cut & track2_cut & tracks_cut & dimuon_cut & occ_cut & D1_occ_cut)
-        except Exception as err:
-            self.console.print(f"[yellow]Warning: Falling back to unconstrained skim cuts (Exception: {err})[/yellow]")
+        except Exception:
             return np.ones(len(getattr(e, 'mass', getattr(e, 'mMass', []))), dtype=bool)
 
     def apply_cuts(self, tree, is_mc=False):
@@ -178,9 +193,7 @@ class DYCrossSectionAnalyzer:
     def get_concatenated_events(self, file_paths, tree_name, is_mc=False):
         all_events = None
         for fp in file_paths:
-            self.console.print(f"  [dim]-> Processing file: {fp}[/dim]")
             if not os.path.exists(fp):
-                self.console.print(f"  [bold yellow]   Skipping missing file: {fp}[/bold yellow]")
                 continue
             try:
                 with uproot.open(fp) as f:
@@ -195,7 +208,6 @@ class DYCrossSectionAnalyzer:
                 raise RuntimeError(f"Failed loading {fp}. Error: {e}")
                 
         if all_events is None:
-            self.console.print(f"  [yellow]WARNING: No valid data found for tree '{tree_name}' in provided files.[/yellow]")
             return {}
         
         return {k: np.concatenate(v) for k, v in all_events.items()}
@@ -357,7 +369,6 @@ class DYCrossSectionAnalyzer:
                 mass_reco, xf_reco = events["mass"], events["xF"]
                 xf_reco_indices = np.digitize(xf_reco, config.XF_BINS) - 1
                 
-                n_filled = 0
                 for i in range(len(mass_true)):
                     if mask_reco[i]:
                         mr, xr = float(mass_reco[i]), float(xf_reco[i])
@@ -367,23 +378,18 @@ class DYCrossSectionAnalyzer:
                         if 0 <= ix < n_xf_bins:
                             if not math.isnan(mr) and not math.isnan(mt) and mr > 0.0 and mt > 0.0:
                                 store_dict[target_label][ix].Fill(mr, mt)
-                                n_filled += 1
                                 
-                self.console.print(f"  [cyan][{target_label} - {label_prefix.upper()}] Matrices Trained: {n_filled} events survived cuts out of {len(mass_true)} generated.[/cyan]")
-                
                 self.rm_file.cd()
                 for i_x in range(n_xf_bins):
                     resp_obj = store_dict[target_label][i_x]
                     resp_obj.Write()
                     
-                    # Extract 2D matrix, save to ROOT and print as PDF
                     if resp_obj.Htruth().Integral() > 0:
                         h2_resp = resp_obj.Hresponse()
                         h2_resp.SetName(f"TH2D_Response_{label_prefix}_{target_label}_xF_{i_x}")
                         h2_resp.SetTitle(f"{label_prefix.capitalize()} {target_label} Response xF bin {i_x};True Mass [GeV];Reco Mass [GeV]")
                         h2_resp.Write()
                         
-                        # Generate nice PDF
                         c_rm = ROOT.TCanvas(f"c_rm_{label_prefix}_{target_label}_{i_x}", "", 800, 600)
                         c_rm.SetRightMargin(0.15)
                         c_rm.SetLeftMargin(0.12)
@@ -671,8 +677,8 @@ class DYCrossSectionAnalyzer:
             if os.path.exists(theory_ct18_path): f_ct18 = ROOT.TFile.Open(theory_ct18_path)
             if os.path.exists(theory_nnpdf_path): f_nnpdf = ROOT.TFile.Open(theory_nnpdf_path)
             if os.path.exists(psip_path): f_psip = ROOT.TFile.Open(psip_path)
-        except Exception as e:
-            self.console.print(f"[yellow]Warning: Could not open one or more auxiliary files: {e}[/yellow]")
+        except Exception:
+            pass
 
         n_xf_bins = len(config.XF_BINS) - 1
         n_mass_bins = len(config.MASS_BINS) - 1
@@ -945,22 +951,22 @@ class DYCrossSectionAnalyzer:
 
             resp_matrix_messy = self.response_matrices_messy.get(target_label, {}).get(i_x)
             if resp_matrix_messy is not None and resp_matrix_messy.Htruth().Integral() > 0:
-                opt_iter_m = self.optimize_unfolding_iterations(h_raw_1d, resp_matrix_messy, target_label, i_x, "Messy")
-                unfold_m = ROOT.RooUnfoldBayes(resp_matrix_messy, h_raw_1d, opt_iter_m)
-                unfold_m.SetVerbose(0)
-                h_unf_m = unfold_m.Hunfold()
+                with suppress_c_stdout():
+                    opt_iter_m = self.optimize_unfolding_iterations(h_raw_1d, resp_matrix_messy, target_label, i_x, "Messy")
+                    unfold_m = ROOT.RooUnfoldBayes(resp_matrix_messy, h_raw_1d, opt_iter_m)
+                    unfold_m.SetVerbose(0)
+                    h_unf_m = unfold_m.Hunfold()
             else:
-                self.console.print(f"  [yellow]WARNING: Skipping Messy Unfolding for {target_label} xF bin {i_x}. Matrix empty.[/yellow]")
                 h_unf_m = h_raw_1d.Clone(f"h_unf_messy_fallback_{target_label}_{i_x}")
                 
             resp_matrix_clean = self.response_matrices_clean.get(target_label, {}).get(i_x)
             if resp_matrix_clean is not None and resp_matrix_clean.Htruth().Integral() > 0:
-                opt_iter_c = self.optimize_unfolding_iterations(h_raw_1d, resp_matrix_clean, target_label, i_x, "Clean")
-                unfold_c = ROOT.RooUnfoldBayes(resp_matrix_clean, h_raw_1d, opt_iter_c)
-                unfold_c.SetVerbose(0)
-                h_unf_c = unfold_c.Hunfold()
+                with suppress_c_stdout():
+                    opt_iter_c = self.optimize_unfolding_iterations(h_raw_1d, resp_matrix_clean, target_label, i_x, "Clean")
+                    unfold_c = ROOT.RooUnfoldBayes(resp_matrix_clean, h_raw_1d, opt_iter_c)
+                    unfold_c.SetVerbose(0)
+                    h_unf_c = unfold_c.Hunfold()
             else:
-                self.console.print(f"  [yellow]WARNING: Skipping Clean Unfolding for {target_label} xF bin {i_x}. Matrix empty.[/yellow]")
                 h_unf_c = h_raw_1d.Clone(f"h_unf_clean_fallback_{target_label}_{i_x}")
 
             acc_folder = f"mass_sliced_by_xF_bin{i_x}"
@@ -1178,8 +1184,6 @@ class DYCrossSectionAnalyzer:
                 overall_max = max(y_max_raw, y_max_unf)
                 draw_and_save_canvas("Centroid", g_raw_cent_xsec, g_raw_cent_sys, g_unf_m_cent_xsec, g_unf_m_cent_sys, g_unf_c_cent_xsec, g_unf_c_cent_sys, xf_min, xf_max, i_x, theory_idx, overall_min, overall_max, f_ct18, f_nnpdf)
                 draw_and_save_canvas("GeoCenter", g_raw_geo_xsec, g_raw_geo_sys, g_unf_m_geo_xsec, g_unf_m_geo_sys, g_unf_c_geo_xsec, g_unf_c_geo_sys, xf_min, xf_max, i_x, theory_idx, overall_min, overall_max, f_ct18, f_nnpdf)
-            else:
-                self.console.print(f"  [dim]Note: Zero surviving events for {target_label} in xF [{xf_min:.2f}, {xf_max:.2f}]. No markers drawn.[/dim]")
 
         with open(f"Table_CrossSection_Final_Unfolded_{target_label}.tex", "w") as f:
             f.write(latex_xsec_table_content + r"\end{longtable}" + "\n" + r"\endgroup" + "\n")
@@ -1372,9 +1376,10 @@ class DYCrossSectionAnalyzer:
                         resp = pseudo_resp[cap_mc].get(tgt, {}).get(i_x)
                         if resp and resp.Htruth().Integral() > 0:
                             for it in [3, 4]:
-                                unfold = ROOT.RooUnfoldBayes(resp, h_raw, it)
-                                unfold.SetVerbose(0) 
-                                h_unf = unfold.Hunfold()
+                                with suppress_c_stdout():
+                                    unfold = ROOT.RooUnfoldBayes(resp, h_raw, it)
+                                    unfold.SetVerbose(0) 
+                                    h_unf = unfold.Hunfold()
                                 for i_m in range(n_mass_bins):
                                     h2_toys[tgt][i_x][f"{cap_mc}_{it}"].SetBinContent(i_m+1, toy+1, h_unf.GetBinContent(i_m+1))
 
