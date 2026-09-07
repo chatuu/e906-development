@@ -1,0 +1,1467 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+% Use a blue theme that natively includes slide numbers at the bottom right
+\usetheme{Madrid}
+\usecolortheme{whale} % Enforces a strong blue palette
+
+% Remove navigation symbols for a cleaner look
+\setbeamertemplate{navigation symbols}{}
+
+\title{Detector Acceptance Study}
+\author{Chatura Kuruppu}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% ==========================================
+% INTRO SLIDES
+% ==========================================
+\begin{frame}{Overview}
+    \begin{itemize}
+        \item Files Used \& Event Selection
+        \item Invariant Mass Studies
+        \item $x_F$ Studies (Yields \& Acceptances)
+        \item $p_T$ Studies (Yields \& Acceptances)
+        \item Track Kinematics ($dp_x, dp_y$)
+        \item Binned Slice Studies ($x_F$ and $p_T$ bins)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Files Used \& Kinematic Bins}
+    \textbf{Files Used:}
+    \begin{itemize}
+        \item LH2 and LD2 Drell-Yan Monte Carlo (M027\_S001)
+        \item \textbf{Thrown:} \texttt{mc\_drellyan\_*\_4pi\_pTxFweight\_v2.root}
+        \item \textbf{Accepted:} \texttt{mc\_drellyan\_*\_clean\_occ\_pTxFweight\_v2.root}
+    \end{itemize}
+    \vspace{0.2cm}
+    \textbf{Acceptance Calculation:}
+    \begin{equation*}
+        \text{Acceptance} = \frac{\sum w_{\text{accepted}}}{\sum w_{\text{thrown}}} \quad \text{where } w = \text{ReWeight}
+    \end{equation*}
+    \vspace{0.1cm}
+    \textbf{Kinematic Bin Boundaries:}
+    \begin{itemize}
+        \item \textbf{Mass [GeV]:} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.7]
+        \item \textbf{$x_F$:} [0.0, 0.05, 0.10, ..., 0.80]
+        \item \textbf{$p_T$ [GeV/c]:} [0.0, 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Event Selection Criteria (Chuck's Cuts)}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Dimuon Kinematics:}
+            \begin{itemize}
+                \item $4.2 < \text{Mass} < 8.8 \text{ GeV}$
+                \item $-0.1 < x_F < 0.95$
+                \item $0.05 < x_T \leq 0.58$
+                \item $38 < dp_z < 116 \text{ GeV}$
+                \item $dp_x^2 + dp_y^2 < 5.0 \text{ GeV}^2$
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{Target \& Vertex:}
+            \begin{itemize}
+                \item $-280 < dz < -5 \text{ cm}$
+                \item $|dx| < 0.25 \text{ cm}$
+                \item $|dy - 1.6| < 0.22 \text{ cm}$
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.5\textwidth}
+            \textbf{Track Quality:}
+            \begin{itemize}
+                \item $\chi^2_{\text{dimuon}} < 18$
+                \item Track separation $< 270 \text{ cm}$
+                \item $p_{z,\text{st1}} \in [9, 75] \text{ GeV}$
+                \item $\text{nHits}_1 > 13, \text{nHits}_2 > 13$
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{Generator-Level Fiducial Cuts (Thrown):}
+            \begin{itemize}
+                \item $4.2 < \text{Mass} < 8.8 \text{ GeV}$
+                \item $-0.1 < x_F < 0.95$
+                \item $0.0 < p_T \leq 3.0 \text{ GeV/c}$
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+\section{Invariant Mass Plots}
+
+\begin{frame}{Overlay \& Ratio: Mass (Integrated)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_Integrated_mass.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_Integrated_mass.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Invariant Mass Yields \& Ratio (All $x_F$, $p_T$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_Mass_All_xF_pT.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Invariant Mass Yields \& Ratio ($0.0 < x_F \leq 0.4$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_Mass_0.0_xF_0.4.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Invariant Mass Yields \& Ratio ($0.4 < x_F \leq 0.8$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_Mass_0.4_xF_0.8.pdf}
+    \end{center}
+\end{frame}
+\section{$x_F$ Plots}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ (Integrated)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_Integrated_xF.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_Integrated_xF.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{$x_F$ Yields \& Ratio (All Mass, $p_T$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_xF_All_Mass_pT.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$x_F$ Yields \& Ratio ($4.2 < \text{Mass} \leq 5.5$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_xF_4.2_Mass_5.5.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$x_F$ Yields \& Ratio ($5.5 < \text{Mass} \leq 8.8$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_xF_5.5_Mass_8.8.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$x_F$ Acceptance \& Ratio (All Mass, $p_T$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_xF_All_Mass_pT.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$x_F$ Acceptance \& Ratio ($4.2 < \text{Mass} < 5.5$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_xF_4.2_Mass_5.5.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$x_F$ Acceptance \& Ratio ($5.5 < \text{Mass} < 8.7$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_xF_5.5_Mass_8.7.pdf}
+    \end{center}
+\end{frame}
+\section{$p_T$ Plots}
+
+\begin{frame}{Overlay \& Ratio: $p_T$ (Integrated)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_Integrated_pT.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_Integrated_pT.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (Fine Bins, All Mass, $x_F$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_Fine_All_Mass_xF.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (Fine Bins, $0.0 < x_F < 0.4$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_Fine_0.0_xF_0.4.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (Fine Bins, $0.4 < x_F < 0.8$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_Fine_0.4_xF_0.8.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (Fine Bins, $4.2 < \text{Mass} < 5.5$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_Fine_4.2_Mass_5.5.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (Fine Bins, $5.5 < \text{Mass} < 8.7$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_Fine_5.5_Mass_8.7.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (User Bins, All Mass, $x_F$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_User_All_Mass_xF.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (User Bins, $0.0 < x_F < 0.4$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_User_0.0_xF_0.4.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (User Bins, $0.4 < x_F < 0.8$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_User_0.4_xF_0.8.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (User Bins, $4.2 < \text{Mass} < 5.5$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_User_4.2_Mass_5.5.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Yields \& Ratio (User Bins, $5.5 < \text{Mass} < 8.7$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_User_5.5_Mass_8.7.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Acceptance \& Ratio (User Bins, All Mass, $x_F$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_pT_All_Mass_xF.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Acceptance \& Ratio (User Bins, $0.0 < x_F < 0.4$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_pT_0.0_xF_0.4.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Acceptance \& Ratio (User Bins, $0.4 < x_F < 0.8$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_pT_0.4_xF_0.8.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Acceptance \& Ratio (User Bins, $4.2 < \text{Mass} < 5.5$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_pT_4.2_Mass_5.5.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{$p_T$ Acceptance \& Ratio (User Bins, $5.5 < \text{Mass} < 8.7$)}
+    \begin{center}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_pT_5.5_Mass_8.7.pdf}
+    \end{center}
+\end{frame}
+\section{Track Kinematics ($dp_x, dp_y$)}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): Integrated}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_integrated.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_integrated.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): Integrated}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_integrated.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_integrated.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): Integrated}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_integrated.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_integrated.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): Integrated}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_integrated.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_integrated.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+\section{Binned Studies: $x_F$ Slices}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 0}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 0}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 0}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 0}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 0}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 1}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 1}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 1}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 1}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 1}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 2}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 2}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 2}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 2}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 2}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 3}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 3}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 3}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 3}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 3}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 4}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 4}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 4}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 4}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 4}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 5}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 5}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 5}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 5}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 5}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 6}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 6}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 6}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 6}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 6}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 7}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin7.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin7.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 7}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin7.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin7.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 7}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin7.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin7.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 7}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin7.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin7.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 7}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin7.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin7.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 8}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin8.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin8.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 8}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin8.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin8.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 8}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin8.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin8.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 8}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin8.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin8.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 8}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin8.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin8.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 9}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin9.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin9.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 9}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin9.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin9.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 9}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin9.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin9.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 9}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin9.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin9.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 9}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin9.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin9.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 10}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin10.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin10.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 10}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin10.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin10.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 10}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin10.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin10.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 10}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin10.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin10.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 10}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin10.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin10.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 11}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin11.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin11.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 11}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin11.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin11.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 11}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin11.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin11.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 11}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin11.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin11.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 11}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin11.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin11.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 12}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin12.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin12.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 12}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin12.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin12.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 12}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin12.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin12.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 12}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin12.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin12.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 12}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin12.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin12.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 13}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin13.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin13.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 13}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin13.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin13.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 13}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin13.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin13.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 13}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin13.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin13.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 13}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin13.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin13.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 14}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin14.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin14.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 14}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin14.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin14.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 14}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin14.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin14.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 14}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin14.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin14.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 14}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin14.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin14.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 15}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin15.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 15}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin15.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 15}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin15.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 15}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin15.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $x_F$ Bin 15}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin15.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+\section{Binned Studies: $p_T$ Slices}
+
+\begin{frame}{Overlay \& Ratio: $p_T$ Bin 0}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $p_T$ Bin 1}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $p_T$ Bin 2}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $p_T$ Bin 3}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $p_T$ Bin 4}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $p_T$ Bin 5}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio: $p_T$ Bin 6}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+\end{document}
