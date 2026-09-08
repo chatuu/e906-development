@@ -2,11 +2,9 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 
-% Use a blue theme that natively includes slide numbers at the bottom right
 \usetheme{Madrid}
-\usecolortheme{whale} % Enforces a strong blue palette
+\usecolortheme{whale}
 
-% Remove navigation symbols for a cleaner look
 \setbeamertemplate{navigation symbols}{}
 
 \title{Detector Acceptance Study}
@@ -19,9 +17,6 @@
     \titlepage
 \end{frame}
 
-% ==========================================
-% INTRO SLIDES
-% ==========================================
 \begin{frame}{Overview}
     \begin{itemize}
         \item Files Used \& Event Selection
@@ -48,8 +43,8 @@
     \vspace{0.1cm}
     \textbf{Kinematic Bin Boundaries:}
     \begin{itemize}
-        \item \textbf{Mass [GeV]:} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.7]
-        \item \textbf{$x_F$:} [0.0, 0.05, 0.10, ..., 0.80]
+        \item \textbf{Mass [GeV]:} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.8]
+        \item \textbf{$x_F$:} [-0.05, 0.0, 0.05, ..., 0.85]
         \item \textbf{$p_T$ [GeV/c]:} [0.0, 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8]
     \end{itemize}
 \end{frame}
@@ -169,9 +164,9 @@
     \end{center}
 \end{frame}
 
-\begin{frame}{$x_F$ Acceptance \& Ratio ($5.5 < \text{Mass} < 8.7$)}
+\begin{frame}{$x_F$ Acceptance \& Ratio ($5.5 < \text{Mass} < 8.8$)}
     \begin{center}
-        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_xF_5.5_Mass_8.7.pdf}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_xF_5.5_Mass_8.8.pdf}
     \end{center}
 \end{frame}
 \section{$p_T$ Plots}
@@ -213,9 +208,9 @@
     \end{center}
 \end{frame}
 
-\begin{frame}{$p_T$ Yields \& Ratio (Fine Bins, $5.5 < \text{Mass} < 8.7$)}
+\begin{frame}{$p_T$ Yields \& Ratio (Fine Bins, $5.5 < \text{Mass} < 8.8$)}
     \begin{center}
-        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_Fine_5.5_Mass_8.7.pdf}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_Fine_5.5_Mass_8.8.pdf}
     \end{center}
 \end{frame}
 
@@ -243,9 +238,9 @@
     \end{center}
 \end{frame}
 
-\begin{frame}{$p_T$ Yields \& Ratio (User Bins, $5.5 < \text{Mass} < 8.7$)}
+\begin{frame}{$p_T$ Yields \& Ratio (User Bins, $5.5 < \text{Mass} < 8.8$)}
     \begin{center}
-        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_User_5.5_Mass_8.7.pdf}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Split_pT_User_5.5_Mass_8.8.pdf}
     \end{center}
 \end{frame}
 
@@ -273,9 +268,9 @@
     \end{center}
 \end{frame}
 
-\begin{frame}{$p_T$ Acceptance \& Ratio (User Bins, $5.5 < \text{Mass} < 8.7$)}
+\begin{frame}{$p_T$ Acceptance \& Ratio (User Bins, $5.5 < \text{Mass} < 8.8$)}
     \begin{center}
-        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_pT_5.5_Mass_8.7.pdf}
+        \includegraphics[height=0.85\textheight, keepaspectratio]{Acceptance_pT_5.5_Mass_8.8.pdf}
     \end{center}
 \end{frame}
 \section{Track Kinematics ($dp_x, dp_y$)}
@@ -385,15 +380,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 0}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 0}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin0.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin0.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin0.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin0.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -450,15 +445,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 1}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 1}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin1.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin1.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin1.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin1.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -515,15 +510,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 2}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 2}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin2.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin2.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin2.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin2.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -580,15 +575,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 3}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 3}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin3.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin3.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin3.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin3.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -645,15 +640,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 4}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 4}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin4.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin4.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin4.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin4.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -710,15 +705,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 5}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 5}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin5.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin5.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin5.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin5.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -775,15 +770,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 6}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 6}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin6.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin6.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin6.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin6.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -840,15 +835,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 7}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 7}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin7.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin7.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin7.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin7.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -905,15 +900,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 8}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 8}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin8.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin8.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin8.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin8.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -970,15 +965,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 9}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 9}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin9.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin9.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin9.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin9.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1035,15 +1030,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 10}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 10}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin10.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin10.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin10.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin10.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1100,15 +1095,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 11}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 11}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin11.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin11.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin11.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin11.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1165,15 +1160,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 12}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 12}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin12.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin12.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin12.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin12.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1230,15 +1225,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 13}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 13}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin13.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin13.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin13.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin13.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1295,15 +1290,15 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 14}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 14}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin14.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin14.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin14.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin14.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1360,107 +1355,237 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $x_F$ Bin 15}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 15}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_xF_bin15.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin15.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_xF_bin15.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 16}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin16.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin16.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 16}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin16.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin16.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 16}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin16.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin16.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 16}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin16.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin16.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 16}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin16.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin16.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields ($4\pi$ Thrown): $x_F$ Bin 17}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx_xF_bin17.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy_xF_bin17.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields (Clean Accepted): $x_F$ Bin 17}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx_xF_bin17.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy_xF_bin17.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared ($4\pi$ Thrown): $x_F$ Bin 17}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpx2_xF_bin17.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_th_dpy2_xF_bin17.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kinematic Yields Squared (Clean Accepted): $x_F$ Bin 17}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpx2_xF_bin17.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{yield_ac_dpy2_xF_bin17.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Overlay \& Ratio (Mass sliced by $x_F$): $x_F$ Bin 17}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_xF_bin17.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_xF_bin17.pdf}
         \end{column}
     \end{columns}
 \end{frame}
 \section{Binned Studies: $p_T$ Slices}
 
-\begin{frame}{Overlay \& Ratio: $p_T$ Bin 0}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $p_T$): $p_T$ Bin 0}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin0.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_pT_bin0.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin0.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_pT_bin0.pdf}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $p_T$ Bin 1}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $p_T$): $p_T$ Bin 1}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin1.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_pT_bin1.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin1.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_pT_bin1.pdf}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $p_T$ Bin 2}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $p_T$): $p_T$ Bin 2}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin2.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_pT_bin2.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin2.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_pT_bin2.pdf}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $p_T$ Bin 3}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $p_T$): $p_T$ Bin 3}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin3.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_pT_bin3.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin3.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_pT_bin3.pdf}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $p_T$ Bin 4}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $p_T$): $p_T$ Bin 4}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin4.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_pT_bin4.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin4.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_pT_bin4.pdf}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $p_T$ Bin 5}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $p_T$): $p_T$ Bin 5}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin5.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_pT_bin5.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin5.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_pT_bin5.pdf}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Overlay \& Ratio: $p_T$ Bin 6}
+\begin{frame}{Overlay \& Ratio (Mass sliced by $p_T$): $p_T$ Bin 6}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_pT_bin6.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_overlay_mass_sliced_by_pT_bin6.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_pT_bin6.pdf}
+            \includegraphics[width=\textwidth, keepaspectratio]{acceptance_ratio_mass_sliced_by_pT_bin6.pdf}
         \end{column}
     \end{columns}
 \end{frame}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.19)  7 SEP 2026 03:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.19)  7 SEP 2026 07:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -707,24 +707,24 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 (./acceptance_slides.aux)
 \openout1 = `acceptance_slides.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -782,64 +782,64 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 16.
+Package hyperref Info: Link coloring OFF on input line 14.
 
 (./acceptance_slides.out) (./acceptance_slides.out)
 \@outlinefile=\write5
 \openout5 = `acceptance_slides.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 16.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 14.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 16.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 14.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 16.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 16.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 16.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 16.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 14.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 16.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 16.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 16.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 14.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 16.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 16.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 16.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 14.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 16.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 16.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 14.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 16.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 14.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 16.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 16.
+(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 16.
+(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 16.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 16.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 16.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 16.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 14.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 14.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
 (Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 1
-6.
+4.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 1
-6.
+4.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 16.
+ut line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary
 -English.dict
@@ -867,19 +867,19 @@ Dictionary: translator-theorem-dictionary, Language: English
 ) (./acceptance_slides.nav) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 34.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 29.
 
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 34.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 34.
+ut line 29.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
@@ -896,13 +896,13 @@ thkerncmss.
 File: acceptance_overlay_Integrated_mass.pdf Graphic file (type pdf)
 <use acceptance_overlay_Integrated_mass.pdf>
 Package pdftex.def Info: acceptance_overlay_Integrated_mass.pdf  used on input 
-line 108.
+line 103.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <acceptance_ratio_Integrated_mass.pdf, id=95, 569.12625pt x 408.52625pt>
 File: acceptance_ratio_Integrated_mass.pdf Graphic file (type pdf)
 <use acceptance_ratio_Integrated_mass.pdf>
 Package pdftex.def Info: acceptance_ratio_Integrated_mass.pdf  used on input li
-ne 108.
+ne 103.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [5
 
@@ -911,10 +911,10 @@ ptance_ratio_Integrated_mass.pdf, page is rotated 90 degrees>]
 <Split_Mass_All_xF_pT.pdf, id=189, 569.12625pt x 552.0625pt>
 File: Split_Mass_All_xF_pT.pdf Graphic file (type pdf)
 <use Split_Mass_All_xF_pT.pdf>
-Package pdftex.def Info: Split_Mass_All_xF_pT.pdf  used on input line 114.
+Package pdftex.def Info: Split_Mass_All_xF_pT.pdf  used on input line 109.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 114
+Overfull \vbox (2.89966pt too high) detected at line 109
  []
 
 [6
@@ -923,10 +923,10 @@ Overfull \vbox (2.89966pt too high) detected at line 114
 <Split_Mass_0.0_xF_0.4.pdf, id=242, 569.12625pt x 552.0625pt>
 File: Split_Mass_0.0_xF_0.4.pdf Graphic file (type pdf)
 <use Split_Mass_0.0_xF_0.4.pdf>
-Package pdftex.def Info: Split_Mass_0.0_xF_0.4.pdf  used on input line 120.
+Package pdftex.def Info: Split_Mass_0.0_xF_0.4.pdf  used on input line 115.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 120
+Overfull \vbox (2.89966pt too high) detected at line 115
  []
 
 [7
@@ -935,10 +935,10 @@ Overfull \vbox (2.89966pt too high) detected at line 120
 <Split_Mass_0.4_xF_0.8.pdf, id=295, 569.12625pt x 552.0625pt>
 File: Split_Mass_0.4_xF_0.8.pdf Graphic file (type pdf)
 <use Split_Mass_0.4_xF_0.8.pdf>
-Package pdftex.def Info: Split_Mass_0.4_xF_0.8.pdf  used on input line 126.
+Package pdftex.def Info: Split_Mass_0.4_xF_0.8.pdf  used on input line 121.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 126
+Overfull \vbox (2.89966pt too high) detected at line 121
  []
 
 [8
@@ -946,27 +946,27 @@ Overfull \vbox (2.89966pt too high) detected at line 126
  <./Split_Mass_0.4_xF_0.8.pdf, page is rotated 90 degrees>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 127.
+(hyperref)                removing `math shift' on input line 122.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 127.
+(hyperref)                removing `subscript' on input line 122.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 127.
+(hyperref)                removing `math shift' on input line 122.
 
 <acceptance_overlay_Integrated_xF.pdf, id=346, 569.12625pt x 408.52625pt>
 File: acceptance_overlay_Integrated_xF.pdf Graphic file (type pdf)
 <use acceptance_overlay_Integrated_xF.pdf>
 Package pdftex.def Info: acceptance_overlay_Integrated_xF.pdf  used on input li
-ne 140.
+ne 135.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <acceptance_ratio_Integrated_xF.pdf, id=347, 569.12625pt x 408.52625pt>
 File: acceptance_ratio_Integrated_xF.pdf Graphic file (type pdf)
 <use acceptance_ratio_Integrated_xF.pdf>
 Package pdftex.def Info: acceptance_ratio_Integrated_xF.pdf  used on input line
- 140.
+ 135.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 [9
 
@@ -975,10 +975,10 @@ ance_ratio_Integrated_xF.pdf, page is rotated 90 degrees>]
 <Split_xF_All_Mass_pT.pdf, id=441, 569.12625pt x 552.0625pt>
 File: Split_xF_All_Mass_pT.pdf Graphic file (type pdf)
 <use Split_xF_All_Mass_pT.pdf>
-Package pdftex.def Info: Split_xF_All_Mass_pT.pdf  used on input line 146.
+Package pdftex.def Info: Split_xF_All_Mass_pT.pdf  used on input line 141.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 146
+Overfull \vbox (2.89966pt too high) detected at line 141
  []
 
 [10
@@ -987,10 +987,10 @@ Overfull \vbox (2.89966pt too high) detected at line 146
 <Split_xF_4.2_Mass_5.5.pdf, id=493, 569.12625pt x 552.0625pt>
 File: Split_xF_4.2_Mass_5.5.pdf Graphic file (type pdf)
 <use Split_xF_4.2_Mass_5.5.pdf>
-Package pdftex.def Info: Split_xF_4.2_Mass_5.5.pdf  used on input line 152.
+Package pdftex.def Info: Split_xF_4.2_Mass_5.5.pdf  used on input line 147.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 152
+Overfull \vbox (2.89966pt too high) detected at line 147
  []
 
 [11
@@ -999,10 +999,10 @@ Overfull \vbox (2.89966pt too high) detected at line 152
 <Split_xF_5.5_Mass_8.8.pdf, id=544, 569.12625pt x 552.0625pt>
 File: Split_xF_5.5_Mass_8.8.pdf Graphic file (type pdf)
 <use Split_xF_5.5_Mass_8.8.pdf>
-Package pdftex.def Info: Split_xF_5.5_Mass_8.8.pdf  used on input line 158.
+Package pdftex.def Info: Split_xF_5.5_Mass_8.8.pdf  used on input line 153.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 158
+Overfull \vbox (2.89966pt too high) detected at line 153
  []
 
 [12
@@ -1011,11 +1011,11 @@ Overfull \vbox (2.89966pt too high) detected at line 158
 <Acceptance_xF_All_Mass_pT.pdf, id=595, 569.12625pt x 552.0625pt>
 File: Acceptance_xF_All_Mass_pT.pdf Graphic file (type pdf)
 <use Acceptance_xF_All_Mass_pT.pdf>
-Package pdftex.def Info: Acceptance_xF_All_Mass_pT.pdf  used on input line 164.
+Package pdftex.def Info: Acceptance_xF_All_Mass_pT.pdf  used on input line 159.
 
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 164
+Overfull \vbox (2.89966pt too high) detected at line 159
  []
 
 [13
@@ -1024,52 +1024,52 @@ Overfull \vbox (2.89966pt too high) detected at line 164
 <Acceptance_xF_4.2_Mass_5.5.pdf, id=647, 569.12625pt x 552.0625pt>
 File: Acceptance_xF_4.2_Mass_5.5.pdf Graphic file (type pdf)
 <use Acceptance_xF_4.2_Mass_5.5.pdf>
-Package pdftex.def Info: Acceptance_xF_4.2_Mass_5.5.pdf  used on input line 170
+Package pdftex.def Info: Acceptance_xF_4.2_Mass_5.5.pdf  used on input line 165
 .
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 170
+Overfull \vbox (2.89966pt too high) detected at line 165
  []
 
 [14
 
  <./Acceptance_xF_4.2_Mass_5.5.pdf, page is rotated 90 degrees>]
-<Acceptance_xF_5.5_Mass_8.7.pdf, id=699, 569.12625pt x 552.0625pt>
-File: Acceptance_xF_5.5_Mass_8.7.pdf Graphic file (type pdf)
-<use Acceptance_xF_5.5_Mass_8.7.pdf>
-Package pdftex.def Info: Acceptance_xF_5.5_Mass_8.7.pdf  used on input line 176
+<Acceptance_xF_5.5_Mass_8.8.pdf, id=699, 569.12625pt x 552.0625pt>
+File: Acceptance_xF_5.5_Mass_8.8.pdf Graphic file (type pdf)
+<use Acceptance_xF_5.5_Mass_8.8.pdf>
+Package pdftex.def Info: Acceptance_xF_5.5_Mass_8.8.pdf  used on input line 171
 .
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 176
+Overfull \vbox (2.89966pt too high) detected at line 171
  []
 
 [15
 
- <./Acceptance_xF_5.5_Mass_8.7.pdf, page is rotated 90 degrees>]
+ <./Acceptance_xF_5.5_Mass_8.8.pdf, page is rotated 90 degrees>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 177.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 177.
+(hyperref)                removing `math shift' on input line 172.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 177.
+(hyperref)                removing `subscript' on input line 172.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 172.
 
 <acceptance_overlay_Integrated_pT.pdf, id=750, 569.12625pt x 408.52625pt>
 File: acceptance_overlay_Integrated_pT.pdf Graphic file (type pdf)
 <use acceptance_overlay_Integrated_pT.pdf>
 Package pdftex.def Info: acceptance_overlay_Integrated_pT.pdf  used on input li
-ne 190.
+ne 185.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <acceptance_ratio_Integrated_pT.pdf, id=751, 569.12625pt x 408.52625pt>
 File: acceptance_ratio_Integrated_pT.pdf Graphic file (type pdf)
 <use acceptance_ratio_Integrated_pT.pdf>
 Package pdftex.def Info: acceptance_ratio_Integrated_pT.pdf  used on input line
- 190.
+ 185.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 [16
 
@@ -1078,11 +1078,11 @@ ance_ratio_Integrated_pT.pdf, page is rotated 90 degrees>]
 <Split_pT_Fine_All_Mass_xF.pdf, id=845, 569.12625pt x 552.0625pt>
 File: Split_pT_Fine_All_Mass_xF.pdf Graphic file (type pdf)
 <use Split_pT_Fine_All_Mass_xF.pdf>
-Package pdftex.def Info: Split_pT_Fine_All_Mass_xF.pdf  used on input line 196.
+Package pdftex.def Info: Split_pT_Fine_All_Mass_xF.pdf  used on input line 191.
 
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 196
+Overfull \vbox (2.89966pt too high) detected at line 191
  []
 
 [17
@@ -1091,10 +1091,10 @@ Overfull \vbox (2.89966pt too high) detected at line 196
 <Split_pT_Fine_0.0_xF_0.4.pdf, id=896, 569.12625pt x 552.0625pt>
 File: Split_pT_Fine_0.0_xF_0.4.pdf Graphic file (type pdf)
 <use Split_pT_Fine_0.0_xF_0.4.pdf>
-Package pdftex.def Info: Split_pT_Fine_0.0_xF_0.4.pdf  used on input line 202.
+Package pdftex.def Info: Split_pT_Fine_0.0_xF_0.4.pdf  used on input line 197.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 202
+Overfull \vbox (2.89966pt too high) detected at line 197
  []
 
 [18
@@ -1103,10 +1103,10 @@ Overfull \vbox (2.89966pt too high) detected at line 202
 <Split_pT_Fine_0.4_xF_0.8.pdf, id=948, 569.12625pt x 552.0625pt>
 File: Split_pT_Fine_0.4_xF_0.8.pdf Graphic file (type pdf)
 <use Split_pT_Fine_0.4_xF_0.8.pdf>
-Package pdftex.def Info: Split_pT_Fine_0.4_xF_0.8.pdf  used on input line 208.
+Package pdftex.def Info: Split_pT_Fine_0.4_xF_0.8.pdf  used on input line 203.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 208
+Overfull \vbox (2.89966pt too high) detected at line 203
  []
 
 [19
@@ -1115,37 +1115,37 @@ Overfull \vbox (2.89966pt too high) detected at line 208
 <Split_pT_Fine_4.2_Mass_5.5.pdf, id=1000, 569.12625pt x 552.0625pt>
 File: Split_pT_Fine_4.2_Mass_5.5.pdf Graphic file (type pdf)
 <use Split_pT_Fine_4.2_Mass_5.5.pdf>
-Package pdftex.def Info: Split_pT_Fine_4.2_Mass_5.5.pdf  used on input line 214
+Package pdftex.def Info: Split_pT_Fine_4.2_Mass_5.5.pdf  used on input line 209
 .
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 214
+Overfull \vbox (2.89966pt too high) detected at line 209
  []
 
 [20
 
  <./Split_pT_Fine_4.2_Mass_5.5.pdf, page is rotated 90 degrees>]
-<Split_pT_Fine_5.5_Mass_8.7.pdf, id=1051, 569.12625pt x 552.0625pt>
-File: Split_pT_Fine_5.5_Mass_8.7.pdf Graphic file (type pdf)
-<use Split_pT_Fine_5.5_Mass_8.7.pdf>
-Package pdftex.def Info: Split_pT_Fine_5.5_Mass_8.7.pdf  used on input line 220
+<Split_pT_Fine_5.5_Mass_8.8.pdf, id=1051, 569.12625pt x 552.0625pt>
+File: Split_pT_Fine_5.5_Mass_8.8.pdf Graphic file (type pdf)
+<use Split_pT_Fine_5.5_Mass_8.8.pdf>
+Package pdftex.def Info: Split_pT_Fine_5.5_Mass_8.8.pdf  used on input line 215
 .
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 220
+Overfull \vbox (2.89966pt too high) detected at line 215
  []
 
 [21
 
- <./Split_pT_Fine_5.5_Mass_8.7.pdf, page is rotated 90 degrees>]
+ <./Split_pT_Fine_5.5_Mass_8.8.pdf, page is rotated 90 degrees>]
 <Split_pT_User_All_Mass_xF.pdf, id=1102, 569.12625pt x 552.0625pt>
 File: Split_pT_User_All_Mass_xF.pdf Graphic file (type pdf)
 <use Split_pT_User_All_Mass_xF.pdf>
-Package pdftex.def Info: Split_pT_User_All_Mass_xF.pdf  used on input line 226.
+Package pdftex.def Info: Split_pT_User_All_Mass_xF.pdf  used on input line 221.
 
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 226
+Overfull \vbox (2.89966pt too high) detected at line 221
  []
 
 [22
@@ -1154,10 +1154,10 @@ Overfull \vbox (2.89966pt too high) detected at line 226
 <Split_pT_User_0.0_xF_0.4.pdf, id=1154, 569.12625pt x 552.0625pt>
 File: Split_pT_User_0.0_xF_0.4.pdf Graphic file (type pdf)
 <use Split_pT_User_0.0_xF_0.4.pdf>
-Package pdftex.def Info: Split_pT_User_0.0_xF_0.4.pdf  used on input line 232.
+Package pdftex.def Info: Split_pT_User_0.0_xF_0.4.pdf  used on input line 227.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 232
+Overfull \vbox (2.89966pt too high) detected at line 227
  []
 
 [23
@@ -1166,10 +1166,10 @@ Overfull \vbox (2.89966pt too high) detected at line 232
 <Split_pT_User_0.4_xF_0.8.pdf, id=1205, 569.12625pt x 552.0625pt>
 File: Split_pT_User_0.4_xF_0.8.pdf Graphic file (type pdf)
 <use Split_pT_User_0.4_xF_0.8.pdf>
-Package pdftex.def Info: Split_pT_User_0.4_xF_0.8.pdf  used on input line 238.
+Package pdftex.def Info: Split_pT_User_0.4_xF_0.8.pdf  used on input line 233.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 238
+Overfull \vbox (2.89966pt too high) detected at line 233
  []
 
 [24
@@ -1178,37 +1178,37 @@ Overfull \vbox (2.89966pt too high) detected at line 238
 <Split_pT_User_4.2_Mass_5.5.pdf, id=1256, 569.12625pt x 552.0625pt>
 File: Split_pT_User_4.2_Mass_5.5.pdf Graphic file (type pdf)
 <use Split_pT_User_4.2_Mass_5.5.pdf>
-Package pdftex.def Info: Split_pT_User_4.2_Mass_5.5.pdf  used on input line 244
+Package pdftex.def Info: Split_pT_User_4.2_Mass_5.5.pdf  used on input line 239
 .
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 244
+Overfull \vbox (2.89966pt too high) detected at line 239
  []
 
 [25
 
  <./Split_pT_User_4.2_Mass_5.5.pdf, page is rotated 90 degrees>]
-<Split_pT_User_5.5_Mass_8.7.pdf, id=1308, 569.12625pt x 552.0625pt>
-File: Split_pT_User_5.5_Mass_8.7.pdf Graphic file (type pdf)
-<use Split_pT_User_5.5_Mass_8.7.pdf>
-Package pdftex.def Info: Split_pT_User_5.5_Mass_8.7.pdf  used on input line 250
+<Split_pT_User_5.5_Mass_8.8.pdf, id=1308, 569.12625pt x 552.0625pt>
+File: Split_pT_User_5.5_Mass_8.8.pdf Graphic file (type pdf)
+<use Split_pT_User_5.5_Mass_8.8.pdf>
+Package pdftex.def Info: Split_pT_User_5.5_Mass_8.8.pdf  used on input line 245
 .
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 250
+Overfull \vbox (2.89966pt too high) detected at line 245
  []
 
 [26
 
- <./Split_pT_User_5.5_Mass_8.7.pdf, page is rotated 90 degrees>]
+ <./Split_pT_User_5.5_Mass_8.8.pdf, page is rotated 90 degrees>]
 <Acceptance_pT_All_Mass_xF.pdf, id=1360, 569.12625pt x 552.0625pt>
 File: Acceptance_pT_All_Mass_xF.pdf Graphic file (type pdf)
 <use Acceptance_pT_All_Mass_xF.pdf>
-Package pdftex.def Info: Acceptance_pT_All_Mass_xF.pdf  used on input line 256.
+Package pdftex.def Info: Acceptance_pT_All_Mass_xF.pdf  used on input line 251.
 
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 256
+Overfull \vbox (2.89966pt too high) detected at line 251
  []
 
 [27
@@ -1217,10 +1217,10 @@ Overfull \vbox (2.89966pt too high) detected at line 256
 <Acceptance_pT_0.0_xF_0.4.pdf, id=1411, 569.12625pt x 552.0625pt>
 File: Acceptance_pT_0.0_xF_0.4.pdf Graphic file (type pdf)
 <use Acceptance_pT_0.0_xF_0.4.pdf>
-Package pdftex.def Info: Acceptance_pT_0.0_xF_0.4.pdf  used on input line 262.
+Package pdftex.def Info: Acceptance_pT_0.0_xF_0.4.pdf  used on input line 257.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 262
+Overfull \vbox (2.89966pt too high) detected at line 257
  []
 
 [28
@@ -1229,10 +1229,10 @@ Overfull \vbox (2.89966pt too high) detected at line 262
 <Acceptance_pT_0.4_xF_0.8.pdf, id=1462, 569.12625pt x 552.0625pt>
 File: Acceptance_pT_0.4_xF_0.8.pdf Graphic file (type pdf)
 <use Acceptance_pT_0.4_xF_0.8.pdf>
-Package pdftex.def Info: Acceptance_pT_0.4_xF_0.8.pdf  used on input line 268.
+Package pdftex.def Info: Acceptance_pT_0.4_xF_0.8.pdf  used on input line 263.
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 268
+Overfull \vbox (2.89966pt too high) detected at line 263
  []
 
 [29
@@ -1241,54 +1241,54 @@ Overfull \vbox (2.89966pt too high) detected at line 268
 <Acceptance_pT_4.2_Mass_5.5.pdf, id=1513, 569.12625pt x 552.0625pt>
 File: Acceptance_pT_4.2_Mass_5.5.pdf Graphic file (type pdf)
 <use Acceptance_pT_4.2_Mass_5.5.pdf>
-Package pdftex.def Info: Acceptance_pT_4.2_Mass_5.5.pdf  used on input line 274
+Package pdftex.def Info: Acceptance_pT_4.2_Mass_5.5.pdf  used on input line 269
 .
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 274
+Overfull \vbox (2.89966pt too high) detected at line 269
  []
 
 [30
 
  <./Acceptance_pT_4.2_Mass_5.5.pdf, page is rotated 90 degrees>]
-<Acceptance_pT_5.5_Mass_8.7.pdf, id=1564, 569.12625pt x 552.0625pt>
-File: Acceptance_pT_5.5_Mass_8.7.pdf Graphic file (type pdf)
-<use Acceptance_pT_5.5_Mass_8.7.pdf>
-Package pdftex.def Info: Acceptance_pT_5.5_Mass_8.7.pdf  used on input line 280
+<Acceptance_pT_5.5_Mass_8.8.pdf, id=1564, 569.12625pt x 552.0625pt>
+File: Acceptance_pT_5.5_Mass_8.8.pdf Graphic file (type pdf)
+<use Acceptance_pT_5.5_Mass_8.8.pdf>
+Package pdftex.def Info: Acceptance_pT_5.5_Mass_8.8.pdf  used on input line 275
 .
 (pdftex.def)             Requested size: 213.29155pt x 206.89842pt.
 
-Overfull \vbox (2.89966pt too high) detected at line 280
+Overfull \vbox (2.89966pt too high) detected at line 275
  []
 
 [31
 
- <./Acceptance_pT_5.5_Mass_8.7.pdf, page is rotated 90 degrees>]
+ <./Acceptance_pT_5.5_Mass_8.8.pdf, page is rotated 90 degrees>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 281.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 281.
+(hyperref)                removing `math shift' on input line 276.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 281.
+(hyperref)                removing `subscript' on input line 276.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 281.
+(hyperref)                removing `subscript' on input line 276.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 276.
 
 <yield_th_dpx_integrated.pdf, id=1617, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_integrated.pdf Graphic file (type pdf)
 <use yield_th_dpx_integrated.pdf>
-Package pdftex.def Info: yield_th_dpx_integrated.pdf  used on input line 294.
+Package pdftex.def Info: yield_th_dpx_integrated.pdf  used on input line 289.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_integrated.pdf, id=1618, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_integrated.pdf Graphic file (type pdf)
 <use yield_th_dpy_integrated.pdf>
-Package pdftex.def Info: yield_th_dpy_integrated.pdf  used on input line 294.
+Package pdftex.def Info: yield_th_dpy_integrated.pdf  used on input line 289.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 [32
 
@@ -1297,12 +1297,12 @@ tegrated.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_integrated.pdf, id=1712, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_integrated.pdf Graphic file (type pdf)
 <use yield_ac_dpx_integrated.pdf>
-Package pdftex.def Info: yield_ac_dpx_integrated.pdf  used on input line 307.
+Package pdftex.def Info: yield_ac_dpx_integrated.pdf  used on input line 302.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_integrated.pdf, id=1713, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_integrated.pdf Graphic file (type pdf)
 <use yield_ac_dpy_integrated.pdf>
-Package pdftex.def Info: yield_ac_dpy_integrated.pdf  used on input line 307.
+Package pdftex.def Info: yield_ac_dpy_integrated.pdf  used on input line 302.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [33
 
@@ -1311,12 +1311,12 @@ tegrated.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_integrated.pdf, id=1808, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_integrated.pdf Graphic file (type pdf)
 <use yield_th_dpx2_integrated.pdf>
-Package pdftex.def Info: yield_th_dpx2_integrated.pdf  used on input line 320.
+Package pdftex.def Info: yield_th_dpx2_integrated.pdf  used on input line 315.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_integrated.pdf, id=1809, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_integrated.pdf Graphic file (type pdf)
 <use yield_th_dpy2_integrated.pdf>
-Package pdftex.def Info: yield_th_dpy2_integrated.pdf  used on input line 320.
+Package pdftex.def Info: yield_th_dpy2_integrated.pdf  used on input line 315.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [34
 
@@ -1325,12 +1325,12 @@ integrated.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_integrated.pdf, id=1903, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_integrated.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_integrated.pdf>
-Package pdftex.def Info: yield_ac_dpx2_integrated.pdf  used on input line 333.
+Package pdftex.def Info: yield_ac_dpx2_integrated.pdf  used on input line 328.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_integrated.pdf, id=1904, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_integrated.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_integrated.pdf>
-Package pdftex.def Info: yield_ac_dpy2_integrated.pdf  used on input line 333.
+Package pdftex.def Info: yield_ac_dpy2_integrated.pdf  used on input line 328.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [35
 
@@ -1338,25 +1338,25 @@ Package pdftex.def Info: yield_ac_dpy2_integrated.pdf  used on input line 333.
 integrated.pdf, page is rotated 90 degrees>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 334.
+(hyperref)                removing `math shift' on input line 329.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 334.
+(hyperref)                removing `subscript' on input line 329.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 334.
+(hyperref)                removing `math shift' on input line 329.
 
 <yield_th_dpx_xF_bin0.pdf, id=1998, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin0.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin0.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin0.pdf  used on input line 347.
+Package pdftex.def Info: yield_th_dpx_xF_bin0.pdf  used on input line 342.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin0.pdf, id=1999, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin0.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin0.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin0.pdf  used on input line 347.
+Package pdftex.def Info: yield_th_dpy_xF_bin0.pdf  used on input line 342.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 [36
 
@@ -1365,12 +1365,12 @@ n0.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin0.pdf, id=2094, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin0.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin0.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin0.pdf  used on input line 360.
+Package pdftex.def Info: yield_ac_dpx_xF_bin0.pdf  used on input line 355.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin0.pdf, id=2095, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin0.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin0.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin0.pdf  used on input line 360.
+Package pdftex.def Info: yield_ac_dpy_xF_bin0.pdf  used on input line 355.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [37
 
@@ -1379,12 +1379,12 @@ n0.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin0.pdf, id=2190, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin0.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin0.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin0.pdf  used on input line 373.
+Package pdftex.def Info: yield_th_dpx2_xF_bin0.pdf  used on input line 368.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin0.pdf, id=2191, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin0.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin0.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin0.pdf  used on input line 373.
+Package pdftex.def Info: yield_th_dpy2_xF_bin0.pdf  used on input line 368.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 [38
 
@@ -1393,41 +1393,44 @@ bin0.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin0.pdf, id=2286, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin0.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin0.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin0.pdf  used on input line 386.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin0.pdf  used on input line 381.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin0.pdf, id=2287, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin0.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin0.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin0.pdf  used on input line 386.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin0.pdf  used on input line 381.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [39
 
  <./yield_ac_dpx2_xF_bin0.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin0.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin0.pdf, id=2381, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin0.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin0.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin0.pdf  used on input line 399
-.
+<acceptance_overlay_mass_sliced_by_xF_bin0.pdf, id=2381, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin0.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin0.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin0.pdf  used on
+ input line 394.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin0.pdf, id=2382, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin0.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin0.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin0.pdf  used on input line 399.
+<acceptance_ratio_mass_sliced_by_xF_bin0.pdf, id=2382, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin0.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin0.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin0.pdf  used on i
+nput line 394.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [40
 
- <./acceptance_overlay_xF_bin0.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin0.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin0.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin0.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin1.pdf, id=2476, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin1.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin1.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin1.pdf  used on input line 412.
+Package pdftex.def Info: yield_th_dpx_xF_bin1.pdf  used on input line 407.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin1.pdf, id=2477, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin1.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin1.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin1.pdf  used on input line 412.
+Package pdftex.def Info: yield_th_dpy_xF_bin1.pdf  used on input line 407.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [41
 
@@ -1436,12 +1439,12 @@ n1.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin1.pdf, id=2572, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin1.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin1.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin1.pdf  used on input line 425.
+Package pdftex.def Info: yield_ac_dpx_xF_bin1.pdf  used on input line 420.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin1.pdf, id=2573, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin1.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin1.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin1.pdf  used on input line 425.
+Package pdftex.def Info: yield_ac_dpy_xF_bin1.pdf  used on input line 420.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [42
 
@@ -1450,12 +1453,12 @@ n1.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin1.pdf, id=2667, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin1.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin1.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin1.pdf  used on input line 438.
+Package pdftex.def Info: yield_th_dpx2_xF_bin1.pdf  used on input line 433.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin1.pdf, id=2668, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin1.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin1.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin1.pdf  used on input line 438.
+Package pdftex.def Info: yield_th_dpy2_xF_bin1.pdf  used on input line 433.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [43
 
@@ -1464,41 +1467,44 @@ bin1.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin1.pdf, id=2764, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin1.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin1.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin1.pdf  used on input line 451.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin1.pdf  used on input line 446.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin1.pdf, id=2765, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin1.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin1.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin1.pdf  used on input line 451.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin1.pdf  used on input line 446.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [44
 
  <./yield_ac_dpx2_xF_bin1.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin1.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin1.pdf, id=2859, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin1.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin1.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin1.pdf  used on input line 464
-.
+<acceptance_overlay_mass_sliced_by_xF_bin1.pdf, id=2859, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin1.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin1.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin1.pdf  used on
+ input line 459.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin1.pdf, id=2860, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin1.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin1.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin1.pdf  used on input line 464.
+<acceptance_ratio_mass_sliced_by_xF_bin1.pdf, id=2860, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin1.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin1.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin1.pdf  used on i
+nput line 459.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [45
 
- <./acceptance_overlay_xF_bin1.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin1.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin1.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin1.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin2.pdf, id=2954, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin2.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin2.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin2.pdf  used on input line 477.
+Package pdftex.def Info: yield_th_dpx_xF_bin2.pdf  used on input line 472.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin2.pdf, id=2955, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin2.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin2.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin2.pdf  used on input line 477.
+Package pdftex.def Info: yield_th_dpy_xF_bin2.pdf  used on input line 472.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [46
 
@@ -1507,27 +1513,26 @@ n2.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin2.pdf, id=3050, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin2.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin2.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin2.pdf  used on input line 490.
+Package pdftex.def Info: yield_ac_dpx_xF_bin2.pdf  used on input line 485.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin2.pdf, id=3051, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin2.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin2.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin2.pdf  used on input line 490.
+Package pdftex.def Info: yield_ac_dpy_xF_bin2.pdf  used on input line 485.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-
-[47
+ [47
 
  <./yield_ac_dpx_xF_bin2.pdf, page is rotated 90 degrees> <./yield_ac_dpy_xF_bi
 n2.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin2.pdf, id=3145, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin2.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin2.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin2.pdf  used on input line 503.
+Package pdftex.def Info: yield_th_dpx2_xF_bin2.pdf  used on input line 498.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin2.pdf, id=3146, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin2.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin2.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin2.pdf  used on input line 503.
+Package pdftex.def Info: yield_th_dpy2_xF_bin2.pdf  used on input line 498.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [48
 
@@ -1536,41 +1541,44 @@ bin2.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin2.pdf, id=3241, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin2.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin2.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin2.pdf  used on input line 516.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin2.pdf  used on input line 511.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin2.pdf, id=3242, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin2.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin2.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin2.pdf  used on input line 516.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin2.pdf  used on input line 511.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [49
 
  <./yield_ac_dpx2_xF_bin2.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin2.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin2.pdf, id=3337, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin2.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin2.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin2.pdf  used on input line 529
-.
+<acceptance_overlay_mass_sliced_by_xF_bin2.pdf, id=3337, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin2.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin2.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin2.pdf  used on
+ input line 524.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin2.pdf, id=3338, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin2.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin2.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin2.pdf  used on input line 529.
+<acceptance_ratio_mass_sliced_by_xF_bin2.pdf, id=3338, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin2.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin2.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin2.pdf  used on i
+nput line 524.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [50
 
- <./acceptance_overlay_xF_bin2.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin2.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin2.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin2.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin3.pdf, id=3432, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin3.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin3.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin3.pdf  used on input line 542.
+Package pdftex.def Info: yield_th_dpx_xF_bin3.pdf  used on input line 537.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin3.pdf, id=3433, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin3.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin3.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin3.pdf  used on input line 542.
+Package pdftex.def Info: yield_th_dpy_xF_bin3.pdf  used on input line 537.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [51
 
@@ -1579,12 +1587,12 @@ n3.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin3.pdf, id=3528, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin3.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin3.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin3.pdf  used on input line 555.
+Package pdftex.def Info: yield_ac_dpx_xF_bin3.pdf  used on input line 550.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin3.pdf, id=3529, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin3.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin3.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin3.pdf  used on input line 555.
+Package pdftex.def Info: yield_ac_dpy_xF_bin3.pdf  used on input line 550.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [52
 
@@ -1593,12 +1601,12 @@ n3.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin3.pdf, id=3623, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin3.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin3.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin3.pdf  used on input line 568.
+Package pdftex.def Info: yield_th_dpx2_xF_bin3.pdf  used on input line 563.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin3.pdf, id=3624, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin3.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin3.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin3.pdf  used on input line 568.
+Package pdftex.def Info: yield_th_dpy2_xF_bin3.pdf  used on input line 563.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [53
 
@@ -1607,56 +1615,58 @@ bin3.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin3.pdf, id=3719, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin3.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin3.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin3.pdf  used on input line 581.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin3.pdf  used on input line 576.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin3.pdf, id=3720, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin3.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin3.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin3.pdf  used on input line 581.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin3.pdf  used on input line 576.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [54
 
  <./yield_ac_dpx2_xF_bin3.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin3.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin3.pdf, id=3814, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin3.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin3.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin3.pdf  used on input line 594
-.
+<acceptance_overlay_mass_sliced_by_xF_bin3.pdf, id=3814, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin3.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin3.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin3.pdf  used on
+ input line 589.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin3.pdf, id=3815, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin3.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin3.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin3.pdf  used on input line 594.
+<acceptance_ratio_mass_sliced_by_xF_bin3.pdf, id=3815, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin3.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin3.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin3.pdf  used on i
+nput line 589.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [55
 
- <./acceptance_overlay_xF_bin3.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin3.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin3.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin3.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin4.pdf, id=3911, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin4.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin4.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin4.pdf  used on input line 607.
+Package pdftex.def Info: yield_th_dpx_xF_bin4.pdf  used on input line 602.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin4.pdf, id=3912, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin4.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin4.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin4.pdf  used on input line 607.
+Package pdftex.def Info: yield_th_dpy_xF_bin4.pdf  used on input line 602.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-
-[56
+ [56
 
  <./yield_th_dpx_xF_bin4.pdf, page is rotated 90 degrees> <./yield_th_dpy_xF_bi
 n4.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin4.pdf, id=4006, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin4.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin4.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin4.pdf  used on input line 620.
+Package pdftex.def Info: yield_ac_dpx_xF_bin4.pdf  used on input line 615.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin4.pdf, id=4007, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin4.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin4.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin4.pdf  used on input line 620.
+Package pdftex.def Info: yield_ac_dpy_xF_bin4.pdf  used on input line 615.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [57
 
@@ -1665,55 +1675,58 @@ n4.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin4.pdf, id=4101, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin4.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin4.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin4.pdf  used on input line 633.
+Package pdftex.def Info: yield_th_dpx2_xF_bin4.pdf  used on input line 628.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin4.pdf, id=4102, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin4.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin4.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin4.pdf  used on input line 633.
+Package pdftex.def Info: yield_th_dpy2_xF_bin4.pdf  used on input line 628.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-[58
+ [58
 
  <./yield_th_dpx2_xF_bin4.pdf, page is rotated 90 degrees> <./yield_th_dpy2_xF_
 bin4.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin4.pdf, id=4197, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin4.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin4.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin4.pdf  used on input line 646.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin4.pdf  used on input line 641.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin4.pdf, id=4198, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin4.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin4.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin4.pdf  used on input line 646.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin4.pdf  used on input line 641.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [59
 
  <./yield_ac_dpx2_xF_bin4.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin4.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin4.pdf, id=4292, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin4.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin4.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin4.pdf  used on input line 659
-.
+<acceptance_overlay_mass_sliced_by_xF_bin4.pdf, id=4292, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin4.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin4.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin4.pdf  used on
+ input line 654.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin4.pdf, id=4293, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin4.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin4.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin4.pdf  used on input line 659.
+<acceptance_ratio_mass_sliced_by_xF_bin4.pdf, id=4293, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin4.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin4.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin4.pdf  used on i
+nput line 654.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [60
 
- <./acceptance_overlay_xF_bin4.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin4.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin4.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin4.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin5.pdf, id=4388, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin5.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin5.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin5.pdf  used on input line 672.
+Package pdftex.def Info: yield_th_dpx_xF_bin5.pdf  used on input line 667.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin5.pdf, id=4389, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin5.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin5.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin5.pdf  used on input line 672.
+Package pdftex.def Info: yield_th_dpy_xF_bin5.pdf  used on input line 667.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [61
 
@@ -1722,26 +1735,27 @@ n5.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin5.pdf, id=4484, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin5.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin5.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin5.pdf  used on input line 685.
+Package pdftex.def Info: yield_ac_dpx_xF_bin5.pdf  used on input line 680.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin5.pdf, id=4485, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin5.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin5.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin5.pdf  used on input line 685.
+Package pdftex.def Info: yield_ac_dpy_xF_bin5.pdf  used on input line 680.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
- [62
+
+[62
 
  <./yield_ac_dpx_xF_bin5.pdf, page is rotated 90 degrees> <./yield_ac_dpy_xF_bi
 n5.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin5.pdf, id=4579, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin5.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin5.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin5.pdf  used on input line 698.
+Package pdftex.def Info: yield_th_dpx2_xF_bin5.pdf  used on input line 693.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin5.pdf, id=4580, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin5.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin5.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin5.pdf  used on input line 698.
+Package pdftex.def Info: yield_th_dpy2_xF_bin5.pdf  used on input line 693.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [63
 
@@ -1750,41 +1764,44 @@ bin5.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin5.pdf, id=4675, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin5.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin5.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin5.pdf  used on input line 711.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin5.pdf  used on input line 706.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin5.pdf, id=4676, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin5.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin5.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin5.pdf  used on input line 711.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin5.pdf  used on input line 706.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [64
 
  <./yield_ac_dpx2_xF_bin5.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin5.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin5.pdf, id=4770, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin5.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin5.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin5.pdf  used on input line 724
-.
+<acceptance_overlay_mass_sliced_by_xF_bin5.pdf, id=4770, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin5.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin5.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin5.pdf  used on
+ input line 719.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin5.pdf, id=4771, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin5.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin5.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin5.pdf  used on input line 724.
+<acceptance_ratio_mass_sliced_by_xF_bin5.pdf, id=4771, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin5.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin5.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin5.pdf  used on i
+nput line 719.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [65
 
- <./acceptance_overlay_xF_bin5.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin5.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin5.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin5.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin6.pdf, id=4866, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin6.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin6.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin6.pdf  used on input line 737.
+Package pdftex.def Info: yield_th_dpx_xF_bin6.pdf  used on input line 732.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin6.pdf, id=4867, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin6.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin6.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin6.pdf  used on input line 737.
+Package pdftex.def Info: yield_th_dpy_xF_bin6.pdf  used on input line 732.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [66
 
@@ -1793,27 +1810,26 @@ n6.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin6.pdf, id=4961, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin6.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin6.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin6.pdf  used on input line 750.
+Package pdftex.def Info: yield_ac_dpx_xF_bin6.pdf  used on input line 745.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin6.pdf, id=4962, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin6.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin6.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin6.pdf  used on input line 750.
+Package pdftex.def Info: yield_ac_dpy_xF_bin6.pdf  used on input line 745.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-
-[67
+ [67
 
  <./yield_ac_dpx_xF_bin6.pdf, page is rotated 90 degrees> <./yield_ac_dpy_xF_bi
 n6.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin6.pdf, id=5057, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin6.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin6.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin6.pdf  used on input line 763.
+Package pdftex.def Info: yield_th_dpx2_xF_bin6.pdf  used on input line 758.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin6.pdf, id=5058, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin6.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin6.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin6.pdf  used on input line 763.
+Package pdftex.def Info: yield_th_dpy2_xF_bin6.pdf  used on input line 758.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [68
 
@@ -1822,41 +1838,44 @@ bin6.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin6.pdf, id=5153, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin6.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin6.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin6.pdf  used on input line 776.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin6.pdf  used on input line 771.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin6.pdf, id=5154, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin6.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin6.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin6.pdf  used on input line 776.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin6.pdf  used on input line 771.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [69
 
  <./yield_ac_dpx2_xF_bin6.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin6.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin6.pdf, id=5248, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin6.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin6.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin6.pdf  used on input line 789
-.
+<acceptance_overlay_mass_sliced_by_xF_bin6.pdf, id=5248, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin6.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin6.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin6.pdf  used on
+ input line 784.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin6.pdf, id=5249, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin6.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin6.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin6.pdf  used on input line 789.
+<acceptance_ratio_mass_sliced_by_xF_bin6.pdf, id=5249, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin6.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin6.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin6.pdf  used on i
+nput line 784.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [70
 
- <./acceptance_overlay_xF_bin6.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin6.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin6.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin6.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin7.pdf, id=5344, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin7.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin7.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin7.pdf  used on input line 802.
+Package pdftex.def Info: yield_th_dpx_xF_bin7.pdf  used on input line 797.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin7.pdf, id=5345, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin7.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin7.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin7.pdf  used on input line 802.
+Package pdftex.def Info: yield_th_dpy_xF_bin7.pdf  used on input line 797.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [71
 
@@ -1865,12 +1884,12 @@ n7.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin7.pdf, id=5439, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin7.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin7.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin7.pdf  used on input line 815.
+Package pdftex.def Info: yield_ac_dpx_xF_bin7.pdf  used on input line 810.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin7.pdf, id=5440, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin7.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin7.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin7.pdf  used on input line 815.
+Package pdftex.def Info: yield_ac_dpy_xF_bin7.pdf  used on input line 810.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [72
 
@@ -1879,12 +1898,12 @@ n7.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin7.pdf, id=5535, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin7.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin7.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin7.pdf  used on input line 828.
+Package pdftex.def Info: yield_th_dpx2_xF_bin7.pdf  used on input line 823.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin7.pdf, id=5536, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin7.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin7.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin7.pdf  used on input line 828.
+Package pdftex.def Info: yield_th_dpy2_xF_bin7.pdf  used on input line 823.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [73
 
@@ -1893,56 +1912,58 @@ bin7.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin7.pdf, id=5631, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin7.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin7.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin7.pdf  used on input line 841.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin7.pdf  used on input line 836.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin7.pdf, id=5632, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin7.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin7.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin7.pdf  used on input line 841.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin7.pdf  used on input line 836.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [74
 
  <./yield_ac_dpx2_xF_bin7.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin7.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin7.pdf, id=5726, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin7.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin7.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin7.pdf  used on input line 854
-.
+<acceptance_overlay_mass_sliced_by_xF_bin7.pdf, id=5726, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin7.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin7.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin7.pdf  used on
+ input line 849.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin7.pdf, id=5727, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin7.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin7.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin7.pdf  used on input line 854.
+<acceptance_ratio_mass_sliced_by_xF_bin7.pdf, id=5727, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin7.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin7.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin7.pdf  used on i
+nput line 849.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [75
 
- <./acceptance_overlay_xF_bin7.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin7.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin7.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin7.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin8.pdf, id=5822, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin8.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin8.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin8.pdf  used on input line 867.
+Package pdftex.def Info: yield_th_dpx_xF_bin8.pdf  used on input line 862.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin8.pdf, id=5823, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin8.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin8.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin8.pdf  used on input line 867.
+Package pdftex.def Info: yield_th_dpy_xF_bin8.pdf  used on input line 862.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-
-[76
+ [76
 
  <./yield_th_dpx_xF_bin8.pdf, page is rotated 90 degrees> <./yield_th_dpy_xF_bi
 n8.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin8.pdf, id=5917, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin8.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin8.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin8.pdf  used on input line 880.
+Package pdftex.def Info: yield_ac_dpx_xF_bin8.pdf  used on input line 875.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin8.pdf, id=5918, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin8.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin8.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin8.pdf  used on input line 880.
+Package pdftex.def Info: yield_ac_dpy_xF_bin8.pdf  used on input line 875.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [77
 
@@ -1951,55 +1972,58 @@ n8.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin8.pdf, id=6013, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin8.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin8.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin8.pdf  used on input line 893.
+Package pdftex.def Info: yield_th_dpx2_xF_bin8.pdf  used on input line 888.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin8.pdf, id=6014, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin8.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin8.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin8.pdf  used on input line 893.
+Package pdftex.def Info: yield_th_dpy2_xF_bin8.pdf  used on input line 888.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-[78
+ [78
 
  <./yield_th_dpx2_xF_bin8.pdf, page is rotated 90 degrees> <./yield_th_dpy2_xF_
 bin8.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin8.pdf, id=6108, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin8.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin8.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin8.pdf  used on input line 906.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin8.pdf  used on input line 901.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin8.pdf, id=6109, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin8.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin8.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin8.pdf  used on input line 906.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin8.pdf  used on input line 901.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [79
 
  <./yield_ac_dpx2_xF_bin8.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin8.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin8.pdf, id=6204, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin8.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin8.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin8.pdf  used on input line 919
-.
+<acceptance_overlay_mass_sliced_by_xF_bin8.pdf, id=6204, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin8.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin8.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin8.pdf  used on
+ input line 914.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin8.pdf, id=6205, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin8.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin8.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin8.pdf  used on input line 919.
+<acceptance_ratio_mass_sliced_by_xF_bin8.pdf, id=6205, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin8.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin8.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin8.pdf  used on i
+nput line 914.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [80
 
- <./acceptance_overlay_xF_bin8.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin8.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin8.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin8.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin9.pdf, id=6300, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin9.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin9.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin9.pdf  used on input line 932.
+Package pdftex.def Info: yield_th_dpx_xF_bin9.pdf  used on input line 927.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin9.pdf, id=6301, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin9.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin9.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin9.pdf  used on input line 932.
+Package pdftex.def Info: yield_th_dpy_xF_bin9.pdf  used on input line 927.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [81
 
@@ -2008,12 +2032,12 @@ n9.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin9.pdf, id=6395, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin9.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin9.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin9.pdf  used on input line 945.
+Package pdftex.def Info: yield_ac_dpx_xF_bin9.pdf  used on input line 940.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin9.pdf, id=6396, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin9.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin9.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin9.pdf  used on input line 945.
+Package pdftex.def Info: yield_ac_dpy_xF_bin9.pdf  used on input line 940.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [82
 
@@ -2022,12 +2046,12 @@ n9.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin9.pdf, id=6491, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin9.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin9.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin9.pdf  used on input line 958.
+Package pdftex.def Info: yield_th_dpx2_xF_bin9.pdf  used on input line 953.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin9.pdf, id=6492, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin9.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin9.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin9.pdf  used on input line 958.
+Package pdftex.def Info: yield_th_dpy2_xF_bin9.pdf  used on input line 953.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [83
 
@@ -2036,70 +2060,73 @@ bin9.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin9.pdf, id=6586, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin9.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin9.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin9.pdf  used on input line 971.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin9.pdf  used on input line 966.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin9.pdf, id=6587, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin9.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin9.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin9.pdf  used on input line 971.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin9.pdf  used on input line 966.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [84
 
  <./yield_ac_dpx2_xF_bin9.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF_
 bin9.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin9.pdf, id=6681, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin9.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin9.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin9.pdf  used on input line 984
-.
+<acceptance_overlay_mass_sliced_by_xF_bin9.pdf, id=6681, 569.12625pt x 408.5262
+5pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin9.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin9.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin9.pdf  used on
+ input line 979.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin9.pdf, id=6682, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin9.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin9.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin9.pdf  used on input line 984.
+<acceptance_ratio_mass_sliced_by_xF_bin9.pdf, id=6682, 569.12625pt x 408.52625p
+t>
+File: acceptance_ratio_mass_sliced_by_xF_bin9.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin9.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin9.pdf  used on i
+nput line 979.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
- [85
 
- <./acceptance_overlay_xF_bin9.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_xF_bin9.pdf, page is rotated 90 degrees>]
+[85
+
+ <./acceptance_overlay_mass_sliced_by_xF_bin9.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_xF_bin9.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin10.pdf, id=6778, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin10.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin10.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin10.pdf  used on input line 997.
+Package pdftex.def Info: yield_th_dpx_xF_bin10.pdf  used on input line 992.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin10.pdf, id=6779, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin10.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin10.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin10.pdf  used on input line 997.
+Package pdftex.def Info: yield_th_dpy_xF_bin10.pdf  used on input line 992.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
- [86
+[86
 
  <./yield_th_dpx_xF_bin10.pdf, page is rotated 90 degrees> <./yield_th_dpy_xF_b
 in10.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin10.pdf, id=6873, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin10.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin10.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin10.pdf  used on input line 1010.
+Package pdftex.def Info: yield_ac_dpx_xF_bin10.pdf  used on input line 1005.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin10.pdf, id=6874, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin10.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin10.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin10.pdf  used on input line 1010.
+Package pdftex.def Info: yield_ac_dpy_xF_bin10.pdf  used on input line 1005.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-
-[87
+ [87
 
  <./yield_ac_dpx_xF_bin10.pdf, page is rotated 90 degrees> <./yield_ac_dpy_xF_b
 in10.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin10.pdf, id=6969, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin10.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin10.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin10.pdf  used on input line 1023.
+Package pdftex.def Info: yield_th_dpx2_xF_bin10.pdf  used on input line 1018.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin10.pdf, id=6970, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin10.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin10.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin10.pdf  used on input line 1023.
+Package pdftex.def Info: yield_th_dpy2_xF_bin10.pdf  used on input line 1018.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [88
 
@@ -2108,42 +2135,44 @@ _bin10.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin10.pdf, id=7064, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin10.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin10.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin10.pdf  used on input line 1036.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin10.pdf  used on input line 1031.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin10.pdf, id=7065, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin10.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin10.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin10.pdf  used on input line 1036.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin10.pdf  used on input line 1031.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [89
 
  <./yield_ac_dpx2_xF_bin10.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF
 _bin10.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin10.pdf, id=7159, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin10.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin10.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin10.pdf  used on input line 10
-49.
+<acceptance_overlay_mass_sliced_by_xF_bin10.pdf, id=7159, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin10.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin10.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin10.pdf  used o
+n input line 1044.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin10.pdf, id=7160, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin10.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin10.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin10.pdf  used on input line 1049
-.
+<acceptance_ratio_mass_sliced_by_xF_bin10.pdf, id=7160, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_xF_bin10.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin10.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin10.pdf  used on 
+input line 1044.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [90
 
- <./acceptance_overlay_xF_bin10.pdf, page is rotated 90 degrees> <./acceptance_
-ratio_xF_bin10.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin10.pdf, page is rotated 90 degrees>
+ <./acceptance_ratio_mass_sliced_by_xF_bin10.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin11.pdf, id=7255, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin11.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin11.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin11.pdf  used on input line 1062.
+Package pdftex.def Info: yield_th_dpx_xF_bin11.pdf  used on input line 1057.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin11.pdf, id=7256, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin11.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin11.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin11.pdf  used on input line 1062.
+Package pdftex.def Info: yield_th_dpy_xF_bin11.pdf  used on input line 1057.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [91
 
@@ -2152,12 +2181,12 @@ in11.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin11.pdf, id=7351, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin11.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin11.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin11.pdf  used on input line 1075.
+Package pdftex.def Info: yield_ac_dpx_xF_bin11.pdf  used on input line 1070.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin11.pdf, id=7352, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin11.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin11.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin11.pdf  used on input line 1075.
+Package pdftex.def Info: yield_ac_dpy_xF_bin11.pdf  used on input line 1070.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [92
 
@@ -2166,12 +2195,12 @@ in11.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin11.pdf, id=7447, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin11.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin11.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin11.pdf  used on input line 1088.
+Package pdftex.def Info: yield_th_dpx2_xF_bin11.pdf  used on input line 1083.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin11.pdf, id=7448, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin11.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin11.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin11.pdf  used on input line 1088.
+Package pdftex.def Info: yield_th_dpy2_xF_bin11.pdf  used on input line 1083.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [93
 
@@ -2180,43 +2209,44 @@ _bin11.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin11.pdf, id=7542, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin11.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin11.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin11.pdf  used on input line 1101.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin11.pdf  used on input line 1096.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin11.pdf, id=7543, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin11.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin11.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin11.pdf  used on input line 1101.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin11.pdf  used on input line 1096.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-
-[94
+ [94
 
  <./yield_ac_dpx2_xF_bin11.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF
 _bin11.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin11.pdf, id=7638, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin11.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin11.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin11.pdf  used on input line 11
-14.
+<acceptance_overlay_mass_sliced_by_xF_bin11.pdf, id=7638, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin11.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin11.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin11.pdf  used o
+n input line 1109.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin11.pdf, id=7639, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin11.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin11.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin11.pdf  used on input line 1114
-.
+<acceptance_ratio_mass_sliced_by_xF_bin11.pdf, id=7639, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_xF_bin11.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin11.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin11.pdf  used on 
+input line 1109.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [95
 
- <./acceptance_overlay_xF_bin11.pdf, page is rotated 90 degrees> <./acceptance_
-ratio_xF_bin11.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin11.pdf, page is rotated 90 degrees>
+ <./acceptance_ratio_mass_sliced_by_xF_bin11.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin12.pdf, id=7733, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin12.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin12.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin12.pdf  used on input line 1127.
+Package pdftex.def Info: yield_th_dpx_xF_bin12.pdf  used on input line 1122.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin12.pdf, id=7734, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin12.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin12.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin12.pdf  used on input line 1127.
+Package pdftex.def Info: yield_th_dpy_xF_bin12.pdf  used on input line 1122.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [96
 
@@ -2225,26 +2255,27 @@ in12.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin12.pdf, id=7828, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin12.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin12.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin12.pdf  used on input line 1140.
+Package pdftex.def Info: yield_ac_dpx_xF_bin12.pdf  used on input line 1135.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin12.pdf, id=7829, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin12.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin12.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin12.pdf  used on input line 1140.
+Package pdftex.def Info: yield_ac_dpy_xF_bin12.pdf  used on input line 1135.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
- [97
+
+[97
 
  <./yield_ac_dpx_xF_bin12.pdf, page is rotated 90 degrees> <./yield_ac_dpy_xF_b
 in12.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin12.pdf, id=7925, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin12.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin12.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin12.pdf  used on input line 1153.
+Package pdftex.def Info: yield_th_dpx2_xF_bin12.pdf  used on input line 1148.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin12.pdf, id=7926, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin12.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin12.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin12.pdf  used on input line 1153.
+Package pdftex.def Info: yield_th_dpy2_xF_bin12.pdf  used on input line 1148.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [98
 
@@ -2253,42 +2284,44 @@ _bin12.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin12.pdf, id=8020, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin12.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin12.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin12.pdf  used on input line 1166.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin12.pdf  used on input line 1161.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin12.pdf, id=8021, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin12.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin12.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin12.pdf  used on input line 1166.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin12.pdf  used on input line 1161.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [99
 
  <./yield_ac_dpx2_xF_bin12.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF
 _bin12.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin12.pdf, id=8116, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin12.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin12.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin12.pdf  used on input line 11
-79.
+<acceptance_overlay_mass_sliced_by_xF_bin12.pdf, id=8116, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin12.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin12.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin12.pdf  used o
+n input line 1174.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin12.pdf, id=8117, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin12.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin12.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin12.pdf  used on input line 1179
-.
+<acceptance_ratio_mass_sliced_by_xF_bin12.pdf, id=8117, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_xF_bin12.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin12.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin12.pdf  used on 
+input line 1174.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [100
 
- <./acceptance_overlay_xF_bin12.pdf, page is rotated 90 degrees> <./acceptance_
-ratio_xF_bin12.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin12.pdf, page is rotated 90 degrees>
+ <./acceptance_ratio_mass_sliced_by_xF_bin12.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin13.pdf, id=8211, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin13.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin13.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin13.pdf  used on input line 1192.
+Package pdftex.def Info: yield_th_dpx_xF_bin13.pdf  used on input line 1187.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin13.pdf, id=8212, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin13.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin13.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin13.pdf  used on input line 1192.
+Package pdftex.def Info: yield_th_dpy_xF_bin13.pdf  used on input line 1187.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [101
 
@@ -2297,12 +2330,12 @@ in13.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin13.pdf, id=8306, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin13.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin13.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin13.pdf  used on input line 1205.
+Package pdftex.def Info: yield_ac_dpx_xF_bin13.pdf  used on input line 1200.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin13.pdf, id=8307, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin13.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin13.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin13.pdf  used on input line 1205.
+Package pdftex.def Info: yield_ac_dpy_xF_bin13.pdf  used on input line 1200.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [102
 
@@ -2311,12 +2344,12 @@ in13.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin13.pdf, id=8402, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin13.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin13.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin13.pdf  used on input line 1218.
+Package pdftex.def Info: yield_th_dpx2_xF_bin13.pdf  used on input line 1213.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin13.pdf, id=8403, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin13.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin13.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin13.pdf  used on input line 1218.
+Package pdftex.def Info: yield_th_dpy2_xF_bin13.pdf  used on input line 1213.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [103
 
@@ -2325,57 +2358,59 @@ _bin13.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin13.pdf, id=8498, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin13.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin13.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin13.pdf  used on input line 1231.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin13.pdf  used on input line 1226.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin13.pdf, id=8499, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin13.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin13.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin13.pdf  used on input line 1231.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin13.pdf  used on input line 1226.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [104
 
  <./yield_ac_dpx2_xF_bin13.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF
 _bin13.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin13.pdf, id=8594, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin13.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin13.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin13.pdf  used on input line 12
-44.
+<acceptance_overlay_mass_sliced_by_xF_bin13.pdf, id=8594, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin13.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin13.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin13.pdf  used o
+n input line 1239.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin13.pdf, id=8595, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin13.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin13.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin13.pdf  used on input line 1244
-.
+<acceptance_ratio_mass_sliced_by_xF_bin13.pdf, id=8595, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_xF_bin13.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin13.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin13.pdf  used on 
+input line 1239.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
- [105
 
- <./acceptance_overlay_xF_bin13.pdf, page is rotated 90 degrees> <./acceptance_
-ratio_xF_bin13.pdf, page is rotated 90 degrees>]
+[105
+
+ <./acceptance_overlay_mass_sliced_by_xF_bin13.pdf, page is rotated 90 degrees>
+ <./acceptance_ratio_mass_sliced_by_xF_bin13.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin14.pdf, id=8689, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin14.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin14.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin14.pdf  used on input line 1257.
+Package pdftex.def Info: yield_th_dpx_xF_bin14.pdf  used on input line 1252.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin14.pdf, id=8690, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin14.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin14.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin14.pdf  used on input line 1257.
+Package pdftex.def Info: yield_th_dpy_xF_bin14.pdf  used on input line 1252.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-
-[106
+ [106
 
  <./yield_th_dpx_xF_bin14.pdf, page is rotated 90 degrees> <./yield_th_dpy_xF_b
 in14.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin14.pdf, id=8784, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin14.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin14.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin14.pdf  used on input line 1270.
+Package pdftex.def Info: yield_ac_dpx_xF_bin14.pdf  used on input line 1265.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin14.pdf, id=8785, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin14.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin14.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin14.pdf  used on input line 1270.
+Package pdftex.def Info: yield_ac_dpy_xF_bin14.pdf  used on input line 1265.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [107
 
@@ -2384,12 +2419,12 @@ in14.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin14.pdf, id=8880, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin14.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin14.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin14.pdf  used on input line 1283.
+Package pdftex.def Info: yield_th_dpx2_xF_bin14.pdf  used on input line 1278.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin14.pdf, id=8881, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin14.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin14.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin14.pdf  used on input line 1283.
+Package pdftex.def Info: yield_th_dpy2_xF_bin14.pdf  used on input line 1278.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [108
 
@@ -2398,42 +2433,44 @@ _bin14.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin14.pdf, id=8975, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin14.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin14.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin14.pdf  used on input line 1296.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin14.pdf  used on input line 1291.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin14.pdf, id=8976, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin14.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin14.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin14.pdf  used on input line 1296.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin14.pdf  used on input line 1291.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [109
 
  <./yield_ac_dpx2_xF_bin14.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF
 _bin14.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin14.pdf, id=9072, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin14.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin14.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin14.pdf  used on input line 13
-09.
+<acceptance_overlay_mass_sliced_by_xF_bin14.pdf, id=9072, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin14.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin14.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin14.pdf  used o
+n input line 1304.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin14.pdf, id=9073, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin14.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin14.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin14.pdf  used on input line 1309
-.
+<acceptance_ratio_mass_sliced_by_xF_bin14.pdf, id=9073, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_xF_bin14.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin14.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin14.pdf  used on 
+input line 1304.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [110
 
- <./acceptance_overlay_xF_bin14.pdf, page is rotated 90 degrees> <./acceptance_
-ratio_xF_bin14.pdf, page is rotated 90 degrees>]
+ <./acceptance_overlay_mass_sliced_by_xF_bin14.pdf, page is rotated 90 degrees>
+ <./acceptance_ratio_mass_sliced_by_xF_bin14.pdf, page is rotated 90 degrees>]
 <yield_th_dpx_xF_bin15.pdf, id=9167, 569.12625pt x 408.52625pt>
 File: yield_th_dpx_xF_bin15.pdf Graphic file (type pdf)
 <use yield_th_dpx_xF_bin15.pdf>
-Package pdftex.def Info: yield_th_dpx_xF_bin15.pdf  used on input line 1322.
+Package pdftex.def Info: yield_th_dpx_xF_bin15.pdf  used on input line 1317.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy_xF_bin15.pdf, id=9168, 569.12625pt x 408.52625pt>
 File: yield_th_dpy_xF_bin15.pdf Graphic file (type pdf)
 <use yield_th_dpy_xF_bin15.pdf>
-Package pdftex.def Info: yield_th_dpy_xF_bin15.pdf  used on input line 1322.
+Package pdftex.def Info: yield_th_dpy_xF_bin15.pdf  used on input line 1317.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [111
 
@@ -2442,12 +2479,12 @@ in15.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx_xF_bin15.pdf, id=9263, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx_xF_bin15.pdf Graphic file (type pdf)
 <use yield_ac_dpx_xF_bin15.pdf>
-Package pdftex.def Info: yield_ac_dpx_xF_bin15.pdf  used on input line 1335.
+Package pdftex.def Info: yield_ac_dpx_xF_bin15.pdf  used on input line 1330.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy_xF_bin15.pdf, id=9264, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy_xF_bin15.pdf Graphic file (type pdf)
 <use yield_ac_dpy_xF_bin15.pdf>
-Package pdftex.def Info: yield_ac_dpy_xF_bin15.pdf  used on input line 1335.
+Package pdftex.def Info: yield_ac_dpy_xF_bin15.pdf  used on input line 1330.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [112
 
@@ -2456,174 +2493,337 @@ in15.pdf, page is rotated 90 degrees>]
 <yield_th_dpx2_xF_bin15.pdf, id=9358, 569.12625pt x 408.52625pt>
 File: yield_th_dpx2_xF_bin15.pdf Graphic file (type pdf)
 <use yield_th_dpx2_xF_bin15.pdf>
-Package pdftex.def Info: yield_th_dpx2_xF_bin15.pdf  used on input line 1348.
+Package pdftex.def Info: yield_th_dpx2_xF_bin15.pdf  used on input line 1343.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_th_dpy2_xF_bin15.pdf, id=9359, 569.12625pt x 408.52625pt>
 File: yield_th_dpy2_xF_bin15.pdf Graphic file (type pdf)
 <use yield_th_dpy2_xF_bin15.pdf>
-Package pdftex.def Info: yield_th_dpy2_xF_bin15.pdf  used on input line 1348.
+Package pdftex.def Info: yield_th_dpy2_xF_bin15.pdf  used on input line 1343.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-
-[113
+ [113
 
  <./yield_th_dpx2_xF_bin15.pdf, page is rotated 90 degrees> <./yield_th_dpy2_xF
 _bin15.pdf, page is rotated 90 degrees>]
 <yield_ac_dpx2_xF_bin15.pdf, id=9453, 569.12625pt x 408.52625pt>
 File: yield_ac_dpx2_xF_bin15.pdf Graphic file (type pdf)
 <use yield_ac_dpx2_xF_bin15.pdf>
-Package pdftex.def Info: yield_ac_dpx2_xF_bin15.pdf  used on input line 1361.
+Package pdftex.def Info: yield_ac_dpx2_xF_bin15.pdf  used on input line 1356.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 <yield_ac_dpy2_xF_bin15.pdf, id=9454, 569.12625pt x 408.52625pt>
 File: yield_ac_dpy2_xF_bin15.pdf Graphic file (type pdf)
 <use yield_ac_dpy2_xF_bin15.pdf>
-Package pdftex.def Info: yield_ac_dpy2_xF_bin15.pdf  used on input line 1361.
+Package pdftex.def Info: yield_ac_dpy2_xF_bin15.pdf  used on input line 1356.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
- [114
+
+[114
 
  <./yield_ac_dpx2_xF_bin15.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF
 _bin15.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_xF_bin15.pdf, id=9549, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_xF_bin15.pdf Graphic file (type pdf)
-<use acceptance_overlay_xF_bin15.pdf>
-Package pdftex.def Info: acceptance_overlay_xF_bin15.pdf  used on input line 13
-74.
+<acceptance_overlay_mass_sliced_by_xF_bin15.pdf, id=9549, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin15.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin15.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin15.pdf  used o
+n input line 1369.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_xF_bin15.pdf, id=9550, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_xF_bin15.pdf Graphic file (type pdf)
-<use acceptance_ratio_xF_bin15.pdf>
-Package pdftex.def Info: acceptance_ratio_xF_bin15.pdf  used on input line 1374
-.
+<acceptance_ratio_mass_sliced_by_xF_bin15.pdf, id=9550, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_xF_bin15.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin15.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin15.pdf  used on 
+input line 1369.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [115
 
- <./acceptance_overlay_xF_bin15.pdf, page is rotated 90 degrees> <./acceptance_
-ratio_xF_bin15.pdf, page is rotated 90 degrees>]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1375.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 1375.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1375.
-
-<acceptance_overlay_pT_bin0.pdf, id=9645, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_pT_bin0.pdf Graphic file (type pdf)
-<use acceptance_overlay_pT_bin0.pdf>
-Package pdftex.def Info: acceptance_overlay_pT_bin0.pdf  used on input line 138
-8.
+ <./acceptance_overlay_mass_sliced_by_xF_bin15.pdf, page is rotated 90 degrees>
+ <./acceptance_ratio_mass_sliced_by_xF_bin15.pdf, page is rotated 90 degrees>]
+<yield_th_dpx_xF_bin16.pdf, id=9645, 569.12625pt x 408.52625pt>
+File: yield_th_dpx_xF_bin16.pdf Graphic file (type pdf)
+<use yield_th_dpx_xF_bin16.pdf>
+Package pdftex.def Info: yield_th_dpx_xF_bin16.pdf  used on input line 1382.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_pT_bin0.pdf, id=9646, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_pT_bin0.pdf Graphic file (type pdf)
-<use acceptance_ratio_pT_bin0.pdf>
-Package pdftex.def Info: acceptance_ratio_pT_bin0.pdf  used on input line 1388.
-
+<yield_th_dpy_xF_bin16.pdf, id=9646, 569.12625pt x 408.52625pt>
+File: yield_th_dpy_xF_bin16.pdf Graphic file (type pdf)
+<use yield_th_dpy_xF_bin16.pdf>
+Package pdftex.def Info: yield_th_dpy_xF_bin16.pdf  used on input line 1382.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-[116
+ [116
 
- <./acceptance_overlay_pT_bin0.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_pT_bin0.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_pT_bin1.pdf, id=9741, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_pT_bin1.pdf Graphic file (type pdf)
-<use acceptance_overlay_pT_bin1.pdf>
-Package pdftex.def Info: acceptance_overlay_pT_bin1.pdf  used on input line 140
-1.
+ <./yield_th_dpx_xF_bin16.pdf, page is rotated 90 degrees> <./yield_th_dpy_xF_b
+in16.pdf, page is rotated 90 degrees>]
+<yield_ac_dpx_xF_bin16.pdf, id=9741, 569.12625pt x 408.52625pt>
+File: yield_ac_dpx_xF_bin16.pdf Graphic file (type pdf)
+<use yield_ac_dpx_xF_bin16.pdf>
+Package pdftex.def Info: yield_ac_dpx_xF_bin16.pdf  used on input line 1395.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_pT_bin1.pdf, id=9742, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_pT_bin1.pdf Graphic file (type pdf)
-<use acceptance_ratio_pT_bin1.pdf>
-Package pdftex.def Info: acceptance_ratio_pT_bin1.pdf  used on input line 1401.
-
+<yield_ac_dpy_xF_bin16.pdf, id=9742, 569.12625pt x 408.52625pt>
+File: yield_ac_dpy_xF_bin16.pdf Graphic file (type pdf)
+<use yield_ac_dpy_xF_bin16.pdf>
+Package pdftex.def Info: yield_ac_dpy_xF_bin16.pdf  used on input line 1395.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [117
 
- <./acceptance_overlay_pT_bin1.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_pT_bin1.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_pT_bin2.pdf, id=9836, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_pT_bin2.pdf Graphic file (type pdf)
-<use acceptance_overlay_pT_bin2.pdf>
-Package pdftex.def Info: acceptance_overlay_pT_bin2.pdf  used on input line 141
-4.
+ <./yield_ac_dpx_xF_bin16.pdf, page is rotated 90 degrees> <./yield_ac_dpy_xF_b
+in16.pdf, page is rotated 90 degrees>]
+<yield_th_dpx2_xF_bin16.pdf, id=9836, 569.12625pt x 408.52625pt>
+File: yield_th_dpx2_xF_bin16.pdf Graphic file (type pdf)
+<use yield_th_dpx2_xF_bin16.pdf>
+Package pdftex.def Info: yield_th_dpx2_xF_bin16.pdf  used on input line 1408.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_pT_bin2.pdf, id=9837, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_pT_bin2.pdf Graphic file (type pdf)
-<use acceptance_ratio_pT_bin2.pdf>
-Package pdftex.def Info: acceptance_ratio_pT_bin2.pdf  used on input line 1414.
-
+<yield_th_dpy2_xF_bin16.pdf, id=9837, 569.12625pt x 408.52625pt>
+File: yield_th_dpy2_xF_bin16.pdf Graphic file (type pdf)
+<use yield_th_dpy2_xF_bin16.pdf>
+Package pdftex.def Info: yield_th_dpy2_xF_bin16.pdf  used on input line 1408.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [118
 
- <./acceptance_overlay_pT_bin2.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_pT_bin2.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_pT_bin3.pdf, id=9931, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_pT_bin3.pdf Graphic file (type pdf)
-<use acceptance_overlay_pT_bin3.pdf>
-Package pdftex.def Info: acceptance_overlay_pT_bin3.pdf  used on input line 142
-7.
+ <./yield_th_dpx2_xF_bin16.pdf, page is rotated 90 degrees> <./yield_th_dpy2_xF
+_bin16.pdf, page is rotated 90 degrees>]
+<yield_ac_dpx2_xF_bin16.pdf, id=9931, 569.12625pt x 408.52625pt>
+File: yield_ac_dpx2_xF_bin16.pdf Graphic file (type pdf)
+<use yield_ac_dpx2_xF_bin16.pdf>
+Package pdftex.def Info: yield_ac_dpx2_xF_bin16.pdf  used on input line 1421.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_pT_bin3.pdf, id=9932, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_pT_bin3.pdf Graphic file (type pdf)
-<use acceptance_ratio_pT_bin3.pdf>
-Package pdftex.def Info: acceptance_ratio_pT_bin3.pdf  used on input line 1427.
-
+<yield_ac_dpy2_xF_bin16.pdf, id=9932, 569.12625pt x 408.52625pt>
+File: yield_ac_dpy2_xF_bin16.pdf Graphic file (type pdf)
+<use yield_ac_dpy2_xF_bin16.pdf>
+Package pdftex.def Info: yield_ac_dpy2_xF_bin16.pdf  used on input line 1421.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [119
 
-[119
-
- <./acceptance_overlay_pT_bin3.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_pT_bin3.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_pT_bin4.pdf, id=10027, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_pT_bin4.pdf Graphic file (type pdf)
-<use acceptance_overlay_pT_bin4.pdf>
-Package pdftex.def Info: acceptance_overlay_pT_bin4.pdf  used on input line 144
-0.
+ <./yield_ac_dpx2_xF_bin16.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF
+_bin16.pdf, page is rotated 90 degrees>]
+<acceptance_overlay_mass_sliced_by_xF_bin16.pdf, id=10027, 569.12625pt x 408.52
+625pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin16.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin16.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin16.pdf  used o
+n input line 1434.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_pT_bin4.pdf, id=10028, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_pT_bin4.pdf Graphic file (type pdf)
-<use acceptance_ratio_pT_bin4.pdf>
-Package pdftex.def Info: acceptance_ratio_pT_bin4.pdf  used on input line 1440.
-
+<acceptance_ratio_mass_sliced_by_xF_bin16.pdf, id=10028, 569.12625pt x 408.5262
+5pt>
+File: acceptance_ratio_mass_sliced_by_xF_bin16.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin16.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin16.pdf  used on 
+input line 1434.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [120
 
- <./acceptance_overlay_pT_bin4.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_pT_bin4.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_pT_bin5.pdf, id=10122, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_pT_bin5.pdf Graphic file (type pdf)
-<use acceptance_overlay_pT_bin5.pdf>
-Package pdftex.def Info: acceptance_overlay_pT_bin5.pdf  used on input line 145
-3.
+ <./acceptance_overlay_mass_sliced_by_xF_bin16.pdf, page is rotated 90 degrees>
+ <./acceptance_ratio_mass_sliced_by_xF_bin16.pdf, page is rotated 90 degrees>]
+<yield_th_dpx_xF_bin17.pdf, id=10122, 569.12625pt x 408.52625pt>
+File: yield_th_dpx_xF_bin17.pdf Graphic file (type pdf)
+<use yield_th_dpx_xF_bin17.pdf>
+Package pdftex.def Info: yield_th_dpx_xF_bin17.pdf  used on input line 1447.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_pT_bin5.pdf, id=10123, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_pT_bin5.pdf Graphic file (type pdf)
-<use acceptance_ratio_pT_bin5.pdf>
-Package pdftex.def Info: acceptance_ratio_pT_bin5.pdf  used on input line 1453.
-
+<yield_th_dpy_xF_bin17.pdf, id=10123, 569.12625pt x 408.52625pt>
+File: yield_th_dpy_xF_bin17.pdf Graphic file (type pdf)
+<use yield_th_dpy_xF_bin17.pdf>
+Package pdftex.def Info: yield_th_dpy_xF_bin17.pdf  used on input line 1447.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
  [121
 
- <./acceptance_overlay_pT_bin5.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_pT_bin5.pdf, page is rotated 90 degrees>]
-<acceptance_overlay_pT_bin6.pdf, id=10219, 569.12625pt x 408.52625pt>
-File: acceptance_overlay_pT_bin6.pdf Graphic file (type pdf)
-<use acceptance_overlay_pT_bin6.pdf>
-Package pdftex.def Info: acceptance_overlay_pT_bin6.pdf  used on input line 146
-6.
+ <./yield_th_dpx_xF_bin17.pdf, page is rotated 90 degrees> <./yield_th_dpy_xF_b
+in17.pdf, page is rotated 90 degrees>]
+<yield_ac_dpx_xF_bin17.pdf, id=10219, 569.12625pt x 408.52625pt>
+File: yield_ac_dpx_xF_bin17.pdf Graphic file (type pdf)
+<use yield_ac_dpx_xF_bin17.pdf>
+Package pdftex.def Info: yield_ac_dpx_xF_bin17.pdf  used on input line 1460.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
-<acceptance_ratio_pT_bin6.pdf, id=10220, 569.12625pt x 408.52625pt>
-File: acceptance_ratio_pT_bin6.pdf Graphic file (type pdf)
-<use acceptance_ratio_pT_bin6.pdf>
-Package pdftex.def Info: acceptance_ratio_pT_bin6.pdf  used on input line 1466.
+<yield_ac_dpy_xF_bin17.pdf, id=10220, 569.12625pt x 408.52625pt>
+File: yield_ac_dpy_xF_bin17.pdf Graphic file (type pdf)
+<use yield_ac_dpy_xF_bin17.pdf>
+Package pdftex.def Info: yield_ac_dpy_xF_bin17.pdf  used on input line 1460.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [122
 
+ <./yield_ac_dpx_xF_bin17.pdf, page is rotated 90 degrees> <./yield_ac_dpy_xF_b
+in17.pdf, page is rotated 90 degrees>]
+<yield_th_dpx2_xF_bin17.pdf, id=10314, 569.12625pt x 408.52625pt>
+File: yield_th_dpx2_xF_bin17.pdf Graphic file (type pdf)
+<use yield_th_dpx2_xF_bin17.pdf>
+Package pdftex.def Info: yield_th_dpx2_xF_bin17.pdf  used on input line 1473.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<yield_th_dpy2_xF_bin17.pdf, id=10315, 569.12625pt x 408.52625pt>
+File: yield_th_dpy2_xF_bin17.pdf Graphic file (type pdf)
+<use yield_th_dpy2_xF_bin17.pdf>
+Package pdftex.def Info: yield_th_dpy2_xF_bin17.pdf  used on input line 1473.
 (pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
 
-[122
+[123
 
- <./acceptance_overlay_pT_bin6.pdf, page is rotated 90 degrees> <./acceptance_r
-atio_pT_bin6.pdf, page is rotated 90 degrees>]
+ <./yield_th_dpx2_xF_bin17.pdf, page is rotated 90 degrees> <./yield_th_dpy2_xF
+_bin17.pdf, page is rotated 90 degrees>]
+<yield_ac_dpx2_xF_bin17.pdf, id=10409, 569.12625pt x 408.52625pt>
+File: yield_ac_dpx2_xF_bin17.pdf Graphic file (type pdf)
+<use yield_ac_dpx2_xF_bin17.pdf>
+Package pdftex.def Info: yield_ac_dpx2_xF_bin17.pdf  used on input line 1486.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<yield_ac_dpy2_xF_bin17.pdf, id=10410, 569.12625pt x 408.52625pt>
+File: yield_ac_dpy2_xF_bin17.pdf Graphic file (type pdf)
+<use yield_ac_dpy2_xF_bin17.pdf>
+Package pdftex.def Info: yield_ac_dpy2_xF_bin17.pdf  used on input line 1486.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [124
+
+ <./yield_ac_dpx2_xF_bin17.pdf, page is rotated 90 degrees> <./yield_ac_dpy2_xF
+_bin17.pdf, page is rotated 90 degrees>]
+<acceptance_overlay_mass_sliced_by_xF_bin17.pdf, id=10505, 569.12625pt x 408.52
+625pt>
+File: acceptance_overlay_mass_sliced_by_xF_bin17.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_xF_bin17.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_xF_bin17.pdf  used o
+n input line 1499.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<acceptance_ratio_mass_sliced_by_xF_bin17.pdf, id=10506, 569.12625pt x 408.5262
+5pt>
+File: acceptance_ratio_mass_sliced_by_xF_bin17.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_xF_bin17.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_xF_bin17.pdf  used on 
+input line 1499.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [125
+
+ <./acceptance_overlay_mass_sliced_by_xF_bin17.pdf, page is rotated 90 degrees>
+ <./acceptance_ratio_mass_sliced_by_xF_bin17.pdf, page is rotated 90 degrees>]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1500.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 1500.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1500.
+
+<acceptance_overlay_mass_sliced_by_pT_bin0.pdf, id=10600, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_pT_bin0.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_pT_bin0.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_pT_bin0.pdf  used on
+ input line 1513.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<acceptance_ratio_mass_sliced_by_pT_bin0.pdf, id=10601, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_pT_bin0.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_pT_bin0.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_pT_bin0.pdf  used on i
+nput line 1513.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+[126
+
+ <./acceptance_overlay_mass_sliced_by_pT_bin0.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_pT_bin0.pdf, page is rotated 90 degrees>]
+<acceptance_overlay_mass_sliced_by_pT_bin1.pdf, id=10696, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_pT_bin1.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_pT_bin1.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_pT_bin1.pdf  used on
+ input line 1526.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<acceptance_ratio_mass_sliced_by_pT_bin1.pdf, id=10697, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_pT_bin1.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_pT_bin1.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_pT_bin1.pdf  used on i
+nput line 1526.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [127
+
+ <./acceptance_overlay_mass_sliced_by_pT_bin1.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_pT_bin1.pdf, page is rotated 90 degrees>]
+<acceptance_overlay_mass_sliced_by_pT_bin2.pdf, id=10792, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_pT_bin2.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_pT_bin2.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_pT_bin2.pdf  used on
+ input line 1539.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<acceptance_ratio_mass_sliced_by_pT_bin2.pdf, id=10793, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_pT_bin2.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_pT_bin2.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_pT_bin2.pdf  used on i
+nput line 1539.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [128
+
+ <./acceptance_overlay_mass_sliced_by_pT_bin2.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_pT_bin2.pdf, page is rotated 90 degrees>]
+<acceptance_overlay_mass_sliced_by_pT_bin3.pdf, id=10887, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_pT_bin3.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_pT_bin3.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_pT_bin3.pdf  used on
+ input line 1552.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<acceptance_ratio_mass_sliced_by_pT_bin3.pdf, id=10888, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_pT_bin3.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_pT_bin3.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_pT_bin3.pdf  used on i
+nput line 1552.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [129
+
+ <./acceptance_overlay_mass_sliced_by_pT_bin3.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_pT_bin3.pdf, page is rotated 90 degrees>]
+<acceptance_overlay_mass_sliced_by_pT_bin4.pdf, id=10983, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_pT_bin4.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_pT_bin4.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_pT_bin4.pdf  used on
+ input line 1565.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<acceptance_ratio_mass_sliced_by_pT_bin4.pdf, id=10984, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_pT_bin4.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_pT_bin4.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_pT_bin4.pdf  used on i
+nput line 1565.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [130
+
+ <./acceptance_overlay_mass_sliced_by_pT_bin4.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_pT_bin4.pdf, page is rotated 90 degrees>]
+<acceptance_overlay_mass_sliced_by_pT_bin5.pdf, id=11078, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_pT_bin5.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_pT_bin5.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_pT_bin5.pdf  used on
+ input line 1578.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<acceptance_ratio_mass_sliced_by_pT_bin5.pdf, id=11079, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_pT_bin5.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_pT_bin5.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_pT_bin5.pdf  used on i
+nput line 1578.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [131
+
+ <./acceptance_overlay_mass_sliced_by_pT_bin5.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_pT_bin5.pdf, page is rotated 90 degrees>]
+<acceptance_overlay_mass_sliced_by_pT_bin6.pdf, id=11174, 569.12625pt x 408.526
+25pt>
+File: acceptance_overlay_mass_sliced_by_pT_bin6.pdf Graphic file (type pdf)
+<use acceptance_overlay_mass_sliced_by_pT_bin6.pdf>
+Package pdftex.def Info: acceptance_overlay_mass_sliced_by_pT_bin6.pdf  used on
+ input line 1591.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+<acceptance_ratio_mass_sliced_by_pT_bin6.pdf, id=11175, 569.12625pt x 408.52625
+pt>
+File: acceptance_ratio_mass_sliced_by_pT_bin6.pdf Graphic file (type pdf)
+<use acceptance_ratio_mass_sliced_by_pT_bin6.pdf>
+Package pdftex.def Info: acceptance_ratio_mass_sliced_by_pT_bin6.pdf  used on i
+nput line 1591.
+(pdftex.def)             Requested size: 216.67201pt x 155.52834pt.
+ [132
+
+ <./acceptance_overlay_mass_sliced_by_pT_bin6.pdf, page is rotated 90 degrees> 
+<./acceptance_ratio_mass_sliced_by_pT_bin6.pdf, page is rotated 90 degrees>]
 \tf@nav=\write6
 \openout6 = `acceptance_slides.nav'.
 
@@ -2642,10 +2842,10 @@ Package rerunfilecheck Info: File `acceptance_slides.out' has not changed.
 (rerunfilecheck)             Checksum: 1F767FDEB5B2AEEC6C0818239072A997;868.
  ) 
 Here is how much of TeX's memory you used:
- 23609 strings out of 476182
- 478683 string characters out of 5795595
+ 23789 strings out of 476182
+ 489459 string characters out of 5795595
  1939975 words of memory out of 5000000
- 44909 multiletter control sequences out of 15000+600000
+ 45069 multiletter control sequences out of 15000+600000
  569385 words of font info for 77 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,15n,123p,413b,647s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2662,10 +2862,10 @@ msfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10
 .pfb>
-Output written on acceptance_slides.pdf (122 pages, 3117850 bytes).
+Output written on acceptance_slides.pdf (132 pages, 3408894 bytes).
 PDF statistics:
- 10426 PDF objects out of 10688 (max. 8388607)
- 4582 compressed objects within 46 object streams
- 251 named destinations out of 1000 (max. 500000)
- 1193 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11386 PDF objects out of 12825 (max. 8388607)
+ 4998 compressed objects within 50 object streams
+ 271 named destinations out of 1000 (max. 500000)
+ 1293 words of extra memory for PDF output out of 10000 (max. 10000000)
 

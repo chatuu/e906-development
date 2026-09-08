@@ -101,14 +101,12 @@ def get_weighted_histogram(data, weights, bins):
     return hist, np.sqrt(sumw2)
 
 def calc_binomial_errors(w_sum, p, w_sqr):
-    """Calculates efficiency/acceptance errors assuming weighted distributions."""
     valid = (w_sum > 0) & (p >= 0) & (p <= 1)
     errors = np.zeros_like(w_sum)
     errors[valid] = (w_sqr[valid] / w_sum[valid]) * np.sqrt(p[valid] * (1 - p[valid]))
     return errors
 
 def calc_ratio_errors_independent(val_num, val_den, err_num, err_den):
-    """Calculates ratio and propagated error for independent samples A and B."""
     valid = (val_den > 0) & (val_num > 0)
     ratio = np.zeros_like(val_num)
     ratio_err = np.zeros_like(err_num)
@@ -134,12 +132,73 @@ def format_hist(h, x_title, y_title, color):
     h.GetYaxis().SetTitle(y_title)
     h.GetYaxis().CenterTitle(True)
 
-def add_fit_and_band(h_ratio, pad):
-    """Applies a pol0 fit, draws an explicitly 1-sigma error band, and annotates the fit result via TLatex."""
-    pad.cd()
-    h_ratio.SetStats(0) # Disable default ROOT stats box
+def set_dynamic_bounds(hists, padding=0.20, force_zero_min=True, is_acceptance=False):
+    """
+    Sets dynamic Y-axis bounds to minimize whitespace, intelligently ignoring 
+    low-statistics edge artifacts (e.g., bins that jump to 1.0 simply because
+    they only had 1 thrown event and 1 accepted event).
+    """
+    if not isinstance(hists, list):
+        hists = [hists]
     
-    # Perform the fit quietly ('Q') and save results ('S')
+    max_val = -np.inf
+    min_val = np.inf
+    
+    for h in hists:
+        contents = []
+        errors = []
+        for i in range(1, h.GetNbinsX() + 1):
+            c = h.GetBinContent(i)
+            e = h.GetBinError(i)
+            if c == 0 and e == 0: 
+                continue
+            contents.append(c)
+            errors.append(e)
+            
+        if not contents:
+            continue
+            
+        contents = np.array(contents)
+        errors = np.array(errors)
+        
+        # 1. Strip bins with massive relative errors (SNR < 0.66)
+        sig_mask = errors < (1.5 * contents) 
+        if np.any(sig_mask):
+            contents = contents[sig_mask]
+            errors = errors[sig_mask]
+        
+        # 2. Strip unphysical edge artifacts specific to Acceptances
+        if is_acceptance:
+            med = np.median(contents)
+            if med > 0:
+                phys_mask = contents < (10 * med)
+                if np.any(phys_mask):
+                    contents = contents[phys_mask]
+                    errors = errors[phys_mask]
+
+        current_max = np.max(contents + errors)
+        current_min = np.min(contents - errors)
+        
+        if current_max > max_val: max_val = current_max
+        if current_min < min_val: min_val = current_min
+
+    if max_val == -np.inf:
+        return 
+    
+    rng = max_val - min_val if max_val > min_val else max_val * 0.1
+    if rng <= 0: rng = 1.0
+    
+    y_max = max_val + rng * padding
+    y_min = 0.0 if force_zero_min else max(0.0, min_val - rng * padding)
+    
+    for h in hists:
+        h.SetMaximum(y_max)
+        h.SetMinimum(y_min)
+
+def add_fit_and_band(h_ratio, pad):
+    pad.cd()
+    h_ratio.SetStats(0)
+    
     h_ratio.Fit("pol0", "QS")
     pad.Update()
     
@@ -148,25 +207,21 @@ def add_fit_and_band(h_ratio, pad):
         fit_func.SetLineColor(ROOT.kRed)
         fit_func.SetLineWidth(2)
         
-        # Grab the exact 1-sigma values
         p0 = fit_func.GetParameter(0)
         p0_err = fit_func.GetParError(0)
         
         x_min = h_ratio.GetXaxis().GetXmin()
         x_max = h_ratio.GetXaxis().GetXmax()
         
-        # 1. Generate 1-Sigma Error Band Manually using a TBox
         error_box = ROOT.TBox(x_min, p0 - p0_err, x_max, p0 + p0_err)
-        error_box.SetFillColorAlpha(ROOT.kRed, 0.3) # Transparent Red
+        error_box.SetFillColorAlpha(ROOT.kRed, 0.3) 
         error_box.Draw("SAME")
-        pad._error_band = error_box # prevent garbage collection
+        pad._error_band = error_box 
         
-        # 2. Redraw to ensure correct Z-ordering (Points & Line on top of band)
         fit_func.Draw("SAME")
         h_ratio.Draw("E1 SAME")
         
-        # 3. Add TLatex Annotation
-        x_pos = x_min + (x_max - x_min) * 0.02 # Offset 2% from left edge
+        x_pos = x_min + (x_max - x_min) * 0.02 
         
         y_range = h_ratio.GetMaximum() - h_ratio.GetMinimum()
         y_pos = p0 + (y_range * 0.05) 
@@ -176,10 +231,9 @@ def add_fit_and_band(h_ratio, pad):
         if label_size == 0: label_size = 0.05 
         latex.SetTextSize(label_size * 0.9)
         latex.SetTextColor(ROOT.kRed)
-        latex.SetTextAlign(11) # Bottom-Left alignment
+        latex.SetTextAlign(11)
         latex.DrawLatex(x_pos, y_pos, f"Fit: {p0:.3f} #pm {p0_err:.3f}")
         
-        # 4. Standard ratio=1 Reference Line
         line = ROOT.TLine(x_min, 1.0, x_max, 1.0)
         line.SetLineStyle(2)
         line.SetLineColor(ROOT.kGray+2)
@@ -191,35 +245,20 @@ def add_fit_and_band(h_ratio, pad):
 # Plotting Generation Logic: General Sliced Acceptances
 # ==============================================================================
 def process_acceptance_sliced(x_var, x_edges, slice_var, slice_edges, t_lh2_th, t_lh2_ac, t_ld2_th, t_ld2_ac, out_file):
-    """Generates acceptance plots for x_var by slicing along slice_var."""
     n_bins = len(slice_edges) - 1
     x_edges_root = array('d', x_edges)
     
     x_titles = {"mass": "Mass [GeV]", "xF": "x_{F}", "pT": "p_{T} [GeV/c]", "pT2": "p_{T}^{2} [(GeV/c)^{2}]"}
     x_title = x_titles.get(x_var, x_var)
 
-    if x_var in ["pT", "pT2"]:
-        acc_min, acc_max = 0.0, 0.04
-        ratio_min, ratio_max = 0.0, 1.1
-    elif x_var == "xF":
-        acc_min, acc_max = 0.0, 0.1
-        ratio_min, ratio_max = 0.0, 1.2
-    else:
-        acc_min, acc_max = 0.0, 0.1
-        ratio_min, ratio_max = 0.0, 1.2
-
     for i in range(n_bins):
         val_low = slice_edges[i]
         val_high = slice_edges[i+1]
         
-        if slice_var == "xF":
-            slice_title = f"{val_low:.2f} #leq x_{{F}} < {val_high:.2f}"
-        elif slice_var == "pT":
-            slice_title = f"{val_low:.2f} #leq p_{{T}} < {val_high:.2f}"
-        elif slice_var == "pT2":
-            slice_title = f"{val_low:.2f} #leq p_{{T}}^{{2}} < {val_high:.2f}"
-        else:
-            slice_title = f"{val_low:.2f} #leq {slice_var} < {val_high:.2f}"
+        if slice_var == "xF": slice_title = f"{val_low:.2f} #leq x_{{F}} < {val_high:.2f}"
+        elif slice_var == "pT": slice_title = f"{val_low:.2f} #leq p_{{T}} < {val_high:.2f}"
+        elif slice_var == "pT2": slice_title = f"{val_low:.2f} #leq p_{{T}}^{{2}} < {val_high:.2f}"
+        else: slice_title = f"{val_low:.2f} #leq {slice_var} < {val_high:.2f}"
             
         title = f"{slice_title}; {x_title}"
         binName = f"{x_var}_sliced_by_{slice_var}_bin{i}"
@@ -266,28 +305,15 @@ def process_acceptance_sliced(x_var, x_edges, slice_var, slice_edges, t_lh2_th, 
         format_hist(h_ratio_combine, x_title, "Acceptance", ROOT.kBlack)
         format_hist(h_ratio_acceptance, x_title, "LH2 / LD2 Ratio", ROOT.kBlack)
 
-        max_y = max(h_ratio_LH2.GetMaximum(), h_ratio_LD2.GetMaximum())
-        if max_y > 0:
-            h_ratio_LH2.SetMaximum(max_y * 1.5)
-            h_ratio_LD2.SetMaximum(max_y * 1.5)
-            h_ratio_combine.SetMaximum(max_y * 1.5)
-
-        h_ratio_LH2.SetMinimum(acc_min); h_ratio_LH2.SetMaximum(acc_max)
-        h_ratio_LD2.SetMinimum(acc_min); h_ratio_LD2.SetMaximum(acc_max)
-        h_ratio_combine.SetMinimum(acc_min); h_ratio_combine.SetMaximum(acc_max)
-        h_ratio_acceptance.SetMinimum(ratio_min); h_ratio_acceptance.SetMaximum(ratio_max)
+        set_dynamic_bounds([h_ratio_LH2, h_ratio_LD2, h_ratio_combine], padding=0.20, force_zero_min=True, is_acceptance=True)
+        set_dynamic_bounds([h_ratio_acceptance], padding=0.30, force_zero_min=False, is_acceptance=False)
 
         make_canvas = lambda cname, ctitle: ROOT.TCanvas(cname, ctitle, 800, 600)
         def setup_canvas(c): c.SetTickx(1); c.SetTicky(1)
 
-        c_lh2 = make_canvas(f"c_lh2_{binName}", "LH2 Acceptance")
-        setup_canvas(c_lh2); h_ratio_LH2.Draw("E1"); c_lh2.Write(); c_lh2.SaveAs(f"acceptance_LH2_{binName}.pdf")
-
-        c_ld2 = make_canvas(f"c_ld2_{binName}", "LD2 Acceptance")
-        setup_canvas(c_ld2); h_ratio_LD2.Draw("E1"); c_ld2.Write(); c_ld2.SaveAs(f"acceptance_LD2_{binName}.pdf")
-
-        c_comb = make_canvas(f"c_comb_{binName}", "Combined Acceptance")
-        setup_canvas(c_comb); h_ratio_combine.Draw("E1"); c_comb.Write(); c_comb.SaveAs(f"acceptance_combine_{binName}.pdf")
+        c_lh2 = make_canvas(f"c_lh2_{binName}", "LH2 Acceptance"); setup_canvas(c_lh2); h_ratio_LH2.Draw("E1"); c_lh2.Write(); c_lh2.SaveAs(f"acceptance_LH2_{binName}.pdf")
+        c_ld2 = make_canvas(f"c_ld2_{binName}", "LD2 Acceptance"); setup_canvas(c_ld2); h_ratio_LD2.Draw("E1"); c_ld2.Write(); c_ld2.SaveAs(f"acceptance_LD2_{binName}.pdf")
+        c_comb = make_canvas(f"c_comb_{binName}", "Combined Acceptance"); setup_canvas(c_comb); h_ratio_combine.Draw("E1"); c_comb.Write(); c_comb.SaveAs(f"acceptance_combine_{binName}.pdf")
 
         c_overlay = make_canvas(f"c_overlay_{binName}", "Acceptances Overlay")
         setup_canvas(c_overlay)
@@ -329,16 +355,6 @@ def process_integrated_1D(var_name, var_edges, t_lh2_th, t_lh2_ac, t_ld2_th, t_l
     x_titles = {"mass": "Mass [GeV]", "xF": "x_{F}", "pT": "p_{T} [GeV/c]", "pT2": "p_{T}^{2} [(GeV/c)^{2}]"}
     x_title = x_titles.get(var_name, var_name)
 
-    if var_name in ["pT", "pT2"]:
-        acc_min, acc_max = 0.0, 0.04
-        ratio_min, ratio_max = 0.0, 1.1
-    elif var_name == "xF":
-        acc_min, acc_max = 0.0, 0.1
-        ratio_min, ratio_max = 0.0, 1.2
-    else: 
-        acc_min, acc_max = 0.0, 0.1
-        ratio_min, ratio_max = 0.0, 1.2
-
     lh2_th_h, lh2_th_err = get_weighted_histogram(t_lh2_th[var_name], t_lh2_th.ReWeight, var_edges)
     lh2_ac_h, lh2_ac_err = get_weighted_histogram(t_lh2_ac[var_name], t_lh2_ac.ReWeight, var_edges)
     lh2_ratio = np.divide(lh2_ac_h, lh2_th_h, out=np.zeros_like(lh2_ac_h), where=lh2_th_h != 0)
@@ -372,10 +388,8 @@ def process_integrated_1D(var_name, var_edges, t_lh2_th, t_lh2_ac, t_ld2_th, t_l
     format_hist(h_ratio_combine, x_title, "Acceptance", ROOT.kBlack)
     format_hist(h_ratio_acceptance, x_title, "LH2 / LD2 Ratio", ROOT.kBlack)
 
-    h_ratio_LH2.SetMinimum(acc_min); h_ratio_LH2.SetMaximum(acc_max)
-    h_ratio_LD2.SetMinimum(acc_min); h_ratio_LD2.SetMaximum(acc_max)
-    h_ratio_combine.SetMinimum(acc_min); h_ratio_combine.SetMaximum(acc_max)
-    h_ratio_acceptance.SetMinimum(ratio_min); h_ratio_acceptance.SetMaximum(ratio_max)
+    set_dynamic_bounds([h_ratio_LH2, h_ratio_LD2, h_ratio_combine], padding=0.20, force_zero_min=True, is_acceptance=True)
+    set_dynamic_bounds([h_ratio_acceptance], padding=0.30, force_zero_min=False, is_acceptance=False)
 
     make_canvas = lambda cname, ctitle: ROOT.TCanvas(cname, ctitle, 800, 600)
     def setup_canvas(c): c.SetTickx(1); c.SetTicky(1)
@@ -442,8 +456,7 @@ def plot_kinematics_separated(var_name, title_suffix, file_prefix, var_edges, t_
     h_lh2_th.GetXaxis().CenterTitle(True)
     h_lh2_th.GetYaxis().CenterTitle(True)
 
-    max_y_th = max(h_lh2_th.GetMaximum(), h_ld2_th.GetMaximum())
-    if max_y_th > 0: h_lh2_th.SetMaximum(max_y_th * 1.5)
+    set_dynamic_bounds([h_lh2_th, h_ld2_th], padding=0.15, force_zero_min=True, is_acceptance=False)
 
     c_th = ROOT.TCanvas(f"c_{var_name}_th_{file_prefix}", f"Thrown {var_name}", 800, 600)
     c_th.SetTickx(1); c_th.SetTicky(1)
@@ -468,8 +481,7 @@ def plot_kinematics_separated(var_name, title_suffix, file_prefix, var_edges, t_
     h_lh2_ac.GetXaxis().CenterTitle(True)
     h_lh2_ac.GetYaxis().CenterTitle(True)
 
-    max_y_ac = max(h_lh2_ac.GetMaximum(), h_ld2_ac.GetMaximum())
-    if max_y_ac > 0: h_lh2_ac.SetMaximum(max_y_ac * 1.5)
+    set_dynamic_bounds([h_lh2_ac, h_ld2_ac], padding=0.15, force_zero_min=True, is_acceptance=False)
 
     c_ac = ROOT.TCanvas(f"c_{var_name}_ac_{file_prefix}", f"Accepted {var_name}", 800, 600)
     c_ac.SetTickx(1); c_ac.SetTicky(1)
@@ -559,8 +571,7 @@ def create_split_ratio_canvas(var_name, var_edges, t_lh2, t_ld2, mask_lh2, mask_
     pad2.Draw()
     
     pad1.cd()
-    max_y = max(h_lh2.GetMaximum(), h_ld2.GetMaximum())
-    h_lh2.SetMaximum(max_y * 1.25)
+    set_dynamic_bounds([h_lh2, h_ld2], padding=0.20, force_zero_min=True, is_acceptance=False)
     
     h_lh2.GetXaxis().SetLabelSize(0.04)
     h_lh2.GetXaxis().SetTitleSize(0.045)
@@ -578,18 +589,7 @@ def create_split_ratio_canvas(var_name, var_edges, t_lh2, t_ld2, mask_lh2, mask_
     leg.Draw()
     
     pad2.cd()
-    valid_mask = ratio > 0
-    if np.any(valid_mask):
-        max_ratio_val = np.max(ratio[valid_mask] + ratio_err[valid_mask])
-        min_ratio_val = np.min(ratio[valid_mask] - ratio_err[valid_mask])
-        range_padding = (max_ratio_val - min_ratio_val) * 0.15
-        if range_padding == 0: range_padding = 0.2
-        
-        h_ratio.SetMaximum(max_ratio_val + range_padding)
-        h_ratio.SetMinimum(max(0.0, min_ratio_val - range_padding))
-    else:
-        h_ratio.SetMaximum(2.0)
-        h_ratio.SetMinimum(0.0)
+    set_dynamic_bounds([h_ratio], padding=0.30, force_zero_min=False, is_acceptance=False)
     
     h_ratio.GetYaxis().SetNdivisions(505)
     h_ratio.GetYaxis().SetLabelSize(0.08)
@@ -658,8 +658,7 @@ def create_split_acceptance_canvas(var_name, var_edges, t_lh2_th, t_lh2_ac, t_ld
     pad2.Draw()
     
     pad1.cd()
-    max_y = max(h_lh2.GetMaximum(), h_ld2.GetMaximum())
-    h_lh2.SetMaximum(max_y * 1.4) 
+    set_dynamic_bounds([h_lh2, h_ld2], padding=0.20, force_zero_min=True, is_acceptance=True)
     
     h_lh2.GetXaxis().SetLabelSize(0.04)
     h_lh2.GetXaxis().SetTitleSize(0.045)
@@ -677,19 +676,7 @@ def create_split_acceptance_canvas(var_name, var_edges, t_lh2_th, t_lh2_ac, t_ld
     leg.Draw()
     
     pad2.cd()
-    
-    valid_mask = ratio > 0
-    if np.any(valid_mask):
-        max_ratio_val = np.max(ratio[valid_mask] + ratio_err[valid_mask])
-        min_ratio_val = np.min(ratio[valid_mask] - ratio_err[valid_mask])
-        range_padding = (max_ratio_val - min_ratio_val) * 0.15
-        if range_padding == 0: range_padding = 0.2
-        
-        h_ratio.SetMaximum(max_ratio_val + range_padding)
-        h_ratio.SetMinimum(max(0.0, min_ratio_val - range_padding))
-    else:
-        h_ratio.SetMaximum(2.0)
-        h_ratio.SetMinimum(0.0)
+    set_dynamic_bounds([h_ratio], padding=0.30, force_zero_min=False, is_acceptance=False)
     
     h_ratio.GetYaxis().SetNdivisions(505)
     h_ratio.GetYaxis().SetLabelSize(0.08)
@@ -723,11 +710,9 @@ def main():
     massEdge_root = array('d', massEdge) 
     
     xFEdge = np.round(np.arange(-0.05, 0.90, 0.05), 2)
-    # Both Fine and Coarse pT Bin arrays
     pTEdge_fine = np.linspace(0.0, 3.0, 61) 
     pTEdge_user = np.array([0., 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8], dtype=float)
     
-    # Deriving matching pT2 arrays exactly mapped to the requested user edges
     pT2Edge_fine = np.linspace(0.0, 9.0, 61)
     pT2Edge_user = np.square(pTEdge_user) 
     
@@ -756,7 +741,6 @@ def main():
     t_lh2_accept = ak.with_field(t_lh2_accept, np.sqrt(t_lh2_accept.dpx**2 + t_lh2_accept.dpy**2), "pT")
     t_ld2_accept = ak.with_field(t_ld2_accept, np.sqrt(t_ld2_accept.dpx**2 + t_ld2_accept.dpy**2), "pT")
 
-    # Add pT^2 Support Here
     t_lh2_thrown = ak.with_field(t_lh2_thrown, t_lh2_thrown.pT**2, "pT2")
     t_ld2_thrown = ak.with_field(t_ld2_thrown, t_ld2_thrown.pT**2, "pT2")
     t_lh2_accept = ak.with_field(t_lh2_accept, t_lh2_accept.pT**2, "pT2")
@@ -772,8 +756,6 @@ def main():
     t_lh2_accept = ak.with_field(t_lh2_accept, t_lh2_accept.dpy**2, "dpy2")
     t_ld2_accept = ak.with_field(t_ld2_accept, t_ld2_accept.dpy**2, "dpy2")
 
-    # CRITICAL FIX: Widen the generator-level fiducial cuts so they do not artificially delete events 
-    # operating in the [3.9, 10.0] and [-0.05, 0.90] spaces.
     print("Applying Generator-Level Fiducial Cuts to Thrown Trees (Updated pT up to 3.0)...")
     th_fiducial_lh2 = (
         (t_lh2_thrown.xF >= -0.2) & (t_lh2_thrown.xF <= 1.0) & 
@@ -795,7 +777,6 @@ def main():
     print("\n--- Starting Mass Acceptances Sliced by pT ---")
     process_acceptance_sliced("mass", massEdge, "pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file)
     
-    # 1. Acceptance correction vs pT, sliced by different xF bins
     print("\n--- Starting pT Acceptances Sliced by xF (NEW) ---")
     process_acceptance_sliced("pT", pTEdge_user, "xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file)
 
@@ -804,7 +785,6 @@ def main():
     process_integrated_1D("xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file)
     process_integrated_1D("pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file)
     
-    # 2. Acceptance correction vs pT^2, fully integrated over Mass and xF
     print("\n--- Starting Fully Integrated pT^2 Acceptance (NEW) ---")
     process_integrated_1D("pT2", pT2Edge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file)
     
@@ -846,26 +826,40 @@ def main():
     create_split_ratio_canvas("pT", pTEdge_fine, t_lh2_accept, t_ld2_accept, m_base_lh2_ac, m_base_ld2_ac, "Split_pT_Fine_All_Mass_xF", "p_{T} Yield (Fine, All Mass, x_{F})", "p_{T} [GeV/c]", ratio_out_dir)
     create_split_ratio_canvas("pT", pTEdge_user, t_lh2_accept, t_ld2_accept, m_base_lh2_ac, m_base_ld2_ac, "Split_pT_User_All_Mass_xF", "p_{T} Yield (User Bins, All Mass, x_{F})", "p_{T} [GeV/c]", ratio_out_dir)
 
+    create_split_ratio_canvas("pT", pTEdge_fine, t_lh2_accept, t_ld2_accept, m_xf1_lh2_ac, m_xf1_ld2_ac, "Split_pT_Fine_0.0_xF_0.4", "p_{T} Yield (Fine, 0.0 #leq x_{F} < 0.4)", "p_{T} [GeV/c]", ratio_out_dir)
+    create_split_ratio_canvas("pT", pTEdge_fine, t_lh2_accept, t_ld2_accept, m_xf2_lh2_ac, m_xf2_ld2_ac, "Split_pT_Fine_0.4_xF_0.8", "p_{T} Yield (Fine, 0.4 #leq x_{F} < 0.8)", "p_{T} [GeV/c]", ratio_out_dir)
+    create_split_ratio_canvas("pT", pTEdge_fine, t_lh2_accept, t_ld2_accept, m_mass1_lh2_ac, m_mass1_ld2_ac, "Split_pT_Fine_4.2_Mass_5.5", "p_{T} Yield (Fine, 4.2 < Mass < 5.5)", "p_{T} [GeV/c]", ratio_out_dir)
+    create_split_ratio_canvas("pT", pTEdge_fine, t_lh2_accept, t_ld2_accept, m_mass3_lh2_ac, m_mass3_ld2_ac, "Split_pT_Fine_5.5_Mass_8.8", "p_{T} Yield (Fine, 5.5 < Mass < 8.8)", "p_{T} [GeV/c]", ratio_out_dir)
+
+    create_split_ratio_canvas("pT", pTEdge_user, t_lh2_accept, t_ld2_accept, m_xf1_lh2_ac, m_xf1_ld2_ac, "Split_pT_User_0.0_xF_0.4", "p_{T} Yield (User Bins, 0.0 #leq x_{F} < 0.4)", "p_{T} [GeV/c]", ratio_out_dir)
+    create_split_ratio_canvas("pT", pTEdge_user, t_lh2_accept, t_ld2_accept, m_xf2_lh2_ac, m_xf2_ld2_ac, "Split_pT_User_0.4_xF_0.8", "p_{T} Yield (User Bins, 0.4 #leq x_{F} < 0.8)", "p_{T} [GeV/c]", ratio_out_dir)
+    create_split_ratio_canvas("pT", pTEdge_user, t_lh2_accept, t_ld2_accept, m_mass1_lh2_ac, m_mass1_ld2_ac, "Split_pT_User_4.2_Mass_5.5", "p_{T} Yield (User Bins, 4.2 < Mass < 5.5)", "p_{T} [GeV/c]", ratio_out_dir)
+    create_split_ratio_canvas("pT", pTEdge_user, t_lh2_accept, t_ld2_accept, m_mass3_lh2_ac, m_mass3_ld2_ac, "Split_pT_User_5.5_Mass_8.8", "p_{T} Yield (User Bins, 5.5 < Mass < 8.8)", "p_{T} [GeV/c]", ratio_out_dir)
+
     # ==================================================================================
     # ACCEPTANCE CORRECTIONS (Split Canvas) 
     # ==================================================================================
     print("\n--- Generating Custom Split Canvas ACCEPTANCE Ratio Plots ---")
     acc_ratio_out_dir = out_file.mkdir("Acceptance_Ratios_SplitCanvas")
     
-    # --- pT Acceptance ---
     create_split_acceptance_canvas("pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_base_lh2_th, m_base_lh2_ac, m_base_ld2_th, m_base_ld2_ac, "Acceptance_pT_All_Mass_xF", "p_{T} Acceptance (All Mass, x_{F})", "p_{T} [GeV/c]", acc_ratio_out_dir)
     create_split_acceptance_canvas("pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_xf1_lh2_th, m_xf1_lh2_ac, m_xf1_ld2_th, m_xf1_ld2_ac, "Acceptance_pT_0.0_xF_0.4", "p_{T} Acceptance (0.0 #leq x_{F} < 0.4)", "p_{T} [GeV/c]", acc_ratio_out_dir)
     create_split_acceptance_canvas("pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_xf2_lh2_th, m_xf2_lh2_ac, m_xf2_ld2_th, m_xf2_ld2_ac, "Acceptance_pT_0.4_xF_0.8", "p_{T} Acceptance (0.4 #leq x_{F} < 0.8)", "p_{T} [GeV/c]", acc_ratio_out_dir)
     
-    # --- pT2 Acceptance ---
     create_split_acceptance_canvas("pT2", pT2Edge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_base_lh2_th, m_base_lh2_ac, m_base_ld2_th, m_base_ld2_ac, "Acceptance_pT2_All_Mass_xF", "p_{T}^{2} Acceptance (All Mass, x_{F})", "p_{T}^{2} [(GeV/c)^{2}]", acc_ratio_out_dir)
 
-    # --- xF Acceptance ---
     create_split_acceptance_canvas("xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_base_lh2_th, m_base_lh2_ac, m_base_ld2_th, m_base_ld2_ac, "Acceptance_xF_All_Mass_pT", "x_{F} Acceptance (All Mass, p_{T})", "x_{F}", acc_ratio_out_dir)
+
+    create_split_acceptance_canvas("xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_mass1_lh2_th, m_mass1_lh2_ac, m_mass1_ld2_th, m_mass1_ld2_ac, "Acceptance_xF_4.2_Mass_5.5", "x_{F} Acceptance (4.2 < Mass < 5.5)", "x_{F}", acc_ratio_out_dir)
+    create_split_acceptance_canvas("xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_mass3_lh2_th, m_mass3_lh2_ac, m_mass3_ld2_th, m_mass3_ld2_ac, "Acceptance_xF_5.5_Mass_8.8", "x_{F} Acceptance (5.5 < Mass < 8.8)", "x_{F}", acc_ratio_out_dir)
+    
+    create_split_acceptance_canvas("pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_mass1_lh2_th, m_mass1_lh2_ac, m_mass1_ld2_th, m_mass1_ld2_ac, "Acceptance_pT_4.2_Mass_5.5", "p_{T} Acceptance (4.2 < Mass < 5.5)", "p_{T} [GeV/c]", acc_ratio_out_dir)
+    create_split_acceptance_canvas("pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_mass3_lh2_th, m_mass3_lh2_ac, m_mass3_ld2_th, m_mass3_ld2_ac, "Acceptance_pT_5.5_Mass_8.8", "p_{T} Acceptance (5.5 < Mass < 8.8)", "p_{T} [GeV/c]", acc_ratio_out_dir)
+
 
     out_file.Write()
     out_file.Close()
-    print("\nDone. Generated PDFs and saved TH1 data to 'acceptance_mass_xF.root'")
+    print("\nDone. Generated PDFs and saved TH1 data to 'acceptance_mass_xF_unfolding.root'")
 
 if __name__ == "__main__":
     main()

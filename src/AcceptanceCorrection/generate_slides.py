@@ -30,20 +30,17 @@ def make_frame_1col(title, img):
 def main():
     output_tex = "acceptance_slides.tex"
 
-    # Number of bins based on your numpy arrays
-    num_xf_bins = 16 # np.arange(0.0, 0.85, 0.05) yields 17 edges = 16 bins
-    num_pt_bins = 7  # [0., 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8] = 8 edges = 7 bins
+    # CORRECTED BIN COUNTS
+    num_xf_bins = 18 # np.arange(-0.05, 0.90, 0.05) has 19 edges = 18 bins
+    num_pt_bins = 7  # [0., 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8] has 8 edges = 7 bins
 
-    # LaTeX document header using a 16:9 widescreen aspect ratio
     latex_content = r"""\documentclass[aspectratio=169]{beamer}
 \usepackage{graphicx}
 \usepackage{amsmath}
 
-% Use a blue theme that natively includes slide numbers at the bottom right
 \usetheme{Madrid}
-\usecolortheme{whale} % Enforces a strong blue palette
+\usecolortheme{whale}
 
-% Remove navigation symbols for a cleaner look
 \setbeamertemplate{navigation symbols}{}
 
 \title{Detector Acceptance Study}
@@ -56,9 +53,6 @@ def main():
     \titlepage
 \end{frame}
 
-% ==========================================
-% INTRO SLIDES
-% ==========================================
 \begin{frame}{Overview}
     \begin{itemize}
         \item Files Used \& Event Selection
@@ -85,8 +79,8 @@ def main():
     \vspace{0.1cm}
     \textbf{Kinematic Bin Boundaries:}
     \begin{itemize}
-        \item \textbf{Mass [GeV]:} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.7]
-        \item \textbf{$x_F$:} [0.0, 0.05, 0.10, ..., 0.80]
+        \item \textbf{Mass [GeV]:} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.8]
+        \item \textbf{$x_F$:} [-0.05, 0.0, 0.05, ..., 0.85]
         \item \textbf{$p_T$ [GeV/c]:} [0.0, 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8]
     \end{itemize}
 \end{frame}
@@ -143,7 +137,6 @@ def main():
     latex_content += make_frame_1col("Invariant Mass Yields \\& Ratio ($0.0 < x_F \\leq 0.4$)", "Split_Mass_0.0_xF_0.4.pdf")
     latex_content += make_frame_1col("Invariant Mass Yields \\& Ratio ($0.4 < x_F \\leq 0.8$)", "Split_Mass_0.4_xF_0.8.pdf")
 
-
     # ==========================================
     # 2. xF Studies
     # ==========================================
@@ -157,11 +150,10 @@ def main():
     latex_content += make_frame_1col("$x_F$ Yields \\& Ratio ($4.2 < \\text{Mass} \\leq 5.5$)", "Split_xF_4.2_Mass_5.5.pdf")
     latex_content += make_frame_1col("$x_F$ Yields \\& Ratio ($5.5 < \\text{Mass} \\leq 8.8$)", "Split_xF_5.5_Mass_8.8.pdf")
 
-    # xF Acceptances (New Additions)
+    # xF Acceptances
     latex_content += make_frame_1col("$x_F$ Acceptance \\& Ratio (All Mass, $p_T$)", "Acceptance_xF_All_Mass_pT.pdf")
     latex_content += make_frame_1col("$x_F$ Acceptance \\& Ratio ($4.2 < \\text{Mass} < 5.5$)", "Acceptance_xF_4.2_Mass_5.5.pdf")
-    latex_content += make_frame_1col("$x_F$ Acceptance \\& Ratio ($5.5 < \\text{Mass} < 8.7$)", "Acceptance_xF_5.5_Mass_8.7.pdf")
-
+    latex_content += make_frame_1col("$x_F$ Acceptance \\& Ratio ($5.5 < \\text{Mass} < 8.8$)", "Acceptance_xF_5.5_Mass_8.8.pdf")
 
     # ==========================================
     # 3. pT Studies (Yields & Acceptances)
@@ -176,21 +168,21 @@ def main():
     latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $0.0 < x_F < 0.4$)", "Split_pT_Fine_0.0_xF_0.4.pdf")
     latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $0.4 < x_F < 0.8$)", "Split_pT_Fine_0.4_xF_0.8.pdf")
     latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $4.2 < \\text{Mass} < 5.5$)", "Split_pT_Fine_4.2_Mass_5.5.pdf")
-    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $5.5 < \\text{Mass} < 8.7$)", "Split_pT_Fine_5.5_Mass_8.7.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (Fine Bins, $5.5 < \\text{Mass} < 8.8$)", "Split_pT_Fine_5.5_Mass_8.8.pdf")
 
     # User Binning Yields
     latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, All Mass, $x_F$)", "Split_pT_User_All_Mass_xF.pdf")
     latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $0.0 < x_F < 0.4$)", "Split_pT_User_0.0_xF_0.4.pdf")
     latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $0.4 < x_F < 0.8$)", "Split_pT_User_0.4_xF_0.8.pdf")
     latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $4.2 < \\text{Mass} < 5.5$)", "Split_pT_User_4.2_Mass_5.5.pdf")
-    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $5.5 < \\text{Mass} < 8.7$)", "Split_pT_User_5.5_Mass_8.7.pdf")
+    latex_content += make_frame_1col("$p_T$ Yields \\& Ratio (User Bins, $5.5 < \\text{Mass} < 8.8$)", "Split_pT_User_5.5_Mass_8.8.pdf")
 
     # Acceptances
     latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, All Mass, $x_F$)", "Acceptance_pT_All_Mass_xF.pdf")
     latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $0.0 < x_F < 0.4$)", "Acceptance_pT_0.0_xF_0.4.pdf")
     latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $0.4 < x_F < 0.8$)", "Acceptance_pT_0.4_xF_0.8.pdf")
     latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $4.2 < \\text{Mass} < 5.5$)", "Acceptance_pT_4.2_Mass_5.5.pdf")
-    latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $5.5 < \\text{Mass} < 8.7$)", "Acceptance_pT_5.5_Mass_8.7.pdf")
+    latex_content += make_frame_1col("$p_T$ Acceptance \\& Ratio (User Bins, $5.5 < \\text{Mass} < 8.8$)", "Acceptance_pT_5.5_Mass_8.8.pdf")
 
 
     # ==========================================
@@ -221,7 +213,6 @@ def main():
         prefix = f"xF_bin{i}"
         title = f"$x_F$ Bin {i}"
         
-        # 4pi and Clean Yield differences (Separated Canvases)
         latex_content += make_frame_2cols(f"Kinematic Yields ($4\pi$ Thrown): {title}", 
                                           f"yield_th_dpx_{prefix}.pdf", 
                                           f"yield_th_dpy_{prefix}.pdf")
@@ -236,25 +227,26 @@ def main():
                                           f"yield_ac_dpx2_{prefix}.pdf", 
                                           f"yield_ac_dpy2_{prefix}.pdf")
         
-        latex_content += make_frame_2cols(f"Overlay \\& Ratio: {title}", 
-                                          f"acceptance_overlay_{prefix}.pdf", 
-                                          f"acceptance_ratio_{prefix}.pdf")
+        # CORRECTED FILENAMES: The python script outputs "mass_sliced_by_xF"
+        latex_content += make_frame_2cols(f"Overlay \\& Ratio (Mass sliced by $x_F$): {title}", 
+                                          f"acceptance_overlay_mass_sliced_by_xF_bin{i}.pdf", 
+                                          f"acceptance_ratio_mass_sliced_by_xF_bin{i}.pdf")
 
     # ==========================================
     # 6. Binned Slice Studies (pT Slices)
     # ==========================================
     latex_content += r"\section{Binned Studies: $p_T$ Slices}" + "\n"
     for i in range(num_pt_bins):
-        prefix = f"pT_bin{i}"
         title = f"$p_T$ Bin {i}"
-        latex_content += make_frame_2cols(f"Overlay \\& Ratio: {title}", 
-                                          f"acceptance_overlay_{prefix}.pdf", 
-                                          f"acceptance_ratio_{prefix}.pdf")
+        
+        # CORRECTED FILENAMES: The python script outputs "mass_sliced_by_pT"
+        latex_content += make_frame_2cols(f"Overlay \\& Ratio (Mass sliced by $p_T$): {title}", 
+                                          f"acceptance_overlay_mass_sliced_by_pT_bin{i}.pdf", 
+                                          f"acceptance_ratio_mass_sliced_by_pT_bin{i}.pdf")
 
     # Close the document
     latex_content += r"\end{document}"
 
-    # Write out to file
     with open(output_tex, "w") as f:
         f.write(latex_content)
 

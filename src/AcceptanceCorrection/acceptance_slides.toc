@@ -3,4 +3,4 @@
 \beamer@sectionintoc {3}{$p_T$ Plots}{16}{0}{3}
 \beamer@sectionintoc {4}{Track Kinematics ($dp_x, dp_y$)}{32}{0}{4}
 \beamer@sectionintoc {5}{Binned Studies: $x_F$ Slices}{36}{0}{5}
-\beamer@sectionintoc {6}{Binned Studies: $p_T$ Slices}{116}{0}{6}
+\beamer@sectionintoc {6}{Binned Studies: $p_T$ Slices}{126}{0}{6}
