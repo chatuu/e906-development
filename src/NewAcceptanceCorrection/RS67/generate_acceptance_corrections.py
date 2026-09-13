@@ -551,11 +551,11 @@ def main():
     ROOT.gStyle.SetOptFit(1111)
     ROOT.gROOT.SetBatch(True) 
 
-    massEdge = np.array([3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.8, 10.0], dtype=float)
+    massEdge = np.array([4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.8], dtype=float)
     massEdge_root = array('d', massEdge) 
     
     # 18 Bins representing your full fine xF structure
-    xFEdge = np.round(np.arange(-0.05, 0.90, 0.05), 2)
+    xFEdge = np.round(np.arange(0.0, 0.85, 0.05), 2)
     
     pTEdge_fine = np.linspace(0.0, 3.0, 61) 
     pTEdge_user = np.array([0., 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8], dtype=float)
@@ -577,31 +577,30 @@ def main():
     t_lh2_accept = ak.with_field(t_lh2_accept, t_lh2_accept.pT**2, "pT2")
     t_ld2_accept = ak.with_field(t_ld2_accept, t_ld2_accept.pT**2, "pT2")
 
-    print("Applying Generator-Level Fiducial Cuts to Thrown Trees (Updated pT up to 3.0)...")
+    print("Applying Generator-Level Fiducial Cuts to Thrown Trees (Updated pT up to 2.5)...")
     th_fiducial_lh2 = (
-        (t_lh2_thrown.xF >= -0.2) & (t_lh2_thrown.xF <= 1.0) & 
-        (t_lh2_thrown.mass >= 3.0) & (t_lh2_thrown.mass <= 12.0) &
-        (t_lh2_thrown.pT > 0.0) & (t_lh2_thrown.pT <= 3.0)
+        (t_lh2_thrown.xF >= 0.0) & (t_lh2_thrown.xF <= 0.8) & 
+        (t_lh2_thrown.mass >= 4.2) & (t_lh2_thrown.mass <= 8.8) &
+        (t_lh2_thrown.pT > 0.0) & (t_lh2_thrown.pT <= 1.8)
     )
     th_fiducial_ld2 = (
-        (t_ld2_thrown.xF >= -0.2) & (t_ld2_thrown.xF <= 1.0) & 
-        (t_ld2_thrown.mass >= 3.0) & (t_ld2_thrown.mass <= 12.0) &
-        (t_ld2_thrown.pT > 0.0) & (t_ld2_thrown.pT <= 3.0)
+        (t_ld2_thrown.xF >= 0.0) & (t_ld2_thrown.xF <= 0.85) & 
+        (t_ld2_thrown.mass >= 4.2) & (t_ld2_thrown.mass <= 8.8) &
+        (t_ld2_thrown.pT > 0.0) & (t_ld2_thrown.pT <= 1.8)
     )
     t_lh2_thrown = t_lh2_thrown[th_fiducial_lh2]
     t_ld2_thrown = t_ld2_thrown[th_fiducial_ld2]
 
     out_file = ROOT.TFile("acceptance_mass_xF_unfolding.root", "RECREATE")
 
-    # Applies custom_name="xF" to generate xF_bin0 through xF_bin17
+    # REMOVED custom_name here to let the script generate mass_sliced_by_xF_bin{i}
     print("\n--- Starting Mass Acceptances Sliced by xF ---")
-    process_acceptance_sliced("mass", massEdge, "xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file, custom_name="xF")
+    process_acceptance_sliced("mass", massEdge, "xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file)
     
-    # CRITICAL FIX: Applies custom_name="pT" to generate pT_bin0 through pT_bin6
+    # REMOVED custom_name here to let the script generate mass_sliced_by_pT_bin{i}
     print("\n--- Starting Mass Acceptances Sliced by pT ---")
-    process_acceptance_sliced("mass", massEdge, "pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file, custom_name="pT")
+    process_acceptance_sliced("mass", massEdge, "pT", pTEdge_user, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file)
     
-    # Omitted custom_name here on purpose to avoid overwriting the xF_bin directories created above
     print("\n--- Starting pT Acceptances Sliced by xF ---")
     process_acceptance_sliced("pT", pTEdge_user, "xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, out_file)
 
@@ -661,6 +660,35 @@ def main():
     print("\n--- Generating Custom Split Canvas ACCEPTANCE Ratio Plots ---")
     acc_ratio_out_dir = out_file.mkdir("Acceptance_Ratios_SplitCanvas")
     
+    # --- Mass Acceptance ---
+    create_split_acceptance_canvas("mass", massEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_base_lh2_th, m_base_lh2_ac, m_base_ld2_th, m_base_ld2_ac, "Acceptance_Mass_All_xF_pT", "Invariant Mass Acceptance (All x_{F}, p_{T})", "Mass [GeV]", acc_ratio_out_dir)
+    create_split_acceptance_canvas("mass", massEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_xf1_lh2_th, m_xf1_lh2_ac, m_xf1_ld2_th, m_xf1_ld2_ac, "Acceptance_Mass_0.0_xF_0.4", "Invariant Mass Acceptance (0.0 #leq x_{F} < 0.4)", "Mass [GeV]", acc_ratio_out_dir)
+    create_split_acceptance_canvas("mass", massEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_xf2_lh2_th, m_xf2_lh2_ac, m_xf2_ld2_th, m_xf2_ld2_ac, "Acceptance_Mass_0.4_xF_0.8", "Invariant Mass Acceptance (0.4 #leq x_{F} < 0.8)", "Mass [GeV]", acc_ratio_out_dir)
+
+    # --- Fine-Grained Mass Acceptances (Sliced by xF Bins) ---
+    print("\n--- Generating Fine-Grained Mass Acceptances Sliced by xF Bins ---")
+    for i in range(len(xFEdge) - 1):
+        v_low = xFEdge[i]
+        v_high = xFEdge[i+1]
+        
+        m_slice_lh2_th = (t_lh2_thrown.xF >= v_low) & (t_lh2_thrown.xF < v_high)
+        m_slice_lh2_ac = (t_lh2_accept.xF >= v_low) & (t_lh2_accept.xF < v_high)
+        m_slice_ld2_th = (t_ld2_thrown.xF >= v_low) & (t_ld2_thrown.xF < v_high)
+        m_slice_ld2_ac = (t_ld2_accept.xF >= v_low) & (t_ld2_accept.xF < v_high)
+        
+        # Combine base target masks with the slice masks
+        m_bin_lh2_th = m_base_lh2_th & m_slice_lh2_th
+        m_bin_lh2_ac = m_base_lh2_ac & m_slice_lh2_ac
+        m_bin_ld2_th = m_base_ld2_th & m_slice_ld2_th
+        m_bin_ld2_ac = m_base_ld2_ac & m_slice_ld2_ac
+        
+        plot_name = f"Acceptance_Mass_All_pT_xF_bin{i}"
+        plot_title = f"Invariant Mass Acceptance ({v_low:.2f} #leq x_{{F}} < {v_high:.2f})"
+        create_split_acceptance_canvas("mass", massEdge, 
+                                       t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, 
+                                       m_bin_lh2_th, m_bin_lh2_ac, m_bin_ld2_th, m_bin_ld2_ac, 
+                                       plot_name, plot_title, "Mass [GeV]", acc_ratio_out_dir)
+
     # --- xF Acceptance ---
     create_split_acceptance_canvas("xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_base_lh2_th, m_base_lh2_ac, m_base_ld2_th, m_base_ld2_ac, "Acceptance_xF_All_Mass_pT", "x_{F} Acceptance (All Mass, p_{T})", "x_{F}", acc_ratio_out_dir)
     create_split_acceptance_canvas("xF", xFEdge, t_lh2_thrown, t_lh2_accept, t_ld2_thrown, t_ld2_accept, m_mass1_lh2_th, m_mass1_lh2_ac, m_mass1_ld2_th, m_mass1_ld2_ac, "Acceptance_xF_4.2_Mass_5.5", "x_{F} Acceptance (4.2 < Mass < 5.5)", "x_{F}", acc_ratio_out_dir)

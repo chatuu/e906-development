@@ -1,0 +1,847 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+% Use a blue theme that natively includes slide numbers at the bottom right
+\usetheme{Madrid}
+\usecolortheme{whale} % Enforces a strong blue palette
+
+% Remove navigation symbols for a cleaner look
+\setbeamertemplate{navigation symbols}{}
+
+\title{Detector Acceptance Study \\ (Existing Vs Latest)}
+\author{Chatura Kuruppu}
+\institute{New Mexico State University}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% ==========================================
+% INTRO SLIDES
+% ==========================================
+\begin{frame}{Overview}
+    \begin{itemize}
+        \item Re-Calculate Acceptance Correction for each roadset (long term)
+        \item Currently calculated acceptance corrections by using Kenichi's new root files
+        \item Compare Latest Acceptance Correction Vs Existing Acceptance Correction
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Files Used \& Kinematic Bins}
+    \small
+    \textbf{Latest Files Used (Kenichi):}
+    \begin{itemize}
+        \item \textbf{Thrown:} \texttt{rs67\_<lh2/ld2>\_acc.root:tree\_4pi:event}
+        \item \textbf{Accepted:} \texttt{rs67\_<lh2/ld2>\_acc.root:tree\_acc:event}
+    \end{itemize}
+    \vspace{0.1cm}
+    \textbf{Existing Files Used (Hugo):}
+    \begin{itemize}
+        \item \textbf{Thrown:} \texttt{mc\_drellyan\_<LH2/LD2>\_M027\_S001\_4pi\_pTxFweight\_v2.root}
+        \item \textbf{Accepted:} \texttt{mc\_drellyan\_<LH2/LD2>\_M027\_S001\_clean\_occ\_pTxFweight\_v2.root}
+    \end{itemize}
+    \vspace{0.1cm}
+    \textbf{Kinematic Bin Boundaries:}
+    \begin{itemize}
+        \item \textbf{Mass [GeV]:} [4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6.0, 6.3, 6.6, 6.9, 7.5, 8.8]
+        \item \textbf{$x_F$:} [0.0, 0.05, ..., 0.80]
+        \item \textbf{$p_T$ [GeV/c]:} [0.0, 0.32, 0.49, 0.63, 0.77, 0.95, 1.18, 1.8]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Event Selection Criteria (Chuck's Cuts)}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Dimuon Kinematics:}
+            \begin{itemize}
+                \item $4.2 < \text{Mass} < 8.8 \text{ GeV}$
+                \item $-0.1 < x_F < 0.95$
+                \item $0.05 < x_T \leq 0.58$
+                \item $38 < dp_z < 116 \text{ GeV}$
+                \item $dp_x^2 + dp_y^2 < 5.0 \text{ GeV}^2$
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{Target \& Vertex:}
+            \begin{itemize}
+                \item $-280 < dz < -5 \text{ cm}$
+                \item $|dx| < 0.25 \text{ cm}$
+                \item $|dy - 1.6| < 0.22 \text{ cm}$
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.5\textwidth}
+            \textbf{Track Quality:}
+            \begin{itemize}
+                \item $\chi^2_{\text{dimuon}} < 18$
+                \item Track separation $< 270 \text{ cm}$
+                \item $p_{z,\text{st1}} \in [9, 75] \text{ GeV}$
+                \item $\text{nHits}_1 > 13, \text{nHits}_2 > 13$
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{Generator-Level Fiducial Cuts (Thrown):}
+            \begin{itemize}
+                \item $4.2 < \text{Mass} < 8.8 \text{ GeV}$
+                \item $-0.1 < x_F < 0.95$
+                \item $0.0 < p_T \leq 3.0 \text{ GeV/c}$
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+\section{Invariant Mass Plots}
+
+\begin{frame}{Existing (Left) vs Latest (Right): Mass (Integrated)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_Integrated_mass.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_Integrated_mass.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing (Left) vs Latest (Right): Mass Acceptance (All $x_F$, $p_T$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_xF_pT.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_xF_pT.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (Left) vs LD2 (Right): Latest/Existing Mass Acc.}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_xF_pT.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_xF_pT.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+\section{$x_F$ Plots}
+
+\begin{frame}{Existing (Left) vs Latest (Right): $x_F$ (Integrated)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_Integrated_xF.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_Integrated_xF.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing (Left) vs Latest (Right): $x_F$ Acceptance (All Mass, $p_T$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_xF_All_Mass_pT.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_xF_All_Mass_pT.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (Left) vs LD2 (Right): Latest/Existing $x_F$ Acc.}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_xF_All_Mass_pT.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_xF_All_Mass_pT.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+\section{$p_T$ Plots}
+
+\begin{frame}{Existing (Left) vs Latest (Right): $p_T$ (Integrated)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_Integrated_pT.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_Integrated_pT.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing (Left) vs Latest (Right): $p_T$ Acceptance (All Mass, $x_F$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_pT_All_Mass_xF.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_pT_All_Mass_xF.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (Left) vs LD2 (Right): Latest/Existing $p_T$ Acc.}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_pT_All_Mass_xF.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_pT_All_Mass_xF.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+\section{Mass Sliced by $x_F$ Overlays}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.00 \leq x_F < 0.05$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.00 \leq x_F < 0.05$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.00 \leq x_F < 0.05$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin0.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin0.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.05 \leq x_F < 0.10$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.05 \leq x_F < 0.10$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.05 \leq x_F < 0.10$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin1.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin1.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.10 \leq x_F < 0.15$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.10 \leq x_F < 0.15$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.10 \leq x_F < 0.15$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin2.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin2.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.15 \leq x_F < 0.20$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.15 \leq x_F < 0.20$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.15 \leq x_F < 0.20$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin3.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin3.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.20 \leq x_F < 0.25$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.20 \leq x_F < 0.25$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.20 \leq x_F < 0.25$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin4.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin4.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.25 \leq x_F < 0.30$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.25 \leq x_F < 0.30$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.25 \leq x_F < 0.30$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin5.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin5.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.30 \leq x_F < 0.35$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.30 \leq x_F < 0.35$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.30 \leq x_F < 0.35$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin6.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin6.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.35 \leq x_F < 0.40$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin7.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin7.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.35 \leq x_F < 0.40$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin7.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin7.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.35 \leq x_F < 0.40$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin7.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin7.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.40 \leq x_F < 0.45$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin8.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin8.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.40 \leq x_F < 0.45$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin8.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin8.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.40 \leq x_F < 0.45$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin8.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin8.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.45 \leq x_F < 0.50$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin9.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin9.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.45 \leq x_F < 0.50$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin9.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin9.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.45 \leq x_F < 0.50$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin9.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin9.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.50 \leq x_F < 0.55$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin10.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin10.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.50 \leq x_F < 0.55$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin10.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin10.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.50 \leq x_F < 0.55$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin10.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin10.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.55 \leq x_F < 0.60$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin11.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin11.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.55 \leq x_F < 0.60$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin11.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin11.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.55 \leq x_F < 0.60$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin11.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin11.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.60 \leq x_F < 0.65$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin12.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin12.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.60 \leq x_F < 0.65$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin12.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin12.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.60 \leq x_F < 0.65$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin12.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin12.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.65 \leq x_F < 0.70$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin13.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin13.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.65 \leq x_F < 0.70$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin13.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin13.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.65 \leq x_F < 0.70$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin13.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin13.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.70 \leq x_F < 0.75$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin14.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin14.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.70 \leq x_F < 0.75$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin14.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin14.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.70 \leq x_F < 0.75$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin14.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin14.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Overlay ($0.75 \leq x_F < 0.80$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//acceptance_overlay_mass_sliced_by_xF_bin15.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/acceptance_overlay_mass_sliced_by_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Existing vs Latest: Mass Acceptance ($0.75 \leq x_F < 0.80$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/AcceptanceCorrection/acceptance_no_unfolding_bins//Acceptance_Mass_All_pT_xF_bin15.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/NewAcceptanceCorrection/RS67/Acceptance_Mass_All_pT_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LH2 (L) vs LD2 (R): Latest/Existing Mass Acc. ($0.75 \leq x_F < 0.80$)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LH2_Acceptance_Mass_All_pT_xF_bin15.pdf}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth, keepaspectratio]{/root/github/e906-development/src/Existing_Vs_Latest_Acceptance_Comparison/Compare_Latest_Vs_Existing_LD2_Acceptance_Mass_All_pT_xF_bin15.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+\section{Conclusions}
+\begin{frame}{Conclusions}
+    \begin{itemize}
+        \item Acceptance corrections calculated for the double differential cross-section study was minimally impacted.
+        \vspace{0.3cm}
+        \item Acceptance Vs $x_F$ and Acceptance Vs $p_T$ plots demonstrate larger differences.
+    \end{itemize}
+\end{frame}
+\end{document}

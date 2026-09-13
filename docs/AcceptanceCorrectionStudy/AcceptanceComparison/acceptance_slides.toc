@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{Invariant Mass Plots}{5}{0}{1}
+\beamer@sectionintoc {2}{$x_F$ Plots}{8}{0}{2}
+\beamer@sectionintoc {3}{$p_T$ Plots}{11}{0}{3}
+\beamer@sectionintoc {4}{Mass Sliced by $x_F$ Overlays}{14}{0}{4}
+\beamer@sectionintoc {5}{Conclusions}{62}{0}{5}
