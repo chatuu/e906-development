@@ -22,7 +22,7 @@ def e906_chuck_cuts(tree: uproot.TTree, cut=3.0, beam_offset: float = 1.6):
         (np.abs(events.dpx) < 1.8) & (np.abs(events.dpy) < 2.0) &
         (events.dpx**2 + events.dpy**2 < 5.) &
         (events.dpz < 116.) & (events.dpz > 38.) &
-        (events.mass >= 3.0) & (events.mass <= 12.0) &
+        (events.mass >= 4.2) & (events.mass <= 8.8) &
         (events.dx**2 + (events.dy - beam_offset)**2 < 0.06) &
         (events.xF >= -0.20) & (events.xF <= 1.0) &
         (events.xT > 0.05) & (events.xT <= 0.58) &
@@ -84,7 +84,7 @@ def e906_chuck_cuts(tree: uproot.TTree, cut=3.0, beam_offset: float = 1.6):
             (events.D1 >= 20) & (events.D1 < 385)
         )
 
-    mask = track1_cut_2111_v42 & track2_cut_2111_v42 & tracks_cut_2111_v42 & dimuon_cut_2111_v42 & occ_cut_2111_v42 & D1_occ_cut
+    mask = track1_cut_2111_v42 & track2_cut_2111_v42 & tracks_cut_2111_v42 & dimuon_cut_2111_v42 & occ_cut_2111_v42# & D1_occ_cut
 
     return events[mask]
 
