@@ -17,7 +17,7 @@ echo "========================================"
 echo "2. Compiling LaTeX to PDF..."
 echo "========================================"
 # The -interaction=nonstopmode flag ensures it won't hang waiting for user input if there's a LaTeX warning
-pdflatex -interaction=nonstopmode "$TEX_FILE"
+pdflatex -interaction=nonstopmode "$TEX_FILE" > /dev/null 2>&1
 
 echo ""
 echo "========================================"
