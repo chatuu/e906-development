@@ -584,7 +584,7 @@ def main():
         (t_lh2_thrown.pT > 0.0) & (t_lh2_thrown.pT <= 1.8)
     )
     th_fiducial_ld2 = (
-        (t_ld2_thrown.xF >= 0.0) & (t_ld2_thrown.xF <= 0.85) & 
+        (t_ld2_thrown.xF >= 0.0) & (t_ld2_thrown.xF <= 0.8) & 
         (t_ld2_thrown.mass >= 4.2) & (t_ld2_thrown.mass <= 8.8) &
         (t_ld2_thrown.pT > 0.0) & (t_ld2_thrown.pT <= 1.8)
     )

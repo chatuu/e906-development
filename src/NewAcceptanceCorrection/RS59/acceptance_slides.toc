@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{Invariant Mass Plots}{5}{0}{1}
+\beamer@sectionintoc {2}{$x_F$ Plots}{9}{0}{2}
+\beamer@sectionintoc {3}{$p_T$ Plots}{16}{0}{3}
+\beamer@sectionintoc {4}{Binned Studies: $x_F$ Slices}{32}{0}{4}
+\beamer@sectionintoc {5}{Binned Studies: $p_T$ Slices}{50}{0}{5}
