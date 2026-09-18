@@ -824,7 +824,7 @@ def main():
         (t_lh2_thrown.pT > 0.0) & (t_lh2_thrown.pT <= 1.8)
     )
     th_fiducial_ld2 = (
-        (t_ld2_thrown.xF >= 0.0) & (t_ld2_thrown.xF <= 0.85) & 
+        (t_ld2_thrown.xF >= 0.0) & (t_ld2_thrown.xF <= 0.8) & 
         (t_ld2_thrown.mass >= 4.2) & (t_ld2_thrown.mass <= 8.8) &
         (t_ld2_thrown.pT > 0.0) & (t_ld2_thrown.pT <= 1.8)
     )
@@ -868,8 +868,8 @@ def main():
     m_mass1_lh2_th = (t_lh2_thrown.mass > 4.2) & (t_lh2_thrown.mass < 5.5); m_mass1_lh2_ac = (t_lh2_accept.mass > 4.2) & (t_lh2_accept.mass < 5.5)
     m_mass1_ld2_th = (t_ld2_thrown.mass > 4.2) & (t_ld2_thrown.mass < 5.5); m_mass1_ld2_ac = (t_ld2_accept.mass > 4.2) & (t_ld2_accept.mass < 5.5)
 
-    m_mass3_lh2_th = (t_lh2_thrown.mass > 5.5) & (t_lh2_thrown.mass < 8.7); m_mass3_lh2_ac = (t_lh2_accept.mass > 5.5) & (t_lh2_accept.mass < 8.7)
-    m_mass3_ld2_th = (t_ld2_thrown.mass > 5.5) & (t_ld2_thrown.mass < 8.7); m_mass3_ld2_ac = (t_ld2_accept.mass > 5.5) & (t_ld2_accept.mass < 8.7)
+    m_mass3_lh2_th = (t_lh2_thrown.mass > 5.5) & (t_lh2_thrown.mass < 8.8); m_mass3_lh2_ac = (t_lh2_accept.mass > 5.5) & (t_lh2_accept.mass < 8.8)
+    m_mass3_ld2_th = (t_ld2_thrown.mass > 5.5) & (t_ld2_thrown.mass < 8.8); m_mass3_ld2_ac = (t_ld2_accept.mass > 5.5) & (t_ld2_accept.mass < 8.8)
 
     # ==================================================================================
     # CLEAN YIELDS (Split Canvas) 
