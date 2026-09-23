@@ -131,11 +131,12 @@ def add_latex_to_bin(hist, x_center, y_center, value, error):
     l.SetTextColor(ROOT.kBlack)
     hist.GetListOfFunctions().Add(l)
 
-def generate_recoeff_histogram(input_root_file, input_npz_file, target_name, tree_name):
+def generate_recoeff_histogram(input_root_file, input_npz_file, target_name, tree_name, output_root_file):
     print(f"\n==========================================")
     print(f"Target: {target_name}")
     print(f"Tree: {tree_name}")
     print(f"Input File: {input_root_file}")
+    print(f"Output ROOT File: {output_root_file}")
     print(f"==========================================\n")
 
     print(f"Loading data from {input_root_file}...")
@@ -168,7 +169,7 @@ def generate_recoeff_histogram(input_root_file, input_npz_file, target_name, tre
 
     # Format the histogram name based on the tree
     prefix = "E_mix" if tree_name == "result_mix" else "E_total"
-    hist_name = f"{prefix}_reco_{target_name}"
+    hist_name = f"{prefix}_reco_{target_name}_correlated"
     hist_title = f"Avg Reco Eff with Correlated Errors ({target_name} - {prefix});Mass [GeV];x_{{F}}"
 
     # Create TH2D
@@ -209,11 +210,17 @@ def generate_recoeff_histogram(input_root_file, input_npz_file, target_name, tre
             h_reco.SetBinContent(root_x, root_y, mean_eff)
             h_reco.SetBinError(root_x, root_y, corr_err)
             
-            # Add LaTeX text
+            # Add LaTeX text for the PDF
             add_latex_to_bin(h_reco, m_center, x_center, mean_eff, corr_err)
 
-    # Output path based on target and tree
-    out_pdf = f"{hist_name}_correlated.pdf"
+    # 1. Save to Output ROOT File
+    print(f"Saving TH2D to ROOT file: {output_root_file}...")
+    f_out = ROOT.TFile(output_root_file, "UPDATE")
+    h_reco.Write(hist_name, ROOT.TObject.kOverwrite) # Overwrite if it already exists
+    f_out.Close()
+
+    # 2. Save to PDF
+    out_pdf = f"{hist_name}.pdf"
     print(f"Drawing and saving to {out_pdf}...")
     
     c = ROOT.TCanvas(f"c_{hist_name}", "", 1200, 900)
@@ -230,10 +237,11 @@ def generate_recoeff_histogram(input_root_file, input_npz_file, target_name, tre
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate Reco Efficiency Plots from ROOT Files")
     parser.add_argument("-i", "--input", required=True, help="Path to the input ROOT file")
+    parser.add_argument("-o", "--output", default="reco_efficiency_hists.root", help="Path to the output ROOT file to save histograms")
     parser.add_argument("-n", "--npz", default="../GlobalEfficiencyCurve/rs67_avg_eff_D1.npz", help="Path to the averaged efficiency .npz file")
     parser.add_argument("-t", "--target", required=True, choices=["LH2", "LD2", "Flask"], help="Target name (LH2, LD2, Flask)")
     parser.add_argument("--tree", required=True, choices=["result", "result_mix"], help="Tree name to process (result or result_mix)")
     
     args = parser.parse_args()
     
-    generate_recoeff_histogram(args.input, args.npz, args.target, args.tree)
+    generate_recoeff_histogram(args.input, args.npz, args.target, args.tree, args.output)
